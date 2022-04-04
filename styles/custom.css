@@ -1,0 +1,224 @@
+.site-search {
+  margin: 1rem 0;
+}
+.filter-sort {
+  margin: 3rem 0;
+}
+.filter-sort label {
+  font-weight: bold;
+  margin: 0 .5rem 0 0;
+}
+#sort {
+  color: var(--primary-color, #004abc);
+}
+.dataset .description {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+#dataset-description.expanded{
+  -webkit-line-clamp: 100;
+}
+.btn-read-more {
+  color: var(--primary-color, #004abc);
+  margin: 1rem 0;
+  cursor: pointer;
+}
+.dataset-info-label {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.dataset-info {
+  font-size: 1rem;
+}
+.dataset-info h2 {
+  border-bottom: 2px solid #E1E0E3;
+}
+.thin {
+  font-weight:100;
+}
+.resource-linkgrid {
+  margin: 1rem 0 2rem 0;
+}
+/*.dataset-info-topic-list li {
+  list-style: disc;
+  margin-left: 2rem;
+  border: none;
+  padding: 0.25rem 0;
+  font-size: 1rem;
+}
+.topic-info {
+  font-size: 1rem;
+  border: 0px;
+}
+.topic-info li {
+  border: 0px;
+}*/
+
+.three-col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 1rem;
+}
+.card-block {
+  background: #F9F9FA;
+  padding: 1.25rem 1rem;
+}
+.card-block a {
+  font-weight: bolder;
+  line-height: 2.5;
+}
+.card-block p:nth-last-child(1) {
+  margin: 0;
+  padding: 0;
+}
+.topic-qty {
+  font-weight: bold;
+}
+.tags {
+  margin-top: 3rem;
+}
+data-tags {
+  list-style: none;
+}
+.data-tags li {
+  margin-left: .5rem;
+  display: inline;
+}
+.data-tags li:nth-child(1) {
+  margin-left: 0;
+}
+.data-files, .supporting-files  {
+  margin-top: 3rem;
+}
+table.data-files-table, table.supporting-files-table {
+  width: 100%;
+  background-color: #ffffff;
+  border-collapse: collapse;
+  border-width: 1px;
+  border-color: #a19fa7;
+  border-style: solid;
+  color: #000000;
+  text-align: left;
+}
+table.data-files-table td, table.data-files-table th, table.supporting-files-table td, table.supporting-files-table th {
+  border-width: 1px;
+  border-color: #a19fa7;
+  border-style: solid;
+  padding: .5rem 1rem;
+}
+
+table.data-files-table thead, table.supporting-files-table thead{
+  background-color: #ffffff;
+}
+
+.data-files-table th, .supporting-files-table th, .data-files-table td, .supporting-files-table td {
+  white-space: nowrap;
+}
+
+.data-files-table td:nth-child(1), .supporting-files-table td:nth-child(1) {
+  white-space: normal;
+  width: 300px;
+}
+.data-files-table td:nth-child(2), .supporting-files-table td:nth-child(2) {
+  white-space: normal;
+  width: 160px;
+}
+
+.data-files-table td:nth-child(3), .supporting-files-table td:nth-child(3) {
+  white-space: normal;
+  width: 195px;
+}
+
+.data-files-table td:nth-child(4), .supporting-files-table td:nth-child(4) {
+  white-space: normal;
+  width: auto;
+}
+.nav-breadcrumb {
+  margin: 2rem 0;
+  padding: 0 var(--s-2, 1rem) 2rem var(--s-2, 1rem);
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+.nav-breadcrumb ol {
+  list-style: none;
+}
+.nav-breadcrumb ol li {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+.nav-breadcrumb ol li::after {
+  content: '/';
+  padding: 0 0.5rem;
+}
+.nav-breadcrumb ol li:last-child::after {
+  content: '';
+  padding: 0;
+}
+#sortresults select {
+  color: var(--primary-color, #004abc)!important;
+}
+.search-filters {
+  list-style: none;
+  padding-top: 2rem;
+}
+.search-filters>li {
+  border-bottom: 1px solid #cecece;
+  color: var(--primary-color);
+}
+
+.sublist {
+  list-style:none;
+  padding-top: 16px;
+}
+.sublist>li {
+  padding-left: 0px;
+}
+.page-navigation {
+  padding-top: 2rem;
+  float: left;
+}
+.page-previous, .page-current, .page-next {
+  padding: .25rem .75rem;
+  border: 1px solid #cecece;
+  text-decoration: none;
+  line-height: 0;
+  border-radius: 3px;
+  margin: .25rem;
+}
+.page-previous:hover, .page-next:hover {
+  color: white;
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+.page-current {
+  color: white;
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+.page-dots {
+  color: var(--primary-color);
+  padding: 0 .25rem;
+}
+.result-dataset-info {
+  list-style: none;
+  margin-bottom: .25rem;
+}
+.result-dataset-info li {
+  margin: 0;
+}
+/* Filter Toggles */
+.filter-topic,
+.filter-publisher,
+.filter-format,
+.filter-tag {
+height: 42px;
+overflow: hidden;
+cursor: pointer; 
+}
+
+.filter-expanded {
+  height: 100%;
+}
