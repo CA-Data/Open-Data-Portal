@@ -285,7 +285,7 @@ class CAGovPageNavigation extends window.HTMLElement {
     }
     let content = null;
     if (markup !== null) {
-      content = `<nav aria-labelledby="page-navigation-label"> <div id="page-navigation-label" class="label">${label}</div> ${markup}</nav>`;
+      content = `<nav aria-labelledby="page-navigation-label"> <div id="page-navigation-label" className="label">${label}</div> ${markup}</nav>`;
     }
 
     this.template({ content }, 'wordpress');

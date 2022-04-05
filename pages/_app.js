@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }) {
           </div>
         </div>
       </div>
-<div class="site-header">
+<div className="site-header">
   <div className="container with-logo">
           <Link href="/" passHref>
             <a className="grid-logo" aria-label="DCC logo">
@@ -130,10 +130,10 @@ function MyApp({ Component, pageProps }) {
 </div>
 
 <cagov-site-navigation>
-<div class="container">
-<div class="search-container search-container--small hidden-search">
-  <form class="site-search" action="/results">
-    <span class="sr-only" id="SearchInput2">Search datasets</span>
+<div className="container">
+<div className="search-container search-container--small hidden-search">
+  <form className="site-search" action="/results">
+    <span className="sr-only" id="SearchInput2">Search datasets</span>
     <input
       type="text"
       id="q-top-mobile"
@@ -142,7 +142,7 @@ function MyApp({ Component, pageProps }) {
       placeholder="Search datasets"
       className="search-textfield"
     />
-    <button type="submit" class="search-submit">
+    <button type="submit" className="search-submit">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         enableBackground="new 0 0 17 17"
@@ -154,15 +154,15 @@ function MyApp({ Component, pageProps }) {
           d="M16.4 15.2l-4-4c2-2.6 1.8-6.5-.6-8.9-1.3-1.3-3-2-4.8-2s-3.5.7-4.8 2c-2.6 2.6-2.6 6.9 0 9.6 1.3 1.3 3 2 4.8 2 1.4 0 2.9-.5 4.1-1.4l4.1 4c.2.2.4.3.7.3.2 0 .5-.1.7-.3.1-.3.1-.9-.2-1.3zM7 12c-1.3 0-2.6-.5-3.5-1.4-1.9-1.9-1.9-5.1 0-7 .9-.9 2.1-1.5 3.5-1.5s2.6.5 3.5 1.4 1.4 2.2 1.4 3.5-.5 2.6-1.4 3.5c-1 1-2.2 1.5-3.5 1.5z"
         ></path>
       </svg>
-      <span class="sr-only">Submit</span>
+      <span className="sr-only">Submit</span>
     </button>
   </form>
 </div>
-<nav class="expanded-menu" role="navigation" aria-label="Site Navigation" aria-hidden="false" id="main-menu">
-  <div class="expanded-menu-grid">
-    <div class="expanded-menu-col js-cagov-navoverlay-expandable" aria-expanded="false">
-      <div class="expanded-menu-section">
-        <strong class="expanded-menu-section-header">
+<nav className="expanded-menu" role="navigation" aria-label="Site Navigation" aria-hidden="false" id="main-menu">
+  <div className="expanded-menu-grid">
+    <div className="expanded-menu-col js-cagov-navoverlay-expandable" aria-expanded="false">
+      <div className="expanded-menu-section">
+        <strong className="expanded-menu-section-header">
           <Link href="/datasets" passHref>
             <a className="expanded-menu-section-header-link js-event-hm-menu">
               Datasets
@@ -171,9 +171,9 @@ function MyApp({ Component, pageProps }) {
         </strong>
       </div>
     </div>
-    <div class="expanded-menu-col js-cagov-navoverlay-expandable" aria-expanded="false">
-      <div class="expanded-menu-section">
-        <strong class="expanded-menu-section-header">
+    <div className="expanded-menu-col js-cagov-navoverlay-expandable" aria-expanded="false">
+      <div className="expanded-menu-section">
+        <strong className="expanded-menu-section-header">
           <Link href="/state-portals" passHref>
             <a className="expanded-menu-section-header-link js-event-hm-menu">
               State portals
@@ -182,9 +182,9 @@ function MyApp({ Component, pageProps }) {
         </strong>
       </div>
     </div>
-    <div class="expanded-menu-col js-cagov-navoverlay-expandable" aria-expanded="false">
-      <div class="expanded-menu-section">
-        <strong class="expanded-menu-section-header">
+    <div className="expanded-menu-col js-cagov-navoverlay-expandable" aria-expanded="false">
+      <div className="expanded-menu-section">
+        <strong className="expanded-menu-section-header">
           <Link href="/documentation" passHref>
             <a className="expanded-menu-section-header-link js-event-hm-menu">
               Documentation
@@ -193,9 +193,9 @@ function MyApp({ Component, pageProps }) {
         </strong>
       </div>
     </div>
-    <div class="expanded-menu-col js-cagov-navoverlay-expandable" aria-expanded="false">
-      <div class="expanded-menu-section">
-        <strong class="expanded-menu-section-header">
+    <div className="expanded-menu-col js-cagov-navoverlay-expandable" aria-expanded="false">
+      <div className="expanded-menu-section">
+        <strong className="expanded-menu-section-header">
           <Link href="/about" passHref>
             <a className="expanded-menu-section-header-link js-event-hm-menu">
               About
@@ -205,9 +205,9 @@ function MyApp({ Component, pageProps }) {
       </div>
     </div>
 
-  {/* Dropdown example <div class="expanded-menu-col js-cagov-navoverlay-expandable" aria-expanded="false">
-    <div class="expanded-menu-section">
-      <strong class="expanded-menu-section-header">
+  {/* Dropdown example <div className="expanded-menu-col js-cagov-navoverlay-expandable" aria-expanded="false">
+    <div className="expanded-menu-section">
+      <strong className="expanded-menu-section-header">
         <Link href="/documentation" passHref>
           <a className="expanded-menu-section-header-link js-event-hm-menu">
           Documentation
