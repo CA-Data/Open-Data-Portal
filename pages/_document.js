@@ -9,6 +9,7 @@ export default function Document() {
         <NextScript />
       <script type="text/javascript" async="" src="../scripts/custom.js"></script>
       <script type="text/javascript" async="" src="../scripts/page-navigation.js"></script>
+      <script type="text/javascript" async="" src="../scripts/site-navigation.js"></script>
       </body>
     </Html>
   )

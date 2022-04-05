@@ -33,10 +33,7 @@ export async function getServerSideProps(context) {
     dataset.notes = response.result.results[index].description.replace(/\<.*?\>/g, '').substring(0, 200)
     resultsArray.push(dataset)
   }
-  console.log(resultsArray)
-
- 
-
+  
   //filter data
   const filter_data = {
     topicArray: [],
@@ -44,7 +41,6 @@ export async function getServerSideProps(context) {
     tagArray: []
   }
 
-  //console.log("Last", topicObject)
   return {
     props: {
       res: response,
@@ -56,7 +52,6 @@ export async function getServerSideProps(context) {
 
 
 export default function Help(data) {
-  //console.log(data)
   const submit = () => {
     document.getElementById("sortresults").submit();
   };
