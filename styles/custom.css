@@ -92,6 +92,23 @@ data-tags {
 .data-files, .supporting-files  {
   margin-top: 3rem;
 }
+
+.data-files-table th, .supporting-files-table th  {
+  white-space: nowrap;
+}
+table td {
+  white-space:nowrap;
+}
+table th:nth-child(1) {
+  white-space: normal;
+  width: 350px;
+  max-width: 350px;
+  min-width: 350px;
+}
+table td:nth-child(1) {
+  white-space:normal;
+  min-width: 200px;
+}
 table.data-files-table, table.supporting-files-table {
   width: 100%;
   background-color: #ffffff;
@@ -109,32 +126,7 @@ table.data-files-table td, table.data-files-table th, table.supporting-files-tab
   padding: .5rem 1rem;
 }
 
-table.data-files-table thead, table.supporting-files-table thead{
-  background-color: #ffffff;
-}
 
-.data-files-table th, .supporting-files-table th, .data-files-table td, .supporting-files-table td {
-  white-space: nowrap;
-}
-
-.data-files-table td:nth-child(1), .supporting-files-table td:nth-child(1) {
-  white-space: normal;
-  width: 300px;
-}
-.data-files-table td:nth-child(2), .supporting-files-table td:nth-child(2) {
-  white-space: normal;
-  width: 160px;
-}
-
-.data-files-table td:nth-child(3), .supporting-files-table td:nth-child(3) {
-  white-space: normal;
-  width: 195px;
-}
-
-.data-files-table td:nth-child(4), .supporting-files-table td:nth-child(4) {
-  white-space: normal;
-  width: auto;
-}
 .nav-breadcrumb {
   margin: 2rem 0;
   padding: 0 var(--s-2, 1rem) 2rem var(--s-2, 1rem);
