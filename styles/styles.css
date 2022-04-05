@@ -5631,7 +5631,7 @@ figure figcaption {
   grid-template-columns: auto 1fr;
   grid-template-rows: auto;
   grid-template-areas: "org-name mobile-icons";
-  column-gap: 0.5rem;
+  /*column-gap: 0.5rem; addresses left padding issues*/
   row-gap: 0.25rem;
   justify-items: start;
 }
@@ -7073,7 +7073,7 @@ cagov-site-navigation .expanded-menu {
     column-gap: 0.5rem;
     align-content: flex-start;
     align-items: stretch;
-    max-width: calc(var(--w-lg, "1176px") + 32px);
+    max-width: calc(var(--w-lg, "1176px"));
     margin: 0 auto;
   }
 }
