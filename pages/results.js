@@ -189,6 +189,20 @@ export async function getServerSideProps(context) {
 
 
 export default function Results(data) {
+  const submit = () => {
+    document.getElementById("sortresults").submit();
+  };
+  const clear = () => {
+    document.getElementById("q").value = "";
+  };
+  const expand = (e) => {
+    if (e.target.classList.contains('filter-expanded')) {
+      e.target.classList.remove('filter-expanded')
+    } 
+    else {
+      e.target.classList.add('filter-expanded')
+    }
+  }
   if (typeof window === 'object') {
     // Check if document is finally loaded
        document.addEventListener("DOMContentLoaded", function () {
@@ -197,25 +211,9 @@ export default function Results(data) {
             document.querySelectorAll('.page-next')[1].style.display = 'none';
           }
         });
-      }
-  
-  const submit = () => {
-    document.getElementById("sortresults").submit();
-  };
-  const clear = () => {
-    document.getElementById("q").value = "";
-  };
-  const expand = (e) => {
-    console.log(e.target)
-    //e.target.style.height = '100%'
-    if (e.target.classList.contains('filter-expanded')) {
-      e.target.classList.remove('filter-expanded')
-    } 
-    else {
-      e.target.classList.add('filter-expanded')
+      
     }
-    //document.querySelectorAll('.filter-topic')[0].style.height = '100%'
-  }
+  
   return (
     <>
       <main id="body-content" className="cagov-main">

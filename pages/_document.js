@@ -7,6 +7,8 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+      <script type="text/javascript" async="" src="../scripts/custom.js"></script>
+      <script type="text/javascript" async="" src="../scripts/page-navigation.js"></script>
       </body>
     </Html>
   )
