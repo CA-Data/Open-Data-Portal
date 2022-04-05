@@ -111,7 +111,7 @@ export default function dataSet(data) {
       document.querySelectorAll(".btn-read-more")[0].innerHTML = "Read less";
     }
   };
-  
+
   return (
     <>
       <main id="body-content" className="cagov-main dataset">
@@ -221,7 +221,14 @@ export default function dataSet(data) {
                         >
                           <a>Preview</a>
                         </Link>{" "}
-                        | <button className="api-button" data-resource-name= {dataset.name} data-file-id={dataset.id}>API</button>
+                        |{" "}
+                        <button
+                          className="api-button"
+                          data-resource-name={dataset.name}
+                          data-file-id={dataset.id}
+                        >
+                          API
+                        </button>
                       </td>
                       <td>
                         {dataset.format}
@@ -266,7 +273,14 @@ export default function dataSet(data) {
                         >
                           <a>Preview</a>
                         </Link>{" "}
-                        | <button className="api-button" data-resource-name= {dataset.name} data-file-id={dataset.id}>API</button>
+                        |{" "}
+                        <button
+                          className="api-button"
+                          data-resource-name={dataset.name}
+                          data-file-id={dataset.id}
+                        >
+                          API
+                        </button>
                       </td>
                       <td>
                         {dataset.format} {dataset.size}
@@ -295,23 +309,22 @@ export default function dataSet(data) {
           <div className="modal-content">
             <span className="close">&times;</span>
             <h2 className="h3">API endpoint</h2>
-            <h3 id="resource-name" className="h4 thin">Resource name</h3>
+            <h3 id="resource-name" className="h4 thin">
+              Resource name
+            </h3>
             <p>
               Use the query web API to retrieve data with a set of basic
               parameters. Copy the API endpoint you need to start.
             </p>
-            <p><a href="https://docs.ckan.org/en/latest/maintaining/datastore.html#ckanext.datastore.logic.action.datastore_search">
-              Usage documentation
-            </a></p>
+            <p>
+              <a href="https://docs.ckan.org/en/latest/maintaining/datastore.html#ckanext.datastore.logic.action.datastore_search">
+                Usage documentation
+              </a>
+            </p>
             <ul className="input-group">
               <li>
                 <label>Simple query</label>
-                <input
-                  id="simple-query"
-                  type="text"
-                  value=""
-                  readOnly
-                />
+                <input id="simple-query" type="text" value="" readOnly />
                 <button className="copy-button">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -336,12 +349,7 @@ export default function dataSet(data) {
               </li>
               <li>
                 <label>SQL query</label>
-                <input
-                  id="sql-query"
-                  type="text"
-                  value=""
-                  readOnly
-                />
+                <input id="sql-query" type="text" value="" readOnly />
                 <button className="copy-button">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -366,12 +374,7 @@ export default function dataSet(data) {
               </li>
               <li>
                 <label>Odata query</label>
-                <input
-                  id="odata-query"
-                  type="text"
-                  value=""
-                  readOnly
-                />
+                <input id="odata-query" type="text" value="" readOnly />
                 <button className="copy-button">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
