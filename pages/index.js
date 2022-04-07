@@ -54,7 +54,6 @@ export async function getServerSideProps() {
   }
 }
 export default function Home(data) {
-  console.log(data.recent)
   return (
     <>
       <main>

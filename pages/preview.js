@@ -3,7 +3,6 @@ import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 
 export async function getServerSideProps(context) {
-  console.log(context.query.id)
   const response = await fetch('https://data.ca.gov/api/3/action/datastore_search?resource_id='+context.query.id).then(response => response.json());
   const columns = []
   for (const key in response.result.fields) {

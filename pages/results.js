@@ -80,7 +80,6 @@ export async function getServerSideProps(context) {
   } else {
     pageData["total"].value = 0
   }
-  console.log(apirequest)
   
   //search results
   const resultsArray = []
@@ -120,7 +119,6 @@ export async function getServerSideProps(context) {
           }
         }
       }
-      console.log(response.result.results[index])
       resultsArray.push(dataset)
     }
   }

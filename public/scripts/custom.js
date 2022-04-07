@@ -20,8 +20,6 @@ if (document.getElementsByTagName('main')[0].classList.contains('dataset')) {
 
   const apiButtons = document.querySelectorAll('.api-button');
   apiButtons.forEach(el => el.addEventListener('click', event => {
-    console.log(event.target.dataset.fileId);
-    console.log(event.target.dataset.resourceName);
     var file_id = event.target.dataset.fileId;
     var resource_name = event.target.dataset.resourceName;
     addFileId(file_id)

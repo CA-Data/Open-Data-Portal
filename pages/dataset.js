@@ -27,9 +27,6 @@ export async function getServerSideProps(context) {
   }
 
   const name = context.query.name;
-  console.log(
-    "https://data.ca.gov/api/3/action/package_show?name_or_id=" + name
-  );
   const response = await fetch(
     "https://data.ca.gov/api/3/action/package_show?name_or_id=" + name
   ).then((response) => response.json());
