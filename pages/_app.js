@@ -68,7 +68,7 @@ function MyApp({ Component, pageProps }) {
             </Link>
             <div className="cagov-nav mobile-icons grid-mobile-icons">
               <div className="cagov-nav mobile-search">
-                <button className="search-btn" aria-expanded="true">
+                <button className="search-btn" aria-expanded="false">
                   <span>Search</span>
                 </button>
               </div>
@@ -103,7 +103,7 @@ function MyApp({ Component, pageProps }) {
                 <input
                   type="text"
                   id="q-top"
-                  name="q-top"
+                  name="q"
                   aria-labelledby="SearchInput"
                   placeholder="Search datasets"
                   className="search-textfield"

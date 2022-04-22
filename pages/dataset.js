@@ -133,7 +133,7 @@ export default function dataSet(data) {
             className="sidebar-container everylayout sidebar-cell"
             style={{ zIndex: 1 }}
           >
-            <sidebar space="0" side="left">
+            <div className="sidebar" space="0" side="left">
               <div className="dataset-info">
                 <h2 className="h4">About this dataset</h2>
                 <p>
@@ -164,7 +164,7 @@ export default function dataSet(data) {
                   </li>
                 </ul>
               </div>
-            </sidebar>
+            </div>
           </div>
           <div className="cagov-content content-cell">
             <h1 className="h2" style={{ marginTop: 0 }}>

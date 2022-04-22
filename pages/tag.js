@@ -69,11 +69,11 @@ export default function Help(data) {
             className="sidebar-container everylayout sidebar-cell"
             style={{ "zIndex": 1 }}
           >
-            <sidebar space="0" side="left">
+            <div className="sidebar" space="0" side="left">
                 <nav aria-labelledby="page-navigation-label">
                   
                 </nav>
-            </sidebar>
+            </div>
           </div>
           <div className="cagov-content content-cell">
             <h1 style={{ marginTop: 0 }}>Search results:</h1>

@@ -7,8 +7,9 @@ export async function getServerSideProps(context) {
   }
 
   if ('format' in context.query) {
-    apirequest = "https://data.ca.gov/api/3/action/resource_search?query=format:CSV"
-    //apirequest = "https://data.ca.gov/api/3/action/package_search?fq=(title:"+context.query.q.replace(/ /g, '-')+"%20AND%20resources:"+context.query.format.replace(/ /g, '-')+")";
+    apirequest = "https://data.ca.gov/api/3/action/package_search?fq=res_format:"+context.query.format.toUpperCase()+"&q="+context.query.q
+    console.log(apirequest)
+    //apirequest = "https://data.ca.gov/api/3/action/package_search?fq=(title:+"%20AND%20resources:"+context.query.format.replace(/ /g, '-')+")";
   }
 
   if ('tag' in context.query) {
@@ -89,23 +90,18 @@ export async function getServerSideProps(context) {
       dataset.formats = []
       dataset.name = response.result.results[index].name
       dataset.title = response.result.results[index].title
-      if ('format' in context.query) {
-        dataset.organization = response.result.results[index].name
-      } else {
-        dataset.organization = response.result.results[index].organization.title
-      }
+      
+      
+      dataset.organization = response.result.results[index].organization.title
+      
   
       const date_updated = new Date(response.result.results[index].metadata_modified);
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       const metadata_modified = date_updated.toLocaleDateString('en-EN', options)
   
       dataset.updated = metadata_modified
-
-      if ('format' in context.query) {
-        dataset.notes = response.result.results[index].description
-      } else {
-        dataset.notes = response.result.results[index].notes.replace(/\<.*?\>|__/g, '')
-      }
+      
+      dataset.notes = response.result.results[index].notes.replace(/\<.*?\>|__/g, '')
 
       if (response.result.results[index].resources.length > 0) {
         const resource = response.result.results[index].resources
@@ -223,7 +219,7 @@ export default function Results(data) {
             className="sidebar-container everylayout sidebar-cell"
             style={{ "zIndex": 1 }}
           >
-            <sidebar space="0" side="left">
+            <div className="sidebar" space="0" side="left">
                 <nav aria-labelledby="page-navigation-label">
                   <div id="page-navigation-label" className="label">
                     <strong>Filter by</strong>
@@ -262,7 +258,7 @@ export default function Results(data) {
                     </li>
                   </ul>
                 </nav>
-            </sidebar>
+            </div>
           </div>
           <div className="cagov-content content-cell">
             <h1 style={{ marginTop: 0 }}>Search results</h1>
@@ -372,10 +368,10 @@ export default function Results(data) {
 
             {/*<div className="page-navigation"><a className="page-previous" href={"/results?q=water&tag=regulatory&page="+data.pages.previous}>&lt;</a> <span className="page-current">{data.pages.current}</span> <a className="page-next" href={"/results?q=water&tag=regulatory&page="+data.pages.next}>{data.pages.next}</a> <span className="page-dots">...</span> <a className="page-next" href={"/results?q=water&tag=regulatory&page="+data.pages.total}>{data.pages.total}</a> <a className="page-next" href={"/results?q=water&tag=regulatory&page="+data.pages.next}>&gt;</a></div>*/}
             <div className="page-navigation">
-              <a style={{'display':data.pages.previous.display}} className="page-previous" href={"/results?q="+data.parameters.q+"&tag=regulatory&page="+data.pages.previous.value}>&lt;</a> 
+              <a style={{'display':data.pages.previous.display}} className="page-previous" href={"/results?q="+data.parameters.q+"&page="+data.pages.previous.value}>&lt;</a> 
               <span style={{'display':data.pages.current.display}} className="page-current">{data.pages.current.value}</span> 
-              <a style={{'display':data.pages.next.display}} className="page-next" href={"/results?q="+data.parameters.q+"&tag=regulatory&page="+data.pages.next.value}>{data.pages.next.value}</a> 
-              <a style={{'display':data.pages.next.display}} className="page-next" href={"/results?q="+data.parameters.q+"&tag=regulatory&page="+data.pages.next.value}>&gt;</a>
+              <a style={{'display':data.pages.next.display}} className="page-next" href={"/results?q="+data.parameters.q+"&page="+data.pages.next.value}>{data.pages.next.value}</a> 
+              <a style={{'display':data.pages.next.display}} className="page-next" href={"/results?q="+data.parameters.q+"&page="+data.pages.next.value}>&gt;</a>
             </div>
           </div>
         </article>

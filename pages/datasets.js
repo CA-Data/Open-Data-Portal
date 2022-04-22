@@ -25,7 +25,7 @@ export default function preview() {
           className="sidebar-container everylayout sidebar-cell"
           style={{ "zIndex": 1 }}
         >
-          <sidebar space="0" side="left">
+          <div className="sidebar" space="0" side="left">
             <nav aria-labelledby="page-navigation-label">
               <div id="page-navigation-label" className="label">
                 <strong>On this page</strong>
@@ -36,7 +36,7 @@ export default function preview() {
                 </li>
               </ul>
             </nav>
-          </sidebar>
+          </div>
         </div>
 
         <div className={styles.container}>

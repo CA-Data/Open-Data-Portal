@@ -318,6 +318,7 @@ cursor: pointer;
   border-left: 1px solid #E1E0E3;
   border-radius: 0px 5px 5px 0px;
   line-height: 0;
+  position: relative;
 }
 .copy-button svg {
   pointer-events: none;
@@ -351,4 +352,26 @@ cursor: pointer;
 }
 .api-button:hover {
   color: var(--primary-dark-color);
+}
+
+button.copied::before {
+  background: #000;
+  content: '';
+  padding: 6px;
+  position: absolute;
+  transform: rotate(45deg);
+  bottom: 95%;
+  left: 13px;
+}
+
+button.copied::after {
+  content: 'Copied!';
+  position: absolute;
+  border-radius: 4px;
+  padding: 14px 8px 14px 8px;
+  bottom: 100%;
+  left: -10px;
+  background: #000;
+  color: white;
+  font-size: .75rem;
 }

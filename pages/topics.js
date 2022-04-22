@@ -25,7 +25,7 @@ export default function Help(data) {
             className="sidebar-container everylayout sidebar-cell"
             style={{ "zIndex": 1 }}
           >
-            <sidebar space="0" side="left">
+            <div className="sidebar" space="0" side="left">
               <cagov-page-navigation
                 data-selector="main"
                 data-type="wordpress"
@@ -59,7 +59,7 @@ export default function Help(data) {
                   </ul>
                 </nav>
               </cagov-page-navigation>
-            </sidebar>
+            </div>
           </div>
           <div className="cagov-content content-cell">
             <h1 style={{ "margin-top": 0 }}>Search Results</h1>
