@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 export async function getServerSideProps(context) {
   const response = await fetch('https://data.ca.gov/api/3/action/datastore_search?resource_id='+context.query.id).then(response => response.json());
+  console.log(response)
   const columns = []
   for (const key in response.result.fields) {
     if (key > 0) {
@@ -52,7 +53,7 @@ export default function preview(dataset) {
   const rows = dataset.rows;
 
   return (
-    <main id="body-content" className="cagov-main dataset">
+    <main id="body-content" className="cagov-main">
       <nav className="nav-breadcrumb">
         <ol>
           <li><a href="https://ca.gov/">CA.gov</a></li>

@@ -190,7 +190,7 @@ export default function dataSet(data) {
               <table className="data-files-table">
                 <thead>
                   <tr>
-                    <th>Download data</th>
+                    <th>Preview data</th>
                     <th>Access data</th>
                     <th>File details</th>
                     <th>Last updated</th>
@@ -200,10 +200,7 @@ export default function dataSet(data) {
                   {data.dataFiles.map((dataset, index) => (
                     <tr key={index}>
                       <td>
-                        <a href={dataset.url}>{dataset.name}</a>
-                      </td>
-                      <td>
-                        <Link
+                      <Link
                           href={
                             "/preview?name=" +
                             data.parameters.name +
@@ -216,8 +213,11 @@ export default function dataSet(data) {
                           }
                           passHref
                         >
-                          <a>Preview</a>
-                        </Link>{" "}
+                          <a>{dataset.name}</a>
+                        </Link>
+                      </td>
+                      <td>
+                      <a href={dataset.url}>Download</a>{" "}
                         |{" "}
                         <button
                           className="api-button"
@@ -242,7 +242,7 @@ export default function dataSet(data) {
               <table className="supporting-files-table">
                 <thead>
                   <tr>
-                    <th>Download file</th>
+                    <th>Preview file</th>
                     <th>Access data</th>
                     <th>File details</th>
                     <th>Last updated</th>
@@ -251,9 +251,6 @@ export default function dataSet(data) {
                 <tbody>
                   {data.supportingFiles.map((dataset, index) => (
                     <tr key={index}>
-                      <td>
-                        <a href={dataset.url}>{dataset.name}</a>
-                      </td>
                       <td>
                         <Link
                           href={
@@ -268,8 +265,12 @@ export default function dataSet(data) {
                           }
                           passHref
                         >
-                          <a>Preview</a>
-                        </Link>{" "}
+                          <a>{dataset.name}</a>
+                        </Link>
+                      </td>
+                      <td>
+                        
+                      <a href={dataset.url}>Download</a>{" "}
                         |{" "}
                         <button
                           className="api-button"

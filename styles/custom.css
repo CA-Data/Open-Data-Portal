@@ -375,3 +375,11 @@ button.copied::after {
   color: white;
   font-size: .75rem;
 }
+
+/* CSV Preview table */
+.MuiDataGrid-root .MuiDataGrid-columnHeaderTitle {
+  overflow: unset !important;
+  font-weight: 500!important;
+  white-space: nowrap!important;
+  text-overflow: unset!important;
+}
