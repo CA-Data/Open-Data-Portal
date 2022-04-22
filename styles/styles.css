@@ -6124,6 +6124,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 .cagov-featured-sidebar {
   max-width: 400px;
   margin-top: 0;
+  place-self: center;
 }
 
 .cagov-featured-section .components-button.image-button {
