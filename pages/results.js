@@ -8,7 +8,6 @@ export async function getServerSideProps(context) {
 
   if ('format' in context.query) {
     apirequest = "https://data.ca.gov/api/3/action/package_search?fq=res_format:"+context.query.format.toUpperCase()+"&q="+context.query.q
-    console.log(apirequest)
     //apirequest = "https://data.ca.gov/api/3/action/package_search?fq=(title:+"%20AND%20resources:"+context.query.format.replace(/ /g, '-')+")";
   }
 
@@ -82,6 +81,14 @@ export async function getServerSideProps(context) {
     pageData["total"].value = 0
   }
   
+  //filter data
+  const filter_data = {
+    topicArray: [],
+    publisherArray: [],
+    formatArray: [],
+    tagArray: [],
+  }
+
   //search results
   const resultsArray = []
   if (response.result.results.length > 0) {
@@ -119,12 +126,6 @@ export async function getServerSideProps(context) {
     }
   }
 
-  //filter data
-  const filter_data = {
-    topicArray: [],
-    formatArray: [],
-    tagArray: [],
-  }
 
   //get topics
   const topicObject = {}
@@ -138,6 +139,18 @@ export async function getServerSideProps(context) {
   }
   for (const key in topicObject) {
     filter_data.topicArray.push(topicObject[key])
+  }
+
+  //get Publisher
+  const publisherObject = {}
+  for (let index = 0; index < response.result.results.length; index++) {
+    if (response.result.results[index].groups.length > 0) {
+      const publisher = response.result.results[index].organization.title
+      publisherObject[publisher] = {"name": publisher}
+    }    
+  }
+  for (const key in publisherObject) {
+    filter_data.publisherArray.push(publisherObject[key])
   }
 
   //get formats
@@ -169,7 +182,7 @@ export async function getServerSideProps(context) {
   for (const key in tagObject) {
     filter_data.tagArray.push(tagObject[key])
   }
-
+  
   return {
     props: {
       matches: response.result.count,
@@ -236,7 +249,10 @@ export default function Results(data) {
                     <li onClick={expand} className="filter-publisher">
                         Publisher
                       <ul className="sublist">
-                          <li></li>
+                        {data.filterData.publisherArray.map((dataset, index) => (
+                          <li key={index}><a href="/">{dataset.name}</a></li>
+
+                        ))}
                       </ul>
                     </li>
                     <li onClick={expand} className="filter-format">

@@ -3,8 +3,21 @@ import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 
 export async function getServerSideProps(context) {
+  const datasetResponse = await fetch("https://data.ca.gov/api/3/action/package_show?name_or_id="+context.query.name).then((response) => response.json());
+  
+  const datasetInfo = {
+    title: datasetResponse.result.title,
+  }
+
+  for (let index = 0; index < datasetResponse.result.resources.length; index++) {
+    if (context.query.id === datasetResponse.result.resources[index].id) {
+      datasetInfo.description = datasetResponse.result.resources[index].description
+      datasetInfo.download = datasetResponse.result.resources[index].url
+    }
+  }
+
   const response = await fetch('https://data.ca.gov/api/3/action/datastore_search?resource_id='+context.query.id).then(response => response.json());
-  console.log(response)
+
   const columns = []
   for (const key in response.result.fields) {
     if (key > 0) {
@@ -23,6 +36,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
+      details: datasetInfo,
       response: response,
       parameters: context.query,
       columns: columns,
@@ -32,24 +46,7 @@ export async function getServerSideProps(context) {
 
 }
 export default function preview(dataset) {
-
-  const columns_2 = [
-    { field: 'id', headerName: 'ID' },
-    { field: 'firstName', headerName: 'First name' },
-    { field: 'lastName', headerName: 'Last name' },
-    { field: 'age', headerName: 'Age' }
-  ];
   const columns = dataset.columns;
-  const rows_2 = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  ];
-
   const rows = dataset.rows;
 
   return (
@@ -76,7 +73,8 @@ export default function preview(dataset) {
           {dataset.parameters.rname}
         </h1>
         <p className="h4 thin">Data preview</p>
-        <p>Access: <a href="/Download">Download file</a> | <a href="/api">API</a></p>
+        <p className="description">Description: {dataset.details.description}</p>
+        <p>Access: <a href={dataset.details.download}>Download file</a> | <a href="/api">API</a></p>
 
         {/* Use table component */}
         <Table data={rows} columns={columns} height={400}/>

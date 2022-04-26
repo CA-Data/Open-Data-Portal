@@ -78,6 +78,7 @@
 }
 .tags {
   margin-top: 3rem;
+  word-break: break-all;
 }
 data-tags {
   list-style: none;
@@ -376,10 +377,10 @@ button.copied::after {
   font-size: .75rem;
 }
 
-/* CSV Preview table */
+/* CSV Preview table 
 .MuiDataGrid-root .MuiDataGrid-columnHeaderTitle {
   overflow: unset !important;
   font-weight: 500!important;
   white-space: nowrap!important;
   text-overflow: unset!important;
-}
+}*/
