@@ -11,13 +11,16 @@
 #sort {
   color: var(--primary-color, #004abc);
 }
-.dataset .description {
+.dataset .description p{
   display: -webkit-box;
   -webkit-line-clamp: 6;
-  -webkit-box-orient: vertical;  
+  -webkit-box-orient: vertical; 
   overflow: hidden;
 }
-#dataset-description.expanded{
+/*.dataset .description p {
+  overflow: hidden;
+}*/
+#dataset-description p.expanded {
   -webkit-line-clamp: 100;
 }
 .btn-read-more {

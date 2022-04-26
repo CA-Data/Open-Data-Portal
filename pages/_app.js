@@ -105,7 +105,7 @@ function MyApp({ Component, pageProps }) {
                   id="q-top"
                   name="q"
                   aria-labelledby="SearchInput"
-                  placeholder="Search datasets"
+                  placeholder="Search data"
                   className="search-textfield"
                 />
                 <button type="submit" className="search-submit">

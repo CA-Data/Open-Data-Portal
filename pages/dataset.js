@@ -95,16 +95,19 @@ export default function dataSet(data) {
 
   const readMore = () => {
     if (
-      document
-        .getElementById("dataset-description")
-        .classList.contains("expanded")
+      //document
+      //  .getElementById("dataset-description")
+      //  .classList.contains("expanded")
+      document.getElementById("dataset-description").getElementsByTagName('p')[0].classList.contains("expanded")
     ) {
-      document
-        .getElementById("dataset-description")
-        .classList.remove("expanded");
+      //document
+      //  .getElementById("dataset-description")
+      //  .classList.remove("expanded");
+      document.getElementById("dataset-description").getElementsByTagName('p')[0].classList.remove("expanded")
       document.querySelectorAll(".btn-read-more")[0].innerHTML = "Read more";
     } else {
-      document.getElementById("dataset-description").classList.add("expanded");
+      //document.getElementById("dataset-description").classList.add("expanded");
+      document.getElementById("dataset-description").getElementsByTagName('p')[0].classList.add("expanded")
       document.querySelectorAll(".btn-read-more")[0].innerHTML = "Read less";
     }
   };
