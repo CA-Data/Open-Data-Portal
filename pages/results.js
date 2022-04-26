@@ -182,7 +182,7 @@ export async function getServerSideProps(context) {
   for (const key in tagObject) {
     filter_data.tagArray.push(tagObject[key])
   }
-  
+
   return {
     props: {
       matches: response.result.count,
@@ -250,7 +250,7 @@ export default function Results(data) {
                         Publisher
                       <ul className="sublist">
                         {data.filterData.publisherArray.map((dataset, index) => (
-                          <li key={index}><a href="/">{dataset.name}</a></li>
+                          <li key={index}><a href={"/results?q="+data.parameters.q+"&topic="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
 
                         ))}
                       </ul>
