@@ -5,7 +5,6 @@ window.addEventListener('load', function () {
     if (document.getElementsByTagName('main')[0].classList.contains('dataset')) {
       
       var modal = document.getElementById("myModal");
-      var btn = document.getElementById("myBtn");
       var span = document.getElementsByClassName("close")[0];
 
       span.onclick = function() {
@@ -31,13 +30,6 @@ window.addEventListener('load', function () {
         modal.style.display = "block";
       }));
 
-      function wait(ms){
-        var start = new Date().getTime();
-        var end = start;
-        while(end < start + ms) {
-          end = new Date().getTime();
-      }
-    }
       //copy inputs to clipboard
       document.querySelectorAll('.copy-button').forEach(el => el.addEventListener('click', event => {
         event.target.classList.add("copied");
@@ -48,15 +40,7 @@ window.addEventListener('load', function () {
         }, "750")
       }));
 
-      //read more
-      // if (document.getElementById('dataset-description').innerHTML.length <= 520) {
-      //   console.log('yes')
-      //   document.getElementsByClassName('btn-read-more')[0].style.display = "none"
-      // }
-      //read more 2
-
-
-      if (document.getElementById('dataset-description').offsetHeight === document.getElementById('dataset-description').scrollHeight) {
+      if (document.getElementById("dataset-description").getElementsByTagName('p')[0].offsetHeight === document.getElementById("dataset-description").getElementsByTagName('p')[0].scrollHeight) {
         document.getElementsByClassName('btn-read-more')[0].style.display = "none"
       }
     }

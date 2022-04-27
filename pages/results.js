@@ -385,8 +385,8 @@ export default function Results(data) {
             {/*<div className="page-navigation"><a className="page-previous" href={"/results?q=water&tag=regulatory&page="+data.pages.previous}>&lt;</a> <span className="page-current">{data.pages.current}</span> <a className="page-next" href={"/results?q=water&tag=regulatory&page="+data.pages.next}>{data.pages.next}</a> <span className="page-dots">...</span> <a className="page-next" href={"/results?q=water&tag=regulatory&page="+data.pages.total}>{data.pages.total}</a> <a className="page-next" href={"/results?q=water&tag=regulatory&page="+data.pages.next}>&gt;</a></div>*/}
             <div className="page-navigation">
               <a style={{'display':data.pages.previous.display}} className="page-previous" href={"/results?q="+data.parameters.q+"&page="+data.pages.previous.value}>&lt;</a> 
-              <span style={{'display':data.pages.current.display}} className="page-current">{data.pages.current.value}</span> 
-              <a style={{'display':data.pages.next.display}} className="page-next" href={"/results?q="+data.parameters.q+"&page="+data.pages.next.value}>{data.pages.next.value}</a> 
+              <span style={{'display':data.pages.current.display}} className="page-current">{data.pages.current.value+1}</span> 
+              <a style={{'display':data.pages.next.display}} className="page-next" href={"/results?q="+data.parameters.q+"&page="+data.pages.next.value}>{data.pages.next.value+1}</a> 
               <a style={{'display':data.pages.next.display}} className="page-next" href={"/results?q="+data.parameters.q+"&page="+data.pages.next.value}>&gt;</a>
             </div>
           </div>

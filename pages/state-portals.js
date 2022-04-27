@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function preview() {
   return (
-    <main id="body-content" className="cagov-main dataset">
+    <main id="body-content" className="cagov-main">
       <nav className="nav-breadcrumb">
         <ol>
           <li>

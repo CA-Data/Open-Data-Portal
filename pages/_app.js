@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
                 className="cagov-logo"
                 href="https://ca.gov"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

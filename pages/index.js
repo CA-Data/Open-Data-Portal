@@ -79,7 +79,7 @@ export default function Home(data) {
                       placeholder="Search data"
                       className="search-textfield"
                       style={{
-                        width: "auto",
+                        width: "320px",
                         color: "#fff",
                         border: "1px solid blue",
                         padding: ".5rem",

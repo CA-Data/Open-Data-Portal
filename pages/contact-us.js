@@ -1,10 +1,9 @@
-import { Table } from "portal"; //import Table component
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 
 export default function preview(dataset) {
   return (
-    <main id="body-content" className="cagov-main dataset">
+    <main id="body-content" className="cagov-main">
       <nav className="nav-breadcrumb">
         <ol>
           <li>
