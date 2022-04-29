@@ -387,3 +387,6 @@ button.copied::after {
   white-space: nowrap!important;
   text-overflow: unset!important;
 }*/
+.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.MuiTablePagination-toolbar.css-11bfvty-MuiToolbar-root-MuiTablePagination-toolbar {
+  align-items: baseline;
+}
