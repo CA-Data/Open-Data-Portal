@@ -1,94 +1,76 @@
 export async function getServerSideProps(context) {
   var apirequest = "https://data.ca.gov/api/3/action/package_search?q="+context.query.q;
   
-  if ('topic' in context.query) {
-    const topic = context.query.topic.replace(/ /g, '-')
-    apirequest = "https://data.ca.gov/api/3/action/package_search?fq=(title:"+context.query.q.replace(/ /g, '-')+"%20AND%20groups:"+topic.replace(/ /g, '-')+")";
+  var thereWasAFilter = 0; // flag, did user select any filter?
+
+  if ('topic' in context.query && context.query.topic.length>0) {
+    apirequest += "&fq=(groups:" + context.query.topic.replace(/ /g, '-');
+    thereWasAFilter = 1;
   }
 
-  if ('format' in context.query) {
-    apirequest = "https://data.ca.gov/api/3/action/package_search?fq=res_format:"+context.query.format.toUpperCase()+"&q="+context.query.q
-    //apirequest = "https://data.ca.gov/api/3/action/package_search?fq=(title:+"%20AND%20resources:"+context.query.format.replace(/ /g, '-')+")";
+  if ('publisher' in context.query && context.query.format.length>0) {
+    apirequest += thereWasAFilter ? "%20AND%20" : "&fq=(";
+    apirequest += "organization:"+context.query.publisher.replace(/ /g, '-');
+    thereWasAFilter = 1;
   }
 
-  if ('tag' in context.query) {
-    const tag = context.query.tag.replace(/ /g, '-')
-    apirequest = "https://data.ca.gov/api/3/action/package_search?fq=((title:"+context.query.q.replace(/ /g, '-')+"%20OR%20notes:"+context.query.q.replace(/ /g, '-')+")%20OR%20tags:"+tag.replace(/ /g, '-')+")"
-    //apirequest = "https://data.ca.gov/api/3/action/package_search?fq=(notes:"+context.query.q.replace(/ /g, '-')+"%20AND%20tags:"+tag.replace(/ /g, '-')+")";
-    //apirequest = "https://data.ca.gov/api/3/action/package_search?fq=tags:"+context.query.tag;
+  if ('format' in context.query && context.query.format.length>0) {
+    apirequest += thereWasAFilter ? "%20AND%20" : "&fq=(";
+    apirequest += "res_format:"+context.query.format.toUpperCase().replace(/ /g, '-');
+    thereWasAFilter = 1;
+  }
+
+  if ('tag' in context.query && context.query.tag.length>0) {
+    apirequest += thereWasAFilter ? "%20AND%20" : "&fq=(";
+    apirequest += "tags:" + context.query.tag.replace(/ /g, '-');
+    thereWasAFilter = 1;
+  }
+
+  if (thereWasAFilter) {
+    apirequest += ")";
   }
 
   if ('sort' in context.query) {
-  apirequest = "https://data.ca.gov/api/3/action/package_search?q="+context.query.q.replace(/ /g, '-')+"&sort="+context.query.sort;
+    apirequest += "&sort="+context.query.sort;
   }
 
   //pages
   const pageData = {}
 
-  if ('page' in context.query) {
-    const page = parseInt(context.query.page)
+  const page = ('page' in context.query) ? parseInt(context.query.page) : 0;
 
-    pageData["current"] = {}
-    pageData["current"].value = page
-    pageData["current"].display = "inline"
+  pageData["current"] = {};
+  pageData["current"].value = page; // these page numbers start at 0
+  pageData["current"].display = "inline";
 
-    pageData["next"] = {}
-    pageData["next"].value = page + 1
-    pageData["next"].display = "inline"
+  pageData["next"] = {};
+  pageData["next"].value = page + 1;
+  pageData["next"].display = "inline";
 
-    pageData["previous"] = {}
-    pageData["previous"].value = page - 1
-    pageData["previous"].display = "inline"
+  pageData["previous"] = {};
+  pageData["previous"].value = page - 1;
+  pageData["previous"].display = "inline";
 
-    pageData["total"] = {}
-    pageData["total"].display = "inline"
+  pageData["total"] = {};
+  pageData["total"].display = "inline";
 
-    if (pageData["next"].value > pageData["total"].value) {
-      pageData["next"].display = "none"
-    }
-    if (pageData["previous"].value < 0) {
-      pageData["previous"].display = "none"
-    }
-    apirequest = apirequest+"&start="+pageData["current"].value*10
-    
-    //[0]previous, [1]current, [2]next, [3]total, [4]next 
-  } else {
-    const page = 0
-    pageData["current"] = {}
-    pageData["current"].value = page
-    pageData["current"].display = "inline"
-    
-
-    pageData["next"] = {}
-    pageData["next"].value = page + 1
-    pageData["next"].display = "inline"
-
-    pageData["previous"] = {}
-    pageData["previous"].value = page - 1
-    pageData["previous"].display = "none"
-
-    pageData["total"] = {}
-    pageData["total"].display = "inline"
-
-    apirequest = apirequest+"&start="+pageData["current"].value*10
+  if (pageData["previous"].value < 0) {
+    pageData["previous"].display = "none";
   }
- 
+  apirequest += "&start=" + (page * 10);
+  
+  //[0]previous, [1]current, [2]next, [3]total, [4]next 
+
+  console.log(apirequest);
+
   const response = await fetch(apirequest).then((response) => response.json());
 
-  if (pageData["total"].value >= 1) {
-    pageData["total"].value = Math.floor(parseInt(response.result.count) / 10)
-  } else {
-    pageData["total"].value = 0
+  pageData["total"].value = Math.ceil(parseInt(response.result.count) / 10);
+
+  if (pageData["next"].value >= pageData["total"].value) {
+    pageData["next"].display = "none";
   }
   
-  //filter data
-  const filter_data = {
-    topicArray: [],
-    publisherArray: [],
-    formatArray: [],
-    tagArray: [],
-  }
-
   //search results
   const resultsArray = []
   if (response.result.results.length > 0) {
@@ -122,10 +104,18 @@ export async function getServerSideProps(context) {
           }
         }
       }
+      //console.log(response.result.results[index])
       resultsArray.push(dataset)
     }
   }
 
+  //filter data
+  const filter_data = {
+    topicArray: [],
+    publisherArray: [],
+    formatArray: [],
+    tagArray: [],
+  }
 
   //get topics
   const topicObject = {}
@@ -196,20 +186,6 @@ export async function getServerSideProps(context) {
 
 
 export default function Results(data) {
-  const submit = () => {
-    document.getElementById("sortresults").submit();
-  };
-  const clear = () => {
-    document.getElementById("q").value = "";
-  };
-  const expand = (e) => {
-    if (e.target.classList.contains('filter-expanded')) {
-      e.target.classList.remove('filter-expanded')
-    } 
-    else {
-      e.target.classList.add('filter-expanded')
-    }
-  }
   if (typeof window === 'object') {
     // Check if document is finally loaded
        document.addEventListener("DOMContentLoaded", function () {
@@ -218,9 +194,31 @@ export default function Results(data) {
             document.querySelectorAll('.page-next')[1].style.display = 'none';
           }
         });
-      
-    }
+      }
   
+  const submit = () => {
+    document.getElementById("sortresults").submit();
+  };
+  const clear = () => {
+    document.getElementById("q").value = "";
+  };
+  const expand = (e) => {
+    console.log(e.target)
+    //e.target.style.height = '100%'
+    if (e.target.classList.contains('filter-expanded')) {
+      e.target.classList.remove('filter-expanded')
+    } 
+    else {
+      e.target.classList.add('filter-expanded')
+    }
+    //document.querySelectorAll('.filter-topic')[0].style.height = '100%'
+  }
+  var urlParamTopic = (data.parameters.topic) ? "&topic=" + data.parameters.topic : "";
+  var urlParamPublisher = (data.parameters.publisher) ? "&publisher=" + data.parameters.publisher : "";
+  var urlParamFormat = (data.parameters.format) ? "&format=" + data.parameters.format : "";
+  var urlParamTag = (data.parameters.tag) ? "&tag=" + data.parameters.tag : "";
+  var urlParamSort = (data.parameters.sort) ? "&sort=" + data.parameters.sort : "";
+
   return (
     <>
       <main id="body-content" className="cagov-main">
@@ -242,7 +240,7 @@ export default function Results(data) {
                         Topic
                       <ul className="sublist">
                         {data.filterData.topicArray.map((dataset, index) => (
-                          <li key={index}><a href={"/results?q="+data.parameters.q+"&topic="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
+                          <li key={index}><a href={"/results?q="+data.parameters.q+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&topic="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
                         ))}
                       </ul>
                     </li>
@@ -250,8 +248,7 @@ export default function Results(data) {
                         Publisher
                       <ul className="sublist">
                         {data.filterData.publisherArray.map((dataset, index) => (
-                          <li key={index}><a href={"/results?q="+data.parameters.q+"&topic="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
-
+                          <li key={index}><a href={"/results?q="+data.parameters.q+urlParamTopic+urlParamFormat+urlParamTag+urlParamSort+"&publisher="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
                         ))}
                       </ul>
                     </li>
@@ -259,8 +256,7 @@ export default function Results(data) {
                         Format
                       <ul className="sublist">
                       {data.filterData.formatArray.map((dataset, index) => (
-                        <li key={index}><a href={"/results?q="+data.parameters.q+"&format="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
-
+                        <li key={index}><a href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamSort+"&format="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
                       ))}
                       </ul>
                     </li>
@@ -268,7 +264,7 @@ export default function Results(data) {
                         Tag
                       <ul className="sublist">
                         {data.filterData.tagArray.map((dataset, index) => (
-                          <li key={index}><a href={"/results?q="+data.parameters.q+"&tag="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
+                          <li key={index}><a href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamFormat+urlParamSort+"&tag="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
                         ))}
                       </ul>
                     </li>
@@ -332,15 +328,18 @@ export default function Results(data) {
             <div className="filter-sort">
               <form id="sortresults" method="GET" action="/results" name="sort">
                 <input type="hidden" name="q" value={data.parameters.q}></input>
+                <input type="hidden" name="topic" value={data.parameters.topic}></input>
+                <input type="hidden" name="tag" value={data.parameters.tag}></input>
+                <input type="hidden" name="format" value={data.parameters.format}></input>
                 <label htmlFor="sort">Sort by</label>
-                <select onChange={submit} name="sort">
-                  <option className="select-option" value="best_match">
+                <select onChange={submit} name="sort" value={data.parameters.sort}>
+                  <option className="select-option" value="best_match desc">
                     Best match
                   </option>
                   {/*<option className="select-option" value="most_accessed">
                     Most accessed
                   </option>*/}
-                  <option className="select-option" value="metadata_modified+asc">
+                  <option className="select-option" value="metadata_modified asc">
                     Most recent
                   </option>
                 </select>
@@ -384,10 +383,15 @@ export default function Results(data) {
 
             {/*<div className="page-navigation"><a className="page-previous" href={"/results?q=water&tag=regulatory&page="+data.pages.previous}>&lt;</a> <span className="page-current">{data.pages.current}</span> <a className="page-next" href={"/results?q=water&tag=regulatory&page="+data.pages.next}>{data.pages.next}</a> <span className="page-dots">...</span> <a className="page-next" href={"/results?q=water&tag=regulatory&page="+data.pages.total}>{data.pages.total}</a> <a className="page-next" href={"/results?q=water&tag=regulatory&page="+data.pages.next}>&gt;</a></div>*/}
             <div className="page-navigation">
-              <a style={{'display':data.pages.previous.display}} className="page-previous" href={"/results?q="+data.parameters.q+"&page="+data.pages.previous.value}>&lt;</a> 
-              <span style={{'display':data.pages.current.display}} className="page-current">{data.pages.current.value+1}</span> 
-              <a style={{'display':data.pages.next.display}} className="page-next" href={"/results?q="+data.parameters.q+"&page="+data.pages.next.value}>{data.pages.next.value+1}</a> 
-              <a style={{'display':data.pages.next.display}} className="page-next" href={"/results?q="+data.parameters.q+"&page="+data.pages.next.value}>&gt;</a>
+              <a style={{'display':data.pages.previous.display}} className="page-previous" href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+data.pages.previous.value}>&lt;</a> 
+
+              <a style={{'display':data.pages.previous.display}} className="page-previous" href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+data.pages.previous.value}>{data.pages.previous.value + 1}</a> 
+
+              <span style={{'display':data.pages.current.display}} className="page-current">{data.pages.current.value + 1}</span> 
+
+              <a style={{'display':data.pages.next.display}} className="page-next" href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+data.pages.next.value}>{data.pages.next.value + 1}</a> 
+
+              <a style={{'display':data.pages.next.display}} className="page-next" href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+data.pages.next.value}>&gt;</a>
             </div>
           </div>
         </article>
