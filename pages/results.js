@@ -329,6 +329,7 @@ export default function Results(data) {
               <form id="sortresults" method="GET" action="/results" name="sort">
                 <input type="hidden" name="q" value={data.parameters.q}></input>
                 <input type="hidden" name="topic" value={data.parameters.topic}></input>
+                <input type="hidden" name="publisher" value={data.parameters.publisher}></input>
                 <input type="hidden" name="tag" value={data.parameters.tag}></input>
                 <input type="hidden" name="format" value={data.parameters.format}></input>
                 <label htmlFor="sort">Sort by</label>
