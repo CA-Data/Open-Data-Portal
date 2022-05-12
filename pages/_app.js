@@ -260,7 +260,9 @@ function MyApp({ Component, pageProps }) {
             </Link>
           </div>
           <div className="footer-secondary-links">
-            <a href="/contact-us">Contact us</a>
+            <Link href="/contact-us" passHref>
+              <a>Contact us</a>
+            </Link>
             <a href="#">Sitemap</a>
           </div>
           {/*}
