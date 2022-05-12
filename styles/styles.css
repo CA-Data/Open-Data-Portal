@@ -1,20 +1,20 @@
-:root {
-  --primary-color: #004abc;
-  --primary-dark-color: #003484;
-  --primary-light-color: #4d80d0;
-  --primary-lightest-color: #b3c9eb;
-  --primary-hover-color: #003484;
-  --secondary-color: #ff8000;
-  --secondary-dark-color: #b35a00;
-  --secondary-light-color: #ffa64d;
-  --secondary-lightest-color: #ffd9b3;
-  --secondary-hover-color: #b35a00;
-  --highlight-color: #fec02f;
-  --highlight-dark-color: #b28621;
-  --highlight-light-color: #fed36d;
-  --highlight-lightest-color: #ffecc1;
-  --secondary-hover-color: #b28621;
-}
+  root {
+    --primary-color: #034A6B;
+    --primary-dark-color: #034A6B;
+    --primary-light-color: #4F97B8;
+    --primary-lightest-color: #B4D2E0;
+    --primary-hover-color: #034A6B;
+    --secondary-color: #D4D4D4;
+    --secondary-dark-color: #4B4B4B;
+    --secondary-light-color: #EDEDED;
+    --secondary-lightest-color: #FAFAFA;
+    --secondary-hover-color: #4B4B4B;
+    --highlight-color: #FDB81D;
+    --highlight-dark-color: #B18114;
+    --highlight-light-color: #FECD61;
+    --highlight-lightest-color: #FEEABB;
+    --secondary-hover-color: #B18114;
+  }
 
 :root {
   --w-lg: 1176px;
@@ -137,7 +137,7 @@
   --cagov-highlight-light: #fed36d;
   --cagov-highlight: #fec02f;
   --cagov-highlight-dark: #b28621;
-  --cagov-primary: #004abc;
+  --cagov-primary: #034A6B;
   --cagov-primary-dark: #003484;
   --cagov-secondary: #ff8000;
   --white: #fff;
@@ -2317,7 +2317,8 @@ select[data-class-icon] {
 
 .page-container-ds {
   max-width: var(--w-lg, 1176px);
-  margin: 0 auto 2rem auto!important;
+  width: 98%;
+  margin: 2rem auto 2rem auto!important;
   padding-right: 0;
   padding-left: 0;
 }
@@ -2818,7 +2819,7 @@ textarea:focus {
 }
 
 a {
-  color: var(--primary-color, #004abc);
+  color: var(--primary-color, #034A6B);
   text-decoration: underline;
 }
 
@@ -2867,7 +2868,7 @@ button:focus {
     font-weight: 700;
     font-size: calc(1rem + var(--ratio));
     line-height: 1.125rem;
-    color: var(--primary-color, #004abc);
+    color: var(--primary-color, #034A6B);
   }
 
   .breadcrumb span.crumb:not(:last-child):not([class*="separator"]) {
@@ -5620,7 +5621,7 @@ figure figcaption {
   padding: 0;
   box-sizing: border-box;
   background-color: var(--white, #fff);
-  border-bottom: 1px solid var(--gray-300, #e1e0e3);
+  border-bottom: 3px solid var(--highlight-color, #FDB81D);
 }
 
 .site-header .container {
@@ -5664,7 +5665,7 @@ figure figcaption {
   flex-direction: column;
   row-gap: 0.25rem;
   transition: all 0.3s;
-  color: var(--black, #000);
+  color: var(--primary-dark-100, #034A6B);
   text-decoration: none;
 }
 
@@ -5888,7 +5889,7 @@ cagov-site-navigation .search-container .site-search {
 .site-header .search-container .site-search .search-textfield,
 cagov-site-navigation .search-container .site-search .search-textfield {
   border: 1px solid;
-  border-color: var(--primary-color, #004abc);
+  border-color: var(--primary-color, #034A6B);
   border-radius: 4px;
   padding: 10px;
   width: 100%;
@@ -5906,8 +5907,8 @@ cagov-site-navigation .search-container .site-search .search-submit {
   position: relative;
   right: 5px;
   outline-offset: -2px;
-  background-color: var(--primary-color, #004abc);
-  border: 1px solid var(--primary-color, #004abc);
+  background-color: var(--primary-color, #034A6B);
+  border: 1px solid var(--primary-color, #034A6B);
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   padding: 7px 14px 4px 14px;
@@ -5931,7 +5932,7 @@ cagov-site-navigation .search-container .site-search .search-submit svg path {
 
 .site-header .search-container .site-search .search-close,
 cagov-site-navigation .search-container .site-search .search-close {
-  color: var(--primary-color, #004abc);
+  color: var(--primary-color, #034A6B);
   text-decoration: underline;
   border: none;
   background-color: var(--gray-100, #f9f9fa);
@@ -6000,16 +6001,15 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .cagov-card {
-  border: 1px solid var(--gray-300, #e1e0e3);
-  padding: 1rem;
-  border-bottom: 0.3rem solid #004abc;
-  border-bottom: 0.3rem solid var(--primary-color, #004abc);
+  background: var(--secondary-light-color, #EDEDED);
+  padding: .75rem;
   border-radius: 0.3rem;
   min-width: 250px;
   min-height: 50px;
-  margin-top: 0;
+  margin: .5rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .cagov-card:hover {
@@ -6022,7 +6022,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .cagov-card .card-text {
-  color: var(--primary-color, #004abc) !important;
+  color: var(--gray-900, #6c6b77);
   font-size: 1.5rem;
   line-height: 40px;
   font-weight: 400;
@@ -6031,10 +6031,9 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .cagov-card svg {
-  fill: var(--primary-color, #004abc);
+  color: var(--gray-900, #6c6b77);
   width: 1rem;
   margin-top: 0.2rem;
-  margin-left: 1rem;
   max-height: 25px;
   min-width: 1rem;
 }
@@ -6100,6 +6099,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 .cagov-featured-section {
   margin: 0 auto var(--s-5, 3rem) auto;
+  height: 400px;
 }
 .cagov-featured-section h2 {
   padding-bottom: var(--s-2, 1rem);
@@ -6110,6 +6110,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .cagov-hero-body-content p {
+  color: var(--white, #FFFFFF);
   margin-bottom: var(--s-2, 1rem);
 }
 
@@ -6118,7 +6119,14 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .cagov-bkgrd-gry {
-  background-color: var(--gray-100, #f9f9fa);
+  background-color: var(--secondary-light-color, #EDEDED);
+}
+.cagov-bkgrd-image {
+  background: url("/images/odp-hero.png") no-repeat center center; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .cagov-featured-sidebar {
@@ -6265,7 +6273,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .pdf-link-icon svg path {
-  fill: var(--primary-color, #004abc);
+  fill: var(--primary-color, #034A6B);
 }
 
 .external-link-icon {
@@ -6280,7 +6288,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .external-link-icon svg path {
-  fill: var(--primary-color, #004abc);
+  fill: var(--primary-color, #034A6B);
 }
 
 .agency-footer a:hover .external-link-icon svg path,
@@ -6356,8 +6364,8 @@ cagov-back-to-top .back-to-top {
   bottom: 50px;
   opacity: 0;
   visibility: hidden;
-  color: var(--primary-color, #004abc);
-  border: 1px solid var(--primary-color, #004abc);
+  color: var(--primary-color, #034A6B);
+  border: 1px solid var(--primary-color, #034A6B);
   border-radius: 5px 0 0 5px;
   text-decoration: none;
   cursor: pointer;
@@ -6394,7 +6402,7 @@ cagov-back-to-top .back-to-top svg {
 }
 
 cagov-back-to-top .back-to-top svg path {
-  fill: var(--primary-color, #004abc);
+  fill: var(--primary-color, #034A6B);
 }
 
 cagov-back-to-top .back-to-top.is-visible {
@@ -6550,7 +6558,7 @@ ol.cagov-regulatory-outline ol ol li ol li ol li:before {
 }
 
 .official-header {
-  background-color: var(--gray-100, #f9f9fa);
+  background-color: var(--primary-dark-100, #034A6B);
   padding: 0;
   width: 100%;
   border-bottom: 1px solid var(--gray-200, #ededef);
@@ -6600,6 +6608,7 @@ ol.cagov-regulatory-outline ol ol li ol li ol li:before {
 }
 
 .official-header .official-tag {
+  color: var(--secondary-lightest-color, #FAFAFA);
   margin: 0 var(--spacing-base, 8px);
   font-size: 0.95rem;
   display: inherit;
@@ -6811,7 +6820,7 @@ section.site-footer .footer-social-links a:hover svg path {
 }
 
 .bg-light-grey {
-  background-color: var(--gray-100, #f9f9fa);
+  color: var(--secondary-lightest-color, #FAFAFA);
 }
 
 .pt-0 {
@@ -7513,10 +7522,10 @@ cagov-highlight-section article .btn-primary-outline {
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
-  color: var(--primary-color, #004abc);
+  color: var(--primary-color, #034A6B);
   font-weight: var(--font-weight-4, 400);
   font-size: var(--font-size-2, 1.125rem);
-  border: 1px solid var(--primary-color, #004abc);
+  border: 1px solid var(--primary-color, #034A6B);
   border-radius: 5px;
   padding: var(--spacing-base, 0.5rem);
   background-color: #fff;
@@ -7687,6 +7696,7 @@ cagov-highlight-section article .highlight-body .highlight-text h3 {
 }
 
 .cagov-featured-sidebar h1 {
+  color: var(--white, #FFFFFF);
   padding-bottom: var(--s-2, 1rem);
 }
 
@@ -7835,7 +7845,7 @@ cagov-highlight-section article .highlight-body .highlight-text h3 {
   width: 2rem;
   font-weight: 900;
   pointer-events: none;
-  content: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='11' height='7' className='expanded-menu-section-header-arrow-svg' viewBox='0 0 11 7' fill='%23004ABC' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1.15596 0.204797L5.49336 5.06317L9.8545 0.204797C10.4293 -0.452129 11.4124 0.625368 10.813 1.28143L5.90083 6.82273C5.68519 7.05909 5.32606 7.05909 5.1342 6.82273L0.174341 1.28143C-0.400433 0.6245 0.581838 -0.452151 1.15661 0.204797H1.15596Z'%3E%3C/path%3E%3C/svg%3E");
+  content: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='11' height='7' className='expanded-menu-section-header-arrow-svg' viewBox='0 0 11 7' fill='%23034A6B' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1.15596 0.204797L5.49336 5.06317L9.8545 0.204797C10.4293 -0.452129 11.4124 0.625368 10.813 1.28143L5.90083 6.82273C5.68519 7.05909 5.32606 7.05909 5.1342 6.82273L0.174341 1.28143C-0.400433 0.6245 0.581838 -0.452151 1.15661 0.204797H1.15596Z'%3E%3C/path%3E%3C/svg%3E");
 }
 
 cagov-airtable-form .form-responded {
@@ -8057,7 +8067,7 @@ cagov-airtable-form .form-responded {
 .component-sidebar-menu-text {
   flex-grow: 1;
   text-align: start;
-  color: var(--primary-color, #004abc);
+  color: var(--primary-color, #034A6B);
 }
 
 .component-sidebar-menu-arrow {

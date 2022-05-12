@@ -24,11 +24,11 @@ function MyApp({ Component, pageProps }) {
                   viewBox="0 0 20 14.6"
                 >
                   <path
-                    fill="#e69024"
+                    fill="#E69024"
                     d="M12.4 6.1c.1-.2.2-.7.4-1.5.1-.2.2-.6.4-1.3.2-.6.4-1.2.6-1.5-.4.3-.8.6-1.2 1.1-1.5 1.6-3.2 3.6-3.8 4.6.2-.1.6-.6 2.1-1.1 1-.3 1.5-.3 1.5-.3zm-.3 1c-4.7 0-6.7 7.5-10 7.5-.7 0-1.3-.3-1.7-1-.3-.4-.4-.9-.4-1.4C0 10.8.6 9.1 1.9 7 3 5.2 4.2 3.8 5.4 2.7c1.1-.9 2-1.4 2.7-1.4.4 0 .7.2 1 .5.2.2.3.5.3.8 0 .6-.2 1.3-.6 2.1-.4.7-.8 1.3-1.4 1.9-.3.3-.6.5-.8.5-.1 0-.3-.1-.4-.2-.1-.1-.1-.2-.1-.3 0-.2.2-.5.6-.8.5-.4 1-.9 1.3-1.3.5-.7.7-1.3.7-1.8 0-.2 0-.3-.1-.4-.1-.2-.3-.2-.4-.2-.3 0-.8.3-1.5.8S5.2 4.2 4.4 5.2C3.4 6.4 2.6 7.7 2 8.9c-.6 1.3-.8 2.3-.8 3.2 0 .4.1.8.4 1.1s.6.5 1 .5c1.5-.1 3.3-3.5 3.9-4.3 5.7-7.9 6.1-7.9 7-8.7.5-.5.8-.7 1.1-.7.2 0 .3.1.4.2.1.1.2.3.2.4 0 .2-.1.5-.3.9-.3.8-.6 1.7-.9 2.5-.2.8-.4 1.4-.5 1.8h.7c.4 0 .5.1.5.4 0 .1 0 .2-.1.4-.1.1-.2.2-.3.2H14c-.4 0-.6 0-.8.1-.1.2-.2 1.9-.5 2-.7.7-.6-1.6-.6-1.8z"
                   ></path>
                   <path
-                    fill="#005e8a"
+                    fill="#FAFAFA"
                     d="M7.5 12.3c.2 0 .4.1.5.2.1.1.2.3.2.5s-.1.4-.2.5c-.1.1-.3.2-.5.2s-.4-.1-.5-.2c-.1-.1-.2-.3-.2-.5s.1-.4.2-.5c.1-.2.2-.2.5-.2zm4.5-2l-.5.5c-.3-.4-.7-.5-1.2-.5-.4 0-.7.1-1 .4-.2.2-.3.5-.3.9s.1.7.4 1c.3.3.6.4 1 .4.3 0 .5-.1.7-.2.2-.1.3-.3.4-.5h-1.1v-.7h2v.2c0 .3-.1.7-.3 1s-.4.5-.7.7-.6.2-1 .2-.8-.1-1.1-.3c-.3-.2-.6-.4-.8-.8-.2-.3-.3-.7-.3-1.1 0-.5.2-1 .5-1.4.4-.5.9-.7 1.6-.7.3 0 .7.1 1 .2.2.2.5.4.7.7zm2.6-.8c.6 0 1 .2 1.4.6.4.4.6.9.6 1.5s-.2 1.1-.6 1.5-.9.6-1.4.6c-.6 0-1.1-.2-1.5-.6-.4-.4-.6-.9-.6-1.5 0-.4.1-.7.3-1s.4-.6.7-.8c.4-.2.7-.3 1.1-.3zm0 .8c-.4 0-.7.1-.9.4-.2.3-.4.6-.4 1s.2.8.5 1c.2.2.5.3.8.3.4 0 .7-.1.9-.4.2-.3.4-.6.4-1s-.1-.7-.4-1c-.3-.2-.6-.3-.9-.3zm1.9-.7h.7l1 2.8 1-2.8h.8l-1.4 4h-.7z"
                   ></path>
                 </svg>
@@ -243,7 +243,7 @@ function MyApp({ Component, pageProps }) {
         </cagov-site-navigation>
       </div>
       <Component {...pageProps} />
-      {/*
+
       <section aria-label="Site footer" className="site-footer">
         <div className="container">
           <div className="footer-logo">
@@ -260,11 +260,10 @@ function MyApp({ Component, pageProps }) {
             </Link>
           </div>
           <div className="footer-secondary-links">
-            <a href="footer-link">Secondary link 1</a>
-            <a href="footer-link">Secondary link 2</a>
-            <a href="footer-link">Secondary link 3</a>
-            <a href="footer-link">Secondary link 4</a>
+            <a href="/contact-us">Contact us</a>
+            <a href="#">Sitemap</a>
           </div>
+          {/*}
           <div className="footer-social-links">
             <a href="footer-link">
               <span className="sr-only">Facebook</span>
@@ -351,10 +350,9 @@ function MyApp({ Component, pageProps }) {
                 <path d="M12 7.1c-2.7 0-4.9 2.2-4.9 4.9s2.2 4.9 4.9 4.9 4.9-2.2 4.9-4.9-2.2-4.9-4.9-4.9zm0 7.8c-1.6 0-2.9-1.3-2.9-2.9s1.3-2.9 2.9-2.9 2.9 1.3 2.9 2.9-1.3 2.9-2.9 2.9zM18.5 6.9c0 .7-.6 1.3-1.3 1.3S16 7.6 16 6.9s.6-1.3 1.3-1.3 1.2.6 1.2 1.3z"></path>
               </svg>
             </a>
-          </div>
+              </div>*/}
         </div>
         </section>
-        */}
       <footer>
         <div className="bg-light-grey">
           <div className="container">
@@ -385,9 +383,6 @@ function MyApp({ Component, pageProps }) {
               <a href="https://www.ca.gov/use/">Conditions of Use</a>
               <a href="https://www.ca.gov/privacy-policy/">Privacy Policy</a>
               <a href="https://www.ca.gov/accessibility/">Accessibility</a>
-              <Link href="/contact-us" passHref>
-                <a>Contact Us</a>
-              </Link>
             </div>
             <p className="copyright">
               Copyright &copy; {fullYear} State of California

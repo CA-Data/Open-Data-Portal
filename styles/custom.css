@@ -1,3 +1,9 @@
+.primary-color {
+  color: var(--primary-color, #034A6B) !important;
+}
+.padding-y {
+  padding: 2rem 0 2rem 0;
+}
 .site-search {
   margin: 1rem 0;
 }
@@ -59,14 +65,27 @@
   border: 0px;
 }*/
 
+.two-col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1rem;
+}
+.icon-col {
+  padding-top: .5rem;
+}
 .three-col {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   gap: 1rem;
 }
 .card-block {
-  background: #F9F9FA;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  grid-gap: .5rem;
+  background: var(--white, #FFFFFF);
   padding: 1.25rem 1rem;
+  border-radius: .5rem;
+  margin: .5rem;
 }
 .card-block a {
   font-weight: bolder;
@@ -387,6 +406,7 @@ button.copied::after {
   white-space: nowrap!important;
   text-overflow: unset!important;
 }*/
-.MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.MuiTablePagination-toolbar.css-11bfvty-MuiToolbar-root-MuiTablePagination-toolbar {
+.MuiTablePagination-toolbar {
   align-items: baseline;
 }
+
