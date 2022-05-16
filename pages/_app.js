@@ -22,6 +22,8 @@ function MyApp({ Component, pageProps }) {
                   xmlns="http://www.w3.org/2000/svg"
                   enableBackground="new 0 0 20 14.6"
                   viewBox="0 0 20 14.6"
+                  width="33"
+                  height="24"
                 >
                   <path
                     fill="#E69024"
@@ -107,13 +109,15 @@ function MyApp({ Component, pageProps }) {
                   aria-labelledby="SearchInput"
                   placeholder="Search data"
                   className="search-textfield"
+                  autocorrect="off"
+                  autocomplete="off"
                 />
-                <button type="submit" className="search-submit">
+                <button id="nav-search" type="" className="search-submit">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     enableBackground="new 0 0 17 17"
                     viewBox="0 0 17 17"
-                    style={{ width: 17 }}
+                    style={{ width: 18 }}
                   >
                     <path
                       fill="#fff"
@@ -369,6 +373,8 @@ function MyApp({ Component, pageProps }) {
                 xmlns="http://www.w3.org/2000/svg"
                 enableBackground="new 0 0 20 14.6"
                 viewBox="0 0 20 14.6"
+                width="33"
+                height="24"
               >
                 <path
                   fill="#e69024"

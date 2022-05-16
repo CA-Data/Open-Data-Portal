@@ -1,6 +1,5 @@
 //Modal JS
-window.addEventListener('load', function () {
-
+window.addEventListener('load', function (event) {
   if (document.getElementsByTagName('main').length > 0) {
     if (document.getElementsByTagName('main')[0].classList.contains('dataset')) {
       
