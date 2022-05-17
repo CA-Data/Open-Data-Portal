@@ -109,8 +109,8 @@ function MyApp({ Component, pageProps }) {
                   aria-labelledby="SearchInput"
                   placeholder="Search data"
                   className="search-textfield"
-                  autocorrect="off"
-                  autocomplete="off"
+                  autoCorrect="off"
+                  autoComplete="off"
                 />
                 <button id="nav-search" type="" className="search-submit">
                   <svg

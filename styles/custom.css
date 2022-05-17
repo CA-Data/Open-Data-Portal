@@ -1,5 +1,8 @@
+.content-cell h1 {
+  color: var(--primary-dark-color, #034A6B);
+}
 .primary-color {
-  color: var(--primary-color, #034A6B) !important;
+  color: var(--primary-color, #046A99) !important;
 }
 .padding-y {
   padding: 2rem 0 2rem 0;
@@ -15,7 +18,7 @@
   margin: 0 .5rem 0 0;
 }
 #sort {
-  color: var(--primary-color, #004abc);
+  color: var(--primary-color, #046A99);
 }
 .dataset .description p{
   display: -webkit-box;
@@ -30,25 +33,31 @@
   -webkit-line-clamp: 100;
 }
 .btn-read-more {
-  color: var(--primary-color, #004abc);
+  /*color: var(--primary-color, #727272);*/
+  color: #727272;
   margin: 1rem 0;
   cursor: pointer;
 }
 .dataset-info-label {
+  color: #4B4B4B;
   font-weight: bold;
+  font-size: 1.2rem;
   margin-bottom: 1rem;
+  border-top: 1px solid #cecece;
+  border-bottom: 1px solid #cecece;
+  padding: 1rem 0 1rem 0;
 }
 .dataset-info {
   font-size: 1rem;
-}
-.dataset-info h2 {
-  border-bottom: 2px solid #E1E0E3;
 }
 .thin {
   font-weight:100;
 }
 .resource-linkgrid {
   margin: 1rem 0 2rem 0;
+}
+.dataset-info li {
+  text-overflow: ellipsis;
 }
 /*.dataset-info-topic-list li {
   list-style: disc;
@@ -115,7 +124,6 @@ data-tags {
 .data-files, .supporting-files  {
   margin-top: 3rem;
 }
-
 .data-files-table th, .supporting-files-table th  {
   white-space: nowrap;
 }
@@ -124,14 +132,15 @@ table td {
 }
 table th:nth-child(1) {
   white-space: normal;
-  width: 350px;
+  width: 250px;
   max-width: 350px;
-  min-width: 350px;
+  min-width: 100px;
 }
 table td:nth-child(1) {
   white-space:normal;
-  min-width: 200px;
+  min-width: 370px;
 }
+
 table.data-files-table, table.supporting-files-table {
   width: 100%;
   background-color: #ffffff;
@@ -142,14 +151,19 @@ table.data-files-table, table.supporting-files-table {
   color: #000000;
   text-align: left;
 }
-table.data-files-table td, table.data-files-table th, table.supporting-files-table td, table.supporting-files-table th {
+table.data-files-table td,
+table.data-files-table th,
+table.supporting-files-table td,
+table.supporting-files-table th {
   border-width: 1px;
   border-color: #a19fa7;
   border-style: solid;
   padding: .5rem 1rem;
+  vertical-align: top;
 }
-
-
+.data-files-table thead, .supporting-files-table thead{
+  background: #EDEDED;
+}
 .nav-breadcrumb {
   margin: 2rem 0;
   padding: 0 var(--s-2, 1rem) 2rem var(--s-2, 1rem);
@@ -429,4 +443,87 @@ button.copied::after {
   margin-right: 0;
   opacity: 1;
   cursor: text;
+}
+.resource-description {
+  max-width: 250px;
+}
+.data-files-table .resource-description p, .supporting-files-table .resource-description p  {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical; 
+  overflow: hidden;
+  margin-bottom: .5rem;
+}
+.additional-info-table .resource-description p {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical; 
+  overflow: hidden;
+  margin-bottom: .5rem;
+}
+.expanded {
+  -webkit-line-clamp: 100 !important;
+}
+.caret {
+  margin-left: 0.5rem;
+  margin-top: -0.25rem;
+  pointer-events: none;
+  
+}
+.cart svg {
+  width: 16px;
+}
+.rotate-180 svg{
+  transform: rotate(180deg);
+}
+.resource-description .btn-read-more {
+  margin: 0 0 .5rem 0;
+}
+.additional-info  {
+  margin-top: 3rem;
+}
+
+.additional-info-table tbody tr{
+  vertical-align: top;
+  padding: 1rem 0 1rem 0;
+  border-bottom: 1px solid #cecece;
+}
+.additional-info-table strong {
+  color: #727272;
+  font-size: 1.2rem;
+}
+
+.additional-info h2 {
+  color: #727272;
+  font-size: 1.5rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid #727272;
+  margin-bottom: 0;
+}
+.additional-info-table {
+  display: grid;
+}
+.additional-info-table .row {
+  display: grid;
+  min-height: 100px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  border-bottom: 1px solid #727272;
+}
+.additional-info-table .row:last-child {
+  border-bottom: 0;
+
+}
+  .additional-info-table .column {
+  padding: .5rem 0;
+  font-size: 1.2rem;
+}
+.additional-info-table .column p {
+  font-size: 1.2rem;
+  color: #4B4B4B;
+}
+.border-bottom {
+  border-bottom: 1px solid #727272;
+}
+.no-limit {
+  max-width: 1000px !important;
 }

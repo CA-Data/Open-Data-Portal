@@ -1,20 +1,20 @@
-  root {
-    --primary-color: #034A6B;
-    --primary-dark-color: #034A6B;
-    --primary-light-color: #4F97B8;
-    --primary-lightest-color: #B4D2E0;
-    --primary-hover-color: #034A6B;
-    --secondary-color: #D4D4D4;
-    --secondary-dark-color: #4B4B4B;
-    --secondary-light-color: #EDEDED;
-    --secondary-lightest-color: #FAFAFA;
-    --secondary-hover-color: #4B4B4B;
-    --highlight-color: #FDB81D;
-    --highlight-dark-color: #B18114;
-    --highlight-light-color: #FECD61;
-    --highlight-lightest-color: #FEEABB;
-    --secondary-hover-color: #B18114;
-  }
+:root {
+  --primary-color: #046A99;
+  --primary-dark-color: #034A6B;
+  --primary-light-color: #4F97B8;
+  --primary-lightest-color: #B4D2E0;
+  --primary-hover-color: #034A6B;
+  --secondary-color: #D4D4D4;
+  --secondary-dark-color: #4B4B4B;
+  --secondary-light-color: #EDEDED;
+  --secondary-lightest-color: #FAFAFA;
+  --secondary-hover-color: #4B4B4B;
+  --highlight-color: #FDB81D; 
+  --highlight-dark-color: #B18114;
+  --highlight-light-color: #FECD61;
+  --highlight-lightest-color: #FEEABB;
+  --secondary-hover-color: #B18114;
+}
 
 :root {
   --w-lg: 1176px;
@@ -198,6 +198,27 @@
   font-weight: 400;
   font-display: swap;
   src: url("/fonts/publicsans-regular-webfont.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/publicsans-medium-webfont.woff2") format("woff2");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Public Sans Medium";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/publicsans-medium-webfont.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
     U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
     U+FEFF, U+FFFD;
@@ -8276,7 +8297,7 @@ code.hljs {
 
 .cagov-article.with-sidebar {
   display: grid;
-  column-gap: var(--s-6, 4rem);
+  grid-column-gap: var(--s-4, 2rem);
   grid-template-columns: 16rem minmax(0, 1fr);
   grid-template-rows: auto;
   grid-template-areas: "sidebar content" "sidebar content";
