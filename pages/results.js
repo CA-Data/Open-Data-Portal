@@ -8,7 +8,7 @@ export async function getServerSideProps(context) {
     thereWasAFilter = 1;
   }
 
-  if ('publisher' in context.query && context.query.format.length>0) {
+  if ('publisher' in context.query && context.query.publisher.length>0) {
     apirequest += thereWasAFilter ? "%20AND%20" : "&fq=(";
     apirequest += "organization:"+context.query.publisher.replace(/ /g, '-');
     thereWasAFilter = 1;
