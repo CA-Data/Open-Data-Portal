@@ -53,7 +53,7 @@ export async function getServerSideProps() {
     if (dataset.id == "covid-19") {
       dataset.icon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><defs><style>.prefix__f{fill:#046a99}</style></defs><path fill="#fff" id="prefix__b" d="M1 1H49V49H1z"/><g id="prefix__c"><path d="M49 23.2v3.6c0 1-.8 1.8-1.8 1.8s-1.8-.8-1.8-1.8h-3.7c-.4 3.3-1.7 6.3-3.6 8.8l2.6 2.6a1.8 1.8 0 0 1 2.5 2.5l-2.5 2.5a1.8 1.8 0 0 1-2.6-2.5l-2.6-2.6c-2.4 2-5.4 3.2-8.7 3.6v3.7c1 0 1.8.8 1.8 1.8s-.8 1.8-1.8 1.8h-3.6c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8v-3.7c-3.3-.4-6.3-1.7-8.7-3.6l-2.7 2.6a1.8 1.8 0 0 1-2.5 2.5l-2.6-2.5A1.8 1.8 0 0 1 9.3 38l2.6-2.6c-2-2.5-3.3-5.4-3.6-8.7H4.6c0 1-.8 1.8-1.8 1.8S1 27.8 1 26.8v-3.6c0-1 .8-1.8 1.8-1.8s1.8.8 1.8 1.8h3.7a17 17 0 0 1 3.6-8.7l-2.6-2.6c-.7.6-1.9.6-2.6 0s-.7-2 0-2.6l2.6-2.5a1.8 1.8 0 0 1 2.5 2.5l2.6 2.6c2.5-2 5.4-3.2 8.7-3.6V4.6c-1 0-1.7-.8-1.7-1.8S22.2 1 23.2 1h3.6c1 0 1.8.8 1.8 1.8s-.8 1.8-1.8 1.8v3.7c3.3.3 6.3 1.7 8.7 3.6l2.6-2.6c-.7-.7-.7-1.8 0-2.5s1.9-.7 2.6 0l2.5 2.5a1.8 1.8 0 0 1-2.5 2.6L38 14.3c2 2.5 3.3 5.5 3.7 8.8h3.7c0-1 .8-1.8 1.8-1.8s1.8.8 1.8 1.8ZM37 25a12 12 0 1 0-24 0 12 12 0 0 0 24 0Z" fill="#046a99" opacity=".5"/><circle class="prefix__f" cx="16.6" cy="25" r="2.4"/><circle class="prefix__f" cx="29.2" cy="17.8" r="2.4"/><circle class="prefix__f" cx="20.8" cy="17.8" r="2.4"/><circle class="prefix__f" cx="20.8" cy="32.2" r="2.4"/><circle class="prefix__f" cx="25" cy="25" r="2.4"/><circle class="prefix__f" cx="33.4" cy="25" r="2.4"/><circle class="prefix__f" cx="29.2" cy="32.2" r="2.4"/></g></svg>`
     } else if (dataset.id == "economy-and-demographics") {
-      dataset.icon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path fill="#fff" d="M1 1h48v48H1z"/><path fill="#046a99" d="M25 6a19 19 0 0 0-14.7 31L6 41l2.8 3 4.2-4.3a19 19 0 0 0 12 4.2 19 19 0 0 0 19-19V6H25zm15 19c0 4-1.6 7.7-4.4 10.6a14.8 14.8 0 0 1-10.5 4.3 15 15 0 0 1 0-29.8H40V25z" opacity=".5"/><path fill="#046a99" d="m18.3 26.6 7.9.5-5.5 7a1 1 0 0 0 .1 1.4c.4.4 1 .4 1.5 0l10.5-9.7c.9-.8.3-2.3-.9-2.4l-8-.5 5.5-7c.3-.4.3-1 0-1.4a1 1 0 0 0-1.6 0l-10.5 9.7c-.9.8-.3 2.3 1 2.4z"/></svg>` 
+      dataset.icon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path fill="#fff" d="M1 1H49V49H1z"/><g fill="#046a99"><path opacity=".5" d="M19.4 8.2 2.6 25 5.5 28 19.4 14.1 44.6 39 47.6 36.1 19.4 8.2z"/><path d="M28.5 31.2 19.4 22 2.6 38.8 5.5 41.8 19.4 27.9 28.7 37.3 47.4 16.3 44.3 13.5 28.5 31.2z"/></g></svg>` 
     } else if (dataset.id == "government") {
       dataset.icon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><defs><style>.prefix__f{fill:#046a99}</style></defs><path fill="#fff" id="prefix__b" d="M1 1H49V49H1z"/><g id="prefix__c"><path d="M45 41.8H5v4.3h40v-4.3Zm-20-33 11 5.7H14l11-5.8M25 4 5 14.5v4.2h40v-4.2L25 3.9Z" fill="#046a99" opacity=".5"/><path class="prefix__f" d="M10.3 22.9H14.5V37.6H10.3z"/><path class="prefix__f" d="M22.9 22.9H27.1V37.6H22.9z"/><path class="prefix__f" d="M35.6 22.9H39.8V37.6H35.6z"/></g></svg>` 
     } else if (dataset.id == "health-human-services") {
@@ -144,6 +144,35 @@ export default function Home(data) {
         <div className="page-container-ds">
           <h2 className="h3 primary-color">Popular datasets</h2>
           <div className="cagov-grid">
+
+          <Link href="/dataset?name=covid-19-hospital-data1" passHref>
+            <a className="no-deco cagov-card">
+              <span className="card-text">COVID-19 hospital data</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path fill="none" d="M0 0h24v24H0V0z"></path>
+                <path d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+              </svg>
+            </a>
+            </Link>
+            <Link href="/dataset?name=ca-geographic-boundaries" passHref>
+            <a className="no-deco cagov-card">
+              <span className="card-text">CA geographic boundaries</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path fill="none" d="M0 0h24v24H0V0z"></path>
+                <path d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+              </svg>
+            </a>
+            </Link>
             <Link href="/dataset?name=covid-19-vaccine-progress-dashboard-data" passHref>
             <a className="no-deco cagov-card">
               <span className="card-text">COVID-19 vaccine progress</span>
@@ -172,34 +201,7 @@ export default function Home(data) {
               </svg>
             </a>
             </Link>
-            <Link href="/dataset?name=covid-19-hospital-data1" passHref>
-            <a className="no-deco cagov-card">
-              <span className="card-text">COVID-19 hospital data</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <path fill="none" d="M0 0h24v24H0V0z"></path>
-                <path d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
-              </svg>
-            </a>
-            </Link>
-            <Link href="/dataset?name=ca-geographic-boundaries" passHref>
-            <a className="no-deco cagov-card">
-              <span className="card-text">CA geographic boundaries</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <path fill="none" d="M0 0h24v24H0V0z"></path>
-                <path d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
-              </svg>
-            </a>
-            </Link>
+            
             <Link href="/dataset?name=county-and-zip-code-references" passHref>
             <a className="no-deco cagov-card">
               <span className="card-text">Counties and ZIP codes</span>

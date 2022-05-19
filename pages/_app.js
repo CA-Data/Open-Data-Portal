@@ -177,7 +177,7 @@ function MyApp({ Component, pageProps }) {
                 >
                   <div className="expanded-menu-section">
                     <strong className="expanded-menu-section-header">
-                      <Link href="/datasets" passHref>
+                      <Link href="/datasets?q=" passHref>
                         <a className="expanded-menu-section-header-link js-event-hm-menu">
                           Datasets
                         </a>
@@ -248,6 +248,7 @@ function MyApp({ Component, pageProps }) {
       </div>
       <Component {...pageProps} />
 
+      {/*}
       <section aria-label="Site footer" className="site-footer">
         <div className="container">
           <div className="footer-logo">
@@ -269,7 +270,6 @@ function MyApp({ Component, pageProps }) {
             </Link>
             <a href="#">Sitemap</a>
           </div>
-          {/*}
           <div className="footer-social-links">
             <a href="footer-link">
               <span className="sr-only">Facebook</span>
@@ -356,9 +356,9 @@ function MyApp({ Component, pageProps }) {
                 <path d="M12 7.1c-2.7 0-4.9 2.2-4.9 4.9s2.2 4.9 4.9 4.9 4.9-2.2 4.9-4.9-2.2-4.9-4.9-4.9zm0 7.8c-1.6 0-2.9-1.3-2.9-2.9s1.3-2.9 2.9-2.9 2.9 1.3 2.9 2.9-1.3 2.9-2.9 2.9zM18.5 6.9c0 .7-.6 1.3-1.3 1.3S16 7.6 16 6.9s.6-1.3 1.3-1.3 1.2.6 1.2 1.3z"></path>
               </svg>
             </a>
-              </div>*/}
+              </div>
         </div>
-        </section>
+        </section>*/}
       <footer>
         <div className="bg-light-grey">
           <div className="container">
@@ -391,6 +391,7 @@ function MyApp({ Component, pageProps }) {
               <a href="https://www.ca.gov/use/">Conditions of Use</a>
               <a href="https://www.ca.gov/privacy-policy/">Privacy Policy</a>
               <a href="https://www.ca.gov/accessibility/">Accessibility</a>
+              <a href="#">Sitemap</a>
             </div>
             <p className="copyright">
               Copyright &copy; {fullYear} State of California

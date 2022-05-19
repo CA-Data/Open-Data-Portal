@@ -30,20 +30,54 @@ export default function preview() {
               <div id="page-navigation-label" className="label">
                 <strong>On this page</strong>
               </div>
-              <ul className="search-filters">
-                <li>
-                  <a href="#">Heading Link 2</a>
-                </li>
+              <ul className="side-navigation">
+                <li><a href="#">New alpha site for the California Open Data Portal</a></li>
+                <li><a href="#">How we got here</a></li>
+                <li><a href="#">Where the data comes from</a></li>
+                <li><a href="#">About the data on this portal</a></li>
               </ul>
             </nav>
           </div>
         </div>
 
         <div className={styles.container}>
-          <h1 className="h3">Datasets</h1>
-          <p>This is a placeholder page. More coming soon.</p>
-          <h2>Heading 2</h2>
-          <p>This is placeholder content.</p>
+          <h1>About</h1>
+          <p>Open data is data that can be freely used, shared and built-on by anyone, anywhere, for any purpose.</p>
+          <p>The California Open Data Portal provides public data collected by the state. We publish the data in a format that is easy to search, download, and combine with other data sets from other sources.</p>
+          <h2>New alpha site for the California Open Data Portal</h2>
+          <p>This site makes it easier for you to find and use California’s data</p>
+          <p>CalData and the Department of Technology are working together on this new site for open data. We developed this prototype based on research, user feedback, and testing. We do this to learn and make sure we build the right site based on user needs.</p>
+          <p>You can get involved:</p>
+          <ul>
+            <li>Sign up to <a href="#">participate in research</a></li>
+            <li><a href="#">Provide feedback</a></li>
+          </ul>
+
+
+          <p>Since this is a prototype, there will be things that don’t work. Your feedback helps us improve. You can still access the <a href="https://data.ca.gov/">original California open data site</a> if you need to.</p>
+
+          <h2>How we got here</h2>
+          <p>Our users have told us about their frustrations when using the open data site. These include:</p>
+
+          <ul>
+          <li>Difficulty searching for data</li>  
+          <li>Don’t know how to use the data</li>  
+          <li>Confusing interface</li>  
+          </ul>
+
+
+          <p>We knew we could do better. We saw an opportunity to develop a user-friendly site by working directly with our users.</p>
+          <p>We’re at the beginning of this journey. It’ll take more than improving the site to make open data work better for Californians. We also have to invest in standards, process improvements, and program development. </p>
+          <h2>Where the data comes from </h2>
+          <p>It takes a village to share open data. The Statewide Open Data Portal pulls together data published by agencies and departments to provide a single searchable site. Review Organizations for a list of participating agencies and departments.</p>
+          <h2>About the data on this portal</h2>
+          <ul>
+            <li>It is public domain. Anyone can use the data.</li>
+            <li>Data can be downloaded or accessed through application programming interfaces (API). </li>
+            <li>You can perform research, do an analysis, or develop products using open data.</li>
+            <li>The data does not include private or confidential data about individuals.</li>
+          </ul>
+
         </div>
       </article>
     </main>

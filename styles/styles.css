@@ -150,11 +150,11 @@
   --gray-700: #a09fa7;
   --gray-800: #6c6b77;
   --gray-900: #3f3e4d;
-  --black: #000;
+  --black: #4B4B4B;
   --success: #008542;
   --danger: #b71234;
   --warning: #ffd700;
-  --info: #000080;
+  --info: #4B4B4B080;
   --animation-duration-1: 0.1s;
   --animation-duration-2: 0.2s;
   --animation-duration-3: 0.3s;
@@ -2828,7 +2828,7 @@ textarea {
 input,
 textarea {
   background-color: var(--white, #fff);
-  color: var(--black, #000) !important;
+  color: var(--black, #4B4B4B) !important;
   font-size: var(--font-size-2, 1.125rem);
   font-size: calc(var(--font-size-2) + var(--ratio));
   font-weight: var(--font-weight-4, 400);
@@ -2914,7 +2914,7 @@ body {
   font-size: var(--font-size-2, 1.125rem);
   font-weight: var(--font-weight-4, 400);
   line-height: var(--font-lineheight-3, 1.5);
-  color: var(--black, #000);
+  color: var(--black, #4B4B4B);
   overflow-x: hidden;
 }
 
@@ -2969,6 +2969,7 @@ h1 {
   margin-bottom: calc(var(--s-4) + var(--ratio));
   font-weight: var(--font-weight-7, 700);
   line-height: var(--font-lineheight-1);
+  color: var(--primary-color, #046A99);
 }
 
 .h2,
@@ -2978,6 +2979,7 @@ h2 {
   margin-bottom: calc(var(--s-3) + var(--ratio));
   font-weight: var(--font-weight-7, 700);
   line-height: var(--font-lineheight-2);
+  color: var(--secondary-dark-color, #4B4B4B);
 }
 
 .h3,
@@ -6331,7 +6333,7 @@ main a:hover .external-link-icon svg path {
 }
 
 footer a .external-link-icon svg path {
-  fill: var(--black, #000);
+  fill: var(--black, #4B4B4B);
 }
 
 .cagov-card .external-link-icon,
@@ -6648,7 +6650,7 @@ ol.cagov-regulatory-outline ol ol li ol li ol li:before {
 }
 
 .official-header .official-languages a {
-  color: var(--black, #000);
+  color: var(--black, #4B4B4B);
   padding: 0 0.5rem 0 0.5rem;
 }
 
@@ -6932,7 +6934,7 @@ footer .cagov-logo {
 
 footer .bg-light-grey a,
 footer .copyright {
-  color: var(--black, #000);
+  color: var(--black, #4B4B4B);
   padding-top: var(--s-1);
   padding-bottom: var(--s-1);
   margin-bottom: 0;
@@ -7824,7 +7826,7 @@ cagov-highlight-section article .highlight-body .highlight-text h3 {
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px var(--gray-400, #d3d2d6) solid;
-  color: var(--black, #000);
+  color: var(--black, #4B4B4B);
 }
 
 .contact-us input,
@@ -8185,7 +8187,7 @@ cagov-airtable-form .form-responded {
 
 .component-development-stage-grid div.current-development-stage dt {
   background-color: var(--secondary-color, #ff8000);
-  color: var(--black, #000);
+  color: var(--black, #4B4B4B);
 }
 
 .component-development-stage-grid div dt {
@@ -8532,7 +8534,7 @@ footer .cagov-logo svg {
 }
 footer .bg-light-grey a,
 footer .copyright {
-  color: var(--black, #000);
+  color: var(--black, #4B4B4B);
   padding-top: var(--s-1);
   padding-bottom: var(--s-1);
   margin-bottom: 0;
