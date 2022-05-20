@@ -37,7 +37,7 @@ export default function render(data) {
               <a>Open Data</a>
             </Link>
           </li>
-          <li>Sitemap</li>
+          <li>Organizations</li>
         </ol>
       </nav>
       <article

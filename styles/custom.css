@@ -186,7 +186,7 @@ table.supporting-files-table th {
   padding: 0;
 }
 #sortresults select {
-  color: var(--primary-color, #004abc)!important;
+  color: var(--primary-color, #046A99)!important;
 }
 .search-filters {
   list-style: none;
@@ -636,4 +636,14 @@ button.copied::after {
 }
 .home-page h3.h4 {
   margin-top: 0;
+}
+.page-container-ds-alternative {
+  max-width: var(--w-lg, 1176px);
+  width: 98%;
+  padding: 2rem 0;
+}
+@media (max-width: 767px) {
+  .page-container-ds.margin-right-clear {
+    margin-right: 0px!important;
+  }
 }

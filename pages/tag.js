@@ -103,8 +103,8 @@ export default function Help(data) {
                     style={{
                       outlineOffset: -2,
                       right: 5,
-                      backgroundColor: "var(--primary-color, #004abc)",
-                      border: "1px solid var(--primary-color, #004abc)",
+                      backgroundColor: "var(--primary-color, #046A99)",
+                      border: "1px solid var(--primary-color, #046A99)",
                       borderRadius: "0px 4px 4px 0px",
                       padding: "8px 14px",
                       position: "relative",

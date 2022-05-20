@@ -28,8 +28,20 @@ export async function getServerSideProps(context) {
   const response = await fetch(
     "https://data.ca.gov/api/3/action/package_show?name_or_id=" + name
   ).then((response) => response.json());
-  const groups = response.result.groups;
 
+  var groups = response.result.groups;
+  if (groups.length == 0) {
+    groups = [
+      {
+        display_name: "",
+        description: "",
+        image_display_url: "",
+        title: "NA",
+        id: "",
+        name: ""
+      }
+    ]
+  }  
   const tags = response.result.tags;
 
   const dataFiles = [];
@@ -138,7 +150,7 @@ export default function dataSet(data) {
                 <h2 className="h4">About this dataset</h2>
                 <p className="dataset-info-label">
                   {/*data.group_object.map((e) => e.title).join(", ")*/}
-                  {data.group_object[0].title}
+                  {data.group_object[0].title ? data.group_object[0].title: ""}
                 </p>
                 <p><strong>About</strong></p>
                 <ul>
