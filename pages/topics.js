@@ -109,7 +109,7 @@ export default function Home(data) {
                 </div>
                 <div className="content">
                   <h3 className="h4">California State Geoportal</h3>
-                  <p className="topic-desc">This geographic open data portal allows you to explore, visualize, and download California data. Visit our <a href="">California State Geoportal to get started.</a></p>
+                  <p className="topic-desc">This geographic open data portal allows you to explore, visualize, and download California data. Visit our <a href="https://gis.data.ca.gov/">California State Geoportal to get started.</a></p>
                 </div>
               </div>
             </div>

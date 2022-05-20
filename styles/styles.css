@@ -154,7 +154,7 @@
   --success: #008542;
   --danger: #b71234;
   --warning: #ffd700;
-  --info: #4B4B4B080;
+  --info: #4B4B4B;
   --animation-duration-1: 0.1s;
   --animation-duration-2: 0.2s;
   --animation-duration-3: 0.3s;
@@ -2979,7 +2979,7 @@ h2 {
   margin-bottom: calc(var(--s-3) + var(--ratio));
   font-weight: var(--font-weight-7, 700);
   line-height: var(--font-lineheight-2);
-  color: var(--secondary-dark-color, #4B4B4B);
+  color: var(--black, #4B4B4B);
 }
 
 .h3,
@@ -6057,7 +6057,8 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .cagov-card .card-text {
-  color: var(--gray-900, #6c6b77);
+  color: var(--black, #4B4B4B);
+  
   font-size: 1.5rem;
   line-height: 40px;
   font-weight: 400;
