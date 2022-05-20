@@ -76,7 +76,7 @@ export async function getServerSideProps() {
 export default function Home(data) {
   return (
     <>
-      <main>
+      <main className="home-page">
         <div className="wp-block-ca-design-system-hero cagov-with-sidebar cagov-with-sidebar-left cagov-featured-section cagov-bkgrd-image cagov-block wp-block-cagov-hero">
           <div className="page-container-ds">
             <div className="cagov-stack cagov-p-2 cagov-featured-sidebar">
@@ -88,9 +88,6 @@ export default function Home(data) {
                 </p>
                 <div className="search-container grid-search">
                   <form className="site-search" action="/results/">
-                    <span className="sr-only" id="SearchInput">
-                      Custom Google Search
-                    </span>
                     <input
                       type="text"
                       id="q"
@@ -99,20 +96,20 @@ export default function Home(data) {
                       placeholder="Search datasets"
                       className="search-textfield"
                       style={{
-                        width: "320px",
                         color: "#ffffff",
-                        padding: ".5rem",
+                        padding: "7px",
+                        width: "75%",
                         borderRadius: ".25rem",
                       }}
                     />
                     <button
                       style={{
                         outlineOffset: -2,
-                        right: 5,
+                        right: "3px",
                         backgroundColor: "#B4D2E0",
                         border: "0px",
                         borderRadius: "0px 4px 4px 0px",
-                        padding: "8px 14px",
+                        padding: "7px 14px",
                         position: "relative",
                       }}
                       type="submit"
@@ -131,7 +128,6 @@ export default function Home(data) {
                       </svg>
                       <span className="sr-only">Submit</span>
                     </button>
-                    <button className="search-close">Close</button>
                   </form>
                 </div>
               </div>
@@ -233,42 +229,42 @@ export default function Home(data) {
           </div>
         </div>
         <div className="cagov-bkgrd-gry padding-y">
-          <div className="page-container-ds"> 
-          <h2 className="h3">Topics</h2>
-            <div className="two-col">
-              {
-                data.topics.map((topic, index) => (
-                  <div key={index} className="card-block">
-                    <div className="icon-col" dangerouslySetInnerHTML={{ __html: topic.icon }}></div>
-                    <div className="content">
-                      <a href={"/results?q=groups:"+topic.id}>{topic.title}</a>
-                      <p className="topic-desc">{topic.description}</p>
-                      <p className="topic-qty">{topic.count} Datasets</p>
+          <div className="page-container-ds">
+            <h2 className="h3">Topics</h2>
+              <div className="two-col">
+                {
+                  data.topics.map((topic, index) => (
+                    <div key={index} className="card-block">
+                      <div className="icon-col" dangerouslySetInnerHTML={{ __html: topic.icon }}></div>
+                      <div className="content">
+                        <a href={"/results?q=groups:"+topic.id}>{topic.title}</a>
+                        <p className="topic-desc">{topic.description}</p>
+                        <p className="topic-qty">{topic.count} Datasets</p>
+                      </div>
                     </div>
+                    ))
+                }
+                <div className="card-block">
+                  <div className="icon-col">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+                      <circle cx="90" cy="90" r="90" fill="#4f97b8"></circle>
+                      <path
+                        fill="#fdb81d"
+                        d="M42.6 35h40v37.2l51.3 47.3v3.4l4.8 4.4-6.3 5.7v7.7h2.8v4.4h-24.7l-3.3-7-3-1-7.3-6.9h-5.2l-5.9-5.1H77v-6.6l-2-2.4v-1.7l-11-10.3v-2.4l1.2-1.8v-3.5l-3.3.2-2.2-2.8-3.3-6.7-2-3.2-.4-4-7.4-7-.3-10.7-5-5.3v-4.4l2.6-3v-10l-1.1-1.3-.2-3.1z"
+                      ></path>
+                      <path
+                        fill="#fff"
+                        d="M125.3 86a18 18 0 00-15.9-15.9v-4h-4v4a18 18 0 00-15.9 16h-4v4h4a18 18 0 0016 15.8v4.1h4v-4a18 18 0 0015.7-16h4.1v-4h-4.1zm-17.9 16a14 14 0 110-28 14 14 0 010 28z"
+                      ></path>
+                    </svg>
                   </div>
-                  ))
-              }
-              <div className="card-block">
-                <div className="icon-col">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
-                    <circle cx="90" cy="90" r="90" fill="#4f97b8"></circle>
-                    <path
-                      fill="#fdb81d"
-                      d="M42.6 35h40v37.2l51.3 47.3v3.4l4.8 4.4-6.3 5.7v7.7h2.8v4.4h-24.7l-3.3-7-3-1-7.3-6.9h-5.2l-5.9-5.1H77v-6.6l-2-2.4v-1.7l-11-10.3v-2.4l1.2-1.8v-3.5l-3.3.2-2.2-2.8-3.3-6.7-2-3.2-.4-4-7.4-7-.3-10.7-5-5.3v-4.4l2.6-3v-10l-1.1-1.3-.2-3.1z"
-                    ></path>
-                    <path
-                      fill="#fff"
-                      d="M125.3 86a18 18 0 00-15.9-15.9v-4h-4v4a18 18 0 00-15.9 16h-4v4h4a18 18 0 0016 15.8v4.1h4v-4a18 18 0 0015.7-16h4.1v-4h-4.1zm-17.9 16a14 14 0 110-28 14 14 0 010 28z"
-                    ></path>
-                  </svg>
-                </div>
-                <div className="content">
-                  <a href="#">California State Geoportal</a>
-                  <p className="topic-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum pretium dapibus diam California State Geoportal.</p>
+                  <div className="content">
+                    <h3 className="h4">California State Geoportal</h3>
+                    <p className="topic-desc">This geographic open data portal allows you to explore, visualize, and download California data. Visit our <a href="">California State Geoportal to get started.</a></p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </main>
     </>

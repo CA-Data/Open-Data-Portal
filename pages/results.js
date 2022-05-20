@@ -1,6 +1,8 @@
 export async function getServerSideProps(context) {
   var apirequest = "https://data.ca.gov/api/3/action/package_search?q="+context.query.q;
   
+
+
   var thereWasAFilter = 0; // flag, did user select any filter?
 
   if ('topic' in context.query && context.query.topic.length>0) {
@@ -8,7 +10,8 @@ export async function getServerSideProps(context) {
     thereWasAFilter = 1;
   }
 
-  if ('publisher' in context.query && context.query.format.length>0) {
+  //https://data.ca.gov/api/action/package_search?q=water&fq=organization:california-department-of-water-resources
+  if ('publisher' in context.query && context.query.publisher.length>0) {
     apirequest += thereWasAFilter ? "%20AND%20" : "&fq=(";
     apirequest += "organization:"+context.query.publisher.replace(/ /g, '-');
     thereWasAFilter = 1;

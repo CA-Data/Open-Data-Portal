@@ -23,8 +23,23 @@ export default function preview(dataset) {
       >
 
         <div className={styles.container}>
-          <h1 className="h3">Contact Us</h1>
-          <p>Form</p>
+          <h1>Contact Us</h1>
+          <p>Have questions or need to report and issue? We&apos;re here to help.</p>
+          <form className="contact-form">
+            <label>
+              Name
+              <input type="text" name="name" />
+            </label>
+            <label>
+              Email
+              <input type="text" name="email" />
+            </label>
+            <label>
+              Comment
+              <textarea type="text" name="comment" rows="4" cols="50"></textarea>
+            </label>
+            <input className="contact-button" type="submit" value="Submit" />
+          </form>
         </div>
       </article>
     </main>
