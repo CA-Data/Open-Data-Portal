@@ -10,7 +10,6 @@ export async function getServerSideProps(context) {
     thereWasAFilter = 1;
   }
 
-  //https://data.ca.gov/api/action/package_search?q=water&fq=organization:california-department-of-water-resources
   if ('publisher' in context.query && context.query.publisher.length>0) {
     apirequest += thereWasAFilter ? "%20AND%20" : "&fq=(";
     apirequest += "organization:"+context.query.publisher.replace(/ /g, '-');
