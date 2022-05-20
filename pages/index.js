@@ -132,7 +132,7 @@ export default function Home(data) {
               </div>
             </div>
             <div>
-              <img class="cagov-featured-image" src="/images/background-shapes.svg" alt="" width="1024" height="683" />
+              <img className="cagov-featured-image" src="/images/background-shapes.svg" alt="" width="1024" height="683" />
             </div>
           </div>
         </div>
