@@ -16,13 +16,13 @@ export async function getServerSideProps(context) {
 
   if ('format' in context.query && context.query.format.length>0) {
     apirequest += thereWasAFilter ? "%20AND%20" : "&fq=(";
-    apirequest += "res_format:"+context.query.format.toUpperCase().replace(/ /g, '-');
+    apirequest += "res_format:\""+context.query.format + "\""; //.toUpperCase().replace(/ /g, '-');
     thereWasAFilter = 1;
   }
 
   if ('tag' in context.query && context.query.tag.length>0) {
     apirequest += thereWasAFilter ? "%20AND%20" : "&fq=(";
-    apirequest += "tags:" + context.query.tag.replace(/ /g, '-');
+    apirequest += "tags:\"" + context.query.tag + "\""; //.replace(/ /g, '-');
     thereWasAFilter = 1;
   }
 
@@ -145,11 +145,11 @@ export async function getServerSideProps(context) {
 
   //get formats
   const resourceObject = {}
-  for (let index = 0; index < response.result.results.length; index++) {
+  for (let index = 0; index < response.result.results.length; index++) { // loop over all results
     if (response.result.results[index].resources.length > 0) {
       const resource = response.result.results[index].resources
-      for (let index = 0; index < resource.length; index++) {
-        var resource_type = resource[index].format.toUpperCase()
+      for (let index = 0; index < resource.length; index++) { // loop over formats for this record
+        var resource_type = resource[index].format;
         resourceObject[resource_type] = {"name": resource_type}
       }
     }
@@ -256,7 +256,7 @@ export default function Results(data) {
                         Format
                       <ul className="sublist">
                       {data.filterData.formatArray.map((dataset, index) => (
-                        <li key={index}><a href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamSort+"&format="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
+                        <li key={index}><a href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamSort+"&format="+dataset.name}>{dataset.name}</a></li>
                       ))}
                       </ul>
                     </li>
@@ -264,7 +264,7 @@ export default function Results(data) {
                         Tag
                       <ul className="sublist">
                         {data.filterData.tagArray.map((dataset, index) => (
-                          <li key={index}><a href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamFormat+urlParamSort+"&tag="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
+                          <li key={index}><a href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamFormat+urlParamSort+"&tag="+dataset.name}>{dataset.name}</a></li>
                         ))}
                       </ul>
                     </li>
