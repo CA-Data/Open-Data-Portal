@@ -1,7 +1,5 @@
 import "../styles/styles.css";
 import "../styles/custom.css";
-import Image from "next/image";
-//import '../js/page-navigation.js'
 import Link from "next/link";
 
 function MyApp({ Component, pageProps }) {
@@ -179,7 +177,7 @@ function MyApp({ Component, pageProps }) {
                     <strong className="expanded-menu-section-header">
                       <Link href="/datasets?q=" passHref>
                         <a className="expanded-menu-section-header-link js-event-hm-menu">
-                          Datasets
+                          All datasets
                         </a>
                       </Link>
                     </strong>
@@ -191,56 +189,103 @@ function MyApp({ Component, pageProps }) {
                 >
                   <div className="expanded-menu-section">
                     <strong className="expanded-menu-section-header">
-                      <Link href="/state-portals" passHref>
-                        <a className="expanded-menu-section-header-link js-event-hm-menu">
-                          State portals
+                    <button className="expanded-menu-section-header-link js-event-hm-menu">
+                        <span>Explore datasets</span>
+                        <span className="expanded-menu-section-header-arrow">
+                          <svg
+                            aria-hidden="true"
+                            width="11"
+                            height="7"
+                            className="expanded-menu-section-header-arrow-svg"
+                            viewBox="0 0 11 7"
+                            fill="#046A99"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M1.15596 0.204797L5.49336 5.06317L9.8545 0.204797C10.4293 -0.452129 11.4124 0.625368 10.813 1.28143L5.90083 6.82273C5.68519 7.05909 5.32606 7.05909 5.1342 6.82273L0.174341 1.28143C-0.400433 0.6245 0.581838 -0.452151 1.15661 0.204797H1.15596Z"
+                            ></path>
+                          </svg>
+                        </span>
+                      </button>
+                    </strong>
+                    <div className="expanded-menu-dropdown" aria-hidden="true">
+                      <Link href="/topics" passHref>
+                        <a
+                          className="expanded-menu-dropdown-link js-event-hm-menu"
+                          tabIndex="-1"
+                        >
+                          Topics
                         </a>
                       </Link>
-                    </strong>
-                  </div>
-                </div>
-                <div
-                  className="expanded-menu-col js-cagov-navoverlay-expandable"
-                  aria-expanded="false"
-                >
-                  <div className="expanded-menu-section">
-                    <strong className="expanded-menu-section-header">
-                      <Link href="/documentation" passHref>
-                        <a className="expanded-menu-section-header-link js-event-hm-menu">
-                          Documentation
+                      <Link href="/organizations" passHref>
+                        <a
+                          className="expanded-menu-dropdown-link js-event-hm-menu"
+                          tabIndex="-1"
+                        >
+                          Organizations
                         </a>
                       </Link>
-                    </strong>
-                  </div>
-                </div>
-                <div
-                  className="expanded-menu-col js-cagov-navoverlay-expandable"
-                  aria-expanded="false"
-                >
-                  <div className="expanded-menu-section">
-                    <strong className="expanded-menu-section-header">
-                      <Link href="/about" passHref>
-                        <a className="expanded-menu-section-header-link js-event-hm-menu">
-                          About
-                        </a>
-                      </Link>
-                    </strong>
+                    </div>
                   </div>
                 </div>
 
-                {/* Dropdown example
-                  <div className="expanded-menu-col js-cagov-navoverlay-expandable" aria-expanded="false">
-                    <div className="expanded-menu-section">
-                      <strong className="expanded-menu-section-header">
-                        <Link href="/documentation" passHref>
-                          <a className="expanded-menu-section-header-link js-event-hm-menu">
-                          Documentation
-                          </a>
-                        </Link>
-                      </strong>
+                <div
+                  className="expanded-menu-col js-cagov-navoverlay-expandable"
+                  aria-expanded="false"
+                >
+                  <div className="expanded-menu-section">
+                    <strong className="expanded-menu-section-header">
+                      <button className="expanded-menu-section-header-link js-event-hm-menu">
+                        <span>About</span>
+                        <span className="expanded-menu-section-header-arrow">
+                          <svg
+                            aria-hidden="true"
+                            width="11"
+                            height="7"
+                            className="expanded-menu-section-header-arrow-svg"
+                            viewBox="0 0 11 7"
+                            fill="#046A99"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M1.15596 0.204797L5.49336 5.06317L9.8545 0.204797C10.4293 -0.452129 11.4124 0.625368 10.813 1.28143L5.90083 6.82273C5.68519 7.05909 5.32606 7.05909 5.1342 6.82273L0.174341 1.28143C-0.400433 0.6245 0.581838 -0.452151 1.15661 0.204797H1.15596Z"
+                            ></path>
+                          </svg>
+                        </span>
+                      </button>
+                    </strong>
+                    <div className="expanded-menu-dropdown" aria-hidden="true">
+                      <Link href="/about" passHref>
+                        <a
+                          className="expanded-menu-dropdown-link js-event-hm-menu"
+                          tabIndex="-1"
+                        >
+                          About this data portal
+                        </a>
+                      </Link>
+                      <Link href="/contact-us" passHref>
+                        <a
+                          className="expanded-menu-dropdown-link js-event-hm-menu"
+                          tabIndex="-1"
+                        >
+                          Contact us
+                        </a>
+                      </Link>
+                      <Link href="/licenses" passHref>
+                        <a
+                          className="expanded-menu-dropdown-link js-event-hm-menu"
+                          tabIndex="-1"
+                        >
+                          Licenses
+                        </a>
+                      </Link>
                     </div>
                   </div>
-                */}
+                </div>
               </div>
             </nav>
           </div>
@@ -391,7 +436,9 @@ function MyApp({ Component, pageProps }) {
               <a href="https://www.ca.gov/use/">Conditions of Use</a>
               <a href="https://www.ca.gov/privacy-policy/">Privacy Policy</a>
               <a href="https://www.ca.gov/accessibility/">Accessibility</a>
-              <a href="#">Sitemap</a>
+              <Link href="/sitemap" passHref>
+                <a>Sitemap</a>
+              </Link>
             </div>
             <p className="copyright">
               Copyright &copy; {fullYear} State of California

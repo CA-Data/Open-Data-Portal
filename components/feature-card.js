@@ -24,7 +24,7 @@ export default function featureCard() {
                 style={{width: 'auto', color: '#fff', border: '1px solid blue', padding: '.5rem', borderRadius: '.25rem'}}
               />
               <button
-                style={{outlineOffset: -2, right: 5, backgroundColor: 'var(--primary-color, #004abc)', border: '1px solid var(--primary-color, #004abc)', borderRadius: '0px 4px 4px 0px', padding: '8px 14px', position: 'relative'}}
+                style={{outlineOffset: -2, right: 5, backgroundColor: 'var(--primary-color, #046A99)', border: '1px solid var(--primary-color, #046A99)', borderRadius: '0px 4px 4px 0px', padding: '8px 14px', position: 'relative'}}
                 type="submit"
                 className="search-submit">
                 <svg

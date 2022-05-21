@@ -12,15 +12,15 @@ export async function getServerSideProps(context) {
     if (FileSize == null) {
       return "";
     } else if (FileSize < kiloBytes) {
-      return ", " + FileSize + " Bytes";
+      return FileSize + " Bytes";
     } else if (FileSize < megaBytes) {
-      return ", " + (FileSize / kiloBytes).toFixed(decimal) + " KB";
+      return (FileSize / kiloBytes).toFixed(decimal) + " KB";
     } else if (FileSize < gigaBytes) {
-      return ", " + (FileSize / megaBytes).toFixed(decimal) + " MB";
+      return (FileSize / megaBytes).toFixed(decimal) + " MB";
     } else if (FileSize < teraBytes) {
-      return ", " + (FileSize / gigaBytes).toFixed(decimal) + " GB";
+      return (FileSize / gigaBytes).toFixed(decimal) + " GB";
     } else {
-      return ", " + (FileSize / teraBytes).toFixed(decimal) + " TB";
+      return (FileSize / teraBytes).toFixed(decimal) + " TB";
     }
   }
 
@@ -28,8 +28,20 @@ export async function getServerSideProps(context) {
   const response = await fetch(
     "https://data.ca.gov/api/3/action/package_show?name_or_id=" + name
   ).then((response) => response.json());
-  const groups = response.result.groups;
 
+  var groups = response.result.groups;
+  if (groups.length == 0) {
+    groups = [
+      {
+        display_name: "",
+        description: "",
+        image_display_url: "",
+        title: "NA",
+        id: "",
+        name: ""
+      }
+    ]
+  }  
   const tags = response.result.tags;
 
   const dataFiles = [];
@@ -68,9 +80,6 @@ export async function getServerSideProps(context) {
       dataFiles.push(resource);
     } else supportingFiles.push(resource);
   }
-
-  //for (let index = 0; index < response.result.resources.length; index++) {}
-  
   return {
     props: {
       data_object: response,
@@ -104,18 +113,6 @@ export default function dataSet(data) {
     } else {
       document.getElementById("dataset-description").getElementsByTagName('p')[0].classList.add("expanded")
       document.querySelectorAll(".btn-read-more")[0].innerHTML = "Read less";
-    }
-  };
-  
-  const readMoreFiles = () => {
-    if (
-      document.getElementById("dataset-description").getElementsByTagName('p')[0].classList.contains("expanded")
-    ) {
-      document.getElementById("dataset-description").getElementsByTagName('p')[0].classList.remove("expanded")
-      document.querySelectorAll(".btn-read-more")[0].innerHTML = "Read more"+`<span class="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>`;
-    } else {
-      document.getElementById("dataset-description").getElementsByTagName('p')[0].classList.add("expanded")
-      document.querySelectorAll(".btn-read-more")[0].innerHTML = "Read less"+`<span class="caret rotate-180"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>`;
     }
   };
 
@@ -153,7 +150,7 @@ export default function dataSet(data) {
                 <h2 className="h4">About this dataset</h2>
                 <p className="dataset-info-label">
                   {/*data.group_object.map((e) => e.title).join(", ")*/}
-                  {data.group_object[0].title}
+                  {data.group_object[0].title ? data.group_object[0].title: ""}
                 </p>
                 <p><strong>About</strong></p>
                 <ul>
@@ -260,7 +257,7 @@ export default function dataSet(data) {
                       <a href={dataset.url}>Download</a>
                       </td>
                       <td>
-                        {dataset.format}
+                        {dataset.format}<br />
                         {dataset.size}
                       </td>
                       <td>{dataset.created}</td>
@@ -451,7 +448,7 @@ export default function dataSet(data) {
             <span className="close">&times;</span>
             <h2 className="h3">API endpoint</h2>
             <h3 id="resource-name" className="h4 thin">
-              Resource name
+              Dataset Name
             </h3>
             <p>
               Use the query web API to retrieve data with a set of basic

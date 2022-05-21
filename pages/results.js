@@ -1,6 +1,8 @@
 export async function getServerSideProps(context) {
   var apirequest = "https://data.ca.gov/api/3/action/package_search?q="+context.query.q;
   
+
+
   var thereWasAFilter = 0; // flag, did user select any filter?
 
   if ('topic' in context.query && context.query.topic.length>0) {
@@ -300,8 +302,8 @@ export default function Results(data) {
                     style={{
                       outlineOffset: -2,
                       right: 5,
-                      backgroundColor: "var(--primary-color, #004abc)",
-                      border: "1px solid var(--primary-color, #004abc)",
+                      backgroundColor: "var(--primary-color, #046A99)",
+                      border: "1px solid var(--primary-color, #046A99)",
                       borderRadius: "0px 4px 4px 0px",
                       padding: "8px 14px",
                       position: "relative",
