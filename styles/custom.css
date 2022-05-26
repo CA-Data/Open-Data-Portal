@@ -663,7 +663,7 @@ button.copied::after {
   .home-page .wp-block-ca-design-system-hero {
     background-image: url(/images/hero-circles-2.svg), linear-gradient(90deg, rgba(0,79,116,1) 0%, rgba(4,106,153,1) 44%);;
     background-repeat: no-repeat;
-    background-position: right 20% top 1em, 0% 0%;
+    background-position: right 16% top 1em, 0% 0%;
     background-size:auto 120%, auto;
   }
   .home-page .cagov-featured-section .search-textfield {
@@ -675,7 +675,7 @@ button.copied::after {
   .home-page .wp-block-ca-design-system-hero {
     background-image: url(/images/hero-circles-1.svg),  url(/images/hero-circles-2.svg), linear-gradient(90deg, rgba(0,79,116,1) 0%, rgba(4,106,153,1) 44%);;
     background-repeat: no-repeat;
-    background-position: right 45% top -3.2em, right 20% top 1em, 0% 0%;
+    background-position: right 45% top -3.2em, right 16% top 1em, 0% 0%;
     background-size:auto 85%, auto 120%, auto;
   }
   .home-page .cagov-featured-section .search-textfield {
