@@ -11,6 +11,12 @@ export async function getServerSideProps(context) {
     title: datasetResponse.result.title,
   }
 
+  const date_updated = new Date(datasetResponse.result.metadata_modified);
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  datasetInfo.metadata_modified = date_updated.toLocaleDateString('en-EN', options)
+
+  datasetInfo.organization = datasetResponse.result.organization.title
+
   for (let index = 0; index < datasetResponse.result.resources.length; index++) {
     if (context.query.id === datasetResponse.result.resources[index].id) {
       datasetInfo.name = datasetResponse.result.resources[index].name
@@ -75,7 +81,10 @@ export default function preview(dataset) {
         <h1 className="h3">
           {dataset.details.name}
         </h1>
+        <p className="description">Published by: {dataset.details.organization}</p>
         <p className="description">Description: {dataset.details.description}</p>
+        <p className="description">Last updated: {dataset.details.metadata_modified}</p>
+        
         <p>Access: <a href={dataset.details.download}>Download file</a> | <a href="/api">API</a></p>
 
         <p className="h4 thin">Data preview</p>

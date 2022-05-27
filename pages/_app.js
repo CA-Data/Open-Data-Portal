@@ -95,6 +95,7 @@ function MyApp({ Component, pageProps }) {
               </button>
             </div>
 
+            {/*
             <div className="search-container grid-search">
               <form className="site-search" action="/results">
                 <span className="sr-only" id="SearchInput">
@@ -127,6 +128,7 @@ function MyApp({ Component, pageProps }) {
                 <button className="search-close">Close</button>
               </form>
             </div>
+          */}
           </div>
         </div>
 
