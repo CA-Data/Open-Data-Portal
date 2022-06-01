@@ -28,6 +28,8 @@ export async function getServerSideProps(context) {
   const response = await fetch(
     "https://data.ca.gov/api/3/action/package_show?name_or_id=" + name
   ).then((response) => response.json());
+  console.log("https://data.ca.gov/api/3/action/package_show?name_or_id=" + name);
+  //  console.log(response);
 
   var groups = response.result.groups;
   if (groups.length == 0) {
@@ -104,17 +106,18 @@ export default function dataSet(data) {
   const metadata_created = date_created.toLocaleDateString("en-EN", options);
   const metadata_modified = date_modified.toLocaleDateString("en-EN", options);
 
-  const readMore = () => {
+/*  const readMore = () => {
     if (
       document.getElementById("dataset-description").getElementsByTagName('p')[0].classList.contains("expanded")
     ) {
       document.getElementById("dataset-description").getElementsByTagName('p')[0].classList.remove("expanded")
-      document.querySelectorAll(".btn-read-more")[0].innerHTML = "Read more";
+      document.querySelectorAll(".btn-read-more")[0].innerHTML = "Read more ";
     } else {
       document.getElementById("dataset-description").getElementsByTagName('p')[0].classList.add("expanded")
-      document.querySelectorAll(".btn-read-more")[0].innerHTML = "Read less";
+      document.querySelectorAll(".btn-read-more")[0].innerHTML = "Read less ";
     }
   };
+*/
 
   return (
     <>
@@ -154,19 +157,19 @@ export default function dataSet(data) {
                 </p>
                 <p><strong>About</strong></p>
                 <ul>
-                  <li>Organization:<br /> {data.data_object.result.organization.title? data.data_object.result.organization.title: "N/A"}</li>
-                  <li>Contact:<br /> <a href={"mailto:" + data.data_object.result.contact_email}>{data.data_object.result.contact_name}</a></li>
-                  <li><a href={data.data_object.result.url}>Organization website</a></li>
-                  <li>License:<br /> {data.data_object.result.license_title? data.data_object.result.license_title: "N/A"}</li>
+                  <li>Organization: {data.data_object.result.organization.title? data.data_object.result.organization.title: "N/A"}</li>
+                  <li>Contact: <a href={"mailto:" + data.data_object.result.contact_email}>{data.data_object.result.contact_name}</a></li>
+                  <li><a href={data.data_object.result.landingPage}>Organization website</a></li>
+                  <li>License:d {data.data_object.result.license_title? data.data_object.result.license_title: "N/A"}</li>
                 </ul>
                 <p><strong>Timeframe</strong></p>
                 <ul>
-                  <li>Updated:<br /> {}</li>
-                  <li>Last updated:<br /> {metadata_modified}</li>
-                  <li>Created:<br /> {metadata_created}</li>
-                  <li>Temporal coverage:<br /> {data.data_object.result.temporal? data.data_object.result.temporal: "N/A"}</li>
+                  <li>Updated: </li>
+                  <li>Last updated: {metadata_modified}</li>
+                  <li>Created: {metadata_created}</li>
+                  <li>Temporal coverage: {data.data_object.result.temporal? data.data_object.result.temporal: "N/A"}</li>
                 </ul>
-                <p><strong>Related resources</strong></p>
+                <p><strong>Related links</strong></p>
                 <ul>
                   <li>{data.data_object.result.related_resources? data.data_object.result.related_resources: "N/A"}</li>
                 </ul>
@@ -222,7 +225,7 @@ export default function dataSet(data) {
                         >
                           <a>{dataset.name}</a>
                         </Link>
-                        <div className="resource-description">
+                        <div className="resource-description no-limit">
                           <p>{dataset.description}</p>
                           <button className="btn-read-more">
                             Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
@@ -296,7 +299,7 @@ export default function dataSet(data) {
                         >
                           <a>{dataset.name}</a>
                         </Link>
-                        <div className="resource-description">
+                        <div className="resource-description no-limit">
                           <p>{dataset.description}</p>
                           <button className="btn-read-more">
                             Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
