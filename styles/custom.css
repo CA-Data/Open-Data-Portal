@@ -167,7 +167,7 @@ table.supporting-files-table th {
   margin: 2rem 0;
   padding: 0 var(--s-2, 1rem) 2rem var(--s-2, 1rem);
   font-size: 1rem;
-  text-transform: capitalize;
+  /*text-transform: capitalize;*/
 }
 .nav-breadcrumb ol {
   list-style: none;
@@ -646,4 +646,17 @@ button.copied::after {
   .page-container-ds.margin-right-clear {
     margin-right: 0px!important;
   }
+}
+
+.dataset-description {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  /*grid-template-columns: repeat(auto-fill, 1fr);*/
+  grid-row-gap: .8rem;
+  grid-column-gap: 3rem;
+}
+.dataset-label {
+  font-weight: bold;
+  font-size: 1.12rem;
+  letter-spacing: .5px;
 }

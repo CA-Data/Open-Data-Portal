@@ -1,5 +1,6 @@
 //Modal JS
 window.addEventListener('load', function (event) {
+  
   if (document.getElementsByTagName('main').length > 0) {
     if (document.getElementsByTagName('main')[0].classList.contains('dataset')) {
       
@@ -62,6 +63,16 @@ window.addEventListener('load', function (event) {
         }
 
       }));
+    }
+    if (document.getElementsByTagName('main')[0].classList.contains('dataset-preview')) {
+      if (document.getElementById("data-dictionary-section").innerText.includes('No rows')) {
+        document.getElementById("data-dictionary-section").style.display = "None"
+        console.log("Empty table")
+      }
+      if (document.getElementById("data-table-section").innerText.includes('No rows')) {
+        document.getElementById("data-dictionary-section").style.display = "None"
+        console.log("Empty table")
+      }
     }
   }
 })
