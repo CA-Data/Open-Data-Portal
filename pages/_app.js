@@ -266,7 +266,7 @@ function MyApp({ Component, pageProps }) {
                           className="expanded-menu-dropdown-link js-event-hm-menu"
                           tabIndex="-1"
                         >
-                          About this data portal
+                          About
                         </a>
                       </Link>
                       <Link href="/contact-us" passHref>
