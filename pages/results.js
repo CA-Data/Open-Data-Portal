@@ -1,35 +1,80 @@
+import React, {useEffect, useState} from 'react';
+import { useRouter } from 'next/router'
+
 export async function getServerSideProps(context) {
   var apirequest = "https://data.ca.gov/api/3/action/package_search?q="+context.query.q;
-  
-
-
   var thereWasAFilter = 0; // flag, did user select any filter?
-
   if ('topic' in context.query && context.query.topic.length>0) {
-    apirequest += "&fq=(groups:" + context.query.topic.replace(/ /g, '-');
+    let groups = context.query.topic.split(',');
+    let formattedGroupString ='';
+    for(let i=0; i<groups.length;i++){
+      if(groups[i+1]){
+        if(groups[i] == "health and human services"){
+          formattedGroupString += groups[i].replace(/ and/g,'').replace(/ /g, '-') + "%20AND%20";
+        }
+        else{
+          formattedGroupString += groups[i].replace(/ /g, '-') + "%20AND%20";
+        }
+      }
+      else{
+        if(groups[i] == "health and human services"){
+          formattedGroupString += groups[i].replace(/ and/g,'').replace(/ /g, '-') + ")";
+        }
+        else{
+          formattedGroupString += groups[i].replace(/ /g, '-') + ")";
+        }
+      }
+    }
+    apirequest += thereWasAFilter ? "%20AND%20" : "&fq=";
+    apirequest += "groups:(" + formattedGroupString;
     thereWasAFilter = 1;
   }
-
   if ('publisher' in context.query && context.query.publisher.length>0) {
-    apirequest += thereWasAFilter ? "%20AND%20" : "&fq=(";
-    apirequest += "organization:"+context.query.publisher.replace(/ /g, '-');
+    let organizations = context.query.publisher.split(',');
+    let formattedOrganizationsString ='';
+    for(let i=0; i<organizations.length;i++){
+      if(organizations[i+1]){
+        formattedOrganizationsString += organizations[i].replace(/ /g, '-') + "%20AND%20";
+      }
+      else{
+        formattedOrganizationsString += organizations[i].replace(/ /g, '-') + ")";
+      }
+    }
+    apirequest += thereWasAFilter ? "%20AND%20" : "&fq=";
+    apirequest += "organization:("+formattedOrganizationsString;
     thereWasAFilter = 1;
   }
 
   if ('format' in context.query && context.query.format.length>0) {
-    apirequest += thereWasAFilter ? "%20AND%20" : "&fq=(";
-    apirequest += "res_format:"+context.query.format.toUpperCase().replace(/ /g, '-');
+    let filters = context.query.format.split(',');
+    let formattedFormatString ='';
+    for(let i=0; i<filters.length;i++){
+      if(filters[i+1]){
+        formattedFormatString += filters[i].replace(/ /g, '-') + "%20AND%20";
+      }
+      else{
+        formattedFormatString += filters[i].replace(/ /g, '-') + ")";
+      }
+    }
+    apirequest += thereWasAFilter ? "%20AND%20" : "&fq=";
+    apirequest += "res_format:("+formattedFormatString;
     thereWasAFilter = 1;
   }
 
   if ('tag' in context.query && context.query.tag.length>0) {
-    apirequest += thereWasAFilter ? "%20AND%20" : "&fq=(";
-    apirequest += "tags:" + context.query.tag.replace(/ /g, '-');
+    let tags = context.query.tag.split(',');
+    let formattedTagString ='';
+    for(let i=0; i<tags.length;i++){
+      if(tags[i+1]){
+        formattedTagString += tags[i].replace(/ /g, '-') + "%20AND%20";
+      }
+      else{
+        formattedTagString += tags[i].replace(/ /g, '-') + ")";
+      }
+    }
+    apirequest += thereWasAFilter ? "%20AND%20" : "&fq=";
+    apirequest += "tags:(" + formattedTagString;
     thereWasAFilter = 1;
-  }
-
-  if (thereWasAFilter) {
-    apirequest += ")";
   }
 
   if ('sort' in context.query) {
@@ -63,10 +108,9 @@ export async function getServerSideProps(context) {
   
   //[0]previous, [1]current, [2]next, [3]total, [4]next 
 
-  console.log(apirequest);
 
   const response = await fetch(apirequest).then((response) => response.json());
-
+  // console.log(apirequest)
   pageData["total"].value = Math.ceil(parseInt(response.result.count) / 10);
 
   if (pageData["next"].value >= pageData["total"].value) {
@@ -106,7 +150,6 @@ export async function getServerSideProps(context) {
           }
         }
       }
-      //console.log(response.result.results[index])
       resultsArray.push(dataset)
     }
   }
@@ -125,7 +168,7 @@ export async function getServerSideProps(context) {
     if (response.result.results[index].groups.length > 0) {
       const topic = response.result.results[index].groups
       for (let index = 0; index < topic.length; index++) {
-        topicObject[topic[index].display_name] = {"name": topic[index].display_name}
+        topicObject[topic[index].display_name] = topic[index].display_name
       }
     }    
   }
@@ -138,7 +181,7 @@ export async function getServerSideProps(context) {
   for (let index = 0; index < response.result.results.length; index++) {
     if (response.result.results[index].groups.length > 0) {
       const publisher = response.result.results[index].organization.title
-      publisherObject[publisher] = {"name": publisher}
+      publisherObject[publisher] = publisher
     }    
   }
   for (const key in publisherObject) {
@@ -147,12 +190,12 @@ export async function getServerSideProps(context) {
 
   //get formats
   const resourceObject = {}
-  for (let index = 0; index < response.result.results.length; index++) {
+  for (let index = 0; index < response.result.results.length; index++) { // loop over all results
     if (response.result.results[index].resources.length > 0) {
       const resource = response.result.results[index].resources
-      for (let index = 0; index < resource.length; index++) {
-        var resource_type = resource[index].format.toUpperCase()
-        resourceObject[resource_type] = {"name": resource_type}
+      for (let index = 0; index < resource.length; index++) { // loop over formats for this record
+        var resource_type = resource[index].format;
+        resourceObject[resource_type] = resource_type
       }
     }
   }
@@ -167,7 +210,7 @@ export async function getServerSideProps(context) {
       const tag = response.result.results[index].tags
       for (let index = 0; index < tag.length; index++) {
         var tag_name = tag[index].display_name
-        tagObject[tag_name] = {"name": tag_name}
+        tagObject[tag_name] = tag_name
       }
     }
   }
@@ -187,7 +230,19 @@ export async function getServerSideProps(context) {
 }
 
 
-export default function Results(data) {
+const Results =(data)=>{
+  const [topicSvg,setTopicSvg] = useState('svg-rotate-up');
+  const [publisherSvg,setPublisherSvg] = useState('svg-rotate-down');
+  const [formatSvg,setFormatSvg] = useState('svg-rotate-down');
+  const [tagSvg,setTagSvg] = useState('svg-rotate-down');
+  const [topicArray,setTopicArray] = useState([]);
+  const [publisherArray,setPublisherArray] = useState([]);
+  const [formatArray,setFormatArray] = useState([]);
+  const [tagArray,setTagArray] = useState([]);
+  const [reset,setReset] = useState(false);
+  const [initialValues,setInitialValues] = useState(data.parameters.q); 
+
+  const router = useRouter();
   if (typeof window === 'object') {
     // Check if document is finally loaded
        document.addEventListener("DOMContentLoaded", function () {
@@ -204,14 +259,15 @@ export default function Results(data) {
   const clear = () => {
     document.getElementById("q").value = "";
   };
+  
   const expand = (e) => {
     console.log(e.target)
     //e.target.style.height = '100%'
-    if (e.target.classList.contains('filter-expanded')) {
-      e.target.classList.remove('filter-expanded')
+    if (e.target.parentElement.classList.contains('filter-expanded')) {
+      e.target.parentElement.classList.remove('filter-expanded')
     } 
-    else {
-      e.target.classList.add('filter-expanded')
+    else if(e.target.parentElementtype !== "checkbox"){
+      e.target.parentElement.classList.add('filter-expanded')
     }
     //document.querySelectorAll('.filter-topic')[0].style.height = '100%'
   }
@@ -220,7 +276,90 @@ export default function Results(data) {
   var urlParamFormat = (data.parameters.format) ? "&format=" + data.parameters.format : "";
   var urlParamTag = (data.parameters.tag) ? "&tag=" + data.parameters.tag : "";
   var urlParamSort = (data.parameters.sort) ? "&sort=" + data.parameters.sort : "";
+   useEffect(()=>{
+    if(!reset){
 
+    if(topicArray.length == 0 || router.query.topic?.length == 0 ){
+      router.push(router.asPath.split('&topic=')[0])
+    }
+    if(topicArray.length == 1 && !router.query.topic){
+        router.push(router.asPath+'&topic='+topicArray)
+    }
+    if(topicArray.length>=1 && router.query.topic){
+      let newPath = router.asPath.split('&');
+      let index = newPath.findIndex(item=> item.includes('topic'));
+      newPath.splice(index,1,"topic="+topicArray.join(','));
+      newPath = newPath.join('&');
+      router.push(newPath);
+    }
+  }
+  },[topicArray])
+  useEffect(()=>{
+    if(!reset){
+
+    if(publisherArray.length == 0 || router.query.publisher?.length == 0 ){
+      router.push(router.asPath.split('&publisher=')[0])
+    }
+    if(publisherArray.length == 1 && !router.query.publisher){
+        router.push(router.asPath+'&publisher='+publisherArray)
+    }
+    if(publisherArray.length>=1 && router.query.publisher){
+      let newPath = router.asPath.split('&');
+      let index = newPath.findIndex(item=> item.includes('publisher'));
+      newPath.splice(index,1,"publisher="+publisherArray.join(','));
+      newPath = newPath.join('&');
+      router.push(newPath);
+    }
+  }
+  },[publisherArray])
+  useEffect(()=>{
+    if(!reset){
+
+    if(formatArray.length == 0 || router.query.format?.length == 0 ){
+      router.push(router.asPath.split('&format=')[0])
+    }
+    if(formatArray.length == 1 && !router.query.format){
+        router.push(router.asPath+'&format='+formatArray)
+    }
+    if(formatArray.length>=1 && router.query.format){
+      let newPath = router.asPath.split('&');
+      let index = newPath.findIndex(item=> item.includes('format'));
+      newPath.splice(index,1,"format="+formatArray.join(','));
+      newPath = newPath.join('&');
+      router.push(newPath);
+    }
+  }
+  },[formatArray])
+  useEffect(()=>{
+    if(!reset){
+      if(tagArray.length == 0 || router.query.tag?.length == 0 ){
+        router.push(router.asPath.split('&tag=')[0])
+      }
+      if(tagArray.length == 1 && !router.query.tag){
+          router.push(router.asPath+'&tag='+tagArray)
+      }
+      if(tagArray.length>=1 && router.query.tag){
+        let newPath = router.asPath.split('&');
+        let index = newPath.findIndex(item=> item.includes('tag'));
+        newPath.splice(index,1,"tag="+tagArray.join(','));
+        newPath = newPath.join('&');
+        router.push(newPath);
+      }
+    }
+  },[tagArray])
+
+  const resetSearch =async()=>{
+    setFormatSvg('svg-rotate-down');
+    setPublisherSvg('svg-rotate-down');
+    setTagSvg('svg-rotate-down');
+    setTopicSvg('svg-rotate-up');
+    setTopicArray([]);
+    setPublisherArray([]);
+    setFormatArray([]);
+    setTagArray([]);
+    setInitialValues('');
+    router.push('?q=');
+  }
   return (
     <>
       <main id="body-content" className="cagov-main">
@@ -230,52 +369,114 @@ export default function Results(data) {
         >
           <div
             className="sidebar-container everylayout sidebar-cell"
-            style={{ "zIndex": 1 }}
+            style={{ "zIndex": 1, marginTop:'270px'}}
           >
             <div className="sidebar" space="0" side="left">
                 <nav aria-labelledby="page-navigation-label">
                   <div id="page-navigation-label" className="label">
                     <strong>Filter by</strong>
                   </div>
-                  <ul className="search-filters">
-                    <li onClick={expand} className="filter-topic">
-                        Topic
-                      <ul className="sublist">
-                        {data.filterData.topicArray.map((dataset, index) => (
-                          <li key={index}><a href={"/results?q="+data.parameters.q+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&topic="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
+                  <ul className="search-filters align">
+                    <li style={{color:"#4B4B4B"}}  className="filter-topic">
+                      <div onClick={()=>{topicSvg=='svg-rotate-up'?setTopicSvg('svg-rotate-down'):setTopicSvg('svg-rotate-up')}} style={{display:'flex',alignItems:'center', margin:'10px 0px'}}>
+                        <svg style={{margin:'9px 21px 9px 4px'}} className={topicSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg>
+                        <span style={{fontWeight:'bold'}}>Topic</span>
+                      </div>
+                      <ul hidden={topicSvg!='svg-rotate-up'?true:false} style={{cursor:'default'}}>
+                        {data.filterData.topicArray.sort().map((topic, index) => (
+                          <li key={topic} >
+                            <input onChange={(e)=>{
+                              if(e.target.checked){
+                                setTopicArray([...topicArray,topic.toLowerCase()])
+                              }
+                              else{
+                                setTopicArray(topicArray.filter(item=>item!=topic.toLowerCase()))
+                              }
+                              }} style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={topic} className='checkBox' type={'checkbox'}/>
+                            <label style={{cursor:'pointer', }} htmlFor={topic}>{topic}</label>
+                          </li>
                         ))}
                       </ul>
                     </li>
-                    <li onClick={expand} className="filter-publisher">
-                        Publisher
-                      <ul className="sublist">
-                        {data.filterData.publisherArray.map((dataset, index) => (
-                          <li key={index}><a href={"/results?q="+data.parameters.q+urlParamTopic+urlParamFormat+urlParamTag+urlParamSort+"&publisher="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
+                    <li style={{color:"#4B4B4B"}} className="filter-publisher">
+                      <div onClick={()=>{publisherSvg=='svg-rotate-up'?setPublisherSvg('svg-rotate-down'):setPublisherSvg('svg-rotate-up')}} style={{display:'flex',alignItems:'center', margin:'10px 0px'}}>
+                        <svg style={{margin:'9px 21px 9px 4px'}} className={publisherSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg>
+                        <span style={{fontWeight:'bold'}}>Publisher</span>
+                      </div>
+                      <ul hidden={publisherSvg!='svg-rotate-up'?true:false}>
+                        {data.filterData.publisherArray.sort().map((publisher, index) => (
+                          <li key={publisher} >
+                            <input onChange={(e)=>{
+                              if(e.target.checked){
+                                setPublisherArray([...publisherArray,publisher.toLowerCase()])
+                              }
+                              else{
+                                setPublisherArray(publisherArray.filter(item=>item!=publisher.toLowerCase()))
+                              }                            
+                              }} style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={publisher} className='checkBox' type={'checkbox'}/>
+                            <label style={{cursor:'pointer' }} htmlFor={publisher}>{publisher}</label>
+                          </li>
                         ))}
                       </ul>
                     </li>
-                    <li onClick={expand} className="filter-format">
-                        Format
-                      <ul className="sublist">
-                      {data.filterData.formatArray.map((dataset, index) => (
-                        <li key={index}><a href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamSort+"&format="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
-                      ))}
+                    <li style={{color:"#4B4B4B"}} className="filter-format">
+                      <div onClick={()=>{formatSvg=='svg-rotate-up'?setFormatSvg('svg-rotate-down'):setFormatSvg('svg-rotate-up')}} style={{display:'flex',alignItems:'center', margin:'10px 0px'}}>
+                        <svg style={{margin:'9px 21px 9px 4px'}} className={formatSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg>
+                        <span style={{fontWeight:'bold'}}>Format</span>
+                      </div>
+                      <ul hidden={formatSvg!='svg-rotate-up'?true:false}>
+                        {data.filterData.formatArray.sort().map((format, index) => (
+                        <li key={format} >
+                          <input onChange={(e)=>{
+                             if(e.target.checked){
+                              setFormatArray([...formatArray,format.toLowerCase()])
+                            }
+                            else{
+                              setFormatArray(formatArray.filter(item=>item!=format.toLowerCase()))
+                            } 
+                          }}
+                             style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={format} className='checkBox' type={'checkbox'}/>
+                          <label style={{cursor:'pointer'}} htmlFor={format}>{format}</label>
+                        </li>
+                        ))}
                       </ul>
                     </li>
-                    <li onClick={expand} className="filter-tag">
-                        Tag
-                      <ul className="sublist">
-                        {data.filterData.tagArray.map((dataset, index) => (
-                          <li key={index}><a href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamFormat+urlParamSort+"&tag="+dataset.name.toLowerCase()}>{dataset.name}</a></li>
+                    <li style={{color:"#4B4B4B"}} className="filter-tag">
+                      <div onClick={()=>{tagSvg=='svg-rotate-up'?setTagSvg('svg-rotate-down'):setTagSvg('svg-rotate-up')}} style={{display:'flex',alignItems:'center', margin:'10px 0px'}}>
+                        <svg style={{margin:'9px 21px 9px 4px'}} className={tagSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg>
+                        <span style={{fontWeight:'bold'}}>Tag</span>
+                      </div>
+                      <ul hidden={tagSvg!='svg-rotate-up'?true:false}>
+                        {data.filterData.tagArray.sort().map((tag, index) => (
+                        <li key={tag} >
+                          <input onChange={(e)=>{
+                            if(e.target.checked){
+                             setTagArray([...tagArray,tag.toLowerCase()])
+                           }
+                           else{
+                             setTagArray(tagArray.filter(item=>item!=tag.toLowerCase()))
+                           } 
+                         }} style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={tag} className='checkBox' type={'checkbox'}/>
+                          <label style={{cursor:'pointer' }} htmlFor={tag}>{tag}</label>
+                        </li>
                         ))}
                       </ul>
                     </li>
                   </ul>
+                  <button onClick={async()=>{
+                    let checkBoxes = Array.from(document.getElementsByClassName('checkBox'));
+                    checkBoxes.forEach(checkBox =>{
+                      checkBox.checked = false;
+                    })
+                    setReset(true);
+                    await resetSearch();
+                    setReset(false);
+                  }} style={{border:'1px solid #4B4B4B',borderRadius:'5px',padding:'10px 15px', cursor:'pointer',}}>Reset</button>
                 </nav>
             </div>
           </div>
           <div className="cagov-content content-cell">
-            <h1 style={{ marginTop: 0 }}>Search results</h1>
+            <h1 style={{ marginTop: 0, color:'#034A6B', fontSize:'47px', lineHeight:'58.8px'}}>Search results</h1>
             <div className="search-container grid-search">
               <form className="site-search" action="/results">
                 <span className="sr-only" id="SearchInput">
@@ -289,11 +490,12 @@ export default function Results(data) {
                     aria-labelledby="SearchInput"
                     placeholder="Search datasets"
                     className="search-textfield"
-                    defaultValue = {data.parameters.q}
+                    defaultValue = {initialValues}
                     style={{
-                      width: "100%",
+                      width: "876px",
+                      height:'49px',
                       color: "#fff",
-                      border: "1px solid blue",
+                      border: "1px solid #034A6B",
                       padding: ".5rem",
                       borderRadius: ".25rem",
                     }}
@@ -307,6 +509,9 @@ export default function Results(data) {
                       borderRadius: "0px 4px 4px 0px",
                       padding: "8px 14px",
                       position: "relative",
+                      backgroundColor:'#034A6B',
+                      display:'flex',
+                      alignItems:'center'
                     }}
                     type="submit"
                     className="search-submit"
@@ -315,7 +520,7 @@ export default function Results(data) {
                       xmlns="http://www.w3.org/2000/svg"
                       enableBackground="new 0 0 17 17"
                       viewBox="0 0 17 17"
-                      style={{width: 17}}
+                      style={{width: '23.43px',backgroundColor:'#034A6B'}}
                     >
                       <path
                         fill="#fff"
@@ -402,3 +607,4 @@ export default function Results(data) {
     </>
   );
 }
+export default Results;

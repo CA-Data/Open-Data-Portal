@@ -97,7 +97,6 @@ export default function Home(data) {
                       style={{
                         color: "#ffffff",
                         padding: "7px",
-                        width: "75%",
                         borderRadius: ".25rem",
                       }}
                     />
@@ -131,9 +130,9 @@ export default function Home(data) {
                 </div>
               </div>
             </div>
-            <div>
+            {/*<div>
               <img className="cagov-featured-image" src="/images/background-shapes.svg" alt="" width="1024" height="683" />
-            </div>
+            </div>*/}
           </div>
         </div>
         <div className="page-container-ds">

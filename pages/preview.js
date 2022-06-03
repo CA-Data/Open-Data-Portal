@@ -47,7 +47,7 @@ export async function getServerSideProps(context) {
   }
 
   const datasetResponse = await fetch("https://data.ca.gov/api/3/action/package_show?name_or_id="+context.query.name).then((response) => response.json());
-  //const datasetResponse = await fetch("https://data.ca.gov/api/3/action/package_show?name_or_id=ground-water-water-quality-results").then((response) => response.json());
+  //https://data.ca.gov/api/3/action/package_show?name_or_id=ground-water-water-quality-results
 
 
   const options = {
@@ -67,6 +67,11 @@ export async function getServerSideProps(context) {
     columns: [],
     rows: []
   }
+  const date_updated = new Date(datasetResponse.result.metadata_modified);
+  datasetInfo.metadata_modified = date_updated.toLocaleDateString('en-EN', options)
+
+  datasetInfo.organization = datasetResponse.result.organization.title
+
   for (let index = 0; index < datasetResponse.result.resources.length; index++) {
     if (context.query.id === datasetResponse.result.resources[index].id) {
       datasetInfo.name = datasetResponse.result.resources[index].name
@@ -84,10 +89,6 @@ export async function getServerSideProps(context) {
 
 
   const response = await fetch('https://data.ca.gov/api/3/action/datastore_search?resource_id='+context.query.id).then(response => response.json());
-  console.log(response)
-  //const response = await fetch('https://data.ca.gov/api/3/action/datastore_search?resource_id=a0d400c0-fa18-4f2d-adbd-cbe2e552bca2').then(response => response.json());
-  ///https://data.ca.gov/api/3/action/datastore_search?resource_id=a0d400c0-fa18-4f2d-adbd-cbe2e552bca2
-  console.log(response)
   tableData = {
     columns: [],
     rows: []
@@ -103,8 +104,6 @@ export async function getServerSideProps(context) {
       parameters: context.query,
       table: tableData,
       dictionary: dictionaryData,
-      //columns: columns,
-      //rows: rows,
     },
   };
 }

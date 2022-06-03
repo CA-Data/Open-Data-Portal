@@ -141,7 +141,7 @@
   --cagov-primary-dark: #003484;
   --cagov-secondary: #ff8000;
   --white: #fff;
-  --gray-100: #f9f9fa;
+  --gray-100: #fafafa;
   --gray-200: #ededef;
   --gray-300: #e1e0e3;
   --gray-400: #d3d2d6;
@@ -8546,7 +8546,7 @@ footer .copyright {
 }
 
 .bg-light-grey {
-  background-color: var(--gray-100, #f9f9fa);
+  background-color: var(--gray-100, #fafafa);
 }
 
 .pt-0 {
