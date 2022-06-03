@@ -1,3 +1,12 @@
+*{
+  font-size:16px;
+  line-height:28px;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #72717C;
+  opacity: 1; /* Firefox */
+}
+
 .content-cell h1 {
   color: var(--primary-dark-color, #034A6B);
 }
@@ -190,7 +199,6 @@ table.supporting-files-table th {
 }
 .search-filters {
   list-style: none;
-  padding-top: 2rem;
 }
 .search-filters>li {
   border-bottom: 1px solid #cecece;
@@ -242,7 +250,7 @@ table.supporting-files-table th {
 .filter-publisher,
 .filter-format,
 .filter-tag {
-height: 42px;
+height: 100%;
 overflow: hidden;
 cursor: pointer; 
 }
@@ -251,6 +259,10 @@ cursor: pointer;
   height: 100%;
 }
 
+ul.align li,
+ul.align ul {
+    margin-left: 0px;
+}
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -479,6 +491,23 @@ button.copied::after {
 .rotate-180 svg{
   transform: rotate(180deg);
 }
+/* Drop down styling */
+.svg-rotate-up{
+  transform: rotate(-180deg);
+  transition: transform 250ms linear;
+
+}
+.svg-rotate-down{
+  transform: rotate(-360deg);
+  transition: transform 250ms linear;
+}
+/* Checkbox styling */
+input[type=checkbox] {
+  accent-color: #046A99;
+}
+/*********************/
+
+
 .resource-description .btn-read-more {
   margin: 0 0 .5rem 0;
 }
