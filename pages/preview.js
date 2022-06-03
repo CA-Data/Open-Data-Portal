@@ -50,27 +50,16 @@ export async function getServerSideProps(context) {
   //https://data.ca.gov/api/3/action/package_show?name_or_id=ground-water-water-quality-results
 
 
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-
+  const options = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
   const datasetInfo = {
     title: datasetResponse.result.title,
     author: datasetResponse.result.organization.title,
     metadata_modified: new Date(datasetResponse.result.metadata_modified).toLocaleDateString("en-EN", options)
   }
-
   var dictionaryData = {
     columns: [],
     rows: []
   }
-  const date_updated = new Date(datasetResponse.result.metadata_modified);
-  datasetInfo.metadata_modified = date_updated.toLocaleDateString('en-EN', options)
-
-  datasetInfo.organization = datasetResponse.result.organization.title
 
   for (let index = 0; index < datasetResponse.result.resources.length; index++) {
     if (context.query.id === datasetResponse.result.resources[index].id) {
@@ -81,13 +70,14 @@ export async function getServerSideProps(context) {
     }
     
     if (['CSV', 'XLSX'].includes(datasetResponse.result.resources[index].format)) {
-      if (datasetResponse.result.resources[index].name.includes('data dictionary')) {
+
+      if (datasetResponse.result.resources[index].name.includes('data dictionary') || datasetResponse.result.resources[index].name.includes('Data Dictionary')) {
         dictionaryData = await buildTable(datasetResponse.result.resources[index].id)
       }
     }
   }
 
-
+  /* Finds the right resource file */
   const response = await fetch('https://data.ca.gov/api/3/action/datastore_search?resource_id='+context.query.id).then(response => response.json());
   tableData = {
     columns: [],
@@ -109,7 +99,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function preview(dataset) {
-  console.log("HERE", dataset)
   return (
     <main id="body-content" className="cagov-main dataset-preview">
       <nav className="nav-breadcrumb">
@@ -130,24 +119,28 @@ export default function preview(dataset) {
         <h2 className="h3">
           Preview
         </h2>
-        <div className="dataset-description">
+        <div className="dataset-description-table">
           <div className="dataset-label">Published by:</div>
           <div className="dataset-value">{dataset.details.author}</div>
           <div className="dataset-label">Last updated:</div>
           <div className="dataset-value">{dataset.details.metadata_modified}</div>
           <div className="dataset-label">File details:</div>
-          <div className="dataset-value">{dataset.details.size? dataset.details.size: "NA"}</div>
+          <div className="dataset-value">{dataset.details.size? dataset.details.size: "N/A"}</div>
           <div className="dataset-label">Access data:</div>
           <div className="dataset-value">
             <a href={dataset.details.download}>Download File</a> | <a href="">API</a>
           </div>
           <div className="dataset-label">Description:</div>
-          <div className="resource-description">
-            <p>{dataset.description? dataset.description: "N/A"}</p>
+          <div>
+            <div id="dataset-description" className="description resource-description line-clamp-5">
+              <p>{dataset.details.description? dataset.details.description: "N/A"}</p>
+              
+            </div>
             <button className="btn-read-more">
               Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
             </button>
           </div>
+          
           {/*<div className="dataset-value">{dataset.details.description}</div>*/}
 
         </div>
@@ -169,6 +162,101 @@ export default function preview(dataset) {
         </div>
       </div>
       </article>
+      <div id="myModal" className="modal">
+          <div className="modal-content">
+            <span className="close">&times;</span>
+            <h2 className="h3">API endpoint</h2>
+            <h3 id="resource-name" className="h4 thin">
+              Dataset Name
+            </h3>
+            <p>
+              Use the query web API to retrieve data with a set of basic
+              parameters. Copy the API endpoint you need to start.
+            </p>
+            <p>
+              <a href="https://docs.ckan.org/en/latest/maintaining/datastore.html#ckanext.datastore.logic.action.datastore_search">
+                Usage documentation
+              </a>
+            </p>
+            <ul className="input-group">
+              <li>
+                <label>Simple query</label>
+                <input id="simple-query" type="text" value="" readOnly />
+                <button className="copy-button">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="19"
+                    height="22"
+                    fill="none"
+                    viewBox="0 0 19 22"
+                  >
+                    <g clipPath="url(#clip0_425_18691)">
+                      <path
+                        fill="#000"
+                        d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
+                      ></path>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_425_18691">
+                        <path fill="#fff" d="M0 0H19V22H0z"></path>
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </button>
+              </li>
+              <li>
+                <label>SQL query</label>
+                <input id="sql-query" type="text" value="" readOnly />
+                <button className="copy-button">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="19"
+                    height="22"
+                    fill="none"
+                    viewBox="0 0 19 22"
+                  >
+                    <g clipPath="url(#clip0_425_18691)">
+                      <path
+                        fill="#000"
+                        d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
+                      ></path>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_425_18691">
+                        <path fill="#fff" d="M0 0H19V22H0z"></path>
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </button>
+              </li>
+              <li>
+                <label>Odata query</label>
+                <input id="odata-query" type="text" value="" readOnly />
+                <button className="copy-button">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="19"
+                    height="22"
+                    fill="none"
+                    viewBox="0 0 19 22"
+                  >
+                    <g clipPath="url(#clip0_425_18691)">
+                      <path
+                        fill="#000"
+                        d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
+                      ></path>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_425_18691">
+                        <path fill="#fff" d="M0 0H19V22H0z"></path>
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
     </main>
     
   )
