@@ -50,6 +50,14 @@
 .dataset-info {
   font-size: 1rem;
 }
+.dataset-info .dataset-icon {
+  padding-right:1rem;
+  position:relative;
+  top:0.7rem;
+}
+.dataset-info .dataset-icon svg {
+  width:2.5rem;
+}
 .thin {
   font-weight:100;
 }
