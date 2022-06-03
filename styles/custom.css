@@ -31,7 +31,7 @@
 }
 .dataset .description p{
   display: -webkit-box;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical; 
   overflow: hidden;
 }
@@ -54,10 +54,18 @@
   margin-bottom: 1rem;
   border-top: 1px solid #cecece;
   border-bottom: 1px solid #cecece;
-  padding: 1rem 0 1rem 0;
+  padding: 0 0 1rem 0;
 }
 .dataset-info {
   font-size: 1rem;
+}
+.dataset-info .dataset-icon {
+  padding-right:1rem;
+  position:relative;
+  top:0.7rem;
+}
+.dataset-info .dataset-icon svg {
+  width:2.5rem;
 }
 .thin {
   font-weight:100;
@@ -293,6 +301,9 @@ ul.align ul {
 .modal-content h2 {
   margin: 0;
 }
+.modal-content input {
+  font-family:Monaco, Menlo, Consolas, "Courier New", monospace;
+}
 /* The Close Button */
 .close {
   color: #aaaaaa;
@@ -332,8 +343,8 @@ ul.align ul {
 .input-group input {
   height: 3rem;
   width: 90%;
-  background: #F5F5F5;
-  border: 1px solid #E1E0E3;
+  background: #FAFAFA;
+  border: 1px solid #D4D4D4;
   box-sizing: border-box;
   border-radius: 6px 0px 0px 6px;
   padding: 16px 0 16px 16px;
@@ -360,10 +371,10 @@ ul.align ul {
   height: 3rem;
   width: 48px;
   padding: .5rem;
-  background: #f5f5f5;
+  background: #FAFAFA;
   margin: 0;
-  border: 1px solid #E1E0E3;
-  border-left: 1px solid #E1E0E3;
+  border: 1px solid #D4D4D4;
+  border-left: 1px solid #D4D4D4;
   border-radius: 0px 5px 5px 0px;
   line-height: 0;
   position: relative;
@@ -521,15 +532,15 @@ input[type=checkbox] {
   border-bottom: 1px solid #cecece;
 }
 .additional-info-table strong {
-  color: #727272;
+  color: #4B4B4B;
   font-size: 1.2rem;
 }
 
 .additional-info h2 {
-  color: #727272;
+  color: #4B4B4B;
   font-size: 1.5rem;
   padding-bottom: .5rem;
-  border-bottom: 1px solid #727272;
+  border-bottom: 1px solid #4B4B4B;
   margin-bottom: 0;
 }
 .additional-info-table {
@@ -539,7 +550,7 @@ input[type=checkbox] {
   display: grid;
   min-height: 100px;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  border-bottom: 1px solid #727272;
+  border-bottom: 1px solid #4B4B4B;
 }
 .additional-info-table .row:last-child {
   border-bottom: 0;
