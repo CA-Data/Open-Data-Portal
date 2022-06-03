@@ -29,15 +29,14 @@
 #sort {
   color: var(--primary-color, #046A99);
 }
-.dataset .description p{
+
+.line-clamp-5 p{
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical; 
   overflow: hidden;
 }
-/*.dataset .description p {
-  overflow: hidden;
-}*/
+
 #dataset-description p.expanded {
   -webkit-line-clamp: 100;
 }
@@ -46,6 +45,9 @@
   color: #727272;
   margin: 1rem 0;
   cursor: pointer;
+}
+.btn-read-more svg {
+  pointer-events: none;
 }
 .dataset-info-label {
   color: #4B4B4B;
@@ -184,7 +186,7 @@ table.supporting-files-table th {
   margin: 2rem 0;
   padding: 0 var(--s-2, 1rem) 2rem var(--s-2, 1rem);
   font-size: 1rem;
-  text-transform: capitalize;
+  /*text-transform: capitalize;*/
 }
 .nav-breadcrumb ol {
   list-style: none;
@@ -470,9 +472,15 @@ button.copied::after {
   opacity: 1;
   cursor: text;
 }
-.resource-description {
-  max-width: 250px;
+
+#dataset-description .description  {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical; 
+  overflow: hidden;
+  margin-bottom: .5rem;
 }
+
 .data-files-table .resource-description p, .supporting-files-table .resource-description p  {
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -480,6 +488,7 @@ button.copied::after {
   overflow: hidden;
   margin-bottom: .5rem;
 }
+
 .additional-info-table .resource-description p {
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -487,6 +496,7 @@ button.copied::after {
   overflow: hidden;
   margin-bottom: .5rem;
 }
+
 .expanded {
   -webkit-line-clamp: 100 !important;
 }
@@ -494,7 +504,6 @@ button.copied::after {
   margin-left: 0.5rem;
   margin-top: -0.25rem;
   pointer-events: none;
-  
 }
 .cart svg {
   width: 16px;
@@ -567,9 +576,7 @@ input[type=checkbox] {
 .border-bottom {
   border-bottom: 1px solid #727272;
 }
-.no-limit {
-  max-width: 1000px !important;
-}
+
 .side-navigation {
   list-style: none;
 }
@@ -687,6 +694,20 @@ input[type=checkbox] {
     margin-right: 0px!important;
   }
 }
+
+.dataset-description-table {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  /*grid-template-columns: repeat(auto-fill, 1fr);*/
+  grid-row-gap: .8rem;
+  grid-column-gap: 3rem;
+}
+.dataset-label {
+  font-weight: bold;
+  font-size: 1.12rem;
+  letter-spacing: .5px;
+}
+
 /* home page banner */
 .home-page .cagov-featured-section {
   height: auto;
