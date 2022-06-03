@@ -152,7 +152,7 @@ export default function preview(dataset) {
 
         </div>
         
-        <div className="data-table-section">
+        <div id="data-table-section">
           <h3 className="h4">Data preview</h3>
           <p>You’re previewing the first 50 rows of this file.</p>
           <div style={{ height: 600, width: '100%' }}>

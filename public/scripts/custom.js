@@ -70,7 +70,7 @@ window.addEventListener('load', function (event) {
         console.log("Empty table")
       }
       if (document.getElementById("data-table-section").innerText.includes('No rows')) {
-        document.getElementById("data-dictionary-section").style.display = "None"
+        document.getElementById("data-table-section").style.display = "None"
         console.log("Empty table")
       }
     }
