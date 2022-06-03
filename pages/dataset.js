@@ -82,6 +82,36 @@ export async function getServerSideProps(context) {
       dataFiles.push(resource);
     } else supportingFiles.push(resource);
   }
+
+  const arrayUpdateFreq = {"R/P10Y":"Decennial",
+  "R/P4Y":"Quadrennial",
+  "R/P1Y":"Annual",
+  "R/P2M":"Bimonthly",
+  "R/P0.5M":"Bimonthly",
+  "R/P3.5D":"Semiweekly",
+  "R/P1D":"Daily",
+  "R/P2W":"Biweekly",
+  "R/P0.5W":"Biweekly",
+  "R/P6M":"Semiannual",
+  "R/P2Y":"Biennial",
+  "R/P3Y":"Triennial",
+  "R/P0.33W":"Three times a week",
+  "R/P0.33M":"Three times a month",
+  "R/PT1S":"Continuously updated",
+  "R/P1M":"Monthly",
+  "R/P3M":"Quarterly",
+  "R/P0.5M":"Semimonthly",
+  "R/P4M":"Three times a year",
+  "R/P1W":"Weekly",
+  "R/PT1H":"Hourly"};
+  var updateFrequency = arrayUpdateFreq[response.result.accrualPeriodicity];
+  //console.log(updateFrequency);
+  if (updateFrequency) {
+    updateFrequency = arrayUpdateFreq[updateFrequency] ? arrayUpdateFreq[updateFrequency] : updateFrequency;
+  } else {
+    updateFrequency = "N/A";
+  }
+
   return {
     props: {
       data_object: response,
@@ -90,6 +120,7 @@ export async function getServerSideProps(context) {
       supportingFiles: supportingFiles,
       dataFiles: dataFiles,
       parameters: context.query,
+      updateFrequency: updateFrequency
     },
   };
 }
@@ -155,24 +186,29 @@ export default function dataSet(data) {
                   {/*data.group_object.map((e) => e.title).join(", ")*/}
                   {data.group_object[0].title ? data.group_object[0].title: ""}
                 </p>
-                <p><strong>About</strong></p>
+                <h3 className="h5"><strong>About</strong></h3>
                 <ul>
                   <li>Organization: {data.data_object.result.organization.title? data.data_object.result.organization.title: "N/A"}</li>
                   <li>Contact: <a href={"mailto:" + data.data_object.result.contact_email}>{data.data_object.result.contact_name}</a></li>
                   <li><a href={data.data_object.result.landingPage}>Organization website</a></li>
-                  <li>License:d {data.data_object.result.license_title? data.data_object.result.license_title: "N/A"}</li>
+                  <li>License: {data.data_object.result.license_title? data.data_object.result.license_title: "Public domain"}<br/>
+                  Visit <Link href="/licenses">Licenses</Link> for more information.</li>
                 </ul>
-                <p><strong>Timeframe</strong></p>
+                <h3 className="h5"><strong>Timeframe</strong></h3>
                 <ul>
-                  <li>Updated: </li>
+                  <li>Updated: {data.updateFrequency}</li>
                   <li>Last updated: {metadata_modified}</li>
                   <li>Created: {metadata_created}</li>
                   <li>Temporal coverage: {data.data_object.result.temporal? data.data_object.result.temporal: "N/A"}</li>
                 </ul>
-                <p><strong>Related links</strong></p>
-                <ul>
-                  <li>{data.data_object.result.related_resources? data.data_object.result.related_resources: "N/A"}</li>
-                </ul>
+                {data.data_object.result.related_resources &&
+                  <h3 className="h5"><strong>Related resources</strong></h3>
+                }
+                {data.data_object.result.related_resources &&
+                  <ul>
+                    <li>{data.data_object.result.related_resources}</li>
+                  </ul>
+                }
               </div>
             </div>
           </div>
@@ -225,7 +261,7 @@ export default function dataSet(data) {
                         >
                           <a>{dataset.name}</a>
                         </Link>
-                        <div className="resource-description no-limit">
+                        <div className="resource-description" style={{maxWidth: "400px"}}>
                           <p>{dataset.description}</p>
                           <button className="btn-read-more">
                             Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
@@ -334,7 +370,8 @@ export default function dataSet(data) {
                       <a href={dataset.url}>Download</a>
                       </td>
                       <td>
-                        {dataset.format} {dataset.size}
+                        {dataset.format}<br />
+                        {dataset.size}
                       </td>
                       <td>{dataset.created}</td>
                     </tr>
