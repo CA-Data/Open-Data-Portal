@@ -38,7 +38,7 @@ export async function getServerSideProps(context) {
         display_name: "",
         description: "",
         image_display_url: "",
-        title: "NA",
+        title: "N/A",
         id: "",
         name: ""
       }
@@ -50,7 +50,7 @@ export async function getServerSideProps(context) {
   const supportingFiles = [];
   for (let index = 0; index < response.result.resources.length; index++) {
     const date = new Date(response.result.resources[index].created);
-    const options = { year: "numeric", month: "numeric", day: "numeric" };
+    const options = { year: "2-digit", month: "2-digit", day: "2-digit" };
     const dateFromat = date.toLocaleDateString("en-EN", options);
     //console.log(response.result.resources[index].description)
     const resource = {};
@@ -82,6 +82,8 @@ export async function getServerSideProps(context) {
       dataFiles.push(resource);
     } else supportingFiles.push(resource);
   }
+
+  const previewableDataTypes = ["CSV","PDF","XLSX","DOCX"];
 
   const arrayUpdateFreq = {
     "R/P10Y":"Decennial",
@@ -123,7 +125,7 @@ export async function getServerSideProps(context) {
     "transportation":`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path fill="#fff" d="M1 1H49V49H1z"/><g fill="#046a99"><path d="M45.2 19.5c-.3-1-1.2-1.6-2.3-1.6H26c-1 0-2 .7-2.3 1.6l-3.3 9.7v13c0 .8.7 1.6 1.6 1.6h1.5c.9 0 1.6-.9 1.6-1.8v-2.9h18.8v3c0 .8.7 1.7 1.6 1.7h1.4c.9 0 1.6-.8 1.6-1.7V29.2l-3.3-9.7Zm-19.2.8h17l2.3 7H23.6l2.4-7Zm-1 14.1c-1.2 0-2.3-1-2.3-2.4s1-2.3 2.4-2.3 2.3 1 2.3 2.3-1 2.4-2.3 2.4Zm18.9 0c-1.3 0-2.4-1-2.4-2.4s1-2.3 2.4-2.3 2.3 1 2.3 2.3-1 2.4-2.3 2.4Z"/><path d="M25 6.2H8.7a7 7 0 0 0-7 7v18.9a7 7 0 0 0 7 7l-2.3 2.3v2.4h2.3l4.7-4.7H18V27.3H6.3V11h21.1v4.7h4.7v-2.4a7 7 0 0 0-7-7ZM8.7 29.7c1.3 0 2.4 1 2.4 2.4s-1.1 2.3-2.4 2.3a2.4 2.4 0 0 1 0-4.7Z" opacity=".5"/></g></svg>` ,
     "water":`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path fill="#fff" d="M1 1H49V49H1z"/><g fill="#046a99"><path d="M35 35a12 12 0 0 0-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2s-2.8-.5-4.1-1.2c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2v3.9A12 12 0 0 0 11 40c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Zm0-9c-2.6 0-4.3 1-5.8 1.7-1.3.6-2.4 1.2-4.1 1.2s-2.8-.5-4.1-1.2c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2v3.9c2.7 0 4.4-.9 5.9-1.6a7.6 7.6 0 0 1 8.2 0c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6a7.6 7.6 0 0 1 8.2 0c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Zm6-16a11.8 11.8 0 0 0-11.8 0c-1.3.6-2.4 1.1-4.1 1.1s-2.8-.5-4.1-1.2c-1.5-.7-3.2-1.6-6-1.6s-4.3.9-5.8 1.6c-1.3.7-2.4 1.2-4.1 1.2V15c2.7 0 4.4-.9 5.9-1.6 1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4a8 8 0 0 1-4.1-1Z" opacity=".5"/><path d="M35 17.2c-2.6 0-4.3.8-5.8 1.6a7.6 7.6 0 0 1-8.2 0c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6A7.6 7.6 0 0 1 5 20v3.9c2.7 0 4.4-.9 5.9-1.6 1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Z"/></g></svg>` 
   };
-  var topicIcn = (response.result.groups[0].name && topicIconArray[response.result.groups[0].name]) ? topicIconArray[response.result.groups[0].name] : "";
+  var topicIcn = (response.result.groups[0] && response.result.groups[0].name && topicIconArray[response.result.groups[0].name]) ? topicIconArray[response.result.groups[0].name] : "";
 
   return {
     props: {
@@ -134,7 +136,8 @@ export async function getServerSideProps(context) {
       dataFiles: dataFiles,
       parameters: context.query,
       updateFrequency: updateFrequency,
-      topicIcn: topicIcn
+      topicIcn: topicIcn,
+      previewableDataTypes:previewableDataTypes
     },
   };
 }
@@ -260,21 +263,27 @@ export default function dataSet(data) {
                   {data.dataFiles.map((dataset, index) => (
                     <tr key={index}>
                       <td>
-                      <Link
-                          href={
-                            "/preview?name=" +
-                            data.parameters.name +
-                            "&id=" +
-                            dataset.id +
-                            "&rname=" +
-                            dataset.name +
-                            "&state=" +
-                            dataset.active
-                          }
-                          passHref
-                        >
-                          <a>{dataset.name}</a>
-                        </Link>
+                        {
+                          data.previewableDataTypes.includes(dataset.format)
+                          ?
+                          <Link
+                            href={
+                              "/preview?name=" +
+                              data.parameters.name +
+                              "&id=" +
+                              dataset.id +
+                              "&rname=" +
+                              dataset.name +
+                              "&state=" +
+                              dataset.active
+                            }
+                            passHref
+                          >
+                            <a>{dataset.name}</a>
+                          </Link>
+                          :
+                          <div>{dataset.name}</div>
+                        }
                         <div className="resource-description" style={{maxWidth: "400px"}}>
                           <p>{dataset.description}</p>
                           <button className="btn-read-more">
@@ -283,22 +292,25 @@ export default function dataSet(data) {
                         </div>
                       </td>
                       <td>
-                      <Link
-                          href={
-                            "/preview?name=" +
-                            data.parameters.name +
-                            "&id=" +
-                            dataset.id +
-                            "&rname=" +
-                            dataset.name +
-                            "&state=" +
-                            dataset.active
-                          }
-                          passHref
-                        >
-                      <a>Preview</a>
-                      </Link>
-                      <br />
+                        {
+                          data.previewableDataTypes.includes(dataset.format) &&
+                            <div><Link
+                              href={
+                                "/preview?name=" +
+                                data.parameters.name +
+                                "&id=" +
+                                dataset.id +
+                                "&rname=" +
+                                dataset.name +
+                                "&state=" +
+                                dataset.active
+                              }
+                              passHref
+                            >
+                            <a>Preview</a>
+                          </Link></div>
+                        }
+                      
                       <button
                         className="api-button"
                         data-resource-name={dataset.name}
@@ -334,21 +346,28 @@ export default function dataSet(data) {
                   {data.supportingFiles.map((dataset, index) => (
                     <tr key={index}>
                       <td>
-                        <Link
-                          href={
-                            "/preview?name=" +
-                            data.parameters.name +
-                            "&id=" +
-                            dataset.id +
-                            "&rname=" +
-                            dataset.name +
-                            "&state=" +
-                            dataset.active
-                          }
-                          passHref
-                        >
+                        {
+                          data.previewableDataTypes.includes(dataset.format)
+                          ?
+                          <Link
+                            href={
+                              "/preview?name=" +
+                              data.parameters.name +
+                              "&id=" +
+                              dataset.id +
+                              "&rname=" +
+                              dataset.name +
+                              "&state=" +
+                              dataset.active
+                            }
+                            passHref
+                          >
                           <a>{dataset.name}</a>
-                        </Link>
+                          </Link>
+                          :
+                          <div>{dataset.name}</div>
+                        }
+
                         <div className="resource-description no-limit">
                           <p>{dataset.description}</p>
                           <button className="btn-read-more">
@@ -357,22 +376,25 @@ export default function dataSet(data) {
                         </div>
                       </td>
                       <td>
-                      <Link
-                          href={
-                            "/preview?name=" +
-                            data.parameters.name +
-                            "&id=" +
-                            dataset.id +
-                            "&rname=" +
-                            dataset.name +
-                            "&state=" +
-                            dataset.active
-                          }
-                          passHref
-                        >
-                      <a>Preview</a>
-                      </Link>
-                      <br />
+                        {
+                          data.previewableDataTypes.includes(dataset.format) &&
+                            <div><Link
+                              href={
+                                "/preview?name=" +
+                                data.parameters.name +
+                                "&id=" +
+                                dataset.id +
+                                "&rname=" +
+                                dataset.name +
+                                "&state=" +
+                                dataset.active
+                              }
+                              passHref
+                            >
+                            <a>Preview</a>
+                          </Link></div>
+                        }
+
                       <button
                         className="api-button"
                         data-resource-name={dataset.name}

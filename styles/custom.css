@@ -45,7 +45,7 @@
   margin-bottom: 1rem;
   border-top: 1px solid #cecece;
   border-bottom: 1px solid #cecece;
-  padding: 1rem 0 1rem 0;
+  padding: 0 0 1rem 0;
 }
 .dataset-info {
   font-size: 1rem;
@@ -503,15 +503,15 @@ button.copied::after {
   border-bottom: 1px solid #cecece;
 }
 .additional-info-table strong {
-  color: #727272;
+  color: #4B4B4B;
   font-size: 1.2rem;
 }
 
 .additional-info h2 {
-  color: #727272;
+  color: #4B4B4B;
   font-size: 1.5rem;
   padding-bottom: .5rem;
-  border-bottom: 1px solid #727272;
+  border-bottom: 1px solid #4B4B4B;
   margin-bottom: 0;
 }
 .additional-info-table {
@@ -521,7 +521,7 @@ button.copied::after {
   display: grid;
   min-height: 100px;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  border-bottom: 1px solid #727272;
+  border-bottom: 1px solid #4B4B4B;
 }
 .additional-info-table .row:last-child {
   border-bottom: 0;
