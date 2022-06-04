@@ -14,6 +14,11 @@ export default function preview(dataset) {
               <a>Open Data</a>
             </Link>
           </li>
+          <li>
+            <Link href="/" passHref>
+              <a>about</a>
+            </Link>
+          </li>
           <li>Contact us</li>
         </ol>
       </nav>
@@ -24,7 +29,11 @@ export default function preview(dataset) {
 
         <div className={styles.container}>
           <h1>Contact Us</h1>
-          <p>Have questions or need to report and issue? We&apos;re here to help.</p>
+          <p className="lead-text">Have questions or need to report an issue? We’re here to help.</p>
+          <ul>
+          <li>If you have a question about a specific dataset, contact the data steward from the dataset.</li>
+          <li>If you have a technical issue about a dataset, be sure to include the name and link of the dataset.</li>
+          </ul>
           <form className="contact-form">
             <label>
               Name
@@ -35,8 +44,23 @@ export default function preview(dataset) {
               <input type="text" name="email" />
             </label>
             <label>
+              Topic
+            <select>
+              <option value="Dataset / technical help">Dataset / technical help</option>
+              <option value="Report an issue with the site">Report an issue with the site</option>
+              <option value="Share feedback">Share feedback</option>
+              <option value="Upload">Upload</option>
+              <option value="Search">Search</option>
+              <option value="Something else">Something else</option>
+            </select>
+          </label>
+          <label>
+              Page link
+              <input type="text" name="Page link" />
+            </label>
+            <label>
               Comment
-              <textarea type="text" name="comment" rows="4" cols="50"></textarea>
+              <textarea type="text" name="comment" rows="4" cols="50"placeholder="Be sure to include links, if needed."></textarea>
             </label>
             <input className="contact-button" type="submit" value="Submit" />
           </form>

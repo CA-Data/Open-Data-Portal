@@ -76,10 +76,23 @@ export async function getServerSideProps() {
 export default function Home(data) {
   return (
     <>
-      <main>
-        <div className="padding-y">
+       <main id="body-content" className="cagov-main">
+      <nav className="nav-breadcrumb">
+        <ol>
+          <li>
+            <a href="https://ca.gov/">CA.gov</a>
+          </li>
+          <li>
+            <Link href="/" passHref>
+              <a>Open Data</a>
+            </Link>
+          </li>
+          <li>Explore Datasets</li>
+          <li>Topics</li>
+        </ol>
+      </nav>
           <div className="page-container-ds topics-page"> 
-          <h1 className="h2">Topics</h1>
+          <h1>Topics</h1>
             <div className="two-col">
               {
                 data.topics.map((topic, index) => (
@@ -93,28 +106,17 @@ export default function Home(data) {
                   </div>
                   ))
               }
-              <div className="card-block">
-                <div className="icon-col">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
-                    <circle cx="90" cy="90" r="90" fill="#4f97b8"></circle>
-                    <path
-                      fill="#fdb81d"
-                      d="M42.6 35h40v37.2l51.3 47.3v3.4l4.8 4.4-6.3 5.7v7.7h2.8v4.4h-24.7l-3.3-7-3-1-7.3-6.9h-5.2l-5.9-5.1H77v-6.6l-2-2.4v-1.7l-11-10.3v-2.4l1.2-1.8v-3.5l-3.3.2-2.2-2.8-3.3-6.7-2-3.2-.4-4-7.4-7-.3-10.7-5-5.3v-4.4l2.6-3v-10l-1.1-1.3-.2-3.1z"
-                    ></path>
-                    <path
-                      fill="#fff"
-                      d="M125.3 86a18 18 0 00-15.9-15.9v-4h-4v4a18 18 0 00-15.9 16h-4v4h4a18 18 0 0016 15.8v4.1h4v-4a18 18 0 0015.7-16h4.1v-4h-4.1zm-17.9 16a14 14 0 110-28 14 14 0 010 28z"
-                    ></path>
-                  </svg>
+              <div className="card-block card-marketing inverted">
+                  <div className="icon-col">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180"><circle cx="90" cy="90" r="90" fill="#4f97b8"/><path d="M42.6 35h40v37.2l51.3 47.3v3.4l4.8 4.4-6.3 5.7v7.7h2.8v4.4h-24.7l-3.3-7-3-1-7.3-6.9h-5.2l-5.9-5.1H77v-6.6l-2-2.4v-1.7l-11-10.3v-2.4l1.2-1.8v-3.5l-3.3.2-2.2-2.8-3.3-6.7-2-3.2-.4-4-7.4-7-.3-10.7-5-5.3v-4.4l2.6-3v-10l-1.1-1.3-.2-3.1Z" fill="#fdb81d"/><path d="M105.6 67a14 14 0 0 0-14 14c0 10.5 14 26 14 26s14-15.5 14-26a14 14 0 0 0-14-14Zm-10 14a10 10 0 0 1 20 0c0 5.6-5.8 14.4-10 19.8-4.2-5.3-10-14-10-19.8Z" fill="#fff"/><circle cx="105.6" cy="81" r="5" fill="#034a6b"/></svg>
+                  </div>
+                  <div className="content">
+                    <h3 className="h4">California State Geoportal</h3>
+                    <p className="topic-desc">Explore, visualize, and download California data. Visit our <a href="https://gis.data.ca.gov/">California State Geoportal</a>.</p>
+                  </div>
                 </div>
-                <div className="content">
-                  <h3 className="h4">California State Geoportal</h3>
-                  <p className="topic-desc">This geographic open data portal allows you to explore, visualize, and download California data. Visit our <a href="https://gis.data.ca.gov/">California State Geoportal to get started.</a></p>
-                </div>
-              </div>
             </div>
           </div>
-        </div>
       </main>
     </>
   );

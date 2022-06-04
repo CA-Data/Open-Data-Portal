@@ -109,10 +109,13 @@
   display: grid;
   grid-template-columns: 2.5rem 1fr;
   grid-gap: 0.5rem;
-  background: var(--white, #FFFFFF);
+  /* removed style
+  background: var(--white, #FFFFFF);*/
   padding: 1.25rem 1.5rem;
   border-radius: 0.5rem;
   margin: 0.5rem;
+  background: #fafafa;
+  border: 1px solid #D4D4D7;
 }
 .card-block a {
   font-weight: bolder;
@@ -182,9 +185,9 @@ table.supporting-files-table th {
 .data-files-table thead, .supporting-files-table thead{
   background: #EDEDED;
 }
-.nav-breadcrumb {
-  margin: 2rem 0;
-  padding: 0 var(--s-2, 1rem) 2rem var(--s-2, 1rem);
+.nav-breadcrumb {  
+  margin: 2rem 0rem 5rem 1.1rem;
+  padding: 0 var(--s-.5, 1rem) 2rem var(--s-.5, 1rem);
   font-size: 1rem;
   /*text-transform: capitalize;*/
 }
@@ -636,7 +639,6 @@ input[type=checkbox] {
   border-radius: 5px;
   margin-top: .25rem;
 }
-
 .contact-button {
   background: var(--primary-color);
   color: var(--white, #fff)!important;
@@ -653,13 +655,13 @@ input[type=checkbox] {
   background-color: var(--primary-hover-color);
 }
 .organization-table {
-  border: 1px solid #a19fa7;
+  border: 1px solid #d4d4d4;
 }
 .organization-row {
   display: grid;
   grid-template-columns: 1fr 100px;
   width: 100%;
-  border-bottom: 1px solid #a19fa7;
+  border-bottom: 1px solid #d4d4d4;
   line-height: 2rem;
 }
 .organization-row:last-child {
@@ -667,17 +669,19 @@ input[type=checkbox] {
 }
 .organization-table-header {
   background: #EDEDED;
+  font-weight:600;
 }
 .organization-column {
   padding: 0 .5rem;
 }
 .organization-column:first-child {
-  border-right: 1px solid #a19fa7;
+  border-right: 1px solid #d4d4d4;
 }
+/* removed styles due to overlaps within all code-- hd
 .topics-page .card-block {
   background: #FAFAFA;
   border: 1px solid #D4D4D7;
-}
+}*/
 .topics-page h3.h4 {
   margin-top: 0;
 }
@@ -743,7 +747,74 @@ input[type=checkbox] {
     width:60%;
   }
 }
-
 .home-page .cagov-featured-sidebar {
   max-width:none;
+}
+.cagov-card {
+  align-items: start;
+}
+.cagov-card .card-text {
+  font-weight: 600;
+}
+/*Homepage cardblocks*/
+.cagov-bkgrd-gry .two-col .card-block{
+  background: #ffffff;
+}
+/*Homepage marketing card to grey*/
+.cagov-bkgrd-gry .two-col .card-marketing{
+  background: #EDEDED;
+}
+/*Marketing card */
+.card-marketing {
+grid-template-columns: 9.5rem 2fr;
+margin: 0rem;
+padding: 1.3rem;
+border: none;
+background: #ffffff;
+}
+.card-marketing .content  {
+  padding-left: 1.3rem;
+  } 
+.card-marketing .content h3 {
+    color: #034A6B;
+    } 
+.card-marketing .content p {
+      font-weight: 600
+    }    
+.card-marketing .content a {
+    line-height: 0; 
+  }
+ .inverted{
+  background:#ffffff;
+ } 
+  .lead-text {
+    font-size: 2.1rem;
+    line-height: 48px;
+    margin-bottom: 1.5rem; 
+  }
+  .Home_container__bCOhY ul {
+    margin-bottom: 3.5rem;
+  }
+  .contact-form label {
+  font-weight: 600;
+  }
+  .contact-form select {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    border: 1px solid var(--gray-300, #e1e0e3);
+    border-radius: 5px;
+    margin-top: .25rem;
+    width: 100%;
+    max-width: 595px;
+    padding: 0.5rem;
+  }
+  .contact-form input[type=text], textarea {
+    padding: 0.5rem;
+    max-width: 595px;
+  }
+  .contact-form label {
+    margin-bottom: 2.1rem;
+  }
+  .page-container-ds {
+    padding-left: 0.4rem;
 }
