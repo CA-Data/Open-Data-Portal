@@ -46,6 +46,7 @@ export default function preview(dataset) {
             <label>
               Topic
             <select>
+              <option value="" disabled selected>Select an option</option>
               <option value="Dataset / technical help">Dataset / technical help</option>
               <option value="Report an issue with the site">Report an issue with the site</option>
               <option value="Share feedback">Share feedback</option>

@@ -1,4 +1,4 @@
-*{
+* {
   font-size:16px;
   line-height:28px;
 }
@@ -475,29 +475,14 @@ button.copied::after {
   cursor: text;
 }
 
-#dataset-description .description  {
+.line-clamp-1 p  {
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical; 
   overflow: hidden;
   margin-bottom: .5rem;
 }
 
-.data-files-table .resource-description p, .supporting-files-table .resource-description p  {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical; 
-  overflow: hidden;
-  margin-bottom: .5rem;
-}
-
-.additional-info-table .resource-description p {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical; 
-  overflow: hidden;
-  margin-bottom: .5rem;
-}
 
 .expanded {
   -webkit-line-clamp: 100 !important;
@@ -692,6 +677,9 @@ input[type=checkbox] {
 .topics-page h3.h4 {
   margin-top: 0;
 }
+.topics-page a.card-block {
+  text-decoration: none;
+}
 .home-page h3.h4 {
   margin-top: 0;
 }
@@ -707,11 +695,14 @@ input[type=checkbox] {
 }
 
 .dataset-description-table {
+  font-size: 18px;
+  line-height: 32px;
   display: grid;
   grid-template-columns: auto 1fr;
   /*grid-template-columns: repeat(auto-fill, 1fr);*/
   grid-row-gap: .8rem;
   grid-column-gap: 3rem;
+  max-width: 876px;
 }
 .dataset-label {
   font-weight: bold;
@@ -756,6 +747,21 @@ input[type=checkbox] {
 }
 .home-page .cagov-featured-sidebar {
   max-width:none;
+}
+/* Preview Table styling */
+.MuiDataGrid-columnHeaders {
+  background: #EDEDED;
+}
+.MuiDataGrid-columnHeaderTitle {
+  padding: 2px;
+  font-weight: bold!important;
+  overflow-wrap: break-word!important;
+}
+
+/* Header/Nav */
+cagov-site-navigation {
+  border-bottom: 0px;
+  justify-self: end;
 }
 .cagov-card {
   align-items: start;
