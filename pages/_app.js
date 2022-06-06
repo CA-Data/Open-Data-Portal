@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps }) {
           </div>
         </div>
         <div className="site-header">
-          <div className="container">
+          <div className="main-container">
             {/*<Link href="/" passHref>
               <a className="grid-logo" aria-label="DCC logo">
                 <svg
@@ -129,166 +129,168 @@ function MyApp({ Component, pageProps }) {
               </form>
             </div>
           */}
-          <cagov-site-navigation>
-          <div className="container">
-            <div className="search-container search-container--small hidden-search" style={{display: "none!important"}}>
-              <form className="site-search" action="/results">
-                <span className="sr-only" id="SearchInput2">
-                  Search datasets
-                </span>
-                <input
-                  type="text"
-                  id="q-top-mobile"
-                  name="q-top"
-                  aria-labelledby="SearchInput"
-                  placeholder="Search datasets"
-                  className="search-textfield"
-                />
-                <button type="submit" className="search-submit">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    enableBackground="new 0 0 17 17"
-                    viewBox="0 0 17 17"
-                    style={{ width: 17 }}
-                  >
-                    <path
-                      fill="#fff"
-                      d="M16.4 15.2l-4-4c2-2.6 1.8-6.5-.6-8.9-1.3-1.3-3-2-4.8-2s-3.5.7-4.8 2c-2.6 2.6-2.6 6.9 0 9.6 1.3 1.3 3 2 4.8 2 1.4 0 2.9-.5 4.1-1.4l4.1 4c.2.2.4.3.7.3.2 0 .5-.1.7-.3.1-.3.1-.9-.2-1.3zM7 12c-1.3 0-2.6-.5-3.5-1.4-1.9-1.9-1.9-5.1 0-7 .9-.9 2.1-1.5 3.5-1.5s2.6.5 3.5 1.4 1.4 2.2 1.4 3.5-.5 2.6-1.4 3.5c-1 1-2.2 1.5-3.5 1.5z"
-                    ></path>
-                  </svg>
-                  <span className="sr-only">Submit</span>
-                </button>
-              </form>
-            </div>
-            <nav
-              className="expanded-menu"
-              role="navigation"
-              aria-label="Site Navigation"
-              aria-hidden="false"
-              id="main-menu"
-            >
-              <div className="expanded-menu-grid">
-                <div
-                  className="expanded-menu-col js-cagov-navoverlay-expandable"
-                  aria-expanded="false"
-                >
-                  <div className="expanded-menu-section">
-                    <strong className="expanded-menu-section-header">
-                      <Link href="/datasets?q=" passHref>
-                        <a className="expanded-menu-section-header-link js-event-hm-menu">
-                          All datasets
-                        </a>
-                      </Link>
-                    </strong>
-                  </div>
-                </div>
-                <div
-                  className="expanded-menu-col js-cagov-navoverlay-expandable"
-                  aria-expanded="false"
-                >
-                  <div className="expanded-menu-section">
-                    <strong className="expanded-menu-section-header">
-                    <button className="expanded-menu-section-header-link js-event-hm-menu">
-                        <span>Explore datasets</span>
-                        <span className="expanded-menu-section-header-arrow">
-                          <svg
-                            aria-hidden="true"
-                            width="11"
-                            height="7"
-                            className="expanded-menu-section-header-arrow-svg"
-                            viewBox="0 0 11 7"
-                            fill="#046A99"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M1.15596 0.204797L5.49336 5.06317L9.8545 0.204797C10.4293 -0.452129 11.4124 0.625368 10.813 1.28143L5.90083 6.82273C5.68519 7.05909 5.32606 7.05909 5.1342 6.82273L0.174341 1.28143C-0.400433 0.6245 0.581838 -0.452151 1.15661 0.204797H1.15596Z"
-                            ></path>
-                          </svg>
-                        </span>
-                      </button>
-                    </strong>
-                    <div className="expanded-menu-dropdown" aria-hidden="true">
-                      <Link href="/topics" passHref>
-                        <a
-                          className="expanded-menu-dropdown-link js-event-hm-menu"
-                          tabIndex="-1"
-                        >
-                          Topics
-                        </a>
-                      </Link>
-                      <Link href="/organizations" passHref>
-                        <a
-                          className="expanded-menu-dropdown-link js-event-hm-menu"
-                          tabIndex="-1"
-                        >
-                          Organizations
-                        </a>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  className="expanded-menu-col js-cagov-navoverlay-expandable"
-                  aria-expanded="false"
-                >
-                  <div className="expanded-menu-section">
-                    <strong className="expanded-menu-section-header">
-                      <button className="expanded-menu-section-header-link js-event-hm-menu">
-                        <span>About</span>
-                        <span className="expanded-menu-section-header-arrow">
-                          <svg
-                            aria-hidden="true"
-                            width="11"
-                            height="7"
-                            className="expanded-menu-section-header-arrow-svg"
-                            viewBox="0 0 11 7"
-                            fill="#046A99"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M1.15596 0.204797L5.49336 5.06317L9.8545 0.204797C10.4293 -0.452129 11.4124 0.625368 10.813 1.28143L5.90083 6.82273C5.68519 7.05909 5.32606 7.05909 5.1342 6.82273L0.174341 1.28143C-0.400433 0.6245 0.581838 -0.452151 1.15661 0.204797H1.15596Z"
-                            ></path>
-                          </svg>
-                        </span>
-                      </button>
-                    </strong>
-                    <div className="expanded-menu-dropdown" aria-hidden="true">
-                      <Link href="/about" passHref>
-                        <a
-                          className="expanded-menu-dropdown-link js-event-hm-menu"
-                          tabIndex="-1"
-                        >
-                          About this data portal
-                        </a>
-                      </Link>
-                      <Link href="/contact-us" passHref>
-                        <a
-                          className="expanded-menu-dropdown-link js-event-hm-menu"
-                          tabIndex="-1"
-                        >
-                          Contact us
-                        </a>
-                      </Link>
-                      <Link href="/licenses" passHref>
-                        <a
-                          className="expanded-menu-dropdown-link js-event-hm-menu"
-                          tabIndex="-1"
-                        >
-                          Licenses
-                        </a>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+          <div className="mobile-nav">
+            <cagov-site-navigation>
+            <div className="container">
+              <div className="search-container search-container--small hidden-search" style={{display: "none!important"}}>
+                <form className="site-search" action="/results">
+                  <span className="sr-only" id="SearchInput2">
+                    Search datasets
+                  </span>
+                  <input
+                    type="text"
+                    id="q-top-mobile"
+                    name="q-top"
+                    aria-labelledby="SearchInput"
+                    placeholder="Search datasets"
+                    className="search-textfield"
+                  />
+                  <button type="submit" className="search-submit">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      enableBackground="new 0 0 17 17"
+                      viewBox="0 0 17 17"
+                      style={{ width: 17 }}
+                    >
+                      <path
+                        fill="#fff"
+                        d="M16.4 15.2l-4-4c2-2.6 1.8-6.5-.6-8.9-1.3-1.3-3-2-4.8-2s-3.5.7-4.8 2c-2.6 2.6-2.6 6.9 0 9.6 1.3 1.3 3 2 4.8 2 1.4 0 2.9-.5 4.1-1.4l4.1 4c.2.2.4.3.7.3.2 0 .5-.1.7-.3.1-.3.1-.9-.2-1.3zM7 12c-1.3 0-2.6-.5-3.5-1.4-1.9-1.9-1.9-5.1 0-7 .9-.9 2.1-1.5 3.5-1.5s2.6.5 3.5 1.4 1.4 2.2 1.4 3.5-.5 2.6-1.4 3.5c-1 1-2.2 1.5-3.5 1.5z"
+                      ></path>
+                    </svg>
+                    <span className="sr-only">Submit</span>
+                  </button>
+                </form>
               </div>
-            </nav>
-          </div>
-        </cagov-site-navigation>
+              <nav
+                className="expanded-menu"
+                role="navigation"
+                aria-label="Site Navigation"
+                aria-hidden="false"
+                id="main-menu"
+              >
+                <div className="expanded-menu-grid">
+                  <div
+                    className="expanded-menu-col js-cagov-navoverlay-expandable"
+                    aria-expanded="false"
+                  >
+                    <div className="expanded-menu-section">
+                      <strong className="expanded-menu-section-header">
+                        <Link href="/datasets?q=" passHref>
+                          <a className="expanded-menu-section-header-link js-event-hm-menu">
+                            All datasets
+                          </a>
+                        </Link>
+                      </strong>
+                    </div>
+                  </div>
+                  <div
+                    className="expanded-menu-col js-cagov-navoverlay-expandable"
+                    aria-expanded="false"
+                  >
+                    <div className="expanded-menu-section">
+                      <strong className="expanded-menu-section-header">
+                      <button className="expanded-menu-section-header-link js-event-hm-menu">
+                          <span>Explore datasets</span>
+                          <span className="expanded-menu-section-header-arrow">
+                            <svg
+                              aria-hidden="true"
+                              width="11"
+                              height="7"
+                              className="expanded-menu-section-header-arrow-svg"
+                              viewBox="0 0 11 7"
+                              fill="#046A99"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M1.15596 0.204797L5.49336 5.06317L9.8545 0.204797C10.4293 -0.452129 11.4124 0.625368 10.813 1.28143L5.90083 6.82273C5.68519 7.05909 5.32606 7.05909 5.1342 6.82273L0.174341 1.28143C-0.400433 0.6245 0.581838 -0.452151 1.15661 0.204797H1.15596Z"
+                              ></path>
+                            </svg>
+                          </span>
+                        </button>
+                      </strong>
+                      <div className="expanded-menu-dropdown" aria-hidden="true">
+                        <Link href="/topics" passHref>
+                          <a
+                            className="expanded-menu-dropdown-link js-event-hm-menu"
+                            tabIndex="-1"
+                          >
+                            Topics
+                          </a>
+                        </Link>
+                        <Link href="/organizations" passHref>
+                          <a
+                            className="expanded-menu-dropdown-link js-event-hm-menu"
+                            tabIndex="-1"
+                          >
+                            Organizations
+                          </a>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    className="expanded-menu-col js-cagov-navoverlay-expandable"
+                    aria-expanded="false"
+                  >
+                    <div className="expanded-menu-section">
+                      <strong className="expanded-menu-section-header">
+                        <button className="expanded-menu-section-header-link js-event-hm-menu">
+                          <span>About</span>
+                          <span className="expanded-menu-section-header-arrow">
+                            <svg
+                              aria-hidden="true"
+                              width="11"
+                              height="7"
+                              className="expanded-menu-section-header-arrow-svg"
+                              viewBox="0 0 11 7"
+                              fill="#046A99"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M1.15596 0.204797L5.49336 5.06317L9.8545 0.204797C10.4293 -0.452129 11.4124 0.625368 10.813 1.28143L5.90083 6.82273C5.68519 7.05909 5.32606 7.05909 5.1342 6.82273L0.174341 1.28143C-0.400433 0.6245 0.581838 -0.452151 1.15661 0.204797H1.15596Z"
+                              ></path>
+                            </svg>
+                          </span>
+                        </button>
+                      </strong>
+                      <div className="expanded-menu-dropdown" aria-hidden="true">
+                        <Link href="/about" passHref>
+                          <a
+                            className="expanded-menu-dropdown-link js-event-hm-menu"
+                            tabIndex="-1"
+                          >
+                            About
+                          </a>
+                        </Link>
+                        <Link href="/contact-us" passHref>
+                          <a
+                            className="expanded-menu-dropdown-link js-event-hm-menu"
+                            tabIndex="-1"
+                          >
+                            Contact us
+                          </a>
+                        </Link>
+                        <Link href="/licenses" passHref>
+                          <a
+                            className="expanded-menu-dropdown-link js-event-hm-menu"
+                            tabIndex="-1"
+                          >
+                            Licenses
+                          </a>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </div>
+          </cagov-site-navigation>
+        </div>
           </div>
         </div>
 

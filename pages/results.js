@@ -50,10 +50,10 @@ export async function getServerSideProps(context) {
     let formattedFormatString ='';
     for(let i=0; i<filters.length;i++){
       if(filters[i+1]){
-        formattedFormatString += filters[i].replace(/ /g, '-') + "%20AND%20";
+        formattedFormatString += filters[i].replace(/ /g, '-').toUpperCase() + "%20AND%20";
       }
       else{
-        formattedFormatString += filters[i].replace(/ /g, '-') + ")";
+        formattedFormatString += filters[i].replace(/ /g, '-').toUpperCase() + ")";
       }
     }
     apirequest += thereWasAFilter ? "%20AND%20" : "&fq=";
@@ -110,7 +110,7 @@ export async function getServerSideProps(context) {
 
 
   const response = await fetch(apirequest).then((response) => response.json());
-  // console.log(apirequest)
+  //  console.log(apirequest)
   pageData["total"].value = Math.ceil(parseInt(response.result.count) / 10);
 
   if (pageData["next"].value >= pageData["total"].value) {
@@ -241,7 +241,6 @@ const Results =(data)=>{
   const [tagArray,setTagArray] = useState([]);
   const [reset,setReset] = useState(false);
   const [initialValues,setInitialValues] = useState(data.parameters.q); 
-
   const router = useRouter();
   if (typeof window === 'object') {
     // Check if document is finally loaded
@@ -276,59 +275,60 @@ const Results =(data)=>{
   var urlParamFormat = (data.parameters.format) ? "&format=" + data.parameters.format : "";
   var urlParamTag = (data.parameters.tag) ? "&tag=" + data.parameters.tag : "";
   var urlParamSort = (data.parameters.sort) ? "&sort=" + data.parameters.sort : "";
+  useEffect(()=>{
+    setInitialValues(data.parameters.q)
+  },[])
+
    useEffect(()=>{
     if(!reset){
-
-    if(topicArray.length == 0 || router.query.topic?.length == 0 ){
-      router.push(router.asPath.split('&topic=')[0])
+      if(topicArray.length == 0 || router.query.topic?.length == 0 ){
+        router.push(router.asPath.split('&topic=')[0])
+      }
+      if(topicArray.length == 1 && !router.query.topic){
+          router.push(router.asPath+'&topic='+topicArray)
+      }
+      if(topicArray.length>=1 && router.query.topic){
+        let newPath = router.asPath.split('&');
+        let index = newPath.findIndex(item=> item.includes('topic'));
+        newPath.splice(index,1,"topic="+topicArray.join(','));
+        newPath = newPath.join('&');
+        router.push(newPath);
+      }
     }
-    if(topicArray.length == 1 && !router.query.topic){
-        router.push(router.asPath+'&topic='+topicArray)
-    }
-    if(topicArray.length>=1 && router.query.topic){
-      let newPath = router.asPath.split('&');
-      let index = newPath.findIndex(item=> item.includes('topic'));
-      newPath.splice(index,1,"topic="+topicArray.join(','));
-      newPath = newPath.join('&');
-      router.push(newPath);
-    }
-  }
   },[topicArray])
   useEffect(()=>{
     if(!reset){
-
-    if(publisherArray.length == 0 || router.query.publisher?.length == 0 ){
-      router.push(router.asPath.split('&publisher=')[0])
+      if(publisherArray.length == 0 || router.query.publisher?.length == 0 ){
+        router.push(router.asPath.split('&publisher=')[0])
+      }
+      if(publisherArray.length == 1 && !router.query.publisher){
+          router.push(router.asPath+'&publisher='+publisherArray)
+      }
+      if(publisherArray.length>=1 && router.query.publisher){
+        let newPath = router.asPath.split('&');
+        let index = newPath.findIndex(item=> item.includes('publisher'));
+        newPath.splice(index,1,"publisher="+publisherArray.join(','));
+        newPath = newPath.join('&');
+        router.push(newPath);
+      }
     }
-    if(publisherArray.length == 1 && !router.query.publisher){
-        router.push(router.asPath+'&publisher='+publisherArray)
-    }
-    if(publisherArray.length>=1 && router.query.publisher){
-      let newPath = router.asPath.split('&');
-      let index = newPath.findIndex(item=> item.includes('publisher'));
-      newPath.splice(index,1,"publisher="+publisherArray.join(','));
-      newPath = newPath.join('&');
-      router.push(newPath);
-    }
-  }
   },[publisherArray])
   useEffect(()=>{
     if(!reset){
-
-    if(formatArray.length == 0 || router.query.format?.length == 0 ){
-      router.push(router.asPath.split('&format=')[0])
+      if(formatArray.length == 0 || router.query.format?.length == 0 ){
+        router.push(router.asPath.split('&format=')[0])
+      }
+      if(formatArray.length == 1 && !router.query.format){
+          router.push(router.asPath+'&format='+formatArray)
+      }
+      if(formatArray.length>=1 && router.query.format){
+        let newPath = router.asPath.split('&');
+        let index = newPath.findIndex(item=> item.includes('format'));
+        newPath.splice(index,1,"format="+formatArray.join(','));
+        newPath = newPath.join('&');
+        router.push(newPath);
+      }
     }
-    if(formatArray.length == 1 && !router.query.format){
-        router.push(router.asPath+'&format='+formatArray)
-    }
-    if(formatArray.length>=1 && router.query.format){
-      let newPath = router.asPath.split('&');
-      let index = newPath.findIndex(item=> item.includes('format'));
-      newPath.splice(index,1,"format="+formatArray.join(','));
-      newPath = newPath.join('&');
-      router.push(newPath);
-    }
-  }
   },[formatArray])
   useEffect(()=>{
     if(!reset){
@@ -554,7 +554,7 @@ const Results =(data)=>{
               </form>
             </div>
             <div>
-              <h2>{data.matches} matches</h2>
+              <h2>{data.matches > 1 ? data.matches + ' matches': data.matches + ' match'} </h2>
             </div>
             <div className="result-page">
               {data.allResults.map((dataset, index) => (
