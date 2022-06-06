@@ -14,7 +14,7 @@ export default function preview() {
               <a>Open Data</a>
             </Link>
           </li>
-          <li>About this data portal</li>
+          <li>About</li>
         </ol>
       </nav>
       <article
