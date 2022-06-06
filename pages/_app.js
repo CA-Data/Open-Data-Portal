@@ -129,12 +129,9 @@ function MyApp({ Component, pageProps }) {
               </form>
             </div>
           */}
-          </div>
-        </div>
-
-        <cagov-site-navigation>
+          <cagov-site-navigation>
           <div className="container">
-            <div className="search-container search-container--small hidden-search">
+            <div className="search-container search-container--small hidden-search" style={{display: "none!important"}}>
               <form className="site-search" action="/results">
                 <span className="sr-only" id="SearchInput2">
                   Search datasets
@@ -292,6 +289,10 @@ function MyApp({ Component, pageProps }) {
             </nav>
           </div>
         </cagov-site-navigation>
+          </div>
+        </div>
+
+        
       </div>
       <Component {...pageProps} />
 

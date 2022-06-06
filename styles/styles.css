@@ -5652,9 +5652,10 @@ figure figcaption {
   margin: 0 auto;
   padding: 16px;
   display: grid;
-  grid-template-columns: auto 1fr;
+  /*grid-template-columns: auto 1fr;*/
   grid-template-rows: auto;
-  grid-template-areas: "org-name mobile-icons";
+  grid-template-areas: "org-name mobile-icons"
+                       "mobile-nav mobile-nav";
   /*column-gap: 0.5rem; addresses left padding issues*/
   row-gap: 0.25rem;
   justify-items: start;
