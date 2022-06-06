@@ -66,14 +66,14 @@ export async function getServerSideProps(context) {
     let formattedTagString ='';
     for(let i=0; i<tags.length;i++){
       if(tags[i+1]){
-        formattedTagString += tags[i].replace(/ /g, '-') + "%20AND%20";
+        formattedTagString += "\""+tags[i] + "\"%20AND%20";
       }
       else{
-        formattedTagString += tags[i].replace(/ /g, '-') + ")";
+        formattedTagString += "\""+tags[i] + "\")";
       }
     }
     apirequest += thereWasAFilter ? "%20AND%20" : "&fq=";
-    apirequest += "tags:(" + formattedTagString;
+    apirequest += "tags:("+formattedTagString;
     thereWasAFilter = 1;
   }
 
@@ -153,7 +153,6 @@ export async function getServerSideProps(context) {
       resultsArray.push(dataset)
     }
   }
-
   //filter data
   const filter_data = {
     topicArray: [],
@@ -195,7 +194,9 @@ export async function getServerSideProps(context) {
       const resource = response.result.results[index].resources
       for (let index = 0; index < resource.length; index++) { // loop over formats for this record
         var resource_type = resource[index].format;
-        resourceObject[resource_type] = resource_type
+        if(resource[index].format != ""){
+          resourceObject[resource_type] = resource_type
+        }
       }
     }
   }
@@ -240,7 +241,6 @@ const Results =(data)=>{
   const [formatArray,setFormatArray] = useState([]);
   const [tagArray,setTagArray] = useState([]);
   const [reset,setReset] = useState(false);
-  const [initialValues,setInitialValues] = useState(data.parameters.q); 
   const router = useRouter();
   if (typeof window === 'object') {
     // Check if document is finally loaded
@@ -275,9 +275,7 @@ const Results =(data)=>{
   var urlParamFormat = (data.parameters.format) ? "&format=" + data.parameters.format : "";
   var urlParamTag = (data.parameters.tag) ? "&tag=" + data.parameters.tag : "";
   var urlParamSort = (data.parameters.sort) ? "&sort=" + data.parameters.sort : "";
-  useEffect(()=>{
-    setInitialValues(data.parameters.q)
-  },[])
+ 
 
    useEffect(()=>{
     if(!reset){
@@ -357,7 +355,6 @@ const Results =(data)=>{
     setPublisherArray([]);
     setFormatArray([]);
     setTagArray([]);
-    setInitialValues('');
     router.push('?q=');
   }
   return (
@@ -451,10 +448,10 @@ const Results =(data)=>{
                         <li key={tag} >
                           <input onChange={(e)=>{
                             if(e.target.checked){
-                             setTagArray([...tagArray,tag.toLowerCase()])
+                             setTagArray([...tagArray,tag])
                            }
                            else{
-                             setTagArray(tagArray.filter(item=>item!=tag.toLowerCase()))
+                             setTagArray(tagArray.filter(item=>item!=tag))
                            } 
                          }} style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={tag} className='checkBox' type={'checkbox'}/>
                           <label style={{cursor:'pointer' }} htmlFor={tag}>{tag}</label>
@@ -490,7 +487,7 @@ const Results =(data)=>{
                     aria-labelledby="SearchInput"
                     placeholder="Search datasets"
                     className="search-textfield"
-                    defaultValue = {initialValues}
+                    defaultValue = {data.parameters.q}
                     style={{
                       width: "876px",
                       height:'49px',
