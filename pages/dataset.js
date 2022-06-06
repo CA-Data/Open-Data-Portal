@@ -233,7 +233,7 @@ export default function dataSet(data) {
             <h1 className="h2" style={{ marginTop: 0 }}>
               {data.data_object.result.title}
             </h1>
-            <div id="dataset-description" className="description">
+            <div id="dataset-description" className="description line-clamp-5">
               <p>
                 {data.data_object.result.notes
                   .replace(/<br>/g, "\n")
