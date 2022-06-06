@@ -685,6 +685,9 @@ input[type=checkbox] {
 .topics-page h3.h4 {
   margin-top: 0;
 }
+.topics-page a.card-block {
+  text-decoration: none;
+}
 .home-page h3.h4 {
   margin-top: 0;
 }
