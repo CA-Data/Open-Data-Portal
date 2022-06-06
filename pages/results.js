@@ -278,7 +278,7 @@ const Results =(data)=>{
   useEffect(()=>{
     setInitialValues(data.parameters.q)
   },[])
-  
+
    useEffect(()=>{
     if(!reset){
       if(topicArray.length == 0 || router.query.topic?.length == 0 ){
@@ -554,7 +554,7 @@ const Results =(data)=>{
               </form>
             </div>
             <div>
-              <h2>{data.matches} matches</h2>
+              <h2>{data.matches > 1 ? data.matches + ' matches': data.matches + ' match'} </h2>
             </div>
             <div className="result-page">
               {data.allResults.map((dataset, index) => (
