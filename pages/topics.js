@@ -96,7 +96,7 @@ export default function Home(data) {
             <div className="two-col">
               {
                 data.topics.map((topic, index) => (
-                  <a key={index} className="card-block" href={"/results?q=groups:"+topic.id}>
+                  <a key={index} className="card-block" href={"/results?q=&topic="+topic.id}>
                     <div className="icon-col" dangerouslySetInnerHTML={{ __html: topic.icon }}></div>
                     <div className="content">
                       <h3 style={{marginTop:"0.2em"}}>{topic.title}</h3>
