@@ -169,10 +169,10 @@ const Results =(data)=>{
   const [publisherSvg,setPublisherSvg] = useState('svg-rotate-down');
   const [formatSvg,setFormatSvg] = useState('svg-rotate-down');
   const [tagSvg,setTagSvg] = useState('svg-rotate-down');
-  const [topicArray,setTopicArray] = useState([]);
-  const [publisherArray,setPublisherArray] = useState([]);
-  const [formatArray,setFormatArray] = useState([]);
-  const [tagArray,setTagArray] = useState([]);
+  const [selectedTopics,setSelectedTopics] = useState([]);
+  const [selectedPublishers,setSelectedPublishers] = useState([]);
+  const [selectedFormats,setSelectedFormats] = useState([]);
+  const [selectedtags,setSelectedTags] = useState([]);
   const [reset,setReset] = useState(false);
   const [topicList,setTopicList] = useState([]);
   const [publisherList,setPublisherList] = useState([]);
@@ -229,76 +229,76 @@ const Results =(data)=>{
 
 
   // UseEffects will fire when its corresponding array is updated. 
-  // Arrays that can be updated by user input -> (topicArray,publisherArray,formatArray,tagArray)
+  // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedtags)
   // Each array will append a value to the url
   useEffect(()=>{
     if(!reset){
-      if(topicArray.length == 0 || router.query.topic?.length == 0 ){
+      if(selectedTopics.length == 0 || router.query.topic?.length == 0 ){
         router.push(router.asPath.split('&topic=')[0])
       }
-      if(topicArray.length == 1 && !router.query.topic){
-          router.push(router.asPath+'&topic='+topicArray)
+      if(selectedTopics.length == 1 && !router.query.topic){
+          router.push(router.asPath+'&topic='+selectedTopics)
       }
-      if(topicArray.length>=1 && router.query.topic){
+      if(selectedTopics.length>=1 && router.query.topic){
         let newPath = router.asPath.split('&');
         let index = newPath.findIndex(item=> item.includes('topic'));
-        newPath.splice(index,1,"topic="+topicArray.join(','));
+        newPath.splice(index,1,"topic="+selectedTopics.join(','));
         newPath = newPath.join('&');
         router.push(newPath);
       }
     }
-  },[topicArray])
+  },[selectedTopics])
   useEffect(()=>{
     if(!reset){
-      if(publisherArray.length == 0 || router.query.publisher?.length == 0 ){
+      if(selectedPublishers.length == 0 || router.query.publisher?.length == 0 ){
         router.push(router.asPath.split('&publisher=')[0])
       }
-      if(publisherArray.length == 1 && !router.query.publisher){
-          router.push(router.asPath+'&publisher='+publisherArray)
+      if(selectedPublishers.length == 1 && !router.query.publisher){
+          router.push(router.asPath+'&publisher='+selectedPublishers)
       }
-      if(publisherArray.length>=1 && router.query.publisher){
+      if(selectedPublishers.length>=1 && router.query.publisher){
         let newPath = router.asPath.split('&');
         let index = newPath.findIndex(item=> item.includes('publisher'));
-        newPath.splice(index,1,"publisher="+publisherArray.join(','));
+        newPath.splice(index,1,"publisher="+selectedPublishers.join(','));
         newPath = newPath.join('&');
         router.push(newPath);
       }
     }
-  },[publisherArray])
+  },[selectedPublishers])
   useEffect(()=>{
     if(!reset){
-      if(formatArray.length == 0 || router.query.format?.length == 0 ){
+      if(selectedFormats.length == 0 || router.query.format?.length == 0 ){
         router.push(router.asPath.split('&format=')[0])
       }
-      if(formatArray.length == 1 && !router.query.format){
-          router.push(router.asPath+'&format='+formatArray)
+      if(selectedFormats.length == 1 && !router.query.format){
+          router.push(router.asPath+'&format='+selectedFormats)
       }
-      if(formatArray.length>=1 && router.query.format){
+      if(selectedFormats.length>=1 && router.query.format){
         let newPath = router.asPath.split('&');
         let index = newPath.findIndex(item=> item.includes('format'));
-        newPath.splice(index,1,"format="+formatArray.join(','));
+        newPath.splice(index,1,"format="+selectedFormats.join(','));
         newPath = newPath.join('&');
         router.push(newPath);
       }
     }
-  },[formatArray])
+  },[selectedFormats])
   useEffect(()=>{
     if(!reset){
-      if(tagArray.length == 0 || router.query.tag?.length == 0 ){
+      if(selectedtags.length == 0 || router.query.tag?.length == 0 ){
         router.push(router.asPath.split('&tag=')[0])
       }
-      if(tagArray.length == 1 && !router.query.tag){
-          router.push(router.asPath+'&tag='+tagArray)
+      if(selectedtags.length == 1 && !router.query.tag){
+          router.push(router.asPath+'&tag='+selectedtags)
       }
-      if(tagArray.length>=1 && router.query.tag){
+      if(selectedtags.length>=1 && router.query.tag){
         let newPath = router.asPath.split('&');
         let index = newPath.findIndex(item=> item.includes('tag'));
-        newPath.splice(index,1,"tag="+tagArray.join(','));
+        newPath.splice(index,1,"tag="+selectedtags.join(','));
         newPath = newPath.join('&');
         router.push(newPath);
       }
     }
-  },[tagArray])
+  },[selectedtags])
 // End of UseEffect section **********************************************
 
 // resetSearch resets the page
@@ -307,10 +307,10 @@ const Results =(data)=>{
     setPublisherSvg('svg-rotate-down');    // *
     setTagSvg('svg-rotate-down');          // *
     setTopicSvg('svg-rotate-up');          // *
-    setTopicArray([]);                     // resets useState arrays
-    setPublisherArray([]);                 // *
-    setFormatArray([]);                    // *
-    setTagArray([]);                       // *
+    setSelectedTopics([]);                     // resets useState arrays
+    setSelectedPublishers([]);                 // *
+    setSelectedFormats([]);                    // *
+    setSelectedTags([]);                       // *
     router.push('?q=');                    // and resets search results
   }
 
@@ -341,10 +341,10 @@ const Results =(data)=>{
                           <li key={topic} >
                             <input onChange={(e)=>{
                               if(e.target.checked){
-                                setTopicArray([...topicArray,topic.toLowerCase()])
+                                setSelectedTopics([...selectedTopics,topic.toLowerCase()])
                               }
                               else{
-                                setTopicArray(topicArray.filter(item=>item!=topic.toLowerCase()))
+                                setSelectedTopics(selectedTopics.filter(item=>item!=topic.toLowerCase()))
                               }
                               }} style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={topic} className='checkBox' type={'checkbox'}/>
                             <label style={{cursor:'pointer', }} htmlFor={topic}>{topic}</label>
@@ -362,10 +362,10 @@ const Results =(data)=>{
                           <li key={publisher} >
                             <input onChange={(e)=>{
                               if(e.target.checked){
-                                setPublisherArray([...publisherArray,publisher.toLowerCase()])
+                                setSelectedPublishers([...selectedPublishers,publisher.toLowerCase()])
                               }
                               else{
-                                setPublisherArray(publisherArray.filter(item=>item!=publisher.toLowerCase()))
+                                setSelectedPublishers(selectedPublishers.filter(item=>item!=publisher.toLowerCase()))
                               }                            
                               }} style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={publisher} className='checkBox' type={'checkbox'}/>
                             <label style={{cursor:'pointer' }} htmlFor={publisher}>{publisher}</label>
@@ -383,10 +383,10 @@ const Results =(data)=>{
                         <li key={format} >
                           <input onChange={(e)=>{
                              if(e.target.checked){
-                              setFormatArray([...formatArray,format.toLowerCase()])
+                              setSelectedFormats([...selectedFormats,format.toLowerCase()])
                             }
                             else{
-                              setFormatArray(formatArray.filter(item=>item!=format.toLowerCase()))
+                              setSelectedFormats(selectedFormats.filter(item=>item!=format.toLowerCase()))
                             } 
                           }}
                              style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={format} className='checkBox' type={'checkbox'}/>
@@ -405,10 +405,10 @@ const Results =(data)=>{
                         <li key={tag} >
                           <input onChange={(e)=>{
                             if(e.target.checked){
-                             setTagArray([...tagArray,tag])
+                             setSelectedTags([...selectedtags,tag])
                            }
                            else{
-                             setTagArray(tagArray.filter(item=>item!=tag))
+                             setSelectedTags(selectedtags.filter(item=>item!=tag))
                            } 
                          }} style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={tag} className='checkBox' type={'checkbox'}/>
                           <label style={{cursor:'pointer' }} htmlFor={tag}>{tag}</label>
