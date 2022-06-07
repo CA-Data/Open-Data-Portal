@@ -24,8 +24,8 @@ export default function Custom404() {
               <li><Link href="/dataset?name=county-and-zip-code-references"><a>County and ZIP code</a></Link></li>
             </ul>
           </li>
-          <li>Did you get here from a link on our website? <Link href="/contact-us"><a>Let us know</a></Link> so we can fix it.</li>
         </ul>
+        <p>Did you get here from a link on our website? <Link href="/contact-us"><a>Let us know</a></Link> so we can fix it.</p>
         <div className="svg-container">
         <svg
           xmlns="http://www.w3.org/2000/svg"

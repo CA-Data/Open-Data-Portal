@@ -31,7 +31,7 @@ export async function getServerSideProps(context) {
     const columns = []
     for (const key in response.result.fields) {
       if (key > 0) {
-        const data = { field: response.result.fields[key].id, headerName: response.result.fields[key].id, width: 150 }
+        const data = { field: response.result.fields[key].id, headerName: response.result.fields[key].id, width: 225 }
         columns.push(data)
       }
     }
