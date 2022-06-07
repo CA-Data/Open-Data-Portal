@@ -5793,7 +5793,7 @@ figure figcaption {
   display: inline-block;
   cursor: pointer;
   position: relative;
-  color: var(--primary-color, #046A99);
+  color: var(--black, #4B4B4B);
   display: flex;
   align-items: center;
   right: 0;
@@ -5806,16 +5806,16 @@ figure figcaption {
 }
 
 .site-header .menu-trigger .hamburger-inner {
-  background-color: var(--primary-color, #046A99);
+  background-color: var(--black, #4B4B4B);
 }
 
 .site-header .menu-trigger:hover {
-  color: var(--primary-dark-color, #043747);
+  color: var(--black, #4B4B4B);
 }
 
 .site-header .menu-trigger:hover .hamburger-inner:after,
 .site-header .menu-trigger:hover .hamburger-inner:before {
-  background-color: var(--primary-dark-color, #043747);
+  background-color: var(--black, #4B4B4B);
 }
 
 .site-header .hamburger {
@@ -7009,6 +7009,7 @@ footer .copyright {
 
 .cagov-nav.mobile-search {
   margin-top: 1rem;
+  display: none;
 }
 
 .cagov-nav.menu-trigger {
@@ -7250,7 +7251,7 @@ cagov-site-navigation .expanded-menu-section-header-link {
   padding-bottom: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  color: var(--primary-color, #046A99);
+  color: var(--black, #4B4B4B);
   outline-offset: -2px;
 }
 
@@ -7260,7 +7261,7 @@ cagov-site-navigation .expanded-menu-section-header-link:active {
 
 cagov-site-navigation .expanded-menu-section-header-link:hover {
   text-decoration: underline;
-  color: var(--primary-hover-color, #043747);
+  color: var(--black, #4B4B4B);
 }
 
 @media (min-width: 768px) {
@@ -7310,6 +7311,7 @@ cagov-site-navigation .expanded-menu-dropdown-link {
   transition: color 0.3s cubic-bezier(0.57, 0.2, 0.21, 0.89);
   text-decoration: none;
   width: 100%;
+  color: var(--black, #4B4B4B);
 }
 
 cagov-site-navigation .expanded-menu-dropdown-link:hover {

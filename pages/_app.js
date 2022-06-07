@@ -198,7 +198,7 @@ function MyApp({ Component, pageProps }) {
                               height="7"
                               className="expanded-menu-section-header-arrow-svg"
                               viewBox="0 0 11 7"
-                              fill="#046A99"
+                              fill="#4B4B4B"
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
@@ -246,7 +246,7 @@ function MyApp({ Component, pageProps }) {
                               height="7"
                               className="expanded-menu-section-header-arrow-svg"
                               viewBox="0 0 11 7"
-                              fill="#046A99"
+                              fill="#4B4B4B"
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
