@@ -1,6 +1,10 @@
 //Modal JS
 window.addEventListener('load', function (event) {
-  
+  if (document.getElementsByTagName('main').length > 0) {
+    if (document.getElementsByTagName('main')[0].classList.contains('home-page')) {
+      document.querySelectorAll('.site-header')[0].style.border = "0px"
+    }
+  }
   if (document.getElementsByTagName('main').length > 0) {
     if (document.getElementsByTagName('main')[0].classList.contains('dataset') || document.getElementsByTagName('main')[0].classList.contains('dataset-preview')) {
 
@@ -72,4 +76,5 @@ window.addEventListener('load', function (event) {
       }
     }
   }
+
 })

@@ -449,7 +449,7 @@ const Results =(data)=>{
                       width: "876px",
                       height:'49px',
                       color: "#fff",
-                      border: "1px solid #034A6B",
+                      border: "1px solid var(--primary-color, #046A99)",
                       padding: ".5rem",
                       borderRadius: ".25rem",
                     }}

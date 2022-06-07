@@ -94,7 +94,7 @@ export default function Help(data) {
                     style={{
                       width: "100%",
                       color: "#fff",
-                      border: "1px solid blue",
+                      border: "1px solid var(--primary-color, #046A99)",
                       padding: ".5rem",
                       borderRadius: ".25rem",
                     }}

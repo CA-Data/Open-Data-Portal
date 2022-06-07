@@ -21,7 +21,7 @@ export default function featureCard() {
                 aria-labelledby="SearchInput"
                 placeholder="Search datasets"
                 className="search-textfield"
-                style={{width: 'auto', color: '#fff', border: '1px solid blue', padding: '.5rem', borderRadius: '.25rem'}}
+                style={{width: 'auto', color: '#fff', border: '1px solid var(--primary-color, #046A99)', padding: '.5rem', borderRadius: '.25rem'}}
               />
               <button
                 style={{outlineOffset: -2, right: 5, backgroundColor: 'var(--primary-color, #046A99)', border: '1px solid var(--primary-color, #046A99)', borderRadius: '0px 4px 4px 0px', padding: '8px 14px', position: 'relative'}}
