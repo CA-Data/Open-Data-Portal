@@ -110,7 +110,6 @@ export async function getServerSideProps(context) {
 
 
   const response = await fetch(apirequest).then((response) => response.json());
-  //  console.log(apirequest)
   pageData["total"].value = Math.ceil(parseInt(response.result.count) / 10);
 
   if (pageData["next"].value >= pageData["total"].value) {
@@ -241,43 +240,36 @@ const Results =(data)=>{
   const [formatArray,setFormatArray] = useState([]);
   const [tagArray,setTagArray] = useState([]);
   const [reset,setReset] = useState(false);
+  const [topicList,setTopicList] = useState([]);
+  const [publisherList,setPublisherList] = useState([]);
+  const [tagList,setTagList] = useState([]);
   const router = useRouter();
   if (typeof window === 'object') {
     // Check if document is finally loaded
-       document.addEventListener("DOMContentLoaded", function () {
-          if (parseInt(data.pages["next"].value) > parseInt(data.pages["total"].value)) {
-            document.querySelectorAll('.page-next')[0].style.display = 'none';
-            document.querySelectorAll('.page-next')[1].style.display = 'none';
-          }
-        });
+    document.addEventListener("DOMContentLoaded", function () {
+      if (parseInt(data.pages["next"].value) > parseInt(data.pages["total"].value)) {
+        document.querySelectorAll('.page-next')[0].style.display = 'none';
+        document.querySelectorAll('.page-next')[1].style.display = 'none';
       }
+    });
+  }
   
   const submit = () => {
     document.getElementById("sortresults").submit();
   };
-  const clear = () => {
-    document.getElementById("q").value = "";
-  };
   
-  const expand = (e) => {
-    console.log(e.target)
-    //e.target.style.height = '100%'
-    if (e.target.parentElement.classList.contains('filter-expanded')) {
-      e.target.parentElement.classList.remove('filter-expanded')
-    } 
-    else if(e.target.parentElementtype !== "checkbox"){
-      e.target.parentElement.classList.add('filter-expanded')
-    }
-    //document.querySelectorAll('.filter-topic')[0].style.height = '100%'
-  }
   var urlParamTopic = (data.parameters.topic) ? "&topic=" + data.parameters.topic : "";
   var urlParamPublisher = (data.parameters.publisher) ? "&publisher=" + data.parameters.publisher : "";
   var urlParamFormat = (data.parameters.format) ? "&format=" + data.parameters.format : "";
   var urlParamTag = (data.parameters.tag) ? "&tag=" + data.parameters.tag : "";
   var urlParamSort = (data.parameters.sort) ? "&sort=" + data.parameters.sort : "";
- 
-
-   useEffect(()=>{
+  useEffect(()=>{
+    // grab list of Topics on page load
+    fetch('https://data.ca.gov/api/3/action/group_list').then(res=>res.json()).then(data=>setTopicList(data.result)).catch(error=>console.error(error))
+    fetch('https://data.ca.gov/api/3/action/organization_list').then(res=>res.json()).then(data=>setPublisherList(data.result)).catch(error=>console.error(error))
+    fetch('https://data.ca.gov/api/3/action/tag_list').then(res=>res.json()).then(data=>setTagList(data.result)).catch(error=>console.error(error))
+  },[])
+  useEffect(()=>{
     if(!reset){
       if(topicArray.length == 0 || router.query.topic?.length == 0 ){
         router.push(router.asPath.split('&topic=')[0])
@@ -380,7 +372,7 @@ const Results =(data)=>{
                         <span style={{fontWeight:'bold'}}>Topic</span>
                       </div>
                       <ul hidden={topicSvg!='svg-rotate-up'?true:false} style={{cursor:'default'}}>
-                        {data.filterData.topicArray.sort().map((topic, index) => (
+                        {topicList.map((topic, index) => (
                           <li key={topic} >
                             <input onChange={(e)=>{
                               if(e.target.checked){
@@ -401,7 +393,7 @@ const Results =(data)=>{
                         <span style={{fontWeight:'bold'}}>Publisher</span>
                       </div>
                       <ul hidden={publisherSvg!='svg-rotate-up'?true:false}>
-                        {data.filterData.publisherArray.sort().map((publisher, index) => (
+                        {publisherList.map((publisher, index) => (
                           <li key={publisher} >
                             <input onChange={(e)=>{
                               if(e.target.checked){
@@ -444,7 +436,7 @@ const Results =(data)=>{
                         <span style={{fontWeight:'bold'}}>Tag</span>
                       </div>
                       <ul hidden={tagSvg!='svg-rotate-up'?true:false}>
-                        {data.filterData.tagArray.sort().map((tag, index) => (
+                        {tagList.map((tag, index) => (
                         <li key={tag} >
                           <input onChange={(e)=>{
                             if(e.target.checked){
@@ -588,7 +580,7 @@ const Results =(data)=>{
 
             {/*<div className="page-navigation"><a className="page-previous" href={"/results?q=water&tag=regulatory&page="+data.pages.previous}>&lt;</a> <span className="page-current">{data.pages.current}</span> <a className="page-next" href={"/results?q=water&tag=regulatory&page="+data.pages.next}>{data.pages.next}</a> <span className="page-dots">...</span> <a className="page-next" href={"/results?q=water&tag=regulatory&page="+data.pages.total}>{data.pages.total}</a> <a className="page-next" href={"/results?q=water&tag=regulatory&page="+data.pages.next}>&gt;</a></div>*/}
             <div className="page-navigation">
-              <a style={{'display':data.pages.previous.display}} className="page-previous" href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+data.pages.previous.value}><svg className={'rotate-90'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></a> 
+              <a style={{'display':data.pages.previous.display}} className="page-previous" href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+data.pages.previous.value}><svg className={'rotate-90'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><text>Previous page arrow</text><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></a> 
 
               <a style={{'display':data.pages.previous.display}} className="page-previous" href={"/results?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+data.pages.previous.value}>{data.pages.previous.value + 1}</a> 
 
