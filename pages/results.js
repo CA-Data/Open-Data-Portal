@@ -152,78 +152,12 @@ export async function getServerSideProps(context) {
       resultsArray.push(dataset)
     }
   }
-  //filter data
-  const filter_data = {
-    topicArray: [],
-    publisherArray: [],
-    formatArray: [],
-    tagArray: [],
-  }
-
-  //get topics
-  const topicObject = {}
-  for (let index = 0; index < response.result.results.length; index++) {
-    if (response.result.results[index].groups.length > 0) {
-      const topic = response.result.results[index].groups
-      for (let index = 0; index < topic.length; index++) {
-        topicObject[topic[index].display_name] = topic[index].display_name
-      }
-    }    
-  }
-  for (const key in topicObject) {
-    filter_data.topicArray.push(topicObject[key])
-  }
-
-  //get Publisher
-  const publisherObject = {}
-  for (let index = 0; index < response.result.results.length; index++) {
-    if (response.result.results[index].groups.length > 0) {
-      const publisher = response.result.results[index].organization.title
-      publisherObject[publisher] = publisher
-    }    
-  }
-  for (const key in publisherObject) {
-    filter_data.publisherArray.push(publisherObject[key])
-  }
-
-  //get formats
-  const resourceObject = {}
-  for (let index = 0; index < response.result.results.length; index++) { // loop over all results
-    if (response.result.results[index].resources.length > 0) {
-      const resource = response.result.results[index].resources
-      for (let index = 0; index < resource.length; index++) { // loop over formats for this record
-        var resource_type = resource[index].format;
-        if(resource[index].format != ""){
-          resourceObject[resource_type] = resource_type
-        }
-      }
-    }
-  }
-  for (const key in resourceObject) {
-    filter_data.formatArray.push(resourceObject[key])
-  }
-
-  //get tags
-  const tagObject = {}
-  for (let index = 0; index < response.result.results.length; index++) {
-    if (response.result.results[index].tags.length > 0) {
-      const tag = response.result.results[index].tags
-      for (let index = 0; index < tag.length; index++) {
-        var tag_name = tag[index].display_name
-        tagObject[tag_name] = tag_name
-      }
-    }
-  }
-  for (const key in tagObject) {
-    filter_data.tagArray.push(tagObject[key])
-  }
-
+  
   return {
     props: {
       matches: response.result.count,
       allResults: resultsArray,
       parameters: context.query,
-      filterData: filter_data,
       pages: pageData
     },
   };
@@ -243,6 +177,7 @@ const Results =(data)=>{
   const [topicList,setTopicList] = useState([]);
   const [publisherList,setPublisherList] = useState([]);
   const [tagList,setTagList] = useState([]);
+  const [formatList,setFormatList] = useState([]);
   const router = useRouter();
   if (typeof window === 'object') {
     // Check if document is finally loaded
@@ -253,22 +188,49 @@ const Results =(data)=>{
       }
     });
   }
-  
   const submit = () => {
     document.getElementById("sortresults").submit();
   };
-  
   var urlParamTopic = (data.parameters.topic) ? "&topic=" + data.parameters.topic : "";
   var urlParamPublisher = (data.parameters.publisher) ? "&publisher=" + data.parameters.publisher : "";
   var urlParamFormat = (data.parameters.format) ? "&format=" + data.parameters.format : "";
   var urlParamTag = (data.parameters.tag) ? "&tag=" + data.parameters.tag : "";
   var urlParamSort = (data.parameters.sort) ? "&sort=" + data.parameters.sort : "";
   useEffect(()=>{
-    // grab list of Topics on page load
+    // grab lists on page load
     fetch('https://data.ca.gov/api/3/action/group_list').then(res=>res.json()).then(data=>setTopicList(data.result)).catch(error=>console.error(error))
     fetch('https://data.ca.gov/api/3/action/organization_list').then(res=>res.json()).then(data=>setPublisherList(data.result)).catch(error=>console.error(error))
     fetch('https://data.ca.gov/api/3/action/tag_list').then(res=>res.json()).then(data=>setTagList(data.result)).catch(error=>console.error(error))
+
+    // get formats
+    fetch('https://data.ca.gov/api/3/action/package_search?q=&rows=3000')
+    .then(res=>res.json())
+    .then(data=>{
+      const dataSet = new Set();
+      const tempArray= [];
+      for (let index = 0; index < data.result.results.length; index++) { // loop over all results
+        if (data.result.results[index].resources.length > 0) {
+          const resource = data.result.results[index].resources
+          for (let index = 0; index < resource.length; index++) {        // loop over formats for this record
+            var resource_type = resource[index].format;
+            if(resource[index].format != ""){
+              dataSet.add(resource_type)                                 // Creates a set for unique formats
+            }
+          }
+        }
+      }
+      dataSet.forEach(item=>{
+        tempArray.push(item)              // Puts set into an array
+      })
+      setFormatList(tempArray.sort());    // puts array into useState to share state with rest of Results component
+
+    })
   },[])
+
+
+  // UseEffects will fire when its corresponding array is updated. 
+  // Arrays that can be updated by user input -> (topicArray,publisherArray,formatArray,tagArray)
+  // Each array will append a value to the url
   useEffect(()=>{
     if(!reset){
       if(topicArray.length == 0 || router.query.topic?.length == 0 ){
@@ -337,18 +299,21 @@ const Results =(data)=>{
       }
     }
   },[tagArray])
+// End of UseEffect section **********************************************
 
+// resetSearch resets the page
   const resetSearch =async()=>{
-    setFormatSvg('svg-rotate-down');
-    setPublisherSvg('svg-rotate-down');
-    setTagSvg('svg-rotate-down');
-    setTopicSvg('svg-rotate-up');
-    setTopicArray([]);
-    setPublisherArray([]);
-    setFormatArray([]);
-    setTagArray([]);
-    router.push('?q=');
+    setFormatSvg('svg-rotate-down');       // resets any dropdowns to default state
+    setPublisherSvg('svg-rotate-down');    // *
+    setTagSvg('svg-rotate-down');          // *
+    setTopicSvg('svg-rotate-up');          // *
+    setTopicArray([]);                     // resets useState arrays
+    setPublisherArray([]);                 // *
+    setFormatArray([]);                    // *
+    setTagArray([]);                       // *
+    router.push('?q=');                    // and resets search results
   }
+
   return (
     <>
       <main id="body-content" className="cagov-main">
@@ -414,7 +379,7 @@ const Results =(data)=>{
                         <span style={{fontWeight:'bold'}}>Format</span>
                       </div>
                       <ul hidden={formatSvg!='svg-rotate-up'?true:false}>
-                        {data.filterData.formatArray.sort().map((format, index) => (
+                        {formatList.map((format, index) => (
                         <li key={format} >
                           <input onChange={(e)=>{
                              if(e.target.checked){
