@@ -324,6 +324,7 @@ ul.align ul {
   height: 42px;
   width: 42px;
   text-align: center;
+  line-height: 42px;
 }
 
 .close:hover,
@@ -333,6 +334,7 @@ ul.align ul {
   cursor: pointer;
   background: #f5f5f5;
   line-height: unset;
+  line-height: 42px;
 }
 .input-group {
   list-style: none;
@@ -654,6 +656,7 @@ input[type=checkbox] {
 }
 .organization-table {
   border: 1px solid #d4d4d4;
+  max-width: 700px;
 }
 .organization-row {
   display: grid;
@@ -670,7 +673,7 @@ input[type=checkbox] {
   font-weight:600;
 }
 .organization-column {
-  padding: 0 .5rem;
+  padding: 0.75rem .5rem;
 }
 .organization-column:first-child {
   border-right: 1px solid #d4d4d4;
@@ -825,6 +828,7 @@ background: #ffffff;
   }
   .contact-form input[type=text], textarea {
     padding: 0.5rem;
+    width: 100%;
     max-width: 595px;
   }
   .contact-form label {

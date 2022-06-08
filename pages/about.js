@@ -50,7 +50,7 @@ export default function preview() {
           <p>CalData and the Department of Technology are working together on this new site for open data. We developed this prototype based on research, user feedback, and testing. We do this to learn and make sure we build the right site based on user needs.</p>
           <p>You can get involved:</p>
           <ul>
-            <li>Sign up to <a href="#">participate in research</a></li>
+            <li>Sign up to <a href="https://airtable.com/shrv4KWAKgny1lxyD">participate in research</a></li>
             <li><a href="#">Provide feedback</a></li>
           </ul>
 
