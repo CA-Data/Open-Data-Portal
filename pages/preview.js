@@ -1,6 +1,7 @@
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Link from 'next/link'
+import { spacing, style } from '@mui/system';
 
 export async function getServerSideProps(context) {
   function ValidateSize(FileSize) {
@@ -104,21 +105,23 @@ export default function preview(dataset) {
       <nav className="nav-breadcrumb">
         <ol>
           <li>
-          <svg xmlns="http://www.w3.org/2000/svg" width="6" viewBox="0 0 9.6 16"><path fill="#046a99" d="M9.3 14.2L2.7 8.1l6.6-6.3c.4-.4.4-1 0-1.4a1 1 0 00-1.5 0l-7.4 7a1 1 0 00-.4.8c0 .2.1.6.3.7l7.4 6.7a1 1 0 001.5 0c.5-.3.5-1 .1-1.4z"></path></svg>{" "}
+          <svg xmlns="http://www.w3.org/2000/svg" width="6"  viewBox="0 0 9.6 16"><path fill="#046a99" d="M9.3 14.2L2.7 8.1l6.6-6.3c.4-.4.4-1 0-1.4a1 1 0 00-1.5 0l-7.4 7a1 1 0 00-.4.8c0 .2.1.6.3.7l7.4 6.7a1 1 0 001.5 0c.5-.3.5-1 .1-1.4z"></path></svg>{" "}
           <Link href={"/dataset?name="+dataset.parameters.name} passHref>
-              <a>Back to dataset</a>
+              <a style={{paddingLeft:'0.3rem'}}>Back to dataset</a>
             </Link>
           </li>
         </ol>
       </nav>
       <article id="post-design" className="cagov-article with-page-nav">
       <div>
+       <div className='preview-heading'> 
         <h1>
           {dataset.details.name}
         </h1>
         <h2 className="h3">
           Preview
         </h2>
+        </div>
         <div className="dataset-description-table">
           <div className="dataset-label">Published by:</div>
           <div className="dataset-value">{dataset.details.author}</div>
@@ -156,7 +159,7 @@ export default function preview(dataset) {
         <div id="data-dictionary-section">
           <h3 className="h4">Data dictionary</h3>
           <p>You’re previewing the first 50 rows of this file.</p>
-          <div style={{ height: 600, width: '100%' }}>
+          <div style={{ height: 214, width: '100%' }}>
             <DataGrid rows={dataset.dictionary.rows} columns={dataset.dictionary.columns} />
           </div>
         </div>
