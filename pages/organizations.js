@@ -37,7 +37,7 @@ export default function render(data) {
               <a>Open Data</a>
             </Link>
           </li>
-          <li>Explore Datasets</li>
+          <li>Explore datasets</li>
           <li>Organizations</li>
         </ol>
       </nav>
@@ -62,7 +62,7 @@ export default function render(data) {
             {data.org.map((org, index) => (
               <div key={index} className="organization-row">
                 <div className="organization-column">
-                  <a href={"/results?q=&publisher="+org.id}>{org.title}</a>
+                  <a href={"/organization/datasets?q=&publisher="+org.id}>{org.title}</a>
                 </div>
                 <div className="organization-column">
                   {org.package_count}

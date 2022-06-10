@@ -64,6 +64,7 @@ export async function getServerSideProps(context) {
 
   for (let index = 0; index < datasetResponse.result.resources.length; index++) {
     if (context.query.id === datasetResponse.result.resources[index].id) {
+      datasetInfo.id = datasetResponse.result.resources[index].id
       datasetInfo.name = datasetResponse.result.resources[index].name
       datasetInfo.description = datasetResponse.result.resources[index].description
       datasetInfo.download = datasetResponse.result.resources[index].url
@@ -131,7 +132,14 @@ export default function preview(dataset) {
           <div className="dataset-value">{dataset.details.size? dataset.details.size: "N/A"}</div>
           <div className="dataset-label">Access data:</div>
           <div className="dataset-value">
-            <a href={dataset.details.download}>Download File</a> | <a href="">API</a>
+            <a href={dataset.details.download}>Download File</a> |{" "}
+            <button
+              className="api-button"
+              data-resource-name={dataset.details.name}
+              data-file-id={dataset.details.id}
+            >
+              API
+            </button>
           </div>
           <div className="dataset-label">Description:</div>
           <div>

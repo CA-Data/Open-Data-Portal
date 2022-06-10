@@ -2934,7 +2934,10 @@ main h2:first-child {
 }
 
 p {
+  font-size: 1.125rem;
+  line-height: 2rem;
   margin-bottom: calc(var(--s-2) + var(--ratio));
+
 }
 
 ol,
