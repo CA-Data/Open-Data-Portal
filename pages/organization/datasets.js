@@ -525,7 +525,7 @@ const Results =(data)=>{
                 </div>
                 <div className="popular-datasets">
                 <h2>Popular datasets</h2>
-                <div class="popular-datasets-cards-container">
+                <div className="popular-datasets-cards-container">
                 {data.publisherDetails.popular && data.publisherDetails.popular.map((details, index) => (
                     <a
                       key={index}
