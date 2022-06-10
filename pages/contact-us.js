@@ -37,14 +37,14 @@ export default function preview(dataset) {
           <form className="contact-form">
             <label>
               Name*
-              <input type="text" name="name" required/>
+              <input type="text" name="name" placeholder="Be sure to include links, if needed." required/>
             </label>
             <label>
               Email*
-              <input type="text" name="email" required/>
+              <input type="text" name="email" placeholder="Be sure to include links, if needed." required/>
             </label>
             <label>
-              Topic
+              Topic*
             <select required>
               <option value="" disabled selected>Select an option*</option>
               <option value="Dataset / technical help">Dataset / technical help</option>
@@ -57,7 +57,7 @@ export default function preview(dataset) {
           </label>
           <label>
               Page link
-              <input type="text" name="Page link" />
+              <input type="text" name="Page link" placeholder="Be sure to include links, if needed." />
             </label>
             <label>
               Comment*

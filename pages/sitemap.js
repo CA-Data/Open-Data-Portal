@@ -19,41 +19,53 @@ export default function preview(dataset) {
       <article id="post-design" className="cagov-article with-page-nav">
         <div className="content-container">
           <h1>Sitemap</h1>
-          <p>
+          <ul className="site-map-ul">
+            <li>
             <Link href="/" passHref>
               <a>Open Data homepage</a>
             </Link>
-          </p>
-          <h2 className="h4">All datasets</h2>
-          <p>
+            </li>
+          </ul>
+          <h2 className="h4 site-map-heading">All datasets</h2>
+          <ul className="site-map-ul">
+            <li>
             <Link href="/datasets" passHref>
               <a>All datasets</a>
             </Link>
-          </p>
-          <h2 className="h4">Explore datasets</h2>
-          <p>
+            </li>
+          </ul>
+          <h2 className="h4 site-map-heading">Explore datasets</h2>
+          <ul className="site-map-ul">
+          <li>
             <Link href="/organizations" passHref>
               <a>Organizations</a>
             </Link>
-            <br />
+            </li>
+            <li>
             <Link href="/topics" passHref>
               <a>Topics</a>
             </Link>
-          </p>
-          <h2 className="h4">About</h2>
-          <p>
+          </li>
+          </ul>
+          <h2 className="h4 site-map-heading">About</h2>
+          <ul className="site-map-ul">
+           <li> 
             <Link href="/about" passHref>
-              <a>About this data portal</a>
+              <a>About</a>
             </Link>
-            <br />
+            </li>
+            <li>
             <Link href="/contact-us" passHref>
               <a>Contact us</a>
             </Link>
-            <br />
+            </li>
+            <li>
             <Link href="/licenses" passHref>
               <a>Licenses</a>
             </Link>
-          </p>
+            </li>
+          </ul>
+
         </div>
       </article>
     </main>
