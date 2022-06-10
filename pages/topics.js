@@ -87,7 +87,7 @@ export default function Home(data) {
               <a>Open Data</a>
             </Link>
           </li>
-          <li>Explore Datasets</li>
+          <li>Explore datasets</li>
           <li>Topics</li>
         </ol>
       </nav>

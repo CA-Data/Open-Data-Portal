@@ -8334,6 +8334,11 @@ code.hljs {
 .cagov-article.with-page-nav {
   grid-template-areas: "sidebar content" "sidebar content";
 }
+.cagov-article.with-page-nav.with-popular {
+  grid-template-areas:
+  "sidebar popular"
+  "sidebar content";
+}
 
 .title-cell {
   grid-area: title;

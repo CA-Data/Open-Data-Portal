@@ -837,3 +837,48 @@ background: #ffffff;
   .page-container-ds {
     padding-left: 0.4rem;
 }
+
+/* Popular datasets */
+.organization-info {
+  margin-bottom: 2rem;
+}
+.cagov-popular-datasets {
+  grid-area: popular;
+  margin-bottom: 3rem;
+}
+.popular-datasets-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 273px));
+  grid-gap: 1rem;
+}
+.popular-dataset-card {
+  background: #FAFAFA;
+  border: 1px solid #D4D4D4;
+  border-radius: 5px;
+  padding: 1rem;
+  width: 275px;
+  height: 190px;
+  display: grid;
+  grid-template-rows: 1fr .5fr;
+}
+.popular-dataset-card p {
+  margin-bottom: 0;
+  font-size: 1.125rem;
+  line-height: 2rem;
+  font-weight: 700;
+  color: #4B4B4B;
+
+
+}
+.popular-dataset-card .dataset-title {
+  font-weight: 700;
+  font-size: 1.4375rem;
+  line-height: 	2.3125rem;
+}
+.popular-dataset-card .large-text {
+  font-weight: 400;
+  font-size: 2.3125rem;
+  line-height: 2rem;
+  color: #046A99;
+}
+

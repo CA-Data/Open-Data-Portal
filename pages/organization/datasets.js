@@ -22,6 +22,7 @@ export async function getServerSideProps(context) {
   }
   var apirequest = "https://data.ca.gov/api/3/action/package_search?q="+context.query.q;
   var thereWasAFilter = 0; // flag, did user select any filter?
+  
   if ('topic' in context.query && context.query.topic.length>0) {
     let groups = context.query.topic.split(',');
     let formattedGroupString ='';
@@ -338,7 +339,7 @@ const Results =(data)=>{
       <main id="body-content" className="cagov-main">
         <article
           id="post-design"
-          className="cagov-article with-sidebar with-page-nav"
+          className="cagov-article with-sidebar with-page-nav with-popular"
         >
           <div
             className="sidebar-container everylayout sidebar-cell"
@@ -448,8 +449,33 @@ const Results =(data)=>{
                 </nav>
             </div>
           </div>
+          <div className="cagov-popular-datasets">
+            <div className="organization-info">
+              <h1 style={{ marginTop: 0, color:'#034A6B', fontSize:'47px', lineHeight:'58.8px'}}>{data.publisherDetails.title}</h1>
+              <p>Organization website: <a href={data.publisherDetails.website}>{data.publisherDetails.title}</a></p>
+              <p className="organization-description">{data.publisherDetails.description}</p>
+            </div>
+            <div className="popular-datasets">
+            <h2>Popular datasets</h2>
+            <div class="popular-datasets-cards-container">
+            {data.publisherDetails.popular.map((details, index) => (
+                <div key={index} className="popular-dataset-card">
+                <p className="dataset-title">
+                  {details.title}
+                </p>
+                <p>
+                  <span className="large-text">
+                    {details.views}
+                  </span>{" "}
+                  recent views
+                </p>
+              </div>
+              ))}
+            </div>
+            </div>
+          </div>
           <div className="cagov-content content-cell">
-            <h1 style={{ marginTop: 0, color:'#034A6B', fontSize:'47px', lineHeight:'58.8px'}}>Search results</h1>
+            <h3>Search organization results</h3>
             <div className="search-container grid-search">
               <form className="site-search" action="/results">
                 <span className="sr-only" id="SearchInput">
