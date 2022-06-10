@@ -837,3 +837,42 @@ background: #ffffff;
   .page-container-ds {
     padding-left: 0.4rem;
 }
+
+/* topic-results Popular datasets*/
+.topic-popular-container {
+  margin-bottom:1rem;
+}
+.topic-popular-cards-container {
+  display:flex;
+  gap:1rem;
+}
+.topic-popular-dataset {
+  border:1px solid #d4d4d4;
+  border-radius:0.5rem;
+  background:#fafafa;
+  flex:1;
+  padding:1em;
+  text-decoration: none;
+  color:#000;
+  display: flex;
+  flex-direction: column;
+}
+.topic-popular-dataset:hover, .topic-popular-dataset:active {
+  border:1px solid #a4a4a4;
+}
+.topic-recentviews {
+  margin-top:1.6rem;
+}
+.topic-recentviews span {
+  font-size: 2rem;
+  color: #046a99;
+}
+.topic-popular-container .dataset-icon {
+  width:2rem;
+  display:block;
+  float:left;
+  margin-right:1em;
+}
+.topic-organization {
+  flex-grow: 1;
+}
