@@ -80,7 +80,7 @@ export async function getServerSideProps(context) {
   if ('sort' in context.query) {
     apirequest += "&sort="+context.query.sort;
   }
-
+  
   //pages
   const pageData = {}
 
