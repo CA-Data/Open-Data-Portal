@@ -876,6 +876,7 @@ background: #ffffff;
 .topic-organization {
   flex-grow: 1;
 }
+
 /* Popular datasets */
 .organization-info {
   margin-bottom: 2rem;
@@ -898,6 +899,12 @@ background: #ffffff;
   height: 190px;
   display: grid;
   grid-template-rows: 1fr .5fr;
+  text-decoration: none;
+
+}
+
+.popular-dataset-card:hover, .popular-dataset-card:active {
+  border:1px solid #a4a4a4;
 }
 .popular-dataset-card p {
   margin-bottom: 0;
