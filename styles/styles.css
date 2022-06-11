@@ -6047,7 +6047,8 @@ cagov-site-navigation .search-container--small.hidden-search {
   padding: .75rem;
   border-radius: 0.3rem;
   min-width: 250px;
-  min-height: 50px;
+  min-height: 100px; /*dropped from changed from 50 to 100px making sure it fit the card*/
+  max-height: 100px; /*add to make sure all cards are same size 100px*/
   margin: .5rem;
   display: flex;
   justify-content: space-between;
@@ -6055,7 +6056,8 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .cagov-card:hover {
-  background-color: var(--gray-100, #f9f9fa);
+  /*background-color: var(--gray-100, #f9f9fa);  --per sr removed from hover--*/
+  border: 1px solid #A4A4A4; /* added per SR */
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -6065,8 +6067,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 
 .cagov-card .card-text {
   color: var(--black, #4B4B4B);
-  
-  font-size: 1.5rem;
+  font-size: 1.4rem;/*dropped from 1.5 to 1.4 making sure it fit the card*/
   line-height: 40px;
   font-weight: 400;
   padding: 0;
@@ -6159,6 +6160,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 
 .cagov-p-2 {
   padding: var(--s-3, 1.5rem);
+  padding-left: 10px;
 }
 
 .cagov-bkgrd-gry {

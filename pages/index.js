@@ -1,3 +1,4 @@
+import { margin } from "@mui/system";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -82,7 +83,7 @@ export default function Home(data) {
             <div className="cagov-stack cagov-p-2 cagov-featured-sidebar ">
               <h1>Find California data</h1>
               <div className="cagov-hero-body-content">
-                <p>
+                <p className="lead-text">
                 Access thousands of datasets to support your next analysis or project
                 </p>
                 <div className="search-container grid-search">
@@ -102,11 +103,10 @@ export default function Home(data) {
                     />
                     <button
                       style={{
-                        outlineOffset: -2,
-                        right: "3px",
-                        backgroundColor: "#B4D2E0",
-                        border: "0px",
-                        borderRadius: "0px 4px 4px 0px",
+                        right: "-3px",
+                        backgroundColor: "#ffffff",
+                        border: "none",
+                        borderRadius: "4px 0px 0px 4px",
                         padding: "7px 14px",
                         position: "relative",
                       }}
@@ -117,7 +117,7 @@ export default function Home(data) {
                         xmlns="http://www.w3.org/2000/svg"
                         enableBackground="new 0 0 17 17"
                         viewBox="0 0 17 17"
-                        style={{width: 17}}
+                        style={{width: 19}}
                       >
                         <path
                           fill="#034A6B"
@@ -126,6 +126,23 @@ export default function Home(data) {
                       </svg>
                       <span className="sr-only">Submit</span>
                     </button>
+                    <input
+                      type="text"
+                      id="q"
+                      name="q"
+                      aria-labelledby="SearchInput"
+                      placeholder="Search datasets"
+                      className="search-textfield"
+                      style={{
+                        color: "#ffffff",
+                        padding: "7px",
+                        borderRadius: ".25rem",
+                        padding: "5px 0px 9px 10px",
+                        margin:"-4px",
+                        border:"none",
+                      }}
+                    />
+                    
                   </form>
                 </div>
               </div>
@@ -136,7 +153,7 @@ export default function Home(data) {
           </div>
         </div>
         <div className="page-container-ds">
-          <h2 className="h3 primary-color">Popular datasets</h2>
+          <h2 className="primary-color">Popular datasets</h2>
           <div className="cagov-grid">
 
           <Link href="/dataset?name=covid-19-hospital-data1" passHref>
@@ -228,7 +245,7 @@ export default function Home(data) {
         </div>
         <div className="cagov-bkgrd-gry padding-y">
           <div className="page-container-ds">
-            <h2 className="h3">Topics</h2>
+            <h2 className="primary-color">Topics</h2>
               <div className="two-col">
                 {
                 data.topics.map((topic, index) => (
