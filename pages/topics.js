@@ -67,7 +67,8 @@ export async function getServerSideProps() {
     }
   }
   
-  topicArray.sort((a, b) => a.count < b.count ? -1 : b.count > a.count ? 1 : 0).reverse()
+  //topicArray.sort((a, b) => a.count < b.count ? -1 : b.count > a.count ? 1 : 0).reverse(); // sort by # of datasets
+  topicArray.sort((a, b) => a.title > b.title ? -1 : b.title < a.title ? 1 : 0).reverse() // sort by title
   
   return {
     props: {topics: topicArray},
@@ -87,7 +88,7 @@ export default function Home(data) {
               <a>Open Data</a>
             </Link>
           </li>
-          <li>Explore Datasets</li>
+          <li>Explore datasets</li>
           <li>Topics</li>
         </ol>
       </nav>
@@ -96,7 +97,7 @@ export default function Home(data) {
             <div className="two-col">
               {
                 data.topics.map((topic, index) => (
-                  <a key={index} className="card-block" href={"/results?q=&topic="+topic.id}>
+                  <a key={index} className="card-block" href={"/topic/datasets?q=&topic="+topic.id}>
                     <div className="icon-col" dangerouslySetInnerHTML={{ __html: topic.icon }}></div>
                     <div className="content">
                       <h3 className="h4" style={{marginTop:"0.2em"}}>{topic.title}</h3>

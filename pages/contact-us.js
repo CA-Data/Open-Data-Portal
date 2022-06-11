@@ -16,7 +16,7 @@ export default function preview(dataset) {
           </li>
           <li>
             <Link href="/" passHref>
-              <a>about</a>
+              <a>About</a>
             </Link>
           </li>
           <li>Contact us</li>
@@ -36,17 +36,17 @@ export default function preview(dataset) {
           </ul>
           <form className="contact-form">
             <label>
-              Name
-              <input type="text" name="name" placeholder="Be sure to include links, if needed." />
+              Name*
+              <input type="text" name="name" placeholder="Be sure to include links, if needed." required/>
             </label>
             <label>
-              Email
-              <input type="text" name="email" placeholder="Be sure to include links, if needed." />
+              Email*
+              <input type="text" name="email" placeholder="Be sure to include links, if needed." required/>
             </label>
             <label>
-              Topic
-            <select>
-              <option value="" disabled selected>Select an topic</option>
+              Topic*
+            <select required>
+              <option value="" disabled selected>Select an option*</option>
               <option value="Dataset / technical help">Dataset / technical help</option>
               <option value="Report an issue with the site">Report an issue with the site</option>
               <option value="Share feedback">Share feedback</option>
@@ -60,8 +60,8 @@ export default function preview(dataset) {
               <input type="text" name="Page link" placeholder="Be sure to include links, if needed." />
             </label>
             <label>
-              Comment
-              <textarea type="text" name="comment" rows="4" cols="50"placeholder="Be sure to include links, if needed."></textarea>
+              Comment*
+              <textarea type="text" name="comment" rows="4" cols="50"placeholder="Be sure to include links, if needed." required></textarea>
             </label>
             <input className="contact-button" type="submit" value="Submit" />
           </form>

@@ -87,8 +87,21 @@ export default function Home(data) {
                 Access thousands of datasets to support your next analysis or project
                 </p>
                 <div className="search-container grid-search">
-                  <form className="site-search" action="/results/">
-                  <button
+                  <form className="site-search" action="/datasets/">
+                    <input
+                      type="text"
+                      id="q"
+                      name="q"
+                      aria-labelledby="SearchInput"
+                      placeholder="Search datasets"
+                      className="search-textfield"
+                      style={{
+                        color: "#ffffff",
+                        padding: "7px",
+                        borderRadius: ".25rem",
+                      }}
+                    />
+                    <button
                       style={{
                         right: "-3px",
                         backgroundColor: "#ffffff",
@@ -236,7 +249,7 @@ export default function Home(data) {
               <div className="two-col">
                 {
                 data.topics.map((topic, index) => (
-                  <a key={index} className="card-block" href={"/results?q=&topic="+topic.id}>
+                  <a key={index} className="card-block" href={"datasets?q=&topic="+topic.id}>
                     <div className="icon-col" dangerouslySetInnerHTML={{ __html: topic.icon }}></div>
                     <div className="content">
                       <h3 className="h4" style={{marginTop:"0.2em"}}>{topic.title}</h3>
