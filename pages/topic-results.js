@@ -310,7 +310,7 @@ const Results =(data)=>{
         router.push(newPath);
       }
     }
-  },[selectedPublishers, reset, router])
+  },[selectedPublishers])
   useEffect(()=>{
     if(!reset){
       if(selectedFormats.length == 0 || router.query.format?.length == 0 ){
@@ -327,7 +327,7 @@ const Results =(data)=>{
         router.push(newPath);
       }
     }
-  },[selectedFormats, reset, router])
+  },[selectedFormats])
   useEffect(()=>{
     if(!reset){
       if(selectedtags.length == 0 || router.query.tag?.length == 0 ){
@@ -344,7 +344,7 @@ const Results =(data)=>{
         router.push(newPath);
       }
     }
-  },[selectedtags, reset, router])
+  },[selectedtags])
 // End of UseEffect section **********************************************
 
 // resetSearch resets the page
