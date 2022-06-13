@@ -14,7 +14,7 @@ export default function Custom404() {
         <ul>
           <li>Browse our <Link href="/"><a>homepage</a></Link></li>
           <li>Make sure the link is correct</li>
-          <li>Use <Link href="/results"><a>search</a></Link> or the <Link href="/site-map"><a>site map</a></Link></li>
+          <li>Use <Link href="/datasets"><a>search</a></Link> or the <Link href="/site-map"><a>site map</a></Link></li>
           <li>Check out these popular links
             <ul className="list-reset">
               <li><Link href="/dataset?name=covid-19-hospital-data1"><a>COVID-19 hospital data</a></Link></li>
