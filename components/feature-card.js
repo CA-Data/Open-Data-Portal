@@ -12,8 +12,8 @@ export default function featureCard() {
             Open data increases transparency, informs decision making, and creates opportunities.
             </p>
             <div className="search-container grid-search">
-            <form className="site-search" action="/results/">
-              <span className="sr-only" id="SearchInput">Custom Google Search</span>
+            <form className="site-search" action="/datasets">
+              <span className="sr-only" id="SearchInput">Dataset search</span>
               <input
                 type="text"
                 id="q"

@@ -78,7 +78,7 @@ export default function Help(data) {
           <div className="cagov-content content-cell">
             <h1 style={{ marginTop: 0 }}>Search results:</h1>
             <div className="search-container grid-search">
-              <form className="site-search" action="datasets">
+              <form className="site-search" action="/datasets">
                 <span className="sr-only" id="SearchInput">
                   Dataset search
                 </span>
@@ -129,7 +129,7 @@ export default function Help(data) {
               </form>
             </div>
             <div className="filter-sort">
-              <form id="sortresults" method="GET" action="datasets" name="sort">
+              <form id="sortresults" method="GET" action="/datasets" name="sort">
                 <input type="hidden" name="q" value={data.parameters.q}></input>
                 <label htmlFor="sort">Sort by</label>
                 <select onChange={submit} name="sort">

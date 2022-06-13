@@ -279,7 +279,7 @@ export default function dataSet(data) {
                             }
                             passHref
                           >
-                            <a>{dataset.name}</a>
+                            <a><strong>{dataset.name}</strong></a>
                           </Link>
                           :
                           <div>{dataset.name}</div>
@@ -362,7 +362,7 @@ export default function dataSet(data) {
                             }
                             passHref
                           >
-                          <a>{dataset.name}</a>
+                          <a><strong>{dataset.name}</strong></a>
                           </Link>
                           :
                           <div>{dataset.name}</div>

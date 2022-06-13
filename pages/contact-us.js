@@ -34,34 +34,34 @@ export default function preview(dataset) {
           <li>If you have a question about a specific dataset, contact the data steward from the dataset.</li>
           <li>If you have a technical issue about a dataset, be sure to include the name and link of the dataset.</li>
           </ul>
-          <form className="contact-form">
+          <form className="contact-form" action="mailto:opendata@state.ca.gov" method="post" encType="text/plain">
             <label>
               Name*
-              <input type="text" name="name" required/>
+              <input type="text" name="name" placeholder="Name" required/>
             </label>
             <label>
               Email*
-              <input type="text" name="email" required/>
+              <input type="text" name="email" placeholder="Email" required/>
             </label>
             <label>
-              Topic
-            <select required>
-              <option value="" disabled selected>Select an option*</option>
-              <option value="Dataset / technical help">Dataset / technical help</option>
-              <option value="Report an issue with the site">Report an issue with the site</option>
-              <option value="Share feedback">Share feedback</option>
-              <option value="Upload">Upload</option>
-              <option value="Search">Search</option>
-              <option value="Something else">Something else</option>
-            </select>
-          </label>
-          <label>
+              Topic*
+              <select name="subject" required>
+                <option value="" disabled defaultValue>Select an option*</option>
+                <option value="Dataset / technical help">Dataset / technical help</option>
+                <option value="Report an issue with the site">Report an issue with the site</option>
+                <option value="Share feedback">Share feedback</option>
+                <option value="Upload">Upload</option>
+                <option value="Search">Search</option>
+                <option value="Something else">Something else</option>
+              </select>
+            </label>
+            <label>
               Page link
-              <input type="text" name="Page link" />
+              <input type="text" name="Page link" placeholder="Page link" />
             </label>
             <label>
               Comment*
-              <textarea type="text" name="comment" rows="4" cols="50"placeholder="Be sure to include links, if needed." required></textarea>
+              <textarea type="text" name="body" rows="4" cols="50" placeholder="Be sure to include links, if needed." required></textarea>
             </label>
             <input className="contact-button" type="submit" value="Submit" />
           </form>
