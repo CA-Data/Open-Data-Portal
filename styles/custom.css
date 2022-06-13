@@ -16,9 +16,12 @@
 .padding-y {
   padding: 2rem 0 2rem 0;
 }
-/*.site-search {
-  margin: 1rem 0;
-}*/
+.site-search {
+  display: flex;
+}
+.search-textfield:focus {
+  outline: 2px solid var(--highlight-color, #fbad23);
+}
 .filter-sort {
   margin: 3rem 0;
 }
@@ -828,7 +831,7 @@ background: #ffffff;
  } 
 /*Changed color to content cards */ 
  .content {
-color: #4b4b4b !important;
+    color: #4b4b4b !important;
  }
   .lead-text {
     font-size: 2.1rem;
@@ -863,7 +866,7 @@ color: #4b4b4b !important;
     padding-left: 0.4rem;
 }
 
-MuiDataGrid-main css-204u17-MuiDataGrid-main{
+.MuiDataGrid-main .css-204u17-MuiDataGrid-main{
   border-radius: 0px;
 }
 .css-f3jnds-MuiDataGrid-columnHeaders {

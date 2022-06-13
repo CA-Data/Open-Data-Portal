@@ -293,7 +293,7 @@ const Results =(data)=>{
         //router.push(newPath);
       }
     }
-  },[selectedTopics])
+  },[selectedTopics, reset, router])
   useEffect(()=>{
     if(!reset){
       if(selectedPublishers.length == 0 || router.query.publisher?.length == 0 ){
@@ -310,7 +310,7 @@ const Results =(data)=>{
         router.push(newPath);
       }
     }
-  },[selectedPublishers])
+  },[selectedPublishers, reset, router])
   useEffect(()=>{
     if(!reset){
       if(selectedFormats.length == 0 || router.query.format?.length == 0 ){
@@ -327,7 +327,7 @@ const Results =(data)=>{
         router.push(newPath);
       }
     }
-  },[selectedFormats])
+  },[selectedFormats, reset, router])
   useEffect(()=>{
     if(!reset){
       if(selectedtags.length == 0 || router.query.tag?.length == 0 ){
@@ -344,7 +344,7 @@ const Results =(data)=>{
         router.push(newPath);
       }
     }
-  },[selectedtags])
+  },[selectedtags, reset, router])
 // End of UseEffect section **********************************************
 
 // resetSearch resets the page
@@ -520,7 +520,7 @@ const Results =(data)=>{
             {/* Topic ------------------------------------------------------------------------------------------------------------------------ */}
 
             <div className="search-container grid-search">
-              <form className="site-search" action="datasets">
+              <form className="site-search" action="/datasets">
                 <span className="sr-only" id="SearchInput">
                   Dataset search
                 </span>
@@ -575,7 +575,7 @@ const Results =(data)=>{
               </form>
             </div>
             <div className="filter-sort">
-              <form id="sortresults" method="GET" action="datasets" name="sort">
+              <form id="sortresults" method="GET" action="/datasets" name="sort">
                 <input type="hidden" name="q" value={data.parameters.q}></input>
                 <input type="hidden" name="topic" value={data.parameters.topic}></input>
                 <input type="hidden" name="publisher" value={data.parameters.publisher}></input>

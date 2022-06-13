@@ -6000,7 +6000,7 @@ cagov-site-navigation .search-container--small {
 
 .site-header .search-container--small.hidden-search,
 cagov-site-navigation .search-container--small.hidden-search {
-  display: none;
+  display: none!important;
 }
 
 @media (min-width: 768px) {
@@ -6045,10 +6045,11 @@ cagov-site-navigation .search-container--small.hidden-search {
 .cagov-card {
   background: var(--secondary-light-color, #EDEDED);
   padding: .75rem;
+  border: 1px solid var(--secondary-light-color, #EDEDED);
   border-radius: 0.3rem;
   min-width: 250px;
   min-height: 100px; /*dropped from changed from 50 to 100px making sure it fit the card*/
-  max-height: 100px; /*add to make sure all cards are same size 100px*/
+  max-height: 325px; /*add to make sure all cards are same size 100px*/
   margin: .5rem;
   display: flex;
   justify-content: space-between;
@@ -6068,7 +6069,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 .cagov-card .card-text {
   color: var(--black, #4B4B4B);
   font-size: 1.4rem;/*dropped from 1.5 to 1.4 making sure it fit the card*/
-  line-height: 40px;
+  line-height: 2.5rem;
   font-weight: 400;
   padding: 0;
   margin: 0;

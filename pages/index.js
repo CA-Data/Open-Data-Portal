@@ -88,26 +88,13 @@ export default function Home(data) {
                 </p>
                 <div className="search-container grid-search">
                   <form className="site-search" action="/datasets/">
-                    <input
-                      type="text"
-                      id="q"
-                      name="q"
-                      aria-labelledby="SearchInput"
-                      placeholder="Search datasets"
-                      className="search-textfield"
-                      style={{
-                        color: "#ffffff",
-                        padding: "7px",
-                        borderRadius: ".25rem",
-                      }}
-                    />
-                    <button
+                  <button
                       style={{
                         right: "-3px",
                         backgroundColor: "#ffffff",
                         border: "none",
                         borderRadius: "4px 0px 0px 4px",
-                        padding: "7px 14px",
+                        padding: "8px 14px 0px 14px",
                         position: "relative",
                       }}
                       type="submit"
@@ -137,9 +124,6 @@ export default function Home(data) {
                         color: "#ffffff",
                         padding: "7px",
                         borderRadius: ".25rem",
-                        padding: "5px 0px 9px 10px",
-                        margin:"-4px",
-                        border:"none",
                       }}
                     />
                     
