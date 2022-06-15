@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useRouter } from 'next/router'
 
 export async function getServerSideProps(context) {
-  var apirequest = "https://data.ca.gov/api/3/action/package_search?q="+context.query.q;
+  var apirequest = "https://test-data.technology.ca.gov/api/3/action/package_search?q="+context.query.q;
   var thereWasAFilter = 0; // flag, did user select any filter?
   if ('topic' in context.query && context.query.topic.length>0) {
     let groups = context.query.topic.split(',');
@@ -97,7 +97,7 @@ export async function getServerSideProps(context) {
   };
 
   if (context.query.topic && topicIconArray[context.query.topic]) {
-    var apireqtopic = "https://data.ca.gov/api/3/action/package_search?rows=3&fq=groups:(" + context.query.topic + ")&sort=views_recent desc";
+    var apireqtopic = "https://test-data.technology.ca.gov/api/3/action/package_search?rows=3&fq=groups:(" + context.query.topic + ")&sort=views_recent desc";
     const responsetopic = await fetch(apireqtopic).then((responsetopic) => responsetopic.json());
     //\console.log(apireqtopic);
     //console.log(responsetopic);
@@ -144,7 +144,7 @@ export async function getServerSideProps(context) {
     publisherDetails.description = ""
     publisherDetails.website = ""
     publisherDetails.popular = []
-    const popular_datasets = await fetch(`https://data.ca.gov/api/action/package_search?q=${q}&sort=views_recent%20desc&fq=organization:${publisher}&rows=3`).then((response) => response.json());
+    const popular_datasets = await fetch(`https://test-data.technology.ca.gov/api/action/package_search?q=${q}&sort=views_recent%20desc&fq=organization:${publisher}&rows=3`).then((response) => response.json());
     
     console.log('RESULTS', popular_datasets.result.count, publisher)
     if (popular_datasets.result.count > 0) {
@@ -282,12 +282,12 @@ const Results =(data)=>{
   var urlParamSort = (data.parameters.sort) ? "&sort=" + data.parameters.sort : "";
   useEffect(()=>{
     // grab lists on page load
-    fetch('https://data.ca.gov/api/3/action/group_list').then(res=>res.json()).then(data=>setTopicList(data.result)).catch(error=>console.error(error))
-    fetch('https://data.ca.gov/api/3/action/organization_list').then(res=>res.json()).then(data=>setPublisherList(data.result)).catch(error=>console.error(error))
-    fetch('https://data.ca.gov/api/3/action/tag_list').then(res=>res.json()).then(data=>setTagList(data.result)).catch(error=>console.error(error))
+    fetch('https://test-data.technology.ca.gov/api/3/action/group_list').then(res=>res.json()).then(data=>setTopicList(data.result)).catch(error=>console.error(error))
+    fetch('https://test-data.technology.ca.gov/api/3/action/organization_list').then(res=>res.json()).then(data=>setPublisherList(data.result)).catch(error=>console.error(error))
+    fetch('https://test-data.technology.ca.gov/api/3/action/tag_list').then(res=>res.json()).then(data=>setTagList(data.result)).catch(error=>console.error(error))
 
     // get formats
-    fetch('https://data.ca.gov/api/3/action/package_search?q=&rows=3000')
+    fetch('https://test-data.technology.ca.gov/api/3/action/package_search?q=&rows=30')
     .then(res=>res.json())
     .then(data=>{
       const dataSet = new Set();
