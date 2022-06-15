@@ -27,7 +27,7 @@ export default function preview(dataset) {
       >
         <div className="content-container">
           <h1>Licenses</h1>
-          <p><strong>Public domain</strong>: Most datasets have this license. This means the dataset is released into the public domain. You can use the dataset freely without permission.</p>
+          <p><strong>Public domain</strong>: Most datasets are released into the public domain. This means the dataset can be used freely without restriction under copyright law.</p>
           <h2>Other licenses</h2>
           <p>Find out more about these licenses on <a href="http://opendefinition.org">Open Data Commons</a>:</p>
           <ul>
