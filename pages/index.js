@@ -18,18 +18,18 @@ export async function getServerSideProps() {
   //                </svg>
   //              </a> 
   async function recentDatasets() {
-    const response = await fetch('https://data.ca.gov/api/3/action/recently_changed_packages_activity_list').then(response => response.json());
+    const response = await fetch('https://test-data.technology.ca.gov/api/3/action/recently_changed_packages_activity_list').then(response => response.json());
     return response.result
   }
   async function buildTopics() {
     const topicArray = []
-    const response = await fetch('https://data.ca.gov/api/3/action/group_list').then(response => response.json());
+    const response = await fetch('https://test-data.technology.ca.gov/api/3/action/group_list').then(response => response.json());
     const group_array = await response.result
     
     for (let index = 0; index < group_array.length; index++) {
       const topics = {}
       const groupName = group_array[index]
-      const res =  await fetch('https://data.ca.gov/api/3/action/group_show?id='+groupName)
+      const res =  await fetch('https://test-data.technology.ca.gov/api/3/action/group_show?id='+groupName)
       const data =  await res.json();
       const groupTitle =  data.result.title
       const groupCount =  data.result.package_count
@@ -44,7 +44,7 @@ export async function getServerSideProps() {
   };
 
   async function archive() {
-    const response = await fetch('https://data.ca.gov/api/action/package_search?qf=water&facet.field=[%22groups%22]&facet.limit=10&rows=0').then(response => response.json());
+    const response = await fetch('https://test-data.technology.ca.gov/api/action/package_search?qf=water&facet.field=[%22groups%22]&facet.limit=10&rows=0').then(response => response.json());
     return response.result.search_facets.groups.items
   }
   const topicArray = await buildTopics()
@@ -87,14 +87,14 @@ export default function Home(data) {
                 Access thousands of datasets to support your next analysis or project
                 </p>
                 <div className="search-container grid-search">
-                  <form className="site-search" action="/results/">
+                  <form className="site-search" action="/datasets/">
                   <button
                       style={{
                         right: "-3px",
                         backgroundColor: "#ffffff",
                         border: "none",
                         borderRadius: "4px 0px 0px 4px",
-                        padding: "7px 14px",
+                        padding: "8px 14px 0px 14px",
                         position: "relative",
                       }}
                       type="submit"
@@ -252,7 +252,7 @@ export default function Home(data) {
                   </div>
                   <div className="content">
                     <h3 className="h4">California State Geoportal</h3>
-                    <p className="topic-desc">Explore, visualize, and download California data. Visit our <a href="https://gis.data.ca.gov/">California State Geoportal</a>.</p>
+                    <p className="topic-desc">Explore, visualize, and download California data. Visit our <a href="https://gis.test-data.technology.ca.gov/">California State Geoportal</a>.</p>
                   </div>
                 </div>
               </div>

@@ -520,7 +520,7 @@ const Results =(data)=>{
             {/* Topic ------------------------------------------------------------------------------------------------------------------------ */}
 
             <div className="search-container grid-search">
-              <form className="site-search" action="datasets">
+              <form className="site-search" action="/datasets">
                 <span className="sr-only" id="SearchInput">
                   Dataset search
                 </span>
@@ -575,7 +575,7 @@ const Results =(data)=>{
               </form>
             </div>
             <div className="filter-sort">
-              <form id="sortresults" method="GET" action="datasets" name="sort">
+              <form id="sortresults" method="GET" action="/datasets" name="sort">
                 <input type="hidden" name="q" value={data.parameters.q}></input>
                 <input type="hidden" name="topic" value={data.parameters.topic}></input>
                 <input type="hidden" name="publisher" value={data.parameters.publisher}></input>

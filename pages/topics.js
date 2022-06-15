@@ -67,7 +67,8 @@ export async function getServerSideProps() {
     }
   }
   
-  topicArray.sort((a, b) => a.count < b.count ? -1 : b.count > a.count ? 1 : 0).reverse()
+  //topicArray.sort((a, b) => a.count < b.count ? -1 : b.count > a.count ? 1 : 0).reverse(); // sort by # of datasets
+  topicArray.sort((a, b) => a.title > b.title ? -1 : b.title < a.title ? 1 : 0).reverse() // sort by title
   
   return {
     props: {topics: topicArray},
@@ -87,7 +88,7 @@ export default function Home(data) {
               <a>Open Data</a>
             </Link>
           </li>
-          <li>Explore Datasets</li>
+          <li>Explore datasets</li>
           <li>Topics</li>
         </ol>
       </nav>
