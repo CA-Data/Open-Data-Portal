@@ -97,7 +97,7 @@ function MyApp({ Component, pageProps }) {
 
             {/*
             <div className="search-container grid-search">
-              <form className="site-search" action="/results">
+              <form className="site-search" action="/datasets">
                 <span className="sr-only" id="SearchInput">
                   Dataset search
                 </span>
@@ -133,7 +133,7 @@ function MyApp({ Component, pageProps }) {
             <cagov-site-navigation>
             <div className="container">
               <div className="search-container search-container--small hidden-search" style={{display: "none!important"}}>
-                <form className="site-search" action="/results">
+                <form className="site-search" action="/datasets">
                   <span className="sr-only" id="SearchInput2">
                     Search datasets
                   </span>
