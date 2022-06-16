@@ -28,7 +28,7 @@ export async function getServerSideProps(context) {
   }
 
   async function buildTable(resourceId) {
-    const response = await fetch('https://data.ca.gov/api/3/action/datastore_search?resource_id='+resourceId).then(response => response.json());
+    const response = await fetch('https://test-data.technology.ca.gov/api/3/action/datastore_search?resource_id='+resourceId).then(response => response.json());
     const columns = []
     for (const key in response.result.fields) {
       if (key > 0) {
@@ -47,8 +47,8 @@ export async function getServerSideProps(context) {
     return {columns, rows}
   }
 
-  const datasetResponse = await fetch("https://data.ca.gov/api/3/action/package_show?name_or_id="+context.query.name).then((response) => response.json());
-  //https://data.ca.gov/api/3/action/package_show?name_or_id=ground-water-water-quality-results
+  const datasetResponse = await fetch("https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id="+context.query.name).then((response) => response.json());
+  //https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=ground-water-water-quality-results
 
 
   const options = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
@@ -83,7 +83,7 @@ export async function getServerSideProps(context) {
   }
 
   /* Finds the right resource file */
-  const response = await fetch('https://data.ca.gov/api/3/action/datastore_search?resource_id='+context.query.id).then(response => response.json());
+  const response = await fetch('https://test-data.technology.ca.gov/api/3/action/datastore_search?resource_id='+context.query.id).then(response => response.json());
   tableData = {
     columns: [],
     rows: []
