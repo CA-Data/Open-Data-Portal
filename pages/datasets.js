@@ -112,7 +112,7 @@ const getFormattedData =async(context)=>{
   
   //[0]previous, [1]current, [2]next, [3]total, [4]next 
 
-  const response = await fetch(apirequest).then((response) => response.json());
+  const response = await fetch(apirequest,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then((response) => response.json());
 
   pageData["total"].value = Math.ceil(parseInt(response.result.count) / 10);
 
