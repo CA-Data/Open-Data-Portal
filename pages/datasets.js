@@ -306,11 +306,15 @@ const Results =(data)=>{
     setPublisherSvg('svg-rotate-down');    // *
     setTagSvg('svg-rotate-down');          // *
     setTopicSvg('svg-rotate-up');          // *
-    setSelectedTopics([]);                     // resets useState arrays
-    setSelectedPublishers([]);                 // *
-    setSelectedFormats([]);                    // *
-    setSelectedTags([]);                       // *
-    router.push('?q=');                    // and resets search results
+    setSelectedTopics([]);                 // resets useState arrays
+    setSelectedPublishers([]);             // *
+    setSelectedFormats([]);                // *
+    setSelectedTags([]);                   // *
+    setTopicShowMore(4);                   // *
+    setPublisherShowMore(4);               // *
+    setTagShowMore(4);                     // *
+    setFormatShowMore(4);                  // *
+    router.push('?q=',null,{shallow:true});                    // and resets search results
   }
   return (
     <>
@@ -349,7 +353,7 @@ const Results =(data)=>{
                           </li>
                         ))}
                         <div style={{display:'flex',justifyContent:'space-between'}}>
-                          <button hidden={topicList.length < topicShowMore} onClick={()=>topicShowMore > topicList.length ?'':setTopicShowMore(topicShowMore + 5)} style={{cursor:'pointer'}}>+ More</button>
+                          <button hidden={topicList.length <= topicShowMore} onClick={()=>topicShowMore > topicList.length ?'':setTopicShowMore(topicShowMore + 5)} style={{cursor:'pointer'}}>+ More</button>
                           <button hidden={!(topicShowMore > 4)} onClick={()=>setTopicShowMore(4)} style={{cursor:'pointer'}}>Show less</button>
                         </div>
                       </ul>
@@ -374,7 +378,7 @@ const Results =(data)=>{
                           </li>
                         ))}
                         <div style={{display:'flex',justifyContent:'space-between'}}>
-                          <button hidden={publisherList.length < publisherShowMore} onClick={()=>publisherShowMore > publisherList.length ?'':setPublisherShowMore(publisherShowMore + 5)}  style={{cursor:'pointer'}}>+ More</button>
+                          <button hidden={publisherList.length <= publisherShowMore} onClick={()=>publisherShowMore > publisherList.length ?'':setPublisherShowMore(publisherShowMore + 5)}  style={{cursor:'pointer'}}>+ More</button>
                           <button hidden={!(publisherShowMore > 4)} onClick={()=>setPublisherShowMore(4)} style={{cursor:'pointer'}}>Show less</button>
                         </div>
                       </ul>
@@ -400,7 +404,7 @@ const Results =(data)=>{
                         </li>
                         ))}
                         <div style={{display:'flex',justifyContent:'space-between'}}>
-                          <button hidden={formatList.length < formatShowMore} onClick={()=>formatShowMore > formatList.length ?'':setFormatShowMore(formatShowMore + 5)}  style={{cursor:'pointer'}}>+ More</button>
+                          <button hidden={formatList.length <= formatShowMore} onClick={()=>formatShowMore > formatList.length ?'':setFormatShowMore(formatShowMore + 5)}  style={{cursor:'pointer'}}>+ More</button>
                           <button hidden={!(formatShowMore > 4)} onClick={()=>setFormatShowMore(4)} style={{cursor:'pointer'}}>Show less</button>
                         </div>
                       </ul>
@@ -425,7 +429,7 @@ const Results =(data)=>{
                         </li>
                         ))}
                         <div style={{display:'flex',justifyContent:'space-between'}}>
-                          <button hidden={tagList.length < tagShowMore} onClick={()=>tagShowMore > tagList.length ?'':setTagShowMore(tagShowMore + 5)}  style={{cursor:'pointer'}}>+ More</button>
+                          <button hidden={tagList.length <= tagShowMore} onClick={()=>tagShowMore > tagList.length ?'':setTagShowMore(tagShowMore + 5)}  style={{cursor:'pointer'}}>+ More</button>
                           <button hidden={!(tagShowMore > 4)} onClick={()=>setTagShowMore(4)} style={{cursor:'pointer'}}>Show less</button>
                         </div>
                       </ul>
