@@ -98,6 +98,7 @@ export async function getServerSideProps(context) {
 
   if (context.query.topic && topicIconArray[context.query.topic]) {
     var apireqtopic = "https://test-data.technology.ca.gov/api/3/action/package_search?rows=3&fq=groups:(" + context.query.topic + ")&sort=views_recent desc";
+
     const responsetopic = await fetch(apireqtopic,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then((responsetopic) => responsetopic.json());
     //\console.log(apireqtopic);
     //console.log(responsetopic);
@@ -144,9 +145,9 @@ export async function getServerSideProps(context) {
     publisherDetails.description = ""
     publisherDetails.website = ""
     publisherDetails.popular = []
+    
     const popular_datasets = await fetch(`https://test-data.technology.ca.gov/api/action/package_search?q=${q}&sort=views_recent%20desc&fq=organization:${publisher}&rows=3`,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then((response) => response.json());
     
-    console.log('RESULTS', popular_datasets.result.count, publisher)
     if (popular_datasets.result.count > 0) {
       publisherDetails.title = popular_datasets.result.results[0].organization.title
       publisherDetails.description = popular_datasets.result.results[0].organization.description
