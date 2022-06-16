@@ -4,7 +4,7 @@ import Link from "next/link";
 //
 export async function getServerSideProps(context) {
   const response = await fetch(
-    "https://data.ca.gov/api/3/action/organization_list?all_fields=true&include_extras=true"
+    "https://test-data.technology.ca.gov/api/3/action/organization_list?all_fields=true&include_extras=true",{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}
   ).then((response) => response.json());
 
   const organizations = []

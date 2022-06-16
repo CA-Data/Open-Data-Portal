@@ -26,9 +26,9 @@ export async function getServerSideProps(context) {
 
   const name = context.query.name;
   const response = await fetch(
-    "https://data.ca.gov/api/3/action/package_show?name_or_id=" + name
+    "https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=" + name
   ).then((response) => response.json());
-  console.log("https://data.ca.gov/api/3/action/package_show?name_or_id=" + name);
+  console.log("https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=" + name);
   //  console.log(response);
 
   var groups = response.result.groups;
