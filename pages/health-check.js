@@ -6,14 +6,14 @@ import { spacing, style } from '@mui/system';
 export async function getServerSideProps(context) {
   return {
     props: {
-      data: context,
+      data: "",
     },
   };
 }
 
 export default function preview(dataset) {
   return (
-    <main id="body-content" class="cagov-main dataset-preview">
+    <main id="body-content" className="cagov-main">
       <h1>Health check: Ok</h1>
     </main>
     
