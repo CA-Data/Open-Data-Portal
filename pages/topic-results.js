@@ -249,7 +249,7 @@ const Results =(data)=>{
     fetch('https://data.ca.gov/api/3/action/tag_list').then(res=>res.json()).then(data=>setTagList(data.result)).catch(error=>console.error(error))
 
     // get formats
-    fetch('https://data.ca.gov/api/3/action/package_search?q=&rows=3000')
+    fetch('https://data.ca.gov/api/3/action/package_search?q=&rows=30')
     .then(res=>res.json())
     .then(data=>{
       const dataSet = new Set();
