@@ -98,15 +98,17 @@ export async function getServerSideProps(context) {
 
   if (context.query.topic && topicIconArray[context.query.topic]) {
     var apireqtopic = "https://test-data.technology.ca.gov/api/3/action/package_search?rows=3&fq=groups:(" + context.query.topic + ")&sort=views_recent desc";
-    const responsetopic = await fetch(apireqtopic).then((responsetopic) => responsetopic.json());
-    //\console.log(apireqtopic);
+    const responsetopic = await fetch(apireqtopic,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then((responsetopic) => responsetopic.json());
+    //console.log(apireqtopic);
     //console.log(responsetopic);
     for (let index = 0; index < responsetopic.result.results.length; index++) {
       const dataset = {};
       dataset.name = responsetopic.result.results[index].name;
       dataset.title = responsetopic.result.results[index].title;
       dataset.organization = responsetopic.result.results[index].organization.title;
-      dataset.views = 123; // responsetopic.result.results[index].tracking_summary.recent;
+      var apireqdataset = "https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=" + dataset.name + "&include_tracking=true";
+      const responseDataset = await fetch(apireqdataset,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then((responseDataset) => responseDataset.json());
+      dataset.views = responseDataset.result.tracking_summary.recent;
       popularDatasets.push(dataset);
     }
     // get display name and description
