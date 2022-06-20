@@ -219,7 +219,7 @@ export default function dataSet(data) {
                   <li>Temporal coverage: {data.data_object.result.temporal? data.data_object.result.temporal: "N/A"}</li>
                 </ul>
                 {data.data_object.result.related_resources &&
-                  <h3 className="h5"><strong>Related resources</strong></h3>
+                  <h3 className="h5"><strong>Related</strong></h3>
                 }
                 {data.data_object.result.related_resources &&
                   <ul>
@@ -263,27 +263,7 @@ export default function dataSet(data) {
                   {data.dataFiles.map((dataset, index) => (
                     <tr key={index}>
                       <td>
-                        {
-                          data.previewableDataTypes.includes(dataset.format)
-                          ?
-                          <Link
-                            href={
-                              "/preview?name=" +
-                              data.parameters.name +
-                              "&id=" +
-                              dataset.id +
-                              "&rname=" +
-                              dataset.name +
-                              "&state=" +
-                              dataset.active
-                            }
-                            passHref
-                          >
-                            <a><strong>{dataset.name}</strong></a>
-                          </Link>
-                          :
-                          <div>{dataset.name}</div>
-                        }
+                        <p>{dataset.name}</p>
                         <div className="resource-description line-clamp-1" style={{maxWidth: "400px"}}>
                           <p>{dataset.description}</p>
                           <button className="btn-read-more">
@@ -471,7 +451,7 @@ export default function dataSet(data) {
                     <div className="column">
                     {data.data_object.result.tags.map((tag, index) => (
                         <li className="tag" key={tag.id}>
-                          <a href={"datasets?q=" + tag.name + "&tag=" + tag.name}>
+                          <a href={"/results?q=" + tag.name + "&tag=" + tag.name}>
                             {tag.name}
                           </a>
                         </li>
@@ -506,7 +486,7 @@ export default function dataSet(data) {
                     <td>
                       {data.data_object.result.tags.map((tag, index) => (
                         <li className="tag" key={tag.id}>
-                          <a href={"datasets?q=" + tag.name + "&tag=" + tag.name}>
+                          <a href={"/results?q=" + tag.name + "&tag=" + tag.name}>
                             {tag.name}
                           </a>
                         </li>

@@ -1,4 +1,4 @@
-import styles from "../styles/Home.module.css";
+
 import Link from "next/link";
 
 export default function preview() {
@@ -40,9 +40,9 @@ export default function preview() {
           </div>
         </div>
 
-        <div className={styles.container}>
+        <div className="content-container">
           <h1>About</h1>
-          <p>Open data is data that can be freely used, shared and built-on by anyone, anywhere, for any purpose.</p>
+          <p className="lead-text">Open data is data that can be freely used, shared and built-on by anyone, anywhere, for any purpose.</p>
           <p>The California Open Data Portal provides public data collected by the state. We publish the data in a format that is easy to search, download, and combine with other data sets from other sources.</p>
           
           <h2 id="new-alpha-site">New alpha site for the California Open Data Portal</h2>
@@ -51,7 +51,7 @@ export default function preview() {
           <p>You can get involved:</p>
           <ul>
             <li>Sign up to <a href="https://airtable.com/shrv4KWAKgny1lxyD">participate in research</a></li>
-            <li><a href="#">Provide feedback</a></li>
+            <li><a href="/contact-us">Provide feedback</a></li>
           </ul>
 
 
