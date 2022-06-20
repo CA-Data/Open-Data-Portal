@@ -1,14 +1,14 @@
 export async function getServerSideProps(context) {
-  var apirequest = "https://data.ca.gov/api/3/action/package_search?q="+context.query.q;
+  var apirequest = "https://test-data.technology.ca.gov/api/3/action/package_search?q="+context.query.q;
 
   if ('format' in context.query) {
-    apirequest = "https://data.ca.gov/api/3/action/resource_search?query=format:"+context.query.format
-    //apirequest = "https://data.ca.gov/api/3/action/package_search?fq=(title:"+context.query.q.replace(/ /g, '-')+"%20AND%20resources:"+context.query.format.replace(/ /g, '-')+")";
+    apirequest = "https://test-data.technology.ca.gov/api/3/action/resource_search?query=format:"+context.query.format
+    //apirequest = "https://test-data.technology.ca.gov/api/3/action/package_search?fq=(title:"+context.query.q.replace(/ /g, '-')+"%20AND%20resources:"+context.query.format.replace(/ /g, '-')+")";
   }
 
 
   if ('sort' in context.query) {
-  apirequest = "https://data.ca.gov/api/3/action/package_search?q="+context.query.q.replace(/ /g, '-')+"&sort="+context.query.sort;
+  apirequest = "https://test-data.technology.ca.gov/api/3/action/package_search?q="+context.query.q.replace(/ /g, '-')+"&sort="+context.query.sort;
   }
 
    //pagination 
@@ -78,7 +78,7 @@ export default function Help(data) {
           <div className="cagov-content content-cell">
             <h1 style={{ marginTop: 0 }}>Search results:</h1>
             <div className="search-container grid-search">
-              <form className="site-search" action="datasets">
+              <form className="site-search" action="/datasets">
                 <span className="sr-only" id="SearchInput">
                   Dataset search
                 </span>
@@ -129,7 +129,7 @@ export default function Help(data) {
               </form>
             </div>
             <div className="filter-sort">
-              <form id="sortresults" method="GET" action="datasets" name="sort">
+              <form id="sortresults" method="GET" action="/datasets" name="sort">
                 <input type="hidden" name="q" value={data.parameters.q}></input>
                 <label htmlFor="sort">Sort by</label>
                 <select onChange={submit} name="sort">

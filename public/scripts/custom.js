@@ -17,9 +17,9 @@ window.addEventListener('load', function (event) {
 
       //add file id to api query inputs
       function addFileId(fileId) {
-        document.getElementById("simple-query").value = `https://data.ca.gov/api/3/action/datastore_search?resource_id=${fileId}&limit=5`
-        document.getElementById("sql-query").value = `https://data.ca.gov/api/3/action/datastore_search_sql?sql=SELECT * from ${fileId} LIMIT 5`
-        document.getElementById("odata-query").value = `https://data.ca.gov/datastore/odata3.0/${fileId}`
+        document.getElementById("simple-query").value = `https://test-data.technology.ca.gov/api/3/action/datastore_search?resource_id=${fileId}&limit=5`
+        document.getElementById("sql-query").value = `https://test-data.technology.ca.gov/api/3/action/datastore_search_sql?sql=select * from "${fileId}" LIMIT 5`
+        document.getElementById("odata-query").value = `https://test-data.technology.ca.gov/datastore/odata3.0/${fileId}`
       }
 
       const apiButtons = document.querySelectorAll('.api-button');

@@ -17,18 +17,18 @@ export async function getServerSideProps() {
   //                </svg>
   //              </a> 
   async function recentDatasets() {
-    const response = await fetch('https://data.ca.gov/api/3/action/recently_changed_packages_activity_list').then(response => response.json());
+    const response = await fetch('https://test-data.technology.ca.gov/api/3/action/recently_changed_packages_activity_list').then(response => response.json());
     return response.result
   }
   async function buildTopics() {
     const topicArray = []
-    const response = await fetch('https://data.ca.gov/api/3/action/group_list').then(response => response.json());
+    const response = await fetch('https://test-data.technology.ca.gov/api/3/action/group_list').then(response => response.json());
     const group_array = await response.result
     
     for (let index = 0; index < group_array.length; index++) {
       const topics = {}
       const groupName = group_array[index]
-      const res =  await fetch('https://data.ca.gov/api/3/action/group_show?id='+groupName)
+      const res =  await fetch('https://test-data.technology.ca.gov/api/3/action/group_show?id='+groupName)
       const data =  await res.json();
       const groupTitle =  data.result.title
       const groupCount =  data.result.package_count
@@ -43,7 +43,7 @@ export async function getServerSideProps() {
   };
 
   async function archive() {
-    const response = await fetch('https://data.ca.gov/api/action/package_search?qf=water&facet.field=[%22groups%22]&facet.limit=10&rows=0').then(response => response.json());
+    const response = await fetch('https://test-data.technology.ca.gov/api/action/package_search?qf=water&facet.field=[%22groups%22]&facet.limit=10&rows=0').then(response => response.json());
     return response.result.search_facets.groups.items
   }
   const topicArray = await buildTopics()
@@ -67,7 +67,8 @@ export async function getServerSideProps() {
     }
   }
   
-  topicArray.sort((a, b) => a.count < b.count ? -1 : b.count > a.count ? 1 : 0).reverse()
+  //topicArray.sort((a, b) => a.count < b.count ? -1 : b.count > a.count ? 1 : 0).reverse(); // sort by # of datasets
+  topicArray.sort((a, b) => a.title > b.title ? -1 : b.title < a.title ? 1 : 0).reverse() // sort by title
   
   return {
     props: {topics: topicArray},
@@ -87,7 +88,7 @@ export default function Home(data) {
               <a>Open Data</a>
             </Link>
           </li>
-          <li>Explore Datasets</li>
+          <li>Explore datasets</li>
           <li>Topics</li>
         </ol>
       </nav>

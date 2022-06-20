@@ -2,7 +2,11 @@ import React, {useEffect, useState} from 'react';
 import { useRouter } from 'next/router'
 
 export async function getServerSideProps(context) {
-  var apirequest = "https://data.ca.gov/api/3/action/package_search?q="+context.query.q;
+  return getFormattedData(context);
+}
+
+const getFormattedData =async(context)=>{
+  var apirequest = "https://test-data.technology.ca.gov/api/3/action/package_search?q="+context.query.q;
   var thereWasAFilter = 0; // flag, did user select any filter?
   if ('topic' in context.query && context.query.topic.length>0) {
     let groups = context.query.topic.split(',');
@@ -108,13 +112,18 @@ export async function getServerSideProps(context) {
   
   //[0]previous, [1]current, [2]next, [3]total, [4]next 
 
-  const response = await fetch(apirequest).then((response) => response.json());
+  const response = await fetch(apirequest,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then((response) => response.json());
+
   pageData["total"].value = Math.ceil(parseInt(response.result.count) / 10);
 
   if (pageData["next"].value >= pageData["total"].value) {
     pageData["next"].display = "none";
   }
   
+  // Getting Filters
+  
+  const filters = await fetch(`https://test-data.technology.ca.gov/api/action/package_search?${apirequest.split('?')[1]}&facet.field=["groups","tags","organization","res_format"]&rows=0`,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response=>response.json()).catch(error=>console.log(error))
+
   //search results
   const resultsArray = []
   if (response.result.results.length > 0) {
@@ -123,7 +132,6 @@ export async function getServerSideProps(context) {
       dataset.formats = []
       dataset.name = response.result.results[index].name
       dataset.title = response.result.results[index].title
-      
       
       dataset.organization = response.result.results[index].organization.title
       
@@ -151,17 +159,18 @@ export async function getServerSideProps(context) {
       resultsArray.push(dataset)
     }
   }
-  
+ 
+
   return {
     props: {
       matches: response.result.count,
       allResults: resultsArray,
       parameters: context.query,
-      pages: pageData
+      pages: pageData,
+      filters: filters
     },
   };
 }
-
 
 const Results =(data)=>{
   const [topicSvg,setTopicSvg] = useState('svg-rotate-up');
@@ -173,128 +182,119 @@ const Results =(data)=>{
   const [selectedFormats,setSelectedFormats] = useState([]);
   const [selectedtags,setSelectedTags] = useState([]);
   const [reset,setReset] = useState(false);
-  const [topicList,setTopicList] = useState([]);
-  const [publisherList,setPublisherList] = useState([]);
-  const [tagList,setTagList] = useState([]);
-  const [formatList,setFormatList] = useState([]);
+  const [topicList,setTopicList] = useState(Object.entries(data.filters.result.facets.groups).sort((a, b) => a[1] > b[1]?-1:1));
+  const [publisherList,setPublisherList] = useState(Object.entries(data.filters.result.facets.organization).sort((a, b) => a[1] > b[1]?-1:1));
+  const [tagList,setTagList] = useState(Object.entries(data.filters.result.facets.tags).sort((a, b) => a[1] > b[1]?-1:1));
+  const [formatList,setFormatList] = useState(Object.entries(data.filters.result.facets.res_format).sort((a, b) => a[1] > b[1]?-1:1));
+  const [dataState,setDataState] = useState(data);
+  const [topicShowMore,setTopicShowMore] = useState(4);
+  const [publisherShowMore,setPublisherShowMore] = useState(4);
+  const [tagShowMore,setTagShowMore] = useState(4);
+  const [formatShowMore,setFormatShowMore] = useState(4);
   const router = useRouter();
   if (typeof window === 'object') {
     // Check if document is finally loaded
     document.addEventListener("DOMContentLoaded", function () {
-      if (parseInt(data.pages["next"].value) > parseInt(data.pages["total"].value)) {
+      if (parseInt(dataState.pages["next"].value) > parseInt(dataState.pages["total"].value)) {
         document.querySelectorAll('.page-next')[0].style.display = 'none';
         document.querySelectorAll('.page-next')[1].style.display = 'none';
       }
     });
   }
+
   const submit = () => {
     document.getElementById("sortresults").submit();
   };
-  var urlParamTopic = (data.parameters.topic) ? "&topic=" + data.parameters.topic : "";
-  var urlParamPublisher = (data.parameters.publisher) ? "&publisher=" + data.parameters.publisher : "";
-  var urlParamFormat = (data.parameters.format) ? "&format=" + data.parameters.format : "";
-  var urlParamTag = (data.parameters.tag) ? "&tag=" + data.parameters.tag : "";
-  var urlParamSort = (data.parameters.sort) ? "&sort=" + data.parameters.sort : "";
-  useEffect(()=>{
-    // grab lists on page load
-    fetch('https://data.ca.gov/api/3/action/group_list').then(res=>res.json()).then(data=>setTopicList(data.result)).catch(error=>console.error(error))
-    fetch('https://data.ca.gov/api/3/action/organization_list').then(res=>res.json()).then(data=>setPublisherList(data.result)).catch(error=>console.error(error))
-    fetch('https://data.ca.gov/api/3/action/tag_list').then(res=>res.json()).then(data=>setTagList(data.result)).catch(error=>console.error(error))
-
-    // get formats
-    fetch('https://data.ca.gov/api/3/action/package_search?q=&rows=3000')
-    .then(res=>res.json())
-    .then(data=>{
-      const dataSet = new Set();
-      const tempArray= [];
-      for (let index = 0; index < data.result.results.length; index++) { // loop over all results
-        if (data.result.results[index].resources.length > 0) {
-          const resource = data.result.results[index].resources
-          for (let index = 0; index < resource.length; index++) {        // loop over formats for this record
-            var resource_type = resource[index].format;
-            if(resource[index].format != ""){
-              dataSet.add(resource_type)                                 // Creates a set for unique formats
-            }
-          }
-        }
-      }
-      dataSet.forEach(item=>{
-        tempArray.push(item)              // Puts set into an array
-      })
-      setFormatList(tempArray.sort());    // puts array into useState to share state with rest of Results component
-
-    })
-  },[])
-
+  var urlParamTopic = (dataState.parameters.topic) ? "&topic=" + dataState.parameters.topic : "";
+  var urlParamPublisher = (dataState.parameters.publisher) ? "&publisher=" + dataState.parameters.publisher : "";
+  var urlParamFormat = (dataState.parameters.format) ? "&format=" + dataState.parameters.format : "";
+  var urlParamTag = (dataState.parameters.tag) ? "&tag=" + dataState.parameters.tag : "";
+  var urlParamSort = (dataState.parameters.sort) ? "&sort=" + dataState.parameters.sort : "";
 
   // UseEffects will fire when its corresponding array is updated. 
   // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedtags)
   // Each array will append a value to the url
   useEffect(()=>{
+    getFormattedData(router).then(response=>setDataState(response.props));
+  },[router])
+
+  useEffect(()=>{
+    setTopicList(Object.entries(dataState.filters.result.facets.groups).sort((a, b) => a[1] > b[1]?-1:1))
+    setPublisherList(Object.entries(dataState.filters.result.facets.organization).sort((a, b) => a[1] > b[1]?-1:1))
+    setTagList(Object.entries(dataState.filters.result.facets.tags).sort((a, b) => a[1] > b[1]?-1:1))
+    setFormatList(Object.entries(dataState.filters.result.facets.res_format).sort((a, b) => a[1] > b[1]?-1:1))
+  },[dataState])
+
+  useEffect(()=>{
     if(!reset){
       if(selectedTopics.length == 0 || router.query.topic?.length == 0 ){
-        router.push(router.asPath.split('&topic=')[0])
+        router.push(router.asPath.split('&topic=')[0],null,{shallow:true})
+
       }
       if(selectedTopics.length == 1 && !router.query.topic){
-          router.push(router.asPath+'&topic='+selectedTopics)
+        router.push(router.asPath+'&topic='+selectedTopics,null,{shallow:true})
+
       }
       if(selectedTopics.length>=1 && router.query.topic){
         let newPath = router.asPath.split('&');
         let index = newPath.findIndex(item=> item.includes('topic'));
         newPath.splice(index,1,"topic="+selectedTopics.join(','));
         newPath = newPath.join('&');
-        router.push(newPath);
+        router.push(newPath,null,{shallow:true});
       }
     }
   },[selectedTopics])
+
   useEffect(()=>{
     if(!reset){
       if(selectedPublishers.length == 0 || router.query.publisher?.length == 0 ){
-        router.push(router.asPath.split('&publisher=')[0])
+        router.push(router.asPath.split('&publisher=')[0],null,{shallow:true})
       }
       if(selectedPublishers.length == 1 && !router.query.publisher){
-          router.push(router.asPath+'&publisher='+selectedPublishers)
+          router.push(router.asPath+'&publisher='+selectedPublishers,null,{shallow:true})
       }
       if(selectedPublishers.length>=1 && router.query.publisher){
         let newPath = router.asPath.split('&');
         let index = newPath.findIndex(item=> item.includes('publisher'));
         newPath.splice(index,1,"publisher="+selectedPublishers.join(','));
         newPath = newPath.join('&');
-        router.push(newPath);
+        router.push(newPath,null,{shallow:true});
       }
     }
   },[selectedPublishers])
+
   useEffect(()=>{
     if(!reset){
       if(selectedFormats.length == 0 || router.query.format?.length == 0 ){
-        router.push(router.asPath.split('&format=')[0])
+        router.push(router.asPath.split('&format=')[0],null,{shallow:true})
       }
       if(selectedFormats.length == 1 && !router.query.format){
-          router.push(router.asPath+'&format='+selectedFormats)
+          router.push(router.asPath+'&format='+selectedFormats,null,{shallow:true})
       }
       if(selectedFormats.length>=1 && router.query.format){
         let newPath = router.asPath.split('&');
         let index = newPath.findIndex(item=> item.includes('format'));
         newPath.splice(index,1,"format="+selectedFormats.join(','));
         newPath = newPath.join('&');
-        router.push(newPath);
+        router.push(newPath,null,{shallow:true});
       }
     }
   },[selectedFormats])
+
   useEffect(()=>{
     if(!reset){
       if(selectedtags.length == 0 || router.query.tag?.length == 0 ){
-        router.push(router.asPath.split('&tag=')[0])
+        router.push(router.asPath.split('&tag=')[0],null,{shallow:true})
       }
       if(selectedtags.length == 1 && !router.query.tag){
-          router.push(router.asPath+'&tag='+selectedtags)
+        router.push(router.asPath+'&tag='+selectedtags,null,{shallow:true})
       }
       if(selectedtags.length>=1 && router.query.tag){
         let newPath = router.asPath.split('&');
         let index = newPath.findIndex(item=> item.includes('tag'));
         newPath.splice(index,1,"tag="+selectedtags.join(','));
         newPath = newPath.join('&');
-        router.push(newPath);
+        router.push(newPath,null,{shallow:true});
       }
     }
   },[selectedtags])
@@ -306,13 +306,16 @@ const Results =(data)=>{
     setPublisherSvg('svg-rotate-down');    // *
     setTagSvg('svg-rotate-down');          // *
     setTopicSvg('svg-rotate-up');          // *
-    setSelectedTopics([]);                     // resets useState arrays
-    setSelectedPublishers([]);                 // *
-    setSelectedFormats([]);                    // *
-    setSelectedTags([]);                       // *
-    router.push('?q=');                    // and resets search results
+    setSelectedTopics([]);                 // resets useState arrays
+    setSelectedPublishers([]);             // *
+    setSelectedFormats([]);                // *
+    setSelectedTags([]);                   // *
+    setTopicShowMore(4);                   // *
+    setPublisherShowMore(4);               // *
+    setTagShowMore(4);                     // *
+    setFormatShowMore(4);                  // *
+    router.push('?q=',null,{shallow:true});                    // and resets search results
   }
-
   return (
     <>
       <main id="body-content" className="cagov-main">
@@ -331,88 +334,104 @@ const Results =(data)=>{
                   </div>
                   <ul className="search-filters align">
                     <li style={{color:"#4B4B4B"}}  className="filter-topic">
-                      <div onClick={()=>{topicSvg=='svg-rotate-up'?setTopicSvg('svg-rotate-down'):setTopicSvg('svg-rotate-up')}} style={{display:'flex',alignItems:'center', margin:'10px 0px'}}>
+                      <div onClick={()=>{topicSvg=='svg-rotate-up'?setTopicSvg('svg-rotate-down'):setTopicSvg('svg-rotate-up');setTopicShowMore(4)}} style={{display:'flex',alignItems:'center', margin:'10px 0px'}}>
                         <svg style={{margin:'9px 21px 9px 4px'}} className={topicSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg>
                         <span style={{fontWeight:'bold'}}>Topic</span>
                       </div>
                       <ul hidden={topicSvg!='svg-rotate-up'?true:false} style={{cursor:'default'}}>
-                        {topicList.map((topic, index) => (
-                          <li key={topic} >
+                        {topicList.slice(0,topicShowMore).map((topic, index) => (
+                          <li key={topic[0]} >
                             <input onChange={(e)=>{
                               if(e.target.checked){
-                                setSelectedTopics([...selectedTopics,topic.toLowerCase()])
+                                setSelectedTopics([...selectedTopics,topic[0].toLowerCase()])
                               }
                               else{
-                                setSelectedTopics(selectedTopics.filter(item=>item!=topic.toLowerCase()))
+                                setSelectedTopics(selectedTopics.filter(item=>item!=topic[0].toLowerCase()))
                               }
-                              }} style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={topic} className='checkBox' type={'checkbox'}/>
-                            <label style={{cursor:'pointer', }} htmlFor={topic}>{topic}</label>
+                              }} style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={topic[0]} className='checkBox' type={'checkbox'}/>
+                            <label style={{cursor:'pointer', }} htmlFor={topic[0]}>{topic[0]} <span style={{color:'#727272'}}>({topic[1]})</span></label>
                           </li>
                         ))}
+                        <div style={{display:'flex',justifyContent:'space-between'}}>
+                          <button hidden={topicList.length <= topicShowMore} onClick={()=>topicShowMore > topicList.length ?'':setTopicShowMore(topicShowMore + 5)} style={{cursor:'pointer'}}>+ More</button>
+                          <button hidden={!(topicShowMore > 4)} onClick={()=>setTopicShowMore(4)} style={{cursor:'pointer'}}>Show less</button>
+                        </div>
                       </ul>
                     </li>
                     <li style={{color:"#4B4B4B"}} className="filter-publisher">
-                      <div onClick={()=>{publisherSvg=='svg-rotate-up'?setPublisherSvg('svg-rotate-down'):setPublisherSvg('svg-rotate-up')}} style={{display:'flex',alignItems:'center', margin:'10px 0px'}}>
+                      <div onClick={()=>{publisherSvg=='svg-rotate-up'?setPublisherSvg('svg-rotate-down'):setPublisherSvg('svg-rotate-up');setPublisherShowMore(4)}} style={{display:'flex',alignItems:'center', margin:'10px 0px'}}>
                         <svg style={{margin:'9px 21px 9px 4px'}} className={publisherSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg>
                         <span style={{fontWeight:'bold'}}>Publisher</span>
                       </div>
                       <ul hidden={publisherSvg!='svg-rotate-up'?true:false}>
-                        {publisherList.map((publisher, index) => (
-                          <li key={publisher} >
+                        {publisherList.slice(0,publisherShowMore).map((publisher, index) => (
+                          <li key={publisher[0]} >
                             <input onChange={(e)=>{
                               if(e.target.checked){
-                                setSelectedPublishers([...selectedPublishers,publisher.toLowerCase()])
+                                setSelectedPublishers([...selectedPublishers,publisher[0].toLowerCase()])
                               }
                               else{
-                                setSelectedPublishers(selectedPublishers.filter(item=>item!=publisher.toLowerCase()))
+                                setSelectedPublishers(selectedPublishers.filter(item=>item!=publisher[0].toLowerCase()))
                               }                            
-                              }} style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={publisher} className='checkBox' type={'checkbox'}/>
-                            <label style={{cursor:'pointer' }} htmlFor={publisher}>{publisher}</label>
+                              }} style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={publisher[0]} className='checkBox' type={'checkbox'}/>
+                            <label style={{cursor:'pointer' }} htmlFor={publisher[0]}>{publisher[0]} <span style={{color:'#727272'}}>({publisher[1]})</span></label>
                           </li>
                         ))}
+                        <div style={{display:'flex',justifyContent:'space-between'}}>
+                          <button hidden={publisherList.length <= publisherShowMore} onClick={()=>publisherShowMore > publisherList.length ?'':setPublisherShowMore(publisherShowMore + 5)}  style={{cursor:'pointer'}}>+ More</button>
+                          <button hidden={!(publisherShowMore > 4)} onClick={()=>setPublisherShowMore(4)} style={{cursor:'pointer'}}>Show less</button>
+                        </div>
                       </ul>
                     </li>
                     <li style={{color:"#4B4B4B"}} className="filter-format">
-                      <div onClick={()=>{formatSvg=='svg-rotate-up'?setFormatSvg('svg-rotate-down'):setFormatSvg('svg-rotate-up')}} style={{display:'flex',alignItems:'center', margin:'10px 0px'}}>
+                      <div onClick={()=>{formatSvg=='svg-rotate-up'?setFormatSvg('svg-rotate-down'):setFormatSvg('svg-rotate-up');setFormatShowMore(4)}} style={{display:'flex',alignItems:'center', margin:'10px 0px'}}>
                         <svg style={{margin:'9px 21px 9px 4px'}} className={formatSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg>
                         <span style={{fontWeight:'bold'}}>Format</span>
                       </div>
                       <ul hidden={formatSvg!='svg-rotate-up'?true:false}>
-                        {formatList.map((format, index) => (
-                        <li key={format} >
+                        {formatList.slice(0,formatShowMore).map((format, index) => (
+                        <li key={format[0]} >
                           <input onChange={(e)=>{
                              if(e.target.checked){
-                              setSelectedFormats([...selectedFormats,format.toLowerCase()])
+                              setSelectedFormats([...selectedFormats,format[0].toLowerCase()])
                             }
                             else{
-                              setSelectedFormats(selectedFormats.filter(item=>item!=format.toLowerCase()))
+                              setSelectedFormats(selectedFormats.filter(item=>item!=format[0].toLowerCase()))
                             } 
                           }}
-                             style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={format} className='checkBox' type={'checkbox'}/>
-                          <label style={{cursor:'pointer'}} htmlFor={format}>{format}</label>
+                             style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={format[0]} className='checkBox' type={'checkbox'}/>
+                          <label style={{cursor:'pointer'}} htmlFor={format[0]}>{format[0]} <span style={{color:'#727272'}}>({format[1]})</span></label>
                         </li>
                         ))}
+                        <div style={{display:'flex',justifyContent:'space-between'}}>
+                          <button hidden={formatList.length <= formatShowMore} onClick={()=>formatShowMore > formatList.length ?'':setFormatShowMore(formatShowMore + 5)}  style={{cursor:'pointer'}}>+ More</button>
+                          <button hidden={!(formatShowMore > 4)} onClick={()=>setFormatShowMore(4)} style={{cursor:'pointer'}}>Show less</button>
+                        </div>
                       </ul>
                     </li>
                     <li style={{color:"#4B4B4B"}} className="filter-tag">
-                      <div onClick={()=>{tagSvg=='svg-rotate-up'?setTagSvg('svg-rotate-down'):setTagSvg('svg-rotate-up')}} style={{display:'flex',alignItems:'center', margin:'10px 0px'}}>
+                      <div onClick={()=>{tagSvg=='svg-rotate-up'?setTagSvg('svg-rotate-down'):setTagSvg('svg-rotate-up'); setTagShowMore(4)}} style={{display:'flex',alignItems:'center', margin:'10px 0px'}}>
                         <svg style={{margin:'9px 21px 9px 4px'}} className={tagSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg>
                         <span style={{fontWeight:'bold'}}>Tag</span>
                       </div>
                       <ul hidden={tagSvg!='svg-rotate-up'?true:false}>
-                        {tagList.map((tag, index) => (
-                        <li key={tag} >
+                        {tagList.slice(0,tagShowMore).map((tag, index) => (
+                        <li key={tag[0]} >
                           <input onChange={(e)=>{
                             if(e.target.checked){
-                             setSelectedTags([...selectedtags,tag])
+                             setSelectedTags([...selectedtags,tag[0]])
                            }
                            else{
-                             setSelectedTags(selectedtags.filter(item=>item!=tag))
+                             setSelectedTags(selectedtags.filter(item=>item!=tag[0]))
                            } 
-                         }} style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={tag} className='checkBox' type={'checkbox'}/>
-                          <label style={{cursor:'pointer' }} htmlFor={tag}>{tag}</label>
+                         }} style={{cursor:'pointer', margin:'5px 10px 5px 4px'}} id={tag[0]} className='checkBox' type={'checkbox'}/>
+                          <label style={{cursor:'pointer' }} htmlFor={tag[0]}>{tag[0]} <span style={{color:'#727272'}}>({tag[1]})</span></label>
                         </li>
                         ))}
+                        <div style={{display:'flex',justifyContent:'space-between'}}>
+                          <button hidden={tagList.length <= tagShowMore} onClick={()=>tagShowMore > tagList.length ?'':setTagShowMore(tagShowMore + 5)}  style={{cursor:'pointer'}}>+ More</button>
+                          <button hidden={!(tagShowMore > 4)} onClick={()=>setTagShowMore(4)} style={{cursor:'pointer'}}>Show less</button>
+                        </div>
                       </ul>
                     </li>
                   </ul>
@@ -431,7 +450,7 @@ const Results =(data)=>{
           <div className="cagov-content content-cell">
             <h1 style={{ marginTop: 0, color:'#034A6B', fontSize:'47px', lineHeight:'58.8px'}}>Search results</h1>
             <div className="search-container grid-search">
-              <form className="site-search" action="datasets">
+              <form className="site-search" action="/datasets">
                 <span className="sr-only" id="SearchInput">
                   Dataset search
                 </span>
@@ -443,7 +462,7 @@ const Results =(data)=>{
                     aria-labelledby="SearchInput"
                     placeholder="Search datasets"
                     className="search-textfield"
-                    defaultValue = {data.parameters.q}
+                    defaultValue = {dataState.parameters.q}
                     style={{
                       width: "876px",
                       height:'49px',
@@ -486,14 +505,14 @@ const Results =(data)=>{
               </form>
             </div>
             <div className="filter-sort">
-              <form id="sortresults" method="GET" action="datasets" name="sort">
-                <input type="hidden" name="q" value={data.parameters.q}></input>
-                <input type="hidden" name="topic" value={data.parameters.topic}></input>
-                <input type="hidden" name="publisher" value={data.parameters.publisher}></input>
-                <input type="hidden" name="tag" value={data.parameters.tag}></input>
-                <input type="hidden" name="format" value={data.parameters.format}></input>
+              <form id="sortresults" method="GET" action="/datasets" name="sort">
+                <input type="hidden" name="q" value={dataState.parameters.q}></input>
+                <input type="hidden" name="topic" value={dataState.parameters.topic}></input>
+                <input type="hidden" name="publisher" value={dataState.parameters.publisher}></input>
+                <input type="hidden" name="tag" value={dataState.parameters.tag}></input>
+                <input type="hidden" name="format" value={dataState.parameters.format}></input>
                 <label htmlFor="sort">Sort by</label>
-                <select onChange={submit} name="sort" value={data.parameters.sort}>
+                <select onChange={submit} name="sort" value={dataState.parameters.sort}>
                   <option className="select-option" value="best_match desc">
                     Best match
                   </option>
@@ -507,10 +526,10 @@ const Results =(data)=>{
               </form>
             </div>
             <div>
-              <h2>{data.matches > 1 ? data.matches + ' matches': data.matches + ' match'} </h2>
+              <h2>{dataState.matches > 1 ? dataState.matches + ' matches': dataState.matches + ' match'} </h2>
             </div>
             <div className="result-page">
-              {data.allResults.map((dataset, index) => (
+              {dataState.allResults.map((dataset, index) => (
                 <div
                   key={index}
                   style={{ marginBottom: "3rem" }}
@@ -544,15 +563,15 @@ const Results =(data)=>{
 
             {/*<div className="page-navigation"><a className="page-previous" href={"datasets?q=water&tag=regulatory&page="+data.pages.previous}>&lt;</a> <span className="page-current">{data.pages.current}</span> <a className="page-next" href={"datasets?q=water&tag=regulatory&page="+data.pages.next}>{data.pages.next}</a> <span className="page-dots">...</span> <a className="page-next" href={"datasets?q=water&tag=regulatory&page="+data.pages.total}>{data.pages.total}</a> <a className="page-next" href={"datasets?q=water&tag=regulatory&page="+data.pages.next}>&gt;</a></div>*/}
             <div className="page-navigation">
-              <a style={{'display':data.pages.previous.display}} className="page-previous" href={"datasets?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+data.pages.previous.value}><svg className={'rotate-90'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><text>Previous page arrow</text><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></a> 
+              <a style={{'display':dataState.pages.previous.display}} className="page-previous" href={"datasets?q="+dataState.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+dataState.pages.previous.value}><svg className={'rotate-90'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><text>Previous page arrow</text><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></a> 
 
-              <a style={{'display':data.pages.previous.display}} className="page-previous" href={"datasets?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+data.pages.previous.value}>{data.pages.previous.value + 1}</a> 
+              <a style={{'display':dataState.pages.previous.display}} className="page-previous" href={"datasets?q="+dataState.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+dataState.pages.previous.value}>{dataState.pages.previous.value + 1}</a> 
 
-              <span style={{'display':data.pages.current.display}} className="page-current">{data.pages.current.value + 1}</span> 
+              <span style={{'display':dataState.pages.current.display}} className="page-current">{dataState.pages.current.value + 1}</span> 
 
-              <a style={{'display':data.pages.next.display}} className="page-next" href={"datasets?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+data.pages.next.value}>{data.pages.next.value + 1}</a> 
+              <a style={{'display':dataState.pages.next.display}} className="page-next" href={"datasets?q="+dataState.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+dataState.pages.next.value}>{dataState.pages.next.value + 1}</a> 
 
-              <a style={{'display':data.pages.next.display}} className="page-next" href={"datasets?q="+data.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+data.pages.next.value}><svg className={'rotate-270'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><text>Next page arrow</text><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></a>
+              <a style={{'display':dataState.pages.next.display}} className="page-next" href={"datasets?q="+dataState.parameters.q+urlParamTopic+urlParamPublisher+urlParamTag+urlParamFormat+urlParamSort+"&page="+dataState.pages.next.value}><svg className={'rotate-270'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><text>Next page arrow</text><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></a>
             </div>
           </div>
         </article>
