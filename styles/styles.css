@@ -6072,16 +6072,16 @@ cagov-site-navigation .search-container--small.hidden-search {
 .cagov-card .card-text {
   color: var(--black, #4B4B4B);
   font-size: 1.4rem;/*dropped from 1.5 to 1.4 making sure it fit the card*/
-  line-height: 2.5rem;
+  line-height: 37.4px;
   font-weight: 400;
   padding: 0;
   margin: 0;
 }
 
 .cagov-card svg {
-  color: var(--gray-900, #6c6b77);
+  color: var(--black, #4B4B4B);
   width: 1rem;
-  margin-top: 0.2rem;
+  margin-top: 0.5rem;
   max-height: 25px;
   min-width: 1rem;
 }
