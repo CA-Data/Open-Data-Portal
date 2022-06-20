@@ -129,7 +129,6 @@ export default function Home(data) {
                         padding: "7px",
                         borderRadius: ".25rem",
                         padding: "5px 0px 9px 10px",
-                        margin:"-4px",
                         border:"none",
                       }}
                     />
@@ -240,7 +239,7 @@ export default function Home(data) {
               <div className="two-col">
                 {
                 data.topics.map((topic, index) => (
-                  <a key={index} className="card-block" href={"/results?q=&topic="+topic.id}>
+                  <a key={index} className="card-block" href={"/datasets?q=&topic="+topic.id}>
                     <div className="icon-col" dangerouslySetInnerHTML={{ __html: topic.icon }}></div>
                     <div className="content">
                       <h3 className="h4" style={{marginTop:"0.2em"}}>{topic.title}</h3>
