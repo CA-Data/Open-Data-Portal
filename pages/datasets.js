@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
-
+import BasicSelect from '../components/BasicSelect';
 export async function getServerSideProps(context) {
   return getFormattedData(context);
 }
@@ -202,8 +202,17 @@ const Results = (data) => {
     });
   }
 
-  const submit = () => {
-    document.getElementById("sortresults").submit();
+  const submit = (event) => {
+    if(!router.query.sort){
+      router.push(router.asPath + "&sort="+event,null,{shallow:true})
+    }
+    else{
+      let newPath = router.asPath.split('&');
+      let index = newPath.findIndex(item=> item.includes('sort'));
+      newPath.splice(index,1,"sort="+event);
+      newPath = newPath.join('&');
+      router.push(newPath,null,{shallow:true});
+    }
   };
   var urlParamTopic = (dataState.parameters.topic) ? "&topic=" + dataState.parameters.topic : "";
   var urlParamPublisher = (dataState.parameters.publisher) ? "&publisher=" + dataState.parameters.publisher : "";
@@ -518,18 +527,10 @@ const Results = (data) => {
                 <input type="hidden" name="publisher" value={dataState.parameters.publisher}></input>
                 <input type="hidden" name="tag" value={dataState.parameters.tag}></input>
                 <input type="hidden" name="format" value={dataState.parameters.format}></input>
-                <label htmlFor="sort">Sort by</label>
-                <select onChange={submit} name="sort" value={dataState.parameters.sort}>
-                  <option className="select-option" value="best_match desc">
-                    Best match
-                  </option>
-                  {/*<option className="select-option" value="most_accessed">
-                    Most accessed
-                  </option>*/}
-                  <option className="select-option" value="metadata_modified asc">
-                    Most recent
-                  </option>
-                </select>
+                <div style={{display:'flex',alignItems:'center'}}>
+                  <label htmlFor="sort">Sort by</label>
+                  <BasicSelect submit={submit}/>
+                </div>
               </form>
             </div>
             <div>
