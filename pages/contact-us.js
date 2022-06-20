@@ -1,4 +1,4 @@
-import styles from "../styles/Home.module.css";
+
 import Link from "next/link";
 
 export default function preview(dataset) {
@@ -27,7 +27,7 @@ export default function preview(dataset) {
         className="cagov-article with-page-nav"
       >
 
-        <div className={styles.container}>
+      <div className="content-container">
           <h1>Contact Us</h1>
           <p className="lead-text">Have questions or need to report an issue? We’re here to help.</p>
           <ul>

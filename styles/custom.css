@@ -663,7 +663,9 @@ input[type=checkbox] {
   display: inline-block;
   border: none;
   text-decoration: none;
-  max-width: 125px;
+  /*max-width: 125px;----removed per sr*/
+  max-width: 95px;
+  font-size: 1rem; /*added per sr*/
 }
 .contact-button:hover {
   background-color: var(--primary-hover-color);
@@ -840,7 +842,7 @@ background: #ffffff;
     line-height: 48px;
     margin-bottom: 1.5rem; 
   }
-  .Home_container__bCOhY ul {
+.Home_container__bCOhY ul {
     margin-bottom: 3.5rem;
   }
   .contact-form label {
@@ -1012,4 +1014,23 @@ table.supporting-files-table th {
   font-size: 2.3125rem;
   line-height: 2rem;
   color: #046A99;
+}
+
+/*header navigation*/
+cagov-site-navigation .expanded-menu-section-header span {
+  font-size: 18px!important; /*made same sizing for header per sr*/
+}
+
+cagov-site-navigation .expanded-menu-section-header-link {
+  font-size: 18px!important; /*made same sizing for header per sr*/
+}
+/*contact forms updates sr*/
+.contact-form label span {
+  font-weight: 400; /*made same sizing for header per sr*/
+}
+.contact-form textarea::placeholder{
+  font-weight: 200;
+  font-size: medium;
+  color:#72717C;
+  padding-left: .3rem;
 }
