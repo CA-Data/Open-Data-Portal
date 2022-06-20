@@ -2,9 +2,9 @@ import styles from "../styles/Home.module.css";
 import Link from "next/link";
 
 //
-export async function getServerSideProps(context) {
+export async function getStaticProps() {
   const response = await fetch(
-    "https://test-data.technology.ca.gov/api/3/action/organization_list?all_fields=true&include_extras=true",{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}
+    "https://test-data.technology.ca.gov/api/3/action/organization_list?all_fields=true&include_extras=true", {headers: {'User-Agent': 'NextGenAPI/0.0.1'}}
   ).then((response) => response.json());
 
   const organizations = []
@@ -15,7 +15,6 @@ export async function getServerSideProps(context) {
     data.package_count = organization.package_count
     organizations.push(data)
   }
-  console.log(organizations)
   return {
     props: {
       org: organizations,

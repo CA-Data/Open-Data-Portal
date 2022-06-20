@@ -985,7 +985,7 @@ table.supporting-files-table th {
   border-radius: 5px;
   padding: 1rem;
   width: 275px;
-  height: 190px;
+  min-height: 190px;
   display: grid;
   grid-template-rows: 1fr .5fr;
   text-decoration: none;
@@ -1014,6 +1014,7 @@ table.supporting-files-table th {
   font-size: 2.3125rem;
   line-height: 2rem;
   color: #046A99;
+  background: transparent;
 }
 
 /*header navigation*/
