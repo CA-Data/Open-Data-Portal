@@ -51,7 +51,11 @@ export default function preview() {
           <p>You can get involved:</p>
           <ul>
             <li>Sign up to <a href="https://airtable.com/shrv4KWAKgny1lxyD">participate in research</a></li>
-            <li><a href="/contact-us">Provide feedback</a></li>
+            <li>
+              <Link href="/contact-us" passHref>
+                <a>Provide feedback</a>
+              </Link>
+            </li>
           </ul>
 
 

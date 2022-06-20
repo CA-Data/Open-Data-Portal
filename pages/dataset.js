@@ -451,7 +451,7 @@ export default function dataSet(data) {
                     <div className="column">
                     {data.data_object.result.tags.map((tag, index) => (
                         <li className="tag" key={tag.id}>
-                          <a href={"/results?q=" + tag.name + "&tag=" + tag.name}>
+                          <a href={"/datasets?q=" + tag.name + "&tag=" + tag.name}>
                             {tag.name}
                           </a>
                         </li>
@@ -486,7 +486,7 @@ export default function dataSet(data) {
                     <td>
                       {data.data_object.result.tags.map((tag, index) => (
                         <li className="tag" key={tag.id}>
-                          <a href={"/results?q=" + tag.name + "&tag=" + tag.name}>
+                          <a href={"/datasets?q=" + tag.name + "&tag=" + tag.name}>
                             {tag.name}
                           </a>
                         </li>
