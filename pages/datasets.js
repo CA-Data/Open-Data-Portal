@@ -229,10 +229,11 @@ const Results = (data) => {
     if (!reset) {
       if (selectedTopics.length == 0 || router.query.topic?.length == 0) {
         router.push(router.asPath.split('&topic=')[0], null, { shallow: true })
-
+        console.log('IF #1');
       }
       if (selectedTopics.length == 1 && !router.query.topic) {
         router.push(router.asPath + '&topic=' + selectedTopics, null, { shallow: true })
+        console.log('IF #2');
 
       }
       if (selectedTopics.length >= 1 && router.query.topic) {
@@ -241,6 +242,8 @@ const Results = (data) => {
         newPath.splice(index, 1, "topic=" + selectedTopics.join(','));
         newPath = newPath.join('&');
         router.push(newPath, null, { shallow: true });
+        console.log('IF #3');
+
       }
     }
   }, [selectedTopics])
@@ -298,6 +301,72 @@ const Results = (data) => {
       }
     }
   }, [selectedtags])
+
+  useEffect(() => {
+
+    // console.log('TopicListState: ', topicList);
+    // console.log('PublisherListState: ', publisherList);
+    // console.log('FormatListState: ', formatList);
+    // console.log('TagListState: ', tagList);
+    // console.log('URL: ', window.location.href);
+
+    let url = new URL(window.location.href);
+    let checkboxes = Array.from(document.getElementsByClassName('checkBox'));
+    // const checkboxes = document.querySelectorAll('input[type = checkbox]');
+    // console.log('checkboxes: ', checkboxes);
+
+    const topicParams = url.searchParams?.get('topic');
+    const publisherParams = url.searchParams?.get('publisher');
+    const formatParams = url.searchParams?.get('format');
+    const tagParams = url.searchParams?.get('tag');
+
+
+    topicParams ? setSelectedTopics(topicParams.split(',')) : null;
+    publisherParams ? setSelectedPublishers(publisherParams.split(',')) : null;
+    formatParams ? setSelectedFormats(formatParams.split(',')) : null;
+    tagParams ? setSelectedTags(tagParams.split(',')) : null;
+
+
+    checkboxes.forEach(c => {
+      // console.log('Each checkbox: ', c.id);
+      // console.log('Does checkbox id match topic param? ', c.id === topicParams);
+      // console.log('Does checkbox id match topic param? ', c.id === publisherParams);
+      // console.log('Does checkbox id match topic param? ', c.id === formatParams);
+      // console.log('Does checkbox id match topic param? ', c.id === tagParams);
+
+      console.log('topicParams: ', topicParams);
+      console.log('publisherParams: ', publisherParams);
+      console.log('formatParams: ', formatParams);
+      console.log('tagParams: ', tagParams);
+
+      if (topicParams) {
+        topicParams.split(',').includes(c.id.toLowerCase()) ? c.checked = true : null;
+      }
+      if (publisherParams) {
+        publisherParams.split(',').includes(c.id.toLowerCase()) ? c.checked = true : null;
+      }
+      if (formatParams) {
+        formatParams.split(',').includes(c.id.toLowerCase()) ? c.checked = true : null;
+      }
+      if (tagParams) {
+        tagParams.split(',').includes(c.id.toLowerCase()) ? c.checked = true : null;
+      }
+
+      // c.id.toLowerCase() === publisherParams ? c.checked = true : null;
+      // c.id.toLowerCase() === formatParams ? c.checked = true : null;
+      // c.id.toLowerCase() === tagParams ? c.checked = true : null;
+
+    });
+
+    // console.log('Topic URL param: ', url.searchParams?.get('topic'));
+    // console.log('Publisher URL param: ', url.searchParams?.get('publisher'));
+    // console.log('Format URL param: ', url.searchParams?.get('format'));
+    // console.log('Tag URL param: ', url.searchParams?.get('tag'));
+
+    // console.log('selectedTopics.join: ', selectedTopics.split(','));
+
+  }, []);
+
   // End of UseEffect section **********************************************
 
   // resetSearch resets the page
