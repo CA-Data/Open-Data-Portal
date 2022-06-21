@@ -226,6 +226,8 @@ const Results = (data) => {
   }, [dataState])
 
   useEffect(() => {
+    console.log(document.getElementById('least bells vireo-tag'));
+
     if (!reset) {
       if (selectedTopics.length == 0 || router.query.topic?.length == 0) {
         router.push(router.asPath.split('&topic=')[0], null, { shallow: true })
@@ -312,12 +314,18 @@ const Results = (data) => {
     const publisherParams = url.searchParams?.get('publisher');
     const formatParams = url.searchParams?.get('format');
     const tagParams = url.searchParams?.get('tag');
+    const toBeChecked = {};
+    toBeChecked.topic = topicParams?.split(',');
+    toBeChecked.publisher = publisherParams?.split(',');
+    toBeChecked.format = formatParams?.split(',');
+    toBeChecked.tag = tagParams?.split(',');
+
 
     // Arrays for adding suffix to checkboxes
-    let tempTopicArr = [];
-    let tempPublisherArr = [];
-    let tempFormatArr = [];
-    let tempTagArr = [];
+    // let tempTopicArr = [];
+    // let tempPublisherArr = [];
+    // let tempFormatArr = [];
+    // let tempTagArr = [];
 
     // Set local state from params
     topicParams ? setSelectedTopics(topicParams.split(',')) : null;
@@ -328,37 +336,51 @@ const Results = (data) => {
     // Format params to match more specific IDs
     // Checkboxes now have suffix to specify which category they are in
     // -topic, -publisher, -format, -tag
-    if (topicParams) {
-      tempTopicArr = topicParams.split(',');
-      tempTopicArr = tempTopicArr.map(item => item.concat('-topic'));
-    }
-    if (publisherParams) {
-      tempPublisherArr = publisherParams.split(',');
-      tempPublisherArr = tempPublisherArr.map(item => item.concat('-publisher'));
-    }
-    if (formatParams) {
-      tempFormatArr = formatParams.split(',');
-      tempFormatArr = tempFormatArr.map(item => item.concat('-format'));
-    }
-    if (tagParams) {
-      tempTagArr = tagParams.split(',');
-      tempTagArr = tempTagArr.map(item => item.concat('-tag'));
-    }
+    // if (topicParams) {
+    //   tempTopicArr = topicParams.split(',');
+    //   tempTopicArr = tempTopicArr.map(item => item.concat('-topic'));
+    // }
+    // if (publisherParams) {
+    //   tempPublisherArr = publisherParams.split(',');
+    //   tempPublisherArr = tempPublisherArr.map(item => item.concat('-publisher'));
+    // }
+    // if (formatParams) {
+    //   tempFormatArr = formatParams.split(',');
+    //   tempFormatArr = tempFormatArr.map(item => item.concat('-format'));
+    // }
+    // if (tagParams) {
+    //   tempTagArr = tagParams.split(',');
+    //   tempTagArr = tempTagArr.map(item => item.concat('-tag'));
+    // }
 
-    checkboxes.forEach(c => {
-      if (tempTopicArr) {
-        tempTopicArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
-      }
-      if (tempPublisherArr) {
-        tempPublisherArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
-      }
-      if (tempFormatArr) {
-        tempFormatArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
-      }
-      if (tempTagArr) {
-        tempTagArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
-      }
+    checkboxes.forEach(checkbox => {
+      // console.log(checkbox.value);
+      // console.log(checkbox.id);
+      // console.log(checkbox);
+
+      const formatting = checkbox?.id.split('-');
+      const filter = formatting.pop();
+      const checkboxId = formatting.join('-');
+
+      toBeChecked[filter]?.forEach(item => {
+        if (item === checkboxId) {
+          checkbox.checked = true;
+        }
+      })
+      // if (tempTopicArr) {
+      //   tempTopicArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
+      // }
+      // if (tempPublisherArr) {
+      //   tempPublisherArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
+      // }
+      // if (tempFormatArr) {
+      //   tempFormatArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
+      // }
+      // if (tempTagArr) {
+      //   tempTagArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
+      // }
     });
+
   }, []);
 
   // End of UseEffect section **********************************************
