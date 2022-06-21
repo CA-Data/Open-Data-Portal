@@ -23,7 +23,7 @@
   outline: 2px solid var(--highlight-color, #fbad23);
 }
 .filter-sort {
-  margin: 3rem 0;
+  margin: 2rem 0;
 }
 .filter-sort label {
   font-weight: bold;
