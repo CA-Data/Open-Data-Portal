@@ -51,7 +51,7 @@ export async function getServerSideProps(context) {
   //https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=ground-water-water-quality-results
 
 
-  const options = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
+  const options = {year: "numeric", month: "long", day: "numeric"};
   const datasetInfo = {
     title: datasetResponse.result.title,
     author: datasetResponse.result.organization.title,

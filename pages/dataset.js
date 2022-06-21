@@ -146,7 +146,7 @@ export default function dataSet(data) {
   const date_created = new Date(data.data_object.result.metadata_created);
   const date_modified = new Date(data.data_object.result.metadata_modified);
   const options = {
-    weekday: "long",
+    //weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -203,7 +203,7 @@ export default function dataSet(data) {
                   <span className="dataset-icon" style={{}} dangerouslySetInnerHTML={{ __html:data.topicIcn}}></span>
                   {data.group_object[0].title ? data.group_object[0].title: ""}
                 </p>
-                <h3 className="h5"><strong>About</strong></h3>
+                <h3 className="h5">About</h3>
                 <ul>
                   <li>Organization: {data.data_object.result.organization.title? data.data_object.result.organization.title: "N/A"}</li>
                   <li>Contact: <a href={"mailto:" + data.data_object.result.contact_email}>{data.data_object.result.contact_name}</a></li>
@@ -211,7 +211,7 @@ export default function dataSet(data) {
                   <li>License: {data.data_object.result.license_title? data.data_object.result.license_title: "Public domain"}<br/>
                   Visit <Link href="/licenses">Licenses</Link> for more information.</li>
                 </ul>
-                <h3 className="h5"><strong>Timeframe</strong></h3>
+                <h3 className="h5">Timeframe</h3>
                 <ul>
                   <li>Updated: {data.updateFrequency}</li>
                   <li>Last updated: {metadata_modified}</li>
@@ -219,7 +219,7 @@ export default function dataSet(data) {
                   <li>Temporal coverage: {data.data_object.result.temporal? data.data_object.result.temporal: "N/A"}</li>
                 </ul>
                 {data.data_object.result.related_resources &&
-                  <h3 className="h5"><strong>Related</strong></h3>
+                  <h3 className="h5">Related</h3>
                 }
                 {data.data_object.result.related_resources &&
                   <ul>
