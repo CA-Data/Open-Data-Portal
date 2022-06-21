@@ -987,8 +987,9 @@ table.supporting-files-table th {
   width: 275px;
   min-height: 190px;
   display: grid;
-  grid-template-rows: 1fr .5fr;
+  grid-template-rows: 1fr auto;
   text-decoration: none;
+  grid-row-gap: 1rem;
 
 }
 

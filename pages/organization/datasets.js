@@ -196,13 +196,15 @@ const getFormattedData = async (context) => {
           .then(response => response.json())
           .catch(error => console.log("ERROR"))
 
-        popularDataset.views = views.result.tracking_summary.recent
+        popularDataset.views = views.result.tracking_summary.total
         publisherDetails.popular.push(popularDataset)
       }
     }
+
+  }
   /* Organization End ---------------------------------------------------- */
 
-
+  console.log(publisherDetails)
   return {
     props: {
       matches: response.result.count,
@@ -505,7 +507,9 @@ const Results = (data) => {
               <div className="cagov-popular-datasets">
                 <div className="organization-info">
                   <h1 style={{ marginTop: 0, color:'#034A6B', fontSize:'47px', lineHeight:'58.8px'}}>{data.publisherDetails.title}</h1>
-                  <p>Organization website: <a href={data.publisherDetails.website}>{data.publisherDetails.title}</a></p>
+                  {data.publisherDetails.website && 
+                    <p>Organization website: <a href={data.publisherDetails.website}>{data.publisherDetails.title}</a></p>
+                  }
                   <p className="organization-description">{data.publisherDetails.description}</p>
                 </div>
                 <div className="popular-datasets">
