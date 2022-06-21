@@ -325,7 +325,11 @@ ul.align ul {
 }
 .modal-content input {
   font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
-  font-size: 1rem;
+  font-size: 0.875rem;
+  line-height: 2rem;
+}
+.modal-content p, a {
+  font-size: 1.125rem;
   line-height: 2rem;
 }
 /* The Close Button */
@@ -363,6 +367,7 @@ ul.align ul {
   padding: .25rem;
 }
 .input-group label {
+  font-size: 1.125rem;
   min-width: 120px;
   display: inline-block;
 }

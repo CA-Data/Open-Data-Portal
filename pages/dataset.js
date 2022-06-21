@@ -281,9 +281,7 @@ export default function dataSet(data) {
                                 "&id=" +
                                 dataset.id +
                                 "&rname=" +
-                                dataset.name +
-                                "&state=" +
-                                dataset.active
+                                dataset.name
                               }
                               passHref
                             >
