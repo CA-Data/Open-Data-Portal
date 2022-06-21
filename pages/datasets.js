@@ -302,69 +302,63 @@ const Results = (data) => {
     }
   }, [selectedtags])
 
+  // Persist selected checkboxes on page refresh
   useEffect(() => {
-
-    // console.log('TopicListState: ', topicList);
-    // console.log('PublisherListState: ', publisherList);
-    // console.log('FormatListState: ', formatList);
-    // console.log('TagListState: ', tagList);
-    // console.log('URL: ', window.location.href);
-
     let url = new URL(window.location.href);
     let checkboxes = Array.from(document.getElementsByClassName('checkBox'));
-    // const checkboxes = document.querySelectorAll('input[type = checkbox]');
-    // console.log('checkboxes: ', checkboxes);
 
+    // Get URL params
     const topicParams = url.searchParams?.get('topic');
     const publisherParams = url.searchParams?.get('publisher');
     const formatParams = url.searchParams?.get('format');
     const tagParams = url.searchParams?.get('tag');
 
+    // Arrays for adding suffix to checkboxes
+    let tempTopicArr = [];
+    let tempPublisherArr = [];
+    let tempFormatArr = [];
+    let tempTagArr = [];
 
+    // Set local state from params
     topicParams ? setSelectedTopics(topicParams.split(',')) : null;
     publisherParams ? setSelectedPublishers(publisherParams.split(',')) : null;
     formatParams ? setSelectedFormats(formatParams.split(',')) : null;
     tagParams ? setSelectedTags(tagParams.split(',')) : null;
 
+    // Format params to match more specific IDs
+    // Checkboxes now have suffix to specify which category they are in
+    // -topic, -publisher, -format, -tag
+    if (topicParams) {
+      tempTopicArr = topicParams.split(',');
+      tempTopicArr = tempTopicArr.map(item => item.concat('-topic'));
+    }
+    if (publisherParams) {
+      tempPublisherArr = publisherParams.split(',');
+      tempPublisherArr = tempPublisherArr.map(item => item.concat('-publisher'));
+    }
+    if (formatParams) {
+      tempFormatArr = formatParams.split(',');
+      tempFormatArr = tempFormatArr.map(item => item.concat('-format'));
+    }
+    if (tagParams) {
+      tempTagArr = tagParams.split(',');
+      tempTagArr = tempTagArr.map(item => item.concat('-tag'));
+    }
 
     checkboxes.forEach(c => {
-      // console.log('Each checkbox: ', c.id);
-      // console.log('Does checkbox id match topic param? ', c.id === topicParams);
-      // console.log('Does checkbox id match topic param? ', c.id === publisherParams);
-      // console.log('Does checkbox id match topic param? ', c.id === formatParams);
-      // console.log('Does checkbox id match topic param? ', c.id === tagParams);
-
-      console.log('topicParams: ', topicParams);
-      console.log('publisherParams: ', publisherParams);
-      console.log('formatParams: ', formatParams);
-      console.log('tagParams: ', tagParams);
-
-      if (topicParams) {
-        topicParams.split(',').includes(c.id.toLowerCase()) ? c.checked = true : null;
+      if (tempTopicArr) {
+        tempTopicArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
       }
-      if (publisherParams) {
-        publisherParams.split(',').includes(c.id.toLowerCase()) ? c.checked = true : null;
+      if (tempPublisherArr) {
+        tempPublisherArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
       }
-      if (formatParams) {
-        formatParams.split(',').includes(c.id.toLowerCase()) ? c.checked = true : null;
+      if (tempFormatArr) {
+        tempFormatArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
       }
-      if (tagParams) {
-        tagParams.split(',').includes(c.id.toLowerCase()) ? c.checked = true : null;
+      if (tempTagArr) {
+        tempTagArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
       }
-
-      // c.id.toLowerCase() === publisherParams ? c.checked = true : null;
-      // c.id.toLowerCase() === formatParams ? c.checked = true : null;
-      // c.id.toLowerCase() === tagParams ? c.checked = true : null;
-
     });
-
-    // console.log('Topic URL param: ', url.searchParams?.get('topic'));
-    // console.log('Publisher URL param: ', url.searchParams?.get('publisher'));
-    // console.log('Format URL param: ', url.searchParams?.get('format'));
-    // console.log('Tag URL param: ', url.searchParams?.get('tag'));
-
-    // console.log('selectedTopics.join: ', selectedTopics.split(','));
-
   }, []);
 
   // End of UseEffect section **********************************************
@@ -424,7 +418,7 @@ const Results = (data) => {
                             else {
                               setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
                             }
-                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={topic[0]} className='checkBox' type={'checkbox'} />
+                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
                           <label style={{ cursor: 'pointer', }} htmlFor={topic[0]}>{formatString(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
                         </li>
                       ))}
@@ -449,7 +443,7 @@ const Results = (data) => {
                             else {
                               setSelectedPublishers(selectedPublishers.filter(item => item != publisher[0].toLowerCase()))
                             }
-                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={publisher[0]} className='checkBox' type={'checkbox'} />
+                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${publisher[0]}-publisher`} className='checkBox' type={'checkbox'} />
                           <label style={{ cursor: 'pointer' }} htmlFor={publisher[0]}>{formatString(publisher[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({publisher[1]})</span>
                         </li>
                       ))}
@@ -475,7 +469,7 @@ const Results = (data) => {
                               setSelectedFormats(selectedFormats.filter(item => item != format[0].toLowerCase()))
                             }
                           }}
-                            style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={format[0]} className='checkBox' type={'checkbox'} />
+                            style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${format[0]}-format`} className='checkBox' type={'checkbox'} />
                           <label style={{ cursor: 'pointer' }} htmlFor={format[0]}>{formatString(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
                         </li>
                       ))}
@@ -500,7 +494,7 @@ const Results = (data) => {
                             else {
                               setSelectedTags(selectedtags.filter(item => item != tag[0]))
                             }
-                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={tag[0]} className='checkBox' type={'checkbox'} />
+                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${tag[0]}-tag`} className='checkBox' type={'checkbox'} />
                           <label style={{ cursor: 'pointer' }} htmlFor={tag[0]}>{formatString(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
                         </li>
                       ))}
