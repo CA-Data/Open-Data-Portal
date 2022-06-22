@@ -314,6 +314,7 @@ export default function dataSet(data) {
             </div>
             <div className="supporting-files">
               <h2 className="h3">Supporting files</h2>
+              <div className="shadow"></div>
               <table className="supporting-files-table">
                 <thead>
                   <tr>

@@ -59,19 +59,20 @@
   margin-bottom: 1rem;
   border-top: 1px solid #cecece;
   border-bottom: 1px solid #cecece;
-  padding: 0.5rem 0;
+  padding: 1rem 0 .5rem 0;
   display: grid;
   grid-template-columns: auto 1fr;
+  grid-column-gap: 0.5rem;
   
 }
 .dataset-info {
   font-size: 1rem;
 }
-.dataset-info .dataset-icon {
+/*.dataset-info .dataset-icon {
   padding-right:1rem;
   position:relative;
   top:0.7rem;
-}
+}*/
 .dataset-info .dataset-icon svg {
   width: 2.0625rem;
 }
@@ -166,6 +167,22 @@ data-tags {
 }
 .data-files, .supporting-files  {
   margin-top: 2.125rem;
+}
+@media (max-width: 839px) {
+  .data-files, .supporting-files  {
+    overflow-x: auto;
+    position: relative;
+  }
+  /* Add shadow for overflow on data tables
+  .shadow {
+    position: absolute;
+    right: 0;
+    z-index: 100;
+    width: 25px;
+    height: 100%;
+    background: linear-gradient(-90deg, #00000015, #ffffff00);
+  }*/
+  
 }
 .data-files-table th, .supporting-files-table th  {
   white-space: nowrap;
