@@ -104,6 +104,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function preview(dataset) {
+  console.log()
   return (
     <main id="body-content" className="cagov-main dataset-preview">
       <nav className="nav-breadcrumb">
@@ -163,12 +164,12 @@ Back to dataset</a>
           <h3>Data preview</h3>
           <p>You’re previewing the first 50 rows of this file.</p>
           <div style={{ height: 600, width: '100%' }}>
-            {dataset.table.rows &&
+            {dataset.table.rows.length > 0 &&
               <DataGrid rows={dataset.table.rows} columns={dataset.table.columns} />
             }
           </div>
         </div>
-        {dataset.dictionary.columns &&
+        {dataset.dictionary.columns.length > 0 &&
           <div id="data-dictionary-section">
             <h3>Data dictionary</h3>
             <p>You’re previewing the first 50 rows of this file.</p>

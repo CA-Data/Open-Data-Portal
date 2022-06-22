@@ -245,7 +245,7 @@ table.data-files-table, table.supporting-files-table {
   
  }
 .nav-breadcrumb {  
-  margin: 2rem 0 4rem 1.1rem;
+  margin: 2rem 1.1rem 4rem 1.1rem;
 }
 .nav-breadcrumb ol>li {
   font-size: 0.875rem;
