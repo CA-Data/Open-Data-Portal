@@ -28,7 +28,7 @@ export default function preview(dataset) {
       >
 
       <div className="content-container">
-          <h1>Contact Us</h1>
+          <h1>Contact us</h1>
           <p className="lead-text">Have questions or need to report an issue? We’re here to help.</p>
           <ul>
           <li>If you have a question about a specific dataset, contact the data steward from the dataset.</li>
@@ -36,15 +36,15 @@ export default function preview(dataset) {
           </ul>
           <form className="contact-form" action="mailto:opendata@state.ca.gov" method="post" encType="text/plain">
             <label>
-              Name*
-              <input type="text" name="name" placeholder="Name" required/>
+              Name
+              <input type="text" name="name" required/>
             </label>
             <label>
-              Email*
-              <input type="text" name="email" placeholder="Email" required/>
+              Email
+              <input type="text" name="email" required/>
             </label>
             <label>
-              Topic*
+              Topic
               <select name="subject" required>
                 <option value="" disabled defaultValue>Select an option*</option>
                 <option value="Dataset / technical help">Dataset / technical help</option>
@@ -56,11 +56,11 @@ export default function preview(dataset) {
               </select>
             </label>
             <label>
-              Page link
-              <input type="text" name="Page link" placeholder="Page link" />
+              Page link (optional)
+              <input type="text" name="Page link"/>
             </label>
             <label>
-              Comment*
+              Comment
               <textarea type="text" name="body" rows="4" cols="50" placeholder="Be sure to include links, if needed." required></textarea>
             </label>
             <input className="contact-button" type="submit" value="Submit" />

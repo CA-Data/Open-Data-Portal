@@ -163,17 +163,22 @@ Back to dataset</a>
           <h3 className="h4">Data preview</h3>
           <p>You’re previewing the first 50 rows of this file.</p>
           <div style={{ height: 600, width: '100%' }}>
-            <DataGrid rows={dataset.table.rows} columns={dataset.table.columns} />
+            {dataset.table.rows &&
+              <DataGrid rows={dataset.table.rows} columns={dataset.table.columns} />
+            }
           </div>
         </div>
-        
-        <div id="data-dictionary-section">
-          <h3 className="h4">Data dictionary</h3>
-          <p>You’re previewing the first 50 rows of this file.</p>
-          <div style={{ height: 214, width: '100%' }}>
-            <DataGrid rows={dataset.dictionary.rows} columns={dataset.dictionary.columns} />
+        {dataset.dictionary.rows &&
+          <div id="data-dictionary-section">
+            <h3 className="h4">Data dictionary</h3>
+            <p>You’re previewing the first 50 rows of this file.</p>
+            <div style={{ height: 214, width: '100%' }}>
+              
+                <DataGrid rows={dataset.dictionary.rows} columns={dataset.dictionary.columns} />
+            
+            </div>
           </div>
-        </div>
+        }
       </div>
       </article>
       <div id="myModal" className="modal">

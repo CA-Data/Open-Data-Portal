@@ -67,14 +67,6 @@ window.addEventListener('load', function (event) {
 
       }));
     }
-    if (document.getElementsByTagName('main')[0].classList.contains('dataset-preview')) {
-      if (document.getElementById("data-dictionary-section").innerText.includes('No rows')) {
-        document.getElementById("data-dictionary-section").style.display = "None"
-      }
-      if (document.getElementById("data-table-section").innerText.includes('No rows')) {
-        document.getElementById("data-table-section").style.display = "None"
-      }
-    }
   }
 
 })

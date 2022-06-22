@@ -263,13 +263,16 @@ export default function dataSet(data) {
                   {data.dataFiles.map((dataset, index) => (
                     <tr key={index}>
                       <td>
-                        <p>{dataset.name}</p>
+                        <p><strong>{dataset.name}</strong></p>
+                        {dataset.description &&
                         <div className="resource-description line-clamp-1" style={{maxWidth: "400px"}}>
                           <p>{dataset.description}</p>
                           <button className="btn-read-more">
                             Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
                           </button>
                         </div>
+                        }
+                        
                       </td>
                       <td>
                         {
@@ -324,34 +327,15 @@ export default function dataSet(data) {
                   {data.supportingFiles.map((dataset, index) => (
                     <tr key={index}>
                       <td>
-                        {
-                          data.previewableDataTypes.includes(dataset.format)
-                          ?
-                          <Link
-                            href={
-                              "/preview?name=" +
-                              data.parameters.name +
-                              "&id=" +
-                              dataset.id +
-                              "&rname=" +
-                              dataset.name +
-                              "&state=" +
-                              dataset.active
-                            }
-                            passHref
-                          >
-                          <a><strong>{dataset.name}</strong></a>
-                          </Link>
-                          :
-                          <div>{dataset.name}</div>
+                        <p><strong>{dataset.name}</strong></p>
+                        {dataset.description &&
+                          <div className="resource-description line-clamp-1">
+                            <p>{dataset.description}</p>
+                            <button className="btn-read-more">
+                              Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
+                            </button>
+                          </div>
                         }
-
-                        <div className="resource-description line-clamp-1">
-                          <p>{dataset.description}</p>
-                          <button className="btn-read-more">
-                            Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
-                          </button>
-                        </div>
                       </td>
                       <td>
                         {

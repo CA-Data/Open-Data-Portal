@@ -356,7 +356,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={topicSvg != 'svg-rotate-up' ? true : false} style={{ cursor: 'default' }}>
                       {topicList.slice(0, topicShowMore).map((topic, index) => (
-                        <li key={topic[0]} style={{ display: 'flex' }}>
+                        <li key={topic[0]} style={{ display: 'flex', alignItems: 'baseline'}}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedTopics([...selectedTopics, topic[0].toLowerCase()])
@@ -381,7 +381,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={publisherSvg != 'svg-rotate-up' ? true : false}>
                       {publisherList.slice(0, publisherShowMore).map((publisher, index) => (
-                        <li key={publisher[0]} style={{ display: 'flex' }}>
+                        <li key={publisher[0]} style={{ display: 'flex', alignItems: 'baseline'}}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedPublishers([...selectedPublishers, publisher[0].toLowerCase()])
@@ -406,7 +406,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={formatSvg != 'svg-rotate-up' ? true : false}>
                       {formatList.slice(0, formatShowMore).map((format, index) => (
-                        <li key={format[0]} style={{ display: 'flex' }}>
+                        <li key={format[0]} style={{ display: 'flex', alignItems: 'baseline'}}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedFormats([...selectedFormats, format[0].toLowerCase()])
@@ -432,7 +432,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={tagSvg != 'svg-rotate-up' ? true : false}>
                       {tagList.slice(0, tagShowMore).map((tag, index) => (
-                        <li key={tag[0]} style={{ display: 'flex' }}>
+                        <li key={tag[0]} style={{ display: 'flex', alignItems: 'baseline'}}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedTags([...selectedtags, tag[0]])
