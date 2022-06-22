@@ -325,7 +325,6 @@ const Results = (data) => {
         >
           <div
             className="sidebar-container everylayout sidebar-cell"
-            style={{ "zIndex": 1, marginTop: '270px' }}
           >
             <div className="sidebar" space="0" side="left">
               <nav aria-labelledby="page-navigation-label">
@@ -503,14 +502,6 @@ const Results = (data) => {
                     placeholder="Search datasets"
                     className="search-textfield"
                     defaultValue={dataState.parameters.q}
-                    style={{
-                      width: "876px",
-                      height: '49px',
-                      color: "#fff",
-                      border: "1px solid var(--primary-color, #046A99)",
-                      padding: ".5rem",
-                      borderRadius: ".25rem",
-                    }}
                   />
                   <button
                     style={{
