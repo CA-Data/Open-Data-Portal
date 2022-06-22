@@ -8339,7 +8339,9 @@ code.hljs {
 }
 
 .cagov-article.with-page-nav {
-  grid-template-areas: "sidebar content" "sidebar content";
+  grid-template-areas: 
+  "sidebar title"
+  "sidebar content";
 }
 
 .title-cell {

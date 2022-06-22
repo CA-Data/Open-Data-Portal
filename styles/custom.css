@@ -640,8 +640,16 @@ input[type=checkbox] {
   padding: .5rem 0;
   font-size: 1.2rem;
 }
+.additional-info-table .column>strong {
+  padding: .5rem 0;
+  font-size: 1.125rem;
+}
 .additional-info-table .column p {
-  font-size: 1rem;
+  font-size: 1.125rem;
+  line-height: 2rem;
+}
+.additional-info-table .column a {
+  font-size: 1.125rem;
   line-height: 2rem;
 
 }
