@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
-import BasicSelect from '../components/BasicSelect';
+import BasicSelect from '../../components/BasicSelect';
 export async function getServerSideProps(context) {
   return getFormattedData(context);
 }
