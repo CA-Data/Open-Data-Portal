@@ -783,19 +783,22 @@ input[type=checkbox] {
 max-width: 876px;
 }
 .dataset-description-table {
-  font-size: 18px;
-  line-height: 32px;
   display: grid;
   grid-template-columns: auto 1fr;
   /*grid-template-columns: repeat(auto-fill, 1fr);*/
   grid-row-gap: .8rem;
-  grid-column-gap: 3rem;
+  grid-column-gap: 2rem;
   max-width: 876px;
 }
 .dataset-label {
   font-weight: bold;
-  font-size: 1.12rem;
-  letter-spacing: .5px;
+  font-size: 1.125rem;
+}
+.dataset-value {
+  font-size: 1.125rem;
+}
+.dataset-value a {
+  font-size: 1.125rem;
 }
 
 /* home page banner */

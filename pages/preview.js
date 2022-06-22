@@ -160,7 +160,7 @@ Back to dataset</a>
         </div>
         
         <div id="data-table-section">
-          <h3 className="h4">Data preview</h3>
+          <h3>Data preview</h3>
           <p>You’re previewing the first 50 rows of this file.</p>
           <div style={{ height: 600, width: '100%' }}>
             {dataset.table.rows &&
@@ -168,9 +168,9 @@ Back to dataset</a>
             }
           </div>
         </div>
-        {dataset.dictionary.rows &&
+        {dataset.dictionary.columns &&
           <div id="data-dictionary-section">
-            <h3 className="h4">Data dictionary</h3>
+            <h3>Data dictionary</h3>
             <p>You’re previewing the first 50 rows of this file.</p>
             <div style={{ height: 214, width: '100%' }}>
               
