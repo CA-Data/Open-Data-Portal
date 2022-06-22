@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
-
+import BasicSelect from '../components/BasicSelect';
 export async function getServerSideProps(context) {
   return getFormattedData(context);
 }
@@ -237,7 +237,6 @@ const Results = (data) => {
   const [tagShowMore, setTagShowMore] = useState(4);
   const [formatShowMore, setFormatShowMore] = useState(4);
   const router = useRouter();
-
   if (typeof window === 'object') {
     // Check if document is finally loaded
     document.addEventListener("DOMContentLoaded", function () {
@@ -248,8 +247,17 @@ const Results = (data) => {
     });
   }
 
-  const submit = () => {
-    document.getElementById("sortresults").submit();
+  const submit = (event) => {
+    if(!router.query.sort){
+      router.push(router.asPath + "&sort="+event,null,{shallow:true})
+    }
+    else{
+      let newPath = router.asPath.split('&');
+      let index = newPath.findIndex(item=> item.includes('sort'));
+      newPath.splice(index,1,"sort="+event);
+      newPath = newPath.join('&');
+      router.push(newPath,null,{shallow:true});
+    }
   };
   var urlParamTopic = (dataState.parameters.topic) ? "&topic=" + dataState.parameters.topic : "";
   var urlParamPublisher = (dataState.parameters.publisher) ? "&publisher=" + dataState.parameters.publisher : "";
@@ -273,77 +281,60 @@ const Results = (data) => {
 
   useEffect(() => {
     if (!reset) {
-      if (selectedTopics.length == 0 || router.query.topic?.length == 0) {
-        router.push(router.asPath.split('&topic=')[0], null, { shallow: true })
 
+      const url = new URL(window.location.href);
+      if (selectedTopics.length == 0 || !url.searchParams.get('topic')) {
+        url.searchParams.delete('topic')
+        router.push(url, null, { shallow: true });
       }
-      if (selectedTopics.length == 1 && !router.query.topic) {
-        router.push(router.asPath + '&topic=' + selectedTopics, null, { shallow: true })
-
-      }
-      if (selectedTopics.length >= 1 && router.query.topic) {
-        let newPath = router.asPath.split('&');
-        let index = newPath.findIndex(item => item.includes('topic'));
-        newPath.splice(index, 1, "topic=" + selectedTopics.join(','));
-        newPath = newPath.join('&');
-        router.push(newPath, null, { shallow: true });
+      if (selectedTopics.length >= 1) {
+        url.searchParams.set('topic',selectedTopics)
+        router.push(url, null, { shallow: true });
       }
     }
   }, [selectedTopics])
 
   useEffect(() => {
     if (!reset) {
-      if (selectedPublishers.length == 0 || router.query.publisher?.length == 0) {
-        router.push(router.asPath.split('&publisher=')[0], null, { shallow: true })
+      const url = new URL(window.location.href);
+      if (selectedPublishers.length == 0 || !url.searchParams.get('publisher')) {
+        url.searchParams.delete('publisher')
+        router.push(url, null, { shallow: true });
       }
-      if (selectedPublishers.length == 1 && !router.query.publisher) {
-        router.push(router.asPath + '&publisher=' + selectedPublishers, null, { shallow: true })
-      }
-      if (selectedPublishers.length >= 1 && router.query.publisher) {
-        let newPath = router.asPath.split('&');
-        let index = newPath.findIndex(item => item.includes('publisher'));
-        newPath.splice(index, 1, "publisher=" + selectedPublishers.join(','));
-        newPath = newPath.join('&');
-        router.push(newPath, null, { shallow: true });
+      if (selectedPublishers.length >= 1) {
+        url.searchParams.set('publisher',selectedPublishers)
+        router.push(url, null, { shallow: true });
       }
     }
   }, [selectedPublishers])
 
   useEffect(() => {
     if (!reset) {
-      if (selectedFormats.length == 0 || router.query.format?.length == 0) {
-        router.push(router.asPath.split('&format=')[0], null, { shallow: true })
+      const url = new URL(window.location.href);
+      if (selectedFormats.length == 0 || !url.searchParams.get('format')) {
+        url.searchParams.delete('format')
+        router.push(url, null, { shallow: true });
       }
-      if (selectedFormats.length == 1 && !router.query.format) {
-        router.push(router.asPath + '&format=' + selectedFormats, null, { shallow: true })
-      }
-      if (selectedFormats.length >= 1 && router.query.format) {
-        let newPath = router.asPath.split('&');
-        let index = newPath.findIndex(item => item.includes('format'));
-        newPath.splice(index, 1, "format=" + selectedFormats.join(','));
-        newPath = newPath.join('&');
-        router.push(newPath, null, { shallow: true });
+      if (selectedFormats.length >= 1) {
+        url.searchParams.set('format',selectedFormats)
+        router.push(url, null, { shallow: true });
       }
     }
   }, [selectedFormats])
 
   useEffect(() => {
     if (!reset) {
-      if (selectedtags.length == 0 || router.query.tag?.length == 0) {
-        router.push(router.asPath.split('&tag=')[0], null, { shallow: true })
+      const url = new URL(window.location.href);
+      console.log('in tags',selectedtags + ' ***** ' + url.searchParams.get('tag'))
+      if (selectedtags.length == 0 || !url.searchParams.get('tag')) {
+        url.searchParams.delete('tag')
+        router.push(url, null, { shallow: true });
       }
-      if (selectedtags.length == 1 && !router.query.tag) {
-        router.push(router.asPath + '&tag=' + selectedtags, null, { shallow: true })
-      }
-      if (selectedtags.length >= 1 && router.query.tag) {
-        let newPath = router.asPath.split('&');
-        let index = newPath.findIndex(item => item.includes('tag'));
-        newPath.splice(index, 1, "tag=" + selectedtags.join(','));
-        newPath = newPath.join('&');
-        router.push(newPath, null, { shallow: true });
+      if (selectedtags.length >= 1) {
+        url.searchParams.set('tag',selectedtags)
+        router.push(url, null, { shallow: true });
       }
     }
-
   }, [selectedtags])
   // End of UseEffect section **********************************************
 
@@ -379,7 +370,6 @@ const Results = (data) => {
         >
           <div
             className="sidebar-container everylayout sidebar-cell"
-            style={{ "zIndex": 1, marginTop: '270px' }}
           >
             <div className="sidebar" space="0" side="left">
               <nav aria-labelledby="page-navigation-label">
@@ -394,7 +384,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={topicSvg != 'svg-rotate-up' ? true : false} style={{ cursor: 'default' }}>
                       {topicList.slice(0, topicShowMore).map((topic, index) => (
-                        <li key={topic[0]} style={{ display: 'flex' }}>
+                        <li key={topic[0]} style={{ display: 'flex', alignItems: 'baseline'}}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedTopics([...selectedTopics, topic[0].toLowerCase()])
@@ -407,8 +397,18 @@ const Results = (data) => {
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <button hidden={topicList.length <= topicShowMore} onClick={() => topicShowMore > topicList.length ? '' : setTopicShowMore(topicShowMore + 5)} style={{ cursor: 'pointer' }}>+ More</button>
-                        <button hidden={!(topicShowMore > 4)} onClick={() => setTopicShowMore(4)} style={{ cursor: 'pointer' }}>Show less</button>
+                        <button hidden={topicList.length <= topicShowMore} onClick={() => topicShowMore > topicList.length ? '' : setTopicShowMore(topicShowMore + 5)} style={{ cursor: 'pointer' }}>
+                        <div style={{display:'flex',alignItems:'center'}}>
+                            <svg style={{paddingRight:'5px'}} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg> 
+                            More
+                          </div>                           
+                        </button>
+                        <button hidden={!(topicShowMore > 4)} onClick={() => setTopicShowMore(4)} style={{ cursor: 'pointer'}}>
+                          <div style={{display:'flex',alignItems:'center' }}>
+                            <svg style={{paddingRight:'5px'}} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
+                            Show less
+                          </div>
+                        </button>
                       </div>
                     </ul>
                   </li>
@@ -419,8 +419,8 @@ const Results = (data) => {
                     </div>
                     <ul hidden={publisherSvg != 'svg-rotate-up' ? true : false}>
                       {publisherList.slice(0, publisherShowMore).map((publisher, index) => (
-                        <li key={publisher[0]} style={{ display: 'flex' }}>
-                          <input onChange={(e) => {
+                        <li key={publisher[0]} style={{ display: 'flex', alignItems: 'baseline'}}>
+                        <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedPublishers([...selectedPublishers, publisher[0].toLowerCase()])
                             }
@@ -432,8 +432,18 @@ const Results = (data) => {
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <button hidden={publisherList.length <= publisherShowMore} onClick={() => publisherShowMore > publisherList.length ? '' : setPublisherShowMore(publisherShowMore + 5)} style={{ cursor: 'pointer' }}>+ More</button>
-                        <button hidden={!(publisherShowMore > 4)} onClick={() => setPublisherShowMore(4)} style={{ cursor: 'pointer' }}>Show less</button>
+                        <button hidden={publisherList.length <= publisherShowMore} onClick={() => publisherShowMore > publisherList.length ? '' : setPublisherShowMore(publisherShowMore + 5)} style={{ cursor: 'pointer' }}>
+                          <div style={{display:'flex',alignItems:'center'}}>
+                            <svg style={{paddingRight:'5px'}} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg> 
+                            More
+                          </div>  
+                        </button>
+                        <button hidden={!(publisherShowMore > 4)} onClick={() => setPublisherShowMore(4)} style={{ cursor: 'pointer' }}>
+                          <div style={{display:'flex',alignItems:'center' }}>
+                            <svg style={{paddingRight:'5px'}} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
+                            Show less
+                          </div>
+                        </button>
                       </div>
                     </ul>
                   </li>
@@ -444,8 +454,8 @@ const Results = (data) => {
                     </div>
                     <ul hidden={formatSvg != 'svg-rotate-up' ? true : false}>
                       {formatList.slice(0, formatShowMore).map((format, index) => (
-                        <li key={format[0]} style={{ display: 'flex' }}>
-                          <input onChange={(e) => {
+                        <li key={format[0]} style={{ display: 'flex', alignItems: 'baseline'}}>
+                        <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedFormats([...selectedFormats, format[0].toLowerCase()])
                             }
@@ -458,8 +468,18 @@ const Results = (data) => {
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <button hidden={formatList.length <= formatShowMore} onClick={() => formatShowMore > formatList.length ? '' : setFormatShowMore(formatShowMore + 5)} style={{ cursor: 'pointer' }}>+ More</button>
-                        <button hidden={!(formatShowMore > 4)} onClick={() => setFormatShowMore(4)} style={{ cursor: 'pointer' }}>Show less</button>
+                        <button hidden={formatList.length <= formatShowMore} onClick={() => formatShowMore > formatList.length ? '' : setFormatShowMore(formatShowMore + 5)} style={{ cursor: 'pointer' }}>
+                        <div style={{display:'flex',alignItems:'center'}}>
+                            <svg style={{paddingRight:'5px'}} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg> 
+                            More
+                          </div>                          
+                         </button>
+                        <button hidden={!(formatShowMore > 4)} onClick={() => setFormatShowMore(4)} style={{ cursor: 'pointer' }}>
+                          <div style={{display:'flex',alignItems:'center' }}>
+                              <svg style={{paddingRight:'5px'}} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
+                              Show less
+                          </div>
+                       </button>
                       </div>
                     </ul>
                   </li>
@@ -470,8 +490,8 @@ const Results = (data) => {
                     </div>
                     <ul hidden={tagSvg != 'svg-rotate-up' ? true : false}>
                       {tagList.slice(0, tagShowMore).map((tag, index) => (
-                        <li key={tag[0]} style={{ display: 'flex' }}>
-                          <input onChange={(e) => {
+                        <li key={tag[0]} style={{ display: 'flex', alignItems: 'baseline'}}>
+                        <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedTags([...selectedtags, tag[0]])
                             }
@@ -483,9 +503,19 @@ const Results = (data) => {
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <button hidden={tagList.length <= tagShowMore} onClick={() => tagShowMore > tagList.length ? '' : setTagShowMore(tagShowMore + 5)} style={{ cursor: 'pointer' }}>+ More</button>
-                        <button hidden={!(tagShowMore > 4)} onClick={() => setTagShowMore(4)} style={{ cursor: 'pointer' }}>Show less</button>
-                      </div>
+                      <button hidden={tagList.length <= tagShowMore} onClick={() => tagShowMore > tagList.length ? '' : setTagShowMore(tagShowMore + 5)} style={{ cursor: 'pointer' }}>
+                          <div style={{display:'flex',alignItems:'center'}}>
+                            <svg style={{paddingRight:'5px'}} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg> 
+                            More
+                          </div>                          
+                        </button>
+                        <button hidden={!(tagShowMore > 4)} onClick={() => setTagShowMore(4)} style={{ cursor: 'pointer' }}>
+                          <div style={{display:'flex',alignItems:'center' }}>
+                            <svg style={{paddingRight:'5px'}} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
+                            Show less
+                          </div>
+                        </button>
+                        </div>
                     </ul>
                   </li>
                 </ul>
@@ -551,14 +581,6 @@ const Results = (data) => {
                     placeholder="Search datasets"
                     className="search-textfield"
                     defaultValue={dataState.parameters.q}
-                    style={{
-                      width: "876px",
-                      height: '49px',
-                      color: "#fff",
-                      border: "1px solid var(--primary-color, #046A99)",
-                      padding: ".5rem",
-                      borderRadius: ".25rem",
-                    }}
                   />
                   <button
                     style={{
@@ -599,18 +621,10 @@ const Results = (data) => {
                 <input type="hidden" name="publisher" value={dataState.parameters.publisher}></input>
                 <input type="hidden" name="tag" value={dataState.parameters.tag}></input>
                 <input type="hidden" name="format" value={dataState.parameters.format}></input>
-                <label htmlFor="sort">Sort by</label>
-                <select onChange={submit} name="sort" value={dataState.parameters.sort}>
-                  <option className="select-option" value="best_match desc">
-                    Best match
-                  </option>
-                  {/*<option className="select-option" value="most_accessed">
-                    Most accessed
-                  </option>*/}
-                  <option className="select-option" value="metadata_modified asc">
-                    Most recent
-                  </option>
-                </select>
+                <div style={{display:'flex',alignItems:'center'}}>
+                  <label htmlFor="sort">Sort by</label>
+                  <BasicSelect submit={submit}/>
+                </div>
               </form>
             </div>
             <div>
