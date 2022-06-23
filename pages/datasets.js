@@ -280,7 +280,6 @@ const Results = (data) => {
   useEffect(() => {
     if (!reset) {
       const url = new URL(window.location.href);
-      console.log('in tags', selectedtags + ' ***** ' + url.searchParams.get('tag'))
       if (selectedtags.length == 0 || !url.searchParams.get('tag')) {
         url.searchParams.delete('tag')
         router.push(url, null, { shallow: true });
@@ -319,7 +318,6 @@ const Results = (data) => {
       const formatting = checkbox?.id.split('-');
       const filter = formatting.pop();
       const checkboxId = formatting.join('-');
-      console.log('checkboxId', checkboxId);
       toBeChecked[filter]?.forEach(item => {
         switch (filter) {
           case 'topic':
@@ -382,7 +380,7 @@ const Results = (data) => {
       <main id="body-content" className="cagov-main">
         <article
           id="post-design"
-          className="cagov-article with-sidebar with-page-nav"
+          className="cagov-article with-sidebar with-page-nav results-page"
         >
           <div
             className="sidebar-container everylayout sidebar-cell"

@@ -543,6 +543,9 @@ button.copied::after {
   margin: 0 auto 8rem auto;
   width: 80%;
 }
+.site-search-homepage {
+  display: flex;
+}
 .site-header .search-container .site-search .search-textfield {
   background: #f6f6f6;
   width: 32px;
@@ -714,13 +717,13 @@ input[type=checkbox] {
   display: grid;
   grid-template-rows: .5fr .5fr 1fr;
   margin-bottom: 8rem;
+  max-width: 595px;
 }
 .contact-form label {
   margin-bottom: 1rem;
 }
 .contact-form input[type=text] {
   width: 100%;
-  max-width: 568px;
 }
 .contact-form input[type=text], textarea {
   display: grid;
@@ -934,13 +937,11 @@ background: #ffffff;
     border-radius: 5px;
     margin-top: .25rem;
     width: 100%;
-    max-width: 595px;
     padding: 0.5rem;
   }
   .contact-form input[type=text], textarea {
     padding: 0.5rem;
     width: 100%;
-    max-width: 595px;
   }
   .contact-form label {
     margin-bottom: 2.1rem;
@@ -1113,4 +1114,51 @@ cagov-site-navigation .expanded-menu-section-header-link {
   font-size: medium;
   color:#72717C;
   padding-left: .3rem;
+}
+/* Contact form error styles */
+.contact-form-alert {
+  display: none;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: .5rem;
+  align-self: baseline;
+  font-size: 1.125rem;
+  line-height: 2rem;
+  background: #FCE9E8;
+  color: #B91B37;
+  padding: .5rem 0;
+  border-left: .25rem solid #B91B37;
+  align-items: center;
+  max-width: 595px;
+  margin: 2.5rem 0;
+}
+.contact-form-alert svg {
+  margin-left: 1rem;
+}
+.contact-form-alert p {
+  padding: 0;
+  margin: 0;
+}
+.input-error {
+  position: relative;
+}
+.input-error>input{
+  border-bottom: 4px solid #B91B37!important;
+}
+.input-error>select{
+  border-bottom: 4px solid #B91B37!important;
+}
+.input-error>textarea{
+  border-bottom: 4px solid #B91B37!important;
+}
+.input-error-icon {
+  position: absolute;
+  display: inline-block;
+  right: 16px;
+  top: 46px;
+  display: none;
+}
+.input-error-text {
+  color: #B91B37;
+  display: none;
+
 }

@@ -91,7 +91,7 @@ export default function Home(data) {
                 Access thousands of datasets to support your next analysis or project
                 </p>
                 <div className="search-container grid-search">
-                  <form className="site-search" action="/datasets/">
+                  <form className="site-search site-search-homepage" action="/datasets">
                   <button
                       style={{
                         right: "-3px",

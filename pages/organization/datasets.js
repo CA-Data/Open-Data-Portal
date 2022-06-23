@@ -204,7 +204,6 @@ const getFormattedData = async (context) => {
   }
   /* Organization End ---------------------------------------------------- */
 
-  console.log(publisherDetails)
   return {
     props: {
       matches: response.result.count,
@@ -366,7 +365,7 @@ const Results = (data) => {
       <main id="body-content" className="cagov-main">
         <article
           id="post-design"
-          className="cagov-article with-sidebar with-page-nav"
+          className="cagov-article with-sidebar with-page-nav results-page results-page"
         >
           <div
             className="sidebar-container everylayout sidebar-cell"
