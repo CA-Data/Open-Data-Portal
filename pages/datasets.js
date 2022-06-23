@@ -320,67 +320,48 @@ const Results = (data) => {
     toBeChecked.format = formatParams?.split(',');
     toBeChecked.tag = tagParams?.split(',');
 
-
-    // Arrays for adding suffix to checkboxes
-    // let tempTopicArr = [];
-    // let tempPublisherArr = [];
-    // let tempFormatArr = [];
-    // let tempTagArr = [];
-
     // Set local state from params
     topicParams ? setSelectedTopics(topicParams.split(',')) : null;
     publisherParams ? setSelectedPublishers(publisherParams.split(',')) : null;
     formatParams ? setSelectedFormats(formatParams.split(',')) : null;
     tagParams ? setSelectedTags(tagParams.split(',')) : null;
 
-    // Format params to match more specific IDs
-    // Checkboxes now have suffix to specify which category they are in
-    // -topic, -publisher, -format, -tag
-    // if (topicParams) {
-    //   tempTopicArr = topicParams.split(',');
-    //   tempTopicArr = tempTopicArr.map(item => item.concat('-topic'));
-    // }
-    // if (publisherParams) {
-    //   tempPublisherArr = publisherParams.split(',');
-    //   tempPublisherArr = tempPublisherArr.map(item => item.concat('-publisher'));
-    // }
-    // if (formatParams) {
-    //   tempFormatArr = formatParams.split(',');
-    //   tempFormatArr = tempFormatArr.map(item => item.concat('-format'));
-    // }
-    // if (tagParams) {
-    //   tempTagArr = tagParams.split(',');
-    //   tempTagArr = tempTagArr.map(item => item.concat('-tag'));
-    // }
-
+    // Loop through checkboxes 
     checkboxes.forEach(checkbox => {
-      // console.log(checkbox.value);
-      // console.log(checkbox.id);
-      // console.log(checkbox);
-
       const formatting = checkbox?.id.split('-');
       const filter = formatting.pop();
       const checkboxId = formatting.join('-');
-
+      console.log('checkboxId', checkboxId);
       toBeChecked[filter]?.forEach(item => {
-        if (item === checkboxId) {
+        switch (filter) {
+          case 'topic':
+            if (topicSvg === 'svg-rotate-down') {
+              setTopicSvg('svg-rotate-up');
+            }
+            break;
+          case 'publisher':
+            if (publisherSvg === 'svg-rotate-down') {
+              setPublisherSvg('svg-rotate-up');
+            }
+            break;
+          case 'format':
+            if (formatSvg === 'svg-rotate-down') {
+              setFormatSvg('svg-rotate-up');
+            }
+            break;
+          case 'tag':
+            if (tagSvg === 'svg-rotate-down') {
+              setTagSvg('svg-rotate-up');
+            }
+            break;
+          default:
+            return null;
+        }
+        if (item === checkboxId.toLowerCase()) {
           checkbox.checked = true;
         }
       })
-      // if (tempTopicArr) {
-      //   tempTopicArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
-      // }
-      // if (tempPublisherArr) {
-      //   tempPublisherArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
-      // }
-      // if (tempFormatArr) {
-      //   tempFormatArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
-      // }
-      // if (tempTagArr) {
-      //   tempTagArr.includes(c.id.toLowerCase()) ? c.checked = true : null;
-      // }
     });
-
   }, []);
 
   // End of UseEffect section **********************************************
