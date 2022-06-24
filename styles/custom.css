@@ -154,6 +154,7 @@ a.card-block:hover, a.card-block:active {
   margin-top: 273px;
 }
 @media (max-width: 839px) {
+  
   .results-page > .sidebar-container {
     margin-top: 0px;
   }
@@ -542,6 +543,12 @@ button.copied::after {
 .content-container {
   margin: 0 auto 8rem auto;
   width: 80%;
+}
+@media (max-width: 839px) {
+  .content-container {
+    width: 90%;
+    margin: 0 auto;
+  }
 }
 .site-search-homepage {
   display: flex;
@@ -1137,6 +1144,15 @@ cagov-site-navigation .expanded-menu-section-header-link {
 .contact-form-alert p {
   padding: 0;
   margin: 0;
+}
+@media (max-width: 767px) {
+  .contact-form-alert p {
+    line-height: 1rem;
+  }
+  .input-error-text {
+    padding-top: .25rem;
+    line-height: 1.25rem;
+  }
 }
 .input-error {
   position: relative;

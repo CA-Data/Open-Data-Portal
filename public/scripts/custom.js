@@ -19,20 +19,22 @@ window.addEventListener('load', function (event) {
       }
     }
   }
-  const form = document.getElementById('contact-form')
-  form.addEventListener('focusout', (event) => {
-    if (event.target.value == "") {
-      validate(event.target)
-    }
-    else {
-      event.target.parentElement.classList.remove('input-error')
-      event.target.parentElement.getElementsByClassName('input-error-icon')[0].style.display = "none"
-      if (event.target.parentElement.getElementsByClassName('input-error-text').length > 0) {
-        event.target.parentElement.getElementsByClassName('input-error-text')[0].style.display = "none"
+  if (document.getElementsByTagName('main')[0].classList.contains('contact-us')) {
+    const form = document.getElementById('contact-form')
+    form.addEventListener('focusout', (event) => {
+      if (event.target.value == "") {
+        validate(event.target)
       }
-    }
-    showBanner()
-  }, true);
+      else {
+        event.target.parentElement.classList.remove('input-error')
+        event.target.parentElement.getElementsByClassName('input-error-icon')[0].style.display = "none"
+        if (event.target.parentElement.getElementsByClassName('input-error-text').length > 0) {
+          event.target.parentElement.getElementsByClassName('input-error-text')[0].style.display = "none"
+        }
+      }
+      showBanner()
+    }, true);
+  }
   // -- end contact us error validation //
 
   if (document.getElementsByTagName('main').length > 0) {
