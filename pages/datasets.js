@@ -388,7 +388,7 @@ const Results = (data) => {
             <div className="sidebar" space="0" side="left">
               <nav aria-labelledby="page-navigation-label">
                 <div id="page-navigation-label" className="label">
-                  <strong>Filter by</strong>
+                  <strong style={{ fontSize: '24px' }}>Filter by</strong>
                 </div>
                 <ul className="search-filters align">
                   <li style={{ color: "#4B4B4B" }} className="filter-topic">
@@ -398,7 +398,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={topicSvg != 'svg-rotate-up' ? true : false} style={{ cursor: 'default' }}>
                       {topicList.slice(0, topicShowMore).map((topic, index) => (
-                        <li key={topic[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <li key={topic[0]} style={{ display: 'flex' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedTopics([...selectedTopics, topic[0].toLowerCase()])
@@ -407,7 +407,7 @@ const Results = (data) => {
                               setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', }} htmlFor={topic[0]}>{formatString(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '150px' }} htmlFor={topic[0]}>{formatString(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -433,7 +433,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={publisherSvg != 'svg-rotate-up' ? true : false}>
                       {publisherList.slice(0, publisherShowMore).map((publisher, index) => (
-                        <li key={publisher[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <li key={publisher[0]} style={{ display: 'flex' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedPublishers([...selectedPublishers, publisher[0].toLowerCase()])
@@ -442,7 +442,7 @@ const Results = (data) => {
                               setSelectedPublishers(selectedPublishers.filter(item => item != publisher[0].toLowerCase()))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${publisher[0]}-publisher`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer' }} htmlFor={publisher[0]}>{formatString(publisher[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({publisher[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '150px' }} htmlFor={publisher[0]}>{formatString(publisher[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({publisher[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -468,7 +468,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={formatSvg != 'svg-rotate-up' ? true : false}>
                       {formatList.slice(0, formatShowMore).map((format, index) => (
-                        <li key={format[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <li key={format[0]} style={{ display: 'flex' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedFormats([...selectedFormats, format[0].toLowerCase()])
@@ -478,7 +478,7 @@ const Results = (data) => {
                             }
                           }}
                             style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${format[0]}-format`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer' }} htmlFor={format[0]}>{formatString(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '150px' }} htmlFor={format[0]}>{formatString(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -504,7 +504,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={tagSvg != 'svg-rotate-up' ? true : false}>
                       {tagList.slice(0, tagShowMore).map((tag, index) => (
-                        <li key={tag[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <li key={tag[0]} style={{ display: 'flex' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedTags([...selectedtags, tag[0]])
@@ -513,7 +513,7 @@ const Results = (data) => {
                               setSelectedTags(selectedtags.filter(item => item != tag[0]))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${tag[0]}-tag`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer' }} htmlFor={tag[0]}>{formatString(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '150px' }} htmlFor={tag[0]}>{formatString(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -546,7 +546,7 @@ const Results = (data) => {
             </div>
           </div>
           <div className="cagov-content content-cell">
-            <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>Search results</h1>
+            <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>All datasets</h1>
             <div className="search-container grid-search">
               <form className="site-search" action="/datasets">
                 <span className="sr-only" id="SearchInput">
