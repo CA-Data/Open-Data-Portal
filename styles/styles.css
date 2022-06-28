@@ -2339,7 +2339,7 @@ select[data-class-icon] {
 .page-container-ds {
   max-width: var(--w-lg, 1176px);
   width: 98%;
-  margin: 2rem auto 2rem auto!important;
+  margin: 2rem auto 4rem auto!important;
   padding-right: 0;
   padding-left: 0;
 }

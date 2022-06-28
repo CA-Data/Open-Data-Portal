@@ -830,7 +830,7 @@ max-width: 876px;
 }
 .home-page .cagov-featured-section p {
   max-width:19em;
-  margin-bottom:2.5em;
+  margin-bottom:2em;
 }
 .home-page .cagov-featured-section .search-textfield {
   width:86%;
@@ -838,25 +838,25 @@ max-width: 876px;
 
 @media (min-width: 767px) {
   .home-page .wp-block-ca-design-system-hero {
-    background-image: url(/images/hero-circles-2.svg), linear-gradient(90deg, rgba(0,79,116,1) 0%, rgba(4,106,153,1) 44%);;
+    background-image: url(/images/hero-circles-2.svg), linear-gradient(90deg, rgba(0,79,116,1) 0%, rgba(4,106,153,1) 44%);
     background-repeat: no-repeat;
-    background-position: right 16% top 1em, 0% 0%;
+    background-position: right 8% top 3.5em, 0% 0%;
     background-size:auto 120%, auto;
   }
   .home-page .cagov-featured-section .search-textfield {
-    width:60%;
+    width:73%;
   }
 }
 
 @media (min-width: 1024px) {
   .home-page .wp-block-ca-design-system-hero {
-    background-image: url(/images/hero-circles-1.svg),  url(/images/hero-circles-2.svg), linear-gradient(90deg, rgba(0,79,116,1) 0%, rgba(4,106,153,1) 44%);;
+    background-image: url(/images/hero-circles-1.svg),  url(/images/hero-circles-2.svg), linear-gradient(90deg, rgba(0,79,116,1) 0%, rgba(4,106,153,1) 44%);
     background-repeat: no-repeat;
-    background-position: right 45% top -3.2em, right 16% top 1em, 0% 0%;
+    background-position: right 40% top -5.6em, right 8% top 3.5em, 0% 0%;
     background-size:auto 85%, auto 120%, auto;
   }
   .home-page .cagov-featured-section .search-textfield {
-    width:60%;
+    width:73%;
   }
 }
 .home-page .cagov-featured-sidebar {
