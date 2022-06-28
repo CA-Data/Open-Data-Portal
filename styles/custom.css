@@ -600,6 +600,8 @@ button.copied::after {
 /* Checkbox styling */
 input[type=checkbox] {
   accent-color: #046A99;
+  height: 20px;
+  width: 20px;
 }
 /*********************/
 
