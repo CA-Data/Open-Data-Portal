@@ -76,7 +76,7 @@ export default function preview(dataset) {
             </label>
             <label>
               Topic
-              <div class="form-select">
+              <div className="form-select">
               <select name="subject" defaultValue={''} required>
                 <option value="" disabled>Select an option</option>
                 <option value="Dataset / technical help">Dataset / technical help</option>

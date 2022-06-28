@@ -180,9 +180,11 @@ export default function dataSet(data) {
               </Link>
             </li>
             <li>
-              <a href="/datasets?q=">
-                Datasets
-              </a>
+              <Link href="/datasets?q=" passHref>
+                <a>
+                  Datasets
+                </a>
+              </Link>
             </li>
             <li>{data.data_object.result.title}</li>
           </ol>
