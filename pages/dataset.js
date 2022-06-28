@@ -38,7 +38,7 @@ export async function getServerSideProps(context) {
         display_name: "",
         description: "",
         image_display_url: "",
-        title: "N/A",
+        title: "",
         id: "",
         name: ""
       }
@@ -113,7 +113,7 @@ export async function getServerSideProps(context) {
   if (updateFrequency) {
     updateFrequency = arrayUpdateFreq[updateFrequency] ? arrayUpdateFreq[updateFrequency] : updateFrequency;
   } else {
-    updateFrequency = "N/A";
+    updateFrequency = "";
   }
 
   const topicIconArray = {
@@ -180,9 +180,9 @@ export default function dataSet(data) {
               </Link>
             </li>
             <li>
-              <Link href="/datasets?q=" passHref>
-                <a>Datasets</a>
-              </Link>
+              <a href="/datasets?q=">
+                Datasets
+              </a>
             </li>
             <li>{data.data_object.result.title}</li>
           </ol>
@@ -206,17 +206,25 @@ export default function dataSet(data) {
                 <h3 className="h5">About</h3>
                 <ul>
                   <li>Organization: {data.data_object.result.organization.title? data.data_object.result.organization.title: "N/A"}</li>
-                  <li>Contact: <a href={"mailto:" + data.data_object.result.contact_email}>{data.data_object.result.contact_name}</a></li>
+                  <li>Data steward: <a href={"mailto:" + data.data_object.result.contact_email}>{data.data_object.result.contact_name}</a></li>
                   <li><a href={data.data_object.result.landingPage}>Organization website</a></li>
                   <li>License: {data.data_object.result.license_title? data.data_object.result.license_title: "Public domain"}<br/>
                   Visit <Link href="/licenses">Licenses</Link> for more information.</li>
                 </ul>
                 <h3 className="h5">Timeframe</h3>
                 <ul>
-                  <li>Updated: {data.updateFrequency}</li>
-                  <li>Last updated: {metadata_modified}</li>
-                  <li>Created: {metadata_created}</li>
-                  <li>Temporal coverage: {data.data_object.result.temporal? data.data_object.result.temporal: "N/A"}</li>
+                  {data.updateFrequency &&
+                    <li>Updated: {data.updateFrequency}</li>
+                  }
+                  {metadata_modified && 
+                    <li>Last updated: {metadata_modified}</li>
+                  }
+                  {metadata_created &&
+                    <li>Created: {metadata_created}</li>
+                  }
+                  {data.data_object.result.temporal &&
+                    <li>Temporal coverage: {data.data_object.result.temporal ? data.data_object.result.temporal: "N/A"}</li>
+                  }
                 </ul>
                 {data.data_object.result.related_resources &&
                   <h3 className="h5">Related</h3>
@@ -279,7 +287,7 @@ export default function dataSet(data) {
                       <td>
                         {
                           data.previewableDataTypes.includes(dataset.format) &&
-                            <div><Link
+                            <div><a
                               href={
                                 "/preview?name=" +
                                 data.parameters.name +
@@ -288,12 +296,9 @@ export default function dataSet(data) {
                                 "&rname=" +
                                 dataset.name
                               }
-                              passHref
                             >
-                            <a>Preview</a>
-                          </Link></div>
+                            Preview</a></div>
                         }
-                      
                       <button
                         className="api-button"
                         data-resource-name={dataset.name}
@@ -553,7 +558,7 @@ export default function dataSet(data) {
                 </button>
               </li>
               <li>
-                <label>Odata query</label>
+                <label>OData query</label>
                 <input id="odata-query" type="text" value="" readOnly />
                 <button className="copy-button">
                   <svg

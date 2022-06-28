@@ -23,7 +23,7 @@ export default function preview(dataset) {
       </nav>
       <article
         id="post-design"
-        className="cagov-article with-page-nav"
+        className="cagov-article about-page"
       >
         <div className="content-container">
           <h1>Licenses</h1>
@@ -31,7 +31,7 @@ export default function preview(dataset) {
           <h2>Other licenses</h2>
           <p>Find out more about these licenses on <a href="http://opendefinition.org">Open Data Commons</a>:</p>
           <ul>
-            <li><a href="https://opendefinition.org/licenses/cc-zero/">Creative Commons CCZero</a></li>
+            <li><a href="https://opendefinition.org/licenses/cc-zero/">Creative Commons CC Zero</a></li>
             <li><a href="https://opendefinition.org/licenses/cc-by/">Creative Commons Attribution</a></li>
             <li><a href="https://opendefinition.org/licenses/odc-by/">Open Data Commons Attribution License</a></li>
           </ul>

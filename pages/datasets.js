@@ -374,7 +374,6 @@ const Results = (data) => {
     let tempStr = str.charAt(0).toUpperCase().concat(str.substring(1)).replace(/-/g, ' ');
     return tempStr;
   }
-
   return (
     <>
       <main id="body-content" className="cagov-main">

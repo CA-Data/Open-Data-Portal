@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function preview(dataset) {
   return (
-    <main id="body-content" className="cagov-main">
+    <main id="body-content" className="cagov-main contact-us">
       <nav className="nav-breadcrumb">
         <ol>
           <li>
@@ -15,7 +15,7 @@ export default function preview(dataset) {
             </Link>
           </li>
           <li>
-            <Link href="/" passHref>
+            <Link href="/about" passHref>
               <a>About</a>
             </Link>
           </li>
@@ -76,6 +76,7 @@ export default function preview(dataset) {
             </label>
             <label>
               Topic
+              <div class="form-select">
               <select name="subject" defaultValue={''} required>
                 <option value="" disabled>Select an option</option>
                 <option value="Dataset / technical help">Dataset / technical help</option>
@@ -96,9 +97,10 @@ export default function preview(dataset) {
               <span className="input-error-text">
                 Select a topic
               </span>
+            </div>
             </label>
             <label>
-              Page link (optional)
+              Page link <span className="thin">(optional)</span>
               <input type="text" name="Page link"/>
               <span className="input-error-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">

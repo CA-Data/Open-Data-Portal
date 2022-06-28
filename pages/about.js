@@ -39,9 +39,10 @@ export default function preview() {
             </nav>
           </div>
         </div>
-
-        <div className="content-container">
+        <div className="page-title">
           <h1>About</h1>
+        </div>
+        <div className="content-container">
           <p className="lead-text">Open data is data that can be freely used, shared and built-on by anyone, anywhere, for any purpose.</p>
           <p>The California Open Data Portal provides public data collected by the state. We publish the data in a format that is easy to search, download, and combine with other data sets from other sources.</p>
           

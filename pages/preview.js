@@ -1,7 +1,5 @@
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import Link from 'next/link'
-import { spacing, style } from '@mui/system';
 
 export async function getServerSideProps(context) {
   function ValidateSize(FileSize) {
@@ -110,10 +108,9 @@ export default function preview(dataset) {
       <nav className="nav-breadcrumb">
         <ol>
           <li>
-          <Link href={"/dataset?name="+dataset.parameters.name} passHref>
-              <a><svg xmlns="http://www.w3.org/2000/svg" width="6" viewBox="0 0 9.6 16"><path fill="#046a99" d="M9.3 14.2L2.7 8.1l6.6-6.3c.4-.4.4-1 0-1.4a1 1 0 00-1.5 0l-7.4 7a1 1 0 00-.4.8c0 .2.1.6.3.7l7.4 6.7a1 1 0 001.5 0c.5-.3.5-1 .1-1.4z"></path></svg>{"  "}
-Back to dataset</a>
-            </Link>
+              <a href={"/dataset?name="+dataset.parameters.name}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" viewBox="0 0 9.6 16"><path fill="#046a99" d="M9.3 14.2L2.7 8.1l6.6-6.3c.4-.4.4-1 0-1.4a1 1 0 00-1.5 0l-7.4 7a1 1 0 00-.4.8c0 .2.1.6.3.7l7.4 6.7a1 1 0 001.5 0c.5-.3.5-1 .1-1.4z"></path></svg>{"  "}
+                Back to dataset</a>
           </li>
         </ol>
       </nav>
@@ -136,7 +133,7 @@ Back to dataset</a>
           <div className="dataset-value">{dataset.details.size? dataset.details.size: "N/A"}</div>
           <div className="dataset-label">Access data:</div>
           <div className="dataset-value">
-            <a href={dataset.details.download}>Download File</a> |{" "}
+            <a href={dataset.details.download}>Download file</a> |{" "}
             <button
               className="api-button"
               data-resource-name={dataset.details.name}
@@ -159,16 +156,17 @@ Back to dataset</a>
           {/*<div className="dataset-value">{dataset.details.description}</div>*/}
 
         </div>
-        
+        {dataset.table.rows.length > 0 &&
         <div id="data-table-section">
           <h3>Data preview</h3>
           <p>You’re previewing the first 50 rows of this file.</p>
           <div style={{ height: 600, width: '100%' }}>
-            {dataset.table.rows.length > 0 &&
+            
               <DataGrid rows={dataset.table.rows} columns={dataset.table.columns} />
-            }
+           
           </div>
         </div>
+        }
         {dataset.dictionary.columns.length > 0 &&
           <div id="data-dictionary-section">
             <h3>Data dictionary</h3>
@@ -250,7 +248,7 @@ Back to dataset</a>
                 </button>
               </li>
               <li>
-                <label>Odata query</label>
+                <label>OData query</label>
                 <input id="odata-query" type="text" value="" readOnly />
                 <button className="copy-button">
                   <svg

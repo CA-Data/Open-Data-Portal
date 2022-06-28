@@ -51,7 +51,7 @@
   -webkit-line-clamp: 100;
 }
 .btn-read-more {
-  font-size: 18px;
+  font-size: 1.125rem;
   color: #727272;
   margin: 0 0 1rem 0;
   cursor: pointer;
@@ -153,15 +153,7 @@ a.card-block:hover, a.card-block:active {
 .results-page > .sidebar-container {
   margin-top: 273px;
 }
-@media (max-width: 839px) {
-  
-  .results-page > .sidebar-container {
-    margin-top: 0px;
-  }
-  .home-page .two-col, .topics-page .two-col {
-    grid-template-columns: 1fr;
-  }
-}
+
 .topic-qty {
   font-weight: bold;
 }
@@ -182,27 +174,16 @@ data-tags {
 .data-files, .supporting-files  {
   margin-top: 2.125rem;
 }
-@media (max-width: 839px) {
-  .data-files, .supporting-files  {
-    overflow-x: auto;
-    position: relative;
-  }
-  /* Add shadow for overflow on data tables
-  .shadow {
-    position: absolute;
-    right: 0;
-    z-index: 100;
-    width: 25px;
-    height: 100%;
-    background: linear-gradient(-90deg, #00000015, #ffffff00);
-  }*/
-  
-}
 .data-files-table th, .supporting-files-table th  {
   white-space: nowrap;
+  font-size: 1.125rem;
 }
 .data-files-table p, .supporting-files-table p  {
   margin-bottom: .125rem;
+  font-size: 1.125rem;
+}
+.data-files-table p>strong, .supporting-files-table p>strong {
+  font-size: 1.125rem;
 }
 
 
@@ -369,6 +350,7 @@ ul.align ul {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(140, 140, 140, 0.45); /* Black w/ opacity */
+  z-index: 9999;
 }
 
 /* Modal Content */
@@ -395,9 +377,13 @@ ul.align ul {
   font-size: 1.125rem;
   line-height: 2rem;
 }
+#resource-name {
+  font-size: 1.4375rem;
+}
+
 /* The Close Button */
 .close {
-  color: #aaaaaa;
+  color: #727272;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -410,10 +396,10 @@ ul.align ul {
 
 .close:hover,
 .close:focus {
-  color: #000;
+  color: #4B4B4B;
   text-decoration: none;
   cursor: pointer;
-  background: #f5f5f5;
+  background: #FAFAFA;
   line-height: unset;
   line-height: 42px;
 }
@@ -508,13 +494,13 @@ ul.align ul {
 }
 
 button.copied::before {
-  background: #000;
+  background: #505050;
   content: '';
   padding: 6px;
   position: absolute;
   transform: rotate(45deg);
   bottom: 95%;
-  left: 13px;
+  right: 13px;
 }
 
 button.copied::after {
@@ -523,10 +509,10 @@ button.copied::after {
   border-radius: 4px;
   padding: 14px 8px 14px 8px;
   bottom: 100%;
-  left: -10px;
-  background: #000;
+  right: 6px;
+  background: #505050;
   color: white;
-  font-size: .75rem;
+  font-size: 1rem;
 }
 
 /* CSV Preview table 
@@ -544,12 +530,7 @@ button.copied::after {
   margin: 0 auto 8rem auto;
   width: 80%;
 }
-@media (max-width: 839px) {
-  .content-container {
-    width: 90%;
-    margin: 0 auto;
-  }
-}
+
 .site-search-homepage {
   display: flex;
 }
@@ -587,12 +568,13 @@ button.copied::after {
   -webkit-line-clamp: 100 !important;
 }
 .caret {
-  margin-left: 0.5rem;
+  margin-left: 0.125rem;
   margin-top: -0.25rem;
   pointer-events: none;
 }
-.cart svg {
-  width: 16px;
+.btn-read-more svg {
+  height: 7px;
+  pointer-events: none;
 }
 .rotate-180 svg{
   transform: rotate(180deg);
@@ -696,6 +678,12 @@ input[type=checkbox] {
   margin-top: 0;
   color: var(--primary-color-dark, #034A6B);
 }
+.content-container li {
+  font-size: 1.125rem;
+}
+.content-container a {
+  font-size: 1.125rem;
+}
 .small-text {
   font-size: 1rem;
 }
@@ -725,9 +713,7 @@ input[type=checkbox] {
   grid-template-rows: .5fr .5fr 1fr;
   margin-bottom: 8rem;
   max-width: 595px;
-}
-.contact-form label {
-  margin-bottom: 1rem;
+  grid-row-gap: 2rem;
 }
 .contact-form input[type=text] {
   width: 100%;
@@ -743,7 +729,6 @@ input[type=checkbox] {
   background: var(--primary-color);
   color: var(--white, #fff)!important;
   padding: 0.5556rem;
-  margin: 0 0 1rem 0;
   border-radius: 0.2778rem;
   font-weight: 700;
   display: inline-block;
@@ -752,6 +737,7 @@ input[type=checkbox] {
   /*max-width: 125px;----removed per sr*/
   max-width: 95px;
   font-size: 1rem; /*added per sr*/
+
 }
 .contact-button:hover {
   background-color: var(--primary-hover-color);
@@ -759,6 +745,7 @@ input[type=checkbox] {
 .organization-table {
   border: 1px solid #d4d4d4;
   max-width: 700px;
+  margin-top: 3rem;
 }
 .organization-row {
   display: grid;
@@ -775,6 +762,7 @@ input[type=checkbox] {
   font-weight:600;
 }
 .organization-column {
+  font-size: 1.125rem;
   padding: 0.75rem .5rem;
 }
 .organization-column:first-child {
@@ -795,11 +783,6 @@ input[type=checkbox] {
   max-width: var(--w-lg, 1176px);
   width: 98%;
   padding: 2rem 0;
-}
-@media (max-width: 767px) {
-  .page-container-ds.margin-right-clear {
-    margin-right: 0px!important;
-  }
 }
 
 .preview-heading{
@@ -835,41 +818,20 @@ max-width: 876px;
 .home-page .cagov-featured-section .search-textfield {
   width:86%;
 }
-
-@media (min-width: 767px) {
-  .home-page .wp-block-ca-design-system-hero {
-    background-image: url(/images/hero-circles-2.svg), linear-gradient(90deg, rgba(0,79,116,1) 0%, rgba(4,106,153,1) 44%);;
-    background-repeat: no-repeat;
-    background-position: right 16% top 1em, 0% 0%;
-    background-size:auto 120%, auto;
-  }
-  .home-page .cagov-featured-section .search-textfield {
-    width:60%;
-  }
-}
-
-@media (min-width: 1024px) {
-  .home-page .wp-block-ca-design-system-hero {
-    background-image: url(/images/hero-circles-1.svg),  url(/images/hero-circles-2.svg), linear-gradient(90deg, rgba(0,79,116,1) 0%, rgba(4,106,153,1) 44%);;
-    background-repeat: no-repeat;
-    background-position: right 45% top -3.2em, right 16% top 1em, 0% 0%;
-    background-size:auto 85%, auto 120%, auto;
-  }
-  .home-page .cagov-featured-section .search-textfield {
-    width:60%;
-  }
-}
 .home-page .cagov-featured-sidebar {
   max-width:none;
 }
 /* Preview Table styling */
-.MuiDataGrid-columnHeaders {
+.MuiDataGrid-columnHeader {
   background: #EDEDED;
+  border-left: 1px solid rgba(224, 224, 224, 1);
+  border-right: 1px solid rgba(224, 224, 224, 1);
 }
 .MuiDataGrid-columnHeaderTitle {
   padding: 2px;
   font-weight: bold!important;
   overflow-wrap: break-word!important;
+  line-height: 50px;
 }
 
 /* Header/Nav */
@@ -911,14 +873,6 @@ background: #ffffff;
     line-height: 0; 
     font-size:1.125rem;
   }
-@media (max-width: 839px) {
-  .card-marketing {
-    display:block;
-  }
-  .card-marketing .icon-col {
-    width:9.5em;
-  }
-}
    .inverted{
   background:#ffffff;
  } 
@@ -935,6 +889,7 @@ background: #ffffff;
     margin-bottom: 3.5rem;
   }
   .contact-form label {
+  font-size: 1.125rem;
   font-weight: 600;
   }
   .contact-form select {
@@ -949,9 +904,6 @@ background: #ffffff;
   .contact-form input[type=text], textarea {
     padding: 0.5rem;
     width: 100%;
-  }
-  .contact-form label {
-    margin-bottom: 2.1rem;
   }
   .page-container-ds {
     padding-left: 0.4rem;
@@ -1088,8 +1040,6 @@ font-size: 1rem;
   line-height: 2rem;
   font-weight: 700;
   color: #4B4B4B;
-
-
 }
 .popular-dataset-card .dataset-title {
   font-weight: 700;
@@ -1106,11 +1056,11 @@ font-size: 1rem;
 
 /*header navigation*/
 cagov-site-navigation .expanded-menu-section-header span {
-  font-size: 18px!important; /*made same sizing for header per sr*/
+  font-size: 1.125rem!important; /*made same sizing for header per sr*/
 }
 
 cagov-site-navigation .expanded-menu-section-header-link {
-  font-size: 18px!important; /*made same sizing for header per sr*/
+  font-size: 1.125rem!important; /*made same sizing for header per sr*/
 }
 /*contact forms updates sr*/
 .contact-form label span {
@@ -1145,15 +1095,6 @@ cagov-site-navigation .expanded-menu-section-header-link {
   padding: 0;
   margin: 0;
 }
-@media (max-width: 767px) {
-  .contact-form-alert p {
-    line-height: 1rem;
-  }
-  .input-error-text {
-    padding-top: .25rem;
-    line-height: 1.25rem;
-  }
-}
 .input-error {
   position: relative;
 }
@@ -1173,8 +1114,99 @@ cagov-site-navigation .expanded-menu-section-header-link {
   top: 46px;
   display: none;
 }
+.form-select > .input-error-icon {
+  right: 34px;
+  top: 14px;
+}
 .input-error-text {
   color: #B91B37;
   display: none;
 
+}
+.sitemap a {
+  font-size: 1.125rem;
+  line-height: 2rem;
+}
+.page-title {
+  width: 80%;
+  margin: 0 auto;
+}
+.about-page strong {
+  font-size: 1.125rem;
+}
+@media (max-width: 839px) {
+  .sidebar-cell {
+    width: 100%;
+  }
+  .content-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .page-title {
+    width: 100%;
+  }
+  .results-page > .sidebar-container {
+    margin-top: 0px;
+  }
+  .home-page .two-col, .topics-page .two-col {
+    grid-template-columns: 1fr;
+  }
+  .data-files, .supporting-files  {
+    overflow-x: auto;
+    position: relative;
+  }
+  /* Add shadow for overflow on data tables
+  .shadow {
+    position: absolute;
+    right: 0;
+    z-index: 100;
+    width: 25px;
+    height: 100%;
+    background: linear-gradient(-90deg, #00000015, #ffffff00);
+  }*/
+  .card-marketing {
+    display:block;
+  }
+  .card-marketing .icon-col {
+    width:9.5em;
+  }
+}
+
+@media (max-width: 767px) {
+  .dataset-description-table {
+    grid-template-columns: 1fr;
+  }
+  .modal-content {
+    width: 96%;
+  }
+  .contact-form-alert p {
+    line-height: 1rem;
+  }
+  .input-error-text {
+    padding-top: .25rem;
+    line-height: 1.25rem;
+  }
+  .page-container-ds.margin-right-clear {
+    margin-right: 0px!important;
+  }
+  .home-page .wp-block-ca-design-system-hero {
+    background-image: url(/images/hero-circles-2.svg), linear-gradient(90deg, rgba(0,79,116,1) 0%, rgba(4,106,153,1) 44%);;
+    background-repeat: no-repeat;
+    background-position: right 16% top 1em, 0% 0%;
+    background-size:auto 120%, auto;
+  }
+  .home-page .cagov-featured-section .search-textfield {
+    width:60%;
+  }
+}
+@media (min-width: 1024px) {
+  .home-page .wp-block-ca-design-system-hero {
+    background-image: url(/images/hero-circles-1.svg),  url(/images/hero-circles-2.svg), linear-gradient(90deg, rgba(0,79,116,1) 0%, rgba(4,106,153,1) 44%);;
+    background-repeat: no-repeat;
+    background-position: right 45% top -3.2em, right 16% top 1em, 0% 0%;
+    background-size:auto 85%, auto 120%, auto;
+  }
+  .home-page .cagov-featured-section .search-textfield {
+    width:60%;
+  }
 }
