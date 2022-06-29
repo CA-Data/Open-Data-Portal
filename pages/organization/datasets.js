@@ -267,6 +267,66 @@ const Results = (data) => {
   // UseEffects will fire when its corresponding array is updated. 
   // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedtags)
   // Each array will append a value to the url
+  // Persist selected checkboxes on page refresh
+  useEffect(() => {
+    let url = new URL(window.location.href);
+    let checkboxes = Array.from(document.getElementsByClassName('checkBox'));
+
+    // Get URL params
+    const topicParams = url.searchParams?.get('topic');
+    const publisherParams = url.searchParams?.get('publisher');
+    const formatParams = url.searchParams?.get('format');
+    const tagParams = url.searchParams?.get('tag');
+    const toBeChecked = {};
+    toBeChecked.topic = topicParams?.split(',');
+    toBeChecked.publisher = publisherParams?.split(',');
+    toBeChecked.format = formatParams?.split(',');
+    toBeChecked.tag = tagParams?.split(',');
+
+    // Set local state from params
+    topicParams ? setSelectedTopics(topicParams.split(',')) : null;
+    publisherParams ? setSelectedPublishers(publisherParams.split(',')) : null;
+    formatParams ? setSelectedFormats(formatParams.split(',')) : null;
+    tagParams ? setSelectedTags(tagParams.split(',')) : null;
+
+    // Loop through checkboxes 
+    checkboxes.forEach(checkbox => {
+      const formatting = checkbox?.id.split('-');
+      const filter = formatting.pop();
+      const checkboxId = formatting.join('-');
+      toBeChecked[filter]?.forEach(item => {
+        switch (filter) {
+          case 'topic':
+            if (topicSvg === 'svg-rotate-down') {
+              setTopicSvg('svg-rotate-up');
+            }
+            break;
+          case 'publisher':
+            if (publisherSvg === 'svg-rotate-down') {
+              setPublisherSvg('svg-rotate-up');
+            }
+            break;
+          case 'format':
+            if (formatSvg === 'svg-rotate-down') {
+              setFormatSvg('svg-rotate-up');
+            }
+            break;
+          case 'tag':
+            if (tagSvg === 'svg-rotate-down') {
+              setTagSvg('svg-rotate-up');
+            }
+            break;
+          default:
+            return null;
+        }
+        if (item === checkboxId.toLowerCase()) {
+          checkbox.checked = true;
+        }
+      })
+    });
+  }, []);
+
+
   useEffect(() => {
     getFormattedData(router).then(response => setDataState(response.props));
   }, [router])
@@ -391,7 +451,7 @@ const Results = (data) => {
                             else {
                               setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
                             }
-                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={topic[0]} className='checkBox' type={'checkbox'} />
+                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
                           <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={topic[0]}>{formatString(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
                         </li>
                       ))}
@@ -426,7 +486,7 @@ const Results = (data) => {
                             else {
                               setSelectedPublishers(selectedPublishers.filter(item => item != publisher[0].toLowerCase()))
                             }
-                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={publisher[0]} className='checkBox' type={'checkbox'} />
+                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${publisher[0]}-publisher`} className='checkBox' type={'checkbox'} />
                           <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={publisher[0]}>{formatString(publisher[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({publisher[1]})</span>
                         </li>
                       ))}
@@ -462,7 +522,7 @@ const Results = (data) => {
                               setSelectedFormats(selectedFormats.filter(item => item != format[0].toLowerCase()))
                             }
                           }}
-                            style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={format[0]} className='checkBox' type={'checkbox'} />
+                            style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${format[0]}-format`} className='checkBox' type={'checkbox'} />
                           <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={format[0]}>{formatString(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
                         </li>
                       ))}
@@ -497,7 +557,7 @@ const Results = (data) => {
                             else {
                               setSelectedTags(selectedtags.filter(item => item != tag[0]))
                             }
-                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={tag[0]} className='checkBox' type={'checkbox'} />
+                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${tag[0]}-tag`} className='checkBox' type={'checkbox'} />
                           <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={tag[0]}>{formatString(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
                         </li>
                       ))}
