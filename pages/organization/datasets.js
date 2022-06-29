@@ -161,7 +161,7 @@ const getFormattedData = async (context) => {
   }
   /* Organization -------------------------------------------------------- */
   var publisherDetails = {}
-  if ('publisher' in context.query && context.query.publisher.length>0) {
+  if ('publisher' in context.query && context.query.publisher.length > 0) {
     if ('q' in context.query) {
       var q = context.query.q
     } else {
@@ -171,13 +171,13 @@ const getFormattedData = async (context) => {
     if (publisher.match(/,/gm)) {
       publisher = publisher.replace(/,[a-zA-Z0-9]{1,}/gm, '')
       publisherDetails = {}
-    } 
-        
+    }
+
     publisherDetails.title = ""
     publisherDetails.description = ""
     publisherDetails.website = ""
     publisherDetails.popular = []
-    
+
     const popular_datasets = await fetch(`https://test-data.technology.ca.gov/api/3/action/package_search?q=${q}&sort=views_recent%20desc&fq=organization:${publisher}&rows=3`, { headers: { 'User-Agent': 'NextGenAPI/0.0.1', } }).then(response => response.json()).catch(error => console.log(error))
 
     if (popular_datasets.result.count > 0) {
@@ -188,11 +188,11 @@ const getFormattedData = async (context) => {
         popularDataset.title = item.title
         popularDataset.name = item.name
         popularDataset.id = item.id
-        
+
         const views = await fetch(
           `https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=${item.id}&include_tracking=true`,
-          { headers: { 'User-Agent': 'NextGenAPI/0.0.1'}}
-          )
+          { headers: { 'User-Agent': 'NextGenAPI/0.0.1' } }
+        )
           .then(response => response.json())
           .catch(error => console.log("ERROR"))
 
@@ -247,15 +247,15 @@ const Results = (data) => {
   }
 
   const submit = (event) => {
-    if(!router.query.sort){
-      router.push(router.asPath + "&sort="+event,null,{shallow:true})
+    if (!router.query.sort) {
+      router.push(router.asPath + "&sort=" + event, null, { shallow: true })
     }
-    else{
+    else {
       let newPath = router.asPath.split('&');
-      let index = newPath.findIndex(item=> item.includes('sort'));
-      newPath.splice(index,1,"sort="+event);
+      let index = newPath.findIndex(item => item.includes('sort'));
+      newPath.splice(index, 1, "sort=" + event);
       newPath = newPath.join('&');
-      router.push(newPath,null,{shallow:true});
+      router.push(newPath, null, { shallow: true });
     }
   };
   var urlParamTopic = (dataState.parameters.topic) ? "&topic=" + dataState.parameters.topic : "";
@@ -287,7 +287,7 @@ const Results = (data) => {
         router.push(url, null, { shallow: true });
       }
       if (selectedTopics.length >= 1) {
-        url.searchParams.set('topic',selectedTopics)
+        url.searchParams.set('topic', selectedTopics)
         router.push(url, null, { shallow: true });
       }
     }
@@ -301,7 +301,7 @@ const Results = (data) => {
         router.push(url, null, { shallow: true });
       }
       if (selectedPublishers.length >= 1) {
-        url.searchParams.set('publisher',selectedPublishers)
+        url.searchParams.set('publisher', selectedPublishers)
         router.push(url, null, { shallow: true });
       }
     }
@@ -315,7 +315,7 @@ const Results = (data) => {
         router.push(url, null, { shallow: true });
       }
       if (selectedFormats.length >= 1) {
-        url.searchParams.set('format',selectedFormats)
+        url.searchParams.set('format', selectedFormats)
         router.push(url, null, { shallow: true });
       }
     }
@@ -324,13 +324,13 @@ const Results = (data) => {
   useEffect(() => {
     if (!reset) {
       const url = new URL(window.location.href);
-      console.log('in tags',selectedtags + ' ***** ' + url.searchParams.get('tag'))
+      console.log('in tags', selectedtags + ' ***** ' + url.searchParams.get('tag'))
       if (selectedtags.length == 0 || !url.searchParams.get('tag')) {
         url.searchParams.delete('tag')
         router.push(url, null, { shallow: true });
       }
       if (selectedtags.length >= 1) {
-        url.searchParams.set('tag',selectedtags)
+        url.searchParams.set('tag', selectedtags)
         router.push(url, null, { shallow: true });
       }
     }
@@ -373,7 +373,7 @@ const Results = (data) => {
             <div className="sidebar" space="0" side="left">
               <nav aria-labelledby="page-navigation-label">
                 <div id="page-navigation-label" className="label">
-                  <strong>Filter by</strong>
+                  <strong style={{ fontSize: '24px' }}>Filter by</strong>
                 </div>
                 <ul className="search-filters align">
                   <li style={{ color: "#4B4B4B" }} className="filter-topic">
@@ -383,7 +383,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={topicSvg != 'svg-rotate-up' ? true : false} style={{ cursor: 'default' }}>
                       {topicList.slice(0, topicShowMore).map((topic, index) => (
-                        <li key={topic[0]} style={{ display: 'flex', alignItems: 'baseline'}}>
+                        <li key={topic[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedTopics([...selectedTopics, topic[0].toLowerCase()])
@@ -392,19 +392,19 @@ const Results = (data) => {
                               setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={topic[0]} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', }} htmlFor={topic[0]}>{formatString(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={topic[0]}>{formatString(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={topicList.length <= topicShowMore} onClick={() => topicShowMore > topicList.length ? '' : setTopicShowMore(topicShowMore + 5)} style={{ cursor: 'pointer' }}>
-                        <div style={{display:'flex',alignItems:'center'}}>
-                            <svg style={{paddingRight:'5px'}} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg> 
+                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
-                          </div>                           
+                          </div>
                         </button>
-                        <button hidden={!(topicShowMore > 4)} onClick={() => setTopicShowMore(4)} style={{ cursor: 'pointer'}}>
-                          <div style={{display:'flex',alignItems:'center' }}>
-                            <svg style={{paddingRight:'5px'}} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
+                        <button hidden={!(topicShowMore > 4)} onClick={() => setTopicShowMore(4)} style={{ cursor: 'pointer' }}>
+                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
                           </div>
                         </button>
@@ -418,8 +418,8 @@ const Results = (data) => {
                     </div>
                     <ul hidden={publisherSvg != 'svg-rotate-up' ? true : false}>
                       {publisherList.slice(0, publisherShowMore).map((publisher, index) => (
-                        <li key={publisher[0]} style={{ display: 'flex', alignItems: 'baseline'}}>
-                        <input onChange={(e) => {
+                        <li key={publisher[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                          <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedPublishers([...selectedPublishers, publisher[0].toLowerCase()])
                             }
@@ -427,19 +427,19 @@ const Results = (data) => {
                               setSelectedPublishers(selectedPublishers.filter(item => item != publisher[0].toLowerCase()))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={publisher[0]} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer' }} htmlFor={publisher[0]}>{formatString(publisher[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({publisher[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={publisher[0]}>{formatString(publisher[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({publisher[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={publisherList.length <= publisherShowMore} onClick={() => publisherShowMore > publisherList.length ? '' : setPublisherShowMore(publisherShowMore + 5)} style={{ cursor: 'pointer' }}>
-                          <div style={{display:'flex',alignItems:'center'}}>
-                            <svg style={{paddingRight:'5px'}} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg> 
+                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
-                          </div>  
+                          </div>
                         </button>
                         <button hidden={!(publisherShowMore > 4)} onClick={() => setPublisherShowMore(4)} style={{ cursor: 'pointer' }}>
-                          <div style={{display:'flex',alignItems:'center' }}>
-                            <svg style={{paddingRight:'5px'}} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
+                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
                           </div>
                         </button>
@@ -453,8 +453,8 @@ const Results = (data) => {
                     </div>
                     <ul hidden={formatSvg != 'svg-rotate-up' ? true : false}>
                       {formatList.slice(0, formatShowMore).map((format, index) => (
-                        <li key={format[0]} style={{ display: 'flex', alignItems: 'baseline'}}>
-                        <input onChange={(e) => {
+                        <li key={format[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                          <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedFormats([...selectedFormats, format[0].toLowerCase()])
                             }
@@ -463,22 +463,22 @@ const Results = (data) => {
                             }
                           }}
                             style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={format[0]} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer' }} htmlFor={format[0]}>{formatString(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={format[0]}>{formatString(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={formatList.length <= formatShowMore} onClick={() => formatShowMore > formatList.length ? '' : setFormatShowMore(formatShowMore + 5)} style={{ cursor: 'pointer' }}>
-                        <div style={{display:'flex',alignItems:'center'}}>
-                            <svg style={{paddingRight:'5px'}} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg> 
+                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
-                          </div>                          
-                         </button>
-                        <button hidden={!(formatShowMore > 4)} onClick={() => setFormatShowMore(4)} style={{ cursor: 'pointer' }}>
-                          <div style={{display:'flex',alignItems:'center' }}>
-                              <svg style={{paddingRight:'5px'}} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
-                              Show less
                           </div>
-                       </button>
+                        </button>
+                        <button hidden={!(formatShowMore > 4)} onClick={() => setFormatShowMore(4)} style={{ cursor: 'pointer' }}>
+                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
+                            Show less
+                          </div>
+                        </button>
                       </div>
                     </ul>
                   </li>
@@ -489,8 +489,8 @@ const Results = (data) => {
                     </div>
                     <ul hidden={tagSvg != 'svg-rotate-up' ? true : false}>
                       {tagList.slice(0, tagShowMore).map((tag, index) => (
-                        <li key={tag[0]} style={{ display: 'flex', alignItems: 'baseline'}}>
-                        <input onChange={(e) => {
+                        <li key={tag[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                          <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedTags([...selectedtags, tag[0]])
                             }
@@ -498,23 +498,23 @@ const Results = (data) => {
                               setSelectedTags(selectedtags.filter(item => item != tag[0]))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={tag[0]} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer' }} htmlFor={tag[0]}>{formatString(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={tag[0]}>{formatString(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <button hidden={tagList.length <= tagShowMore} onClick={() => tagShowMore > tagList.length ? '' : setTagShowMore(tagShowMore + 5)} style={{ cursor: 'pointer' }}>
-                          <div style={{display:'flex',alignItems:'center'}}>
-                            <svg style={{paddingRight:'5px'}} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg> 
+                        <button hidden={tagList.length <= tagShowMore} onClick={() => tagShowMore > tagList.length ? '' : setTagShowMore(tagShowMore + 5)} style={{ cursor: 'pointer' }}>
+                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
-                          </div>                          
+                          </div>
                         </button>
                         <button hidden={!(tagShowMore > 4)} onClick={() => setTagShowMore(4)} style={{ cursor: 'pointer' }}>
-                          <div style={{display:'flex',alignItems:'center' }}>
-                            <svg style={{paddingRight:'5px'}} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
+                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
                           </div>
                         </button>
-                        </div>
+                      </div>
                     </ul>
                   </li>
                 </ul>
@@ -532,36 +532,36 @@ const Results = (data) => {
           </div>
           <div className="cagov-content content-cell">
             {/* Organization */}
-            {data.publisherDetails.title && 
+            {data.publisherDetails.title &&
               <div className="cagov-popular-datasets">
                 <div className="organization-info">
-                  <h1 style={{ marginTop: 0, color:'#034A6B', fontSize:'47px', lineHeight:'58.8px'}}>{data.publisherDetails.title}</h1>
-                  {data.publisherDetails.website && 
+                  <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>{data.publisherDetails.title}</h1>
+                  {data.publisherDetails.website &&
                     <p>Organization website: <a href={data.publisherDetails.website}>{data.publisherDetails.title}</a></p>
                   }
                   <p className="organization-description">{data.publisherDetails.description}</p>
                 </div>
                 <div className="popular-datasets">
-                <h2>Popular datasets</h2>
-                <div className="popular-datasets-cards-container">
-                {data.publisherDetails.popular && data.publisherDetails.popular.map((details, index) => (
-                    <a
-                      key={index}
-                      className="popular-dataset-card"
-                      href={"/dataset?name=" + details.name}
-                    >
-                    <p className="dataset-title">
-                      {details.title}
-                    </p>
-                    <p>
-                      <span className="large-text">
-                        {details.views}
-                      </span>{" "}
-                      recent views
-                    </p>
-                  </a>
-                  ))}
-                </div>
+                  <h2>Popular datasets</h2>
+                  <div className="popular-datasets-cards-container">
+                    {data.publisherDetails.popular && data.publisherDetails.popular.map((details, index) => (
+                      <a
+                        key={index}
+                        className="popular-dataset-card"
+                        href={"/dataset?name=" + details.name}
+                      >
+                        <p className="dataset-title">
+                          {details.title}
+                        </p>
+                        <p>
+                          <span className="large-text">
+                            {details.views}
+                          </span>{" "}
+                          recent views
+                        </p>
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
             }
@@ -620,9 +620,9 @@ const Results = (data) => {
                 <input type="hidden" name="publisher" value={dataState.parameters.publisher}></input>
                 <input type="hidden" name="tag" value={dataState.parameters.tag}></input>
                 <input type="hidden" name="format" value={dataState.parameters.format}></input>
-                <div style={{display:'flex',alignItems:'center'}}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
                   <label htmlFor="sort">Sort by</label>
-                  <BasicSelect submit={submit}/>
+                  <BasicSelect submit={submit} />
                 </div>
               </form>
             </div>
