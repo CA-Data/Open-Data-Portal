@@ -108,8 +108,8 @@ export default function preview(dataset) {
       <nav className="nav-breadcrumb">
         <ol>
           <li>
-              <a href={"/dataset?name="+dataset.parameters.name}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="6" viewBox="0 0 9.6 16"><path fill="#046a99" d="M9.3 14.2L2.7 8.1l6.6-6.3c.4-.4.4-1 0-1.4a1 1 0 00-1.5 0l-7.4 7a1 1 0 00-.4.8c0 .2.1.6.3.7l7.4 6.7a1 1 0 001.5 0c.5-.3.5-1 .1-1.4z"></path></svg>{"  "}
+          <svg xmlns="http://www.w3.org/2000/svg" width="6" viewBox="0 0 9.6 16"><path fill="#046a99" d="M9.3 14.2L2.7 8.1l6.6-6.3c.4-.4.4-1 0-1.4a1 1 0 00-1.5 0l-7.4 7a1 1 0 00-.4.8c0 .2.1.6.3.7l7.4 6.7a1 1 0 001.5 0c.5-.3.5-1 .1-1.4z"></path></svg>{"  "}
+{" "}<a style={{marginLeft: '3px'}} href={"/dataset?name="+dataset.parameters.name}>
                 Back to dataset</a>
           </li>
         </ol>
@@ -210,7 +210,7 @@ export default function preview(dataset) {
                   >
                     <g clipPath="url(#clip0_425_18691)">
                       <path
-                        fill="#000"
+                        fill="#4B4B4B"
                         d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
                       ></path>
                     </g>
@@ -235,7 +235,7 @@ export default function preview(dataset) {
                   >
                     <g clipPath="url(#clip0_425_18691)">
                       <path
-                        fill="#000"
+                        fill="#4B4B4B"
                         d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
                       ></path>
                     </g>
@@ -260,7 +260,7 @@ export default function preview(dataset) {
                   >
                     <g clipPath="url(#clip0_425_18691)">
                       <path
-                        fill="#000"
+                        fill="#4B4B4B"
                         d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
                       ></path>
                     </g>

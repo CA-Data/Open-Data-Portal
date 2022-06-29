@@ -13,8 +13,8 @@ export async function getServerSideProps() {
   //                  height="24"
   //                  viewBox="0 0 24 24"
   //                >
-  //                  <path fill="none" d="M0 0h24v24H0V0z"></path>
-  //                  <path d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+  //                  
+  //                  <path fill="currentColor" d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
   //                </svg>
   //              </a> 
   async function recentDatasets() {
@@ -35,6 +35,7 @@ export async function getServerSideProps() {
 
       const data =  await res.json();
       const groupTitle =  data.result.title
+      console.log(groupTitle)
       const groupCount =  data.result.package_count
       const groupDescription =  data.result.description
       topics["id"] = groupName
@@ -132,8 +133,7 @@ export default function Home(data) {
                         border:"none",
                       }}
                     />
-                    
-                  </form>
+                    </form>
                 </div>
               </div>
             </div>
@@ -155,8 +155,7 @@ export default function Home(data) {
                 height="24"
                 viewBox="0 0 24 24"
               >
-                <path fill="none" d="M0 0h24v24H0V0z"></path>
-                <path d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+                <path fill="currentColor" d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
               </svg>
             </a>
             </Link>
@@ -169,8 +168,7 @@ export default function Home(data) {
                 height="24"
                 viewBox="0 0 24 24"
               >
-                <path fill="none" d="M0 0h24v24H0V0z"></path>
-                <path d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+              <path fill="currentColor" d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
               </svg>
             </a>
             </Link>
@@ -183,8 +181,7 @@ export default function Home(data) {
                 height="24"
                 viewBox="0 0 24 24"
               >
-                <path fill="none" d="M0 0h24v24H0V0z"></path>
-                <path d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+              <path fill="currentColor" d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
               </svg>
             </a>
             </Link>
@@ -197,8 +194,7 @@ export default function Home(data) {
                 height="24"
                 viewBox="0 0 24 24"
               >
-                <path fill="none" d="M0 0h24v24H0V0z"></path>
-                <path d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+              <path fill="currentColor" d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
               </svg>
             </a>
             </Link>
@@ -212,8 +208,7 @@ export default function Home(data) {
                 height="24"
                 viewBox="0 0 24 24"
               >
-                <path fill="none" d="M0 0h24v24H0V0z"></path>
-                <path d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+              <path fill="currentColor" d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
               </svg>
             </a>
             </Link>
@@ -226,8 +221,7 @@ export default function Home(data) {
                 height="24"
                 viewBox="0 0 24 24"
               >
-                <path fill="none" d="M0 0h24v24H0V0z"></path>
-                <path d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+              <path fill="currentColor" d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
               </svg>
             </a>
             </Link>

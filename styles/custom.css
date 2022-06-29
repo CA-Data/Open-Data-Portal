@@ -205,7 +205,7 @@ table.data-files-table, table.supporting-files-table {
   border-width: 1px;
   border-color: #a19fa7;
   border-style: solid;
-  color: #000000;
+  color: #4B4B4B;
   text-align: left;
 }
 table.data-files-table td,
@@ -507,7 +507,7 @@ button.copied::after {
   content: 'Copied!';
   position: absolute;
   border-radius: 4px;
-  padding: 14px 8px 14px 8px;
+  padding: 18px 12px 18px 12px;
   bottom: 100%;
   right: 6px;
   background: #505050;
@@ -716,6 +716,7 @@ input[type=checkbox] {
   margin-bottom: 8rem;
   max-width: 595px;
   grid-row-gap: 2rem;
+  margin-top: 2.5rem;
 }
 .contact-form input[type=text] {
   width: 100%;
@@ -734,11 +735,12 @@ input[type=checkbox] {
   border-radius: 0.2778rem;
   font-weight: 700;
   display: inline-block;
-  border: none;
+  border: 0 solid white!important;
   text-decoration: none;
   /*max-width: 125px;----removed per sr*/
   max-width: 95px;
-  font-size: 1rem; /*added per sr*/
+  font-size: 1.125rem; /*added per sr*/
+  height: 48px;
 
 }
 .contact-button:hover {
@@ -1118,6 +1120,7 @@ cagov-site-navigation .expanded-menu-section-header-link {
   margin-left: 1rem;
 }
 .contact-form-alert p {
+  font-weight: 700;
   padding: 0;
   margin: 0;
 }
@@ -1147,6 +1150,7 @@ cagov-site-navigation .expanded-menu-section-header-link {
 .input-error-text {
   color: #B91B37;
   display: none;
+  font-weight: 700!important;
 
 }
 .sitemap a {

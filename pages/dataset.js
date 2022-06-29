@@ -26,8 +26,14 @@ export async function getServerSideProps(context) {
 
   const name = context.query.name;
   const response = await fetch(
-    "https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=" + name
-  ).then((response) => response.json());
+    "https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=" + name,
+    { headers: {
+        'User-Agent': 'NextGenAPI/0.0.1',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET',
+        'Access-Control-Allow-Headers': 'Authorization'
+      }
+    }).then((response) => response.json());
   console.log("https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=" + name);
   //  console.log(response);
 
@@ -208,8 +214,10 @@ export default function dataSet(data) {
                 <h3 className="h5">About</h3>
                 <ul>
                   <li>Organization: {data.data_object.result.organization.title? data.data_object.result.organization.title: "N/A"}</li>
-                  <li>Data steward: <a href={"mailto:" + data.data_object.result.contact_email}>{data.data_object.result.contact_name}</a></li>
-                  <li><a href={data.data_object.result.landingPage}>Organization website</a></li>
+                  <li>Contact: <a href={"mailto:" + data.data_object.result.contact_email}>Data steward</a></li>
+                  {data.data_object.result.url &&
+                    <li><a href={data.data_object.result.url}>Organization website</a></li>
+                  }
                   <li>License: {data.data_object.result.license_title? data.data_object.result.license_title: "Public domain"}<br/>
                   Visit <Link href="/licenses">Licenses</Link> for more information.</li>
                 </ul>
@@ -522,7 +530,7 @@ export default function dataSet(data) {
                   >
                     <g clipPath="url(#clip0_425_18691)">
                       <path
-                        fill="#000"
+                        fill="#4B4B4B"
                         d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
                       ></path>
                     </g>
@@ -547,7 +555,7 @@ export default function dataSet(data) {
                   >
                     <g clipPath="url(#clip0_425_18691)">
                       <path
-                        fill="#000"
+                        fill="#4B4B4B"
                         d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
                       ></path>
                     </g>
@@ -572,7 +580,7 @@ export default function dataSet(data) {
                   >
                     <g clipPath="url(#clip0_425_18691)">
                       <path
-                        fill="#000"
+                        fill="#4B4B4B"
                         d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
                       ></path>
                     </g>
