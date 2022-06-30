@@ -30,14 +30,16 @@ export async function getServerSideProps() {
       const groupName = group_array[index]
       const res =  await fetch('https://test-data.technology.ca.gov/api/3/action/group_show?id='+groupName)
       const data =  await res.json();
-      const groupTitle =  data.result.title
+      const groupTitle =  data.result.title.replace(" Resources", " resources").replace(" Demographics", " demographics").replace(" Human Services", " human services");
       const groupCount =  data.result.package_count
       const groupDescription =  data.result.description
       topics["id"] = groupName
       topics["title"] = groupTitle
       topics["count"] = groupCount
       topics["description"] = groupDescription
-      topicArray.push(topics)
+      if (groupCount) {
+        topicArray.push(topics)
+      }
     }
     return topicArray
   };
