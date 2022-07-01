@@ -188,9 +188,9 @@ const Results = (data) => {
   const [formatList, setFormatList] = useState(Object.entries(data.filters.result.facets.res_format).sort((a, b) => a[1] > b[1] ? -1 : 1));
   const [dataState, setDataState] = useState(data);
   const [topicShowMore, setTopicShowMore] = useState(4);
-  const [publisherShowMore, setPublisherShowMore] = useState(4);
-  const [tagShowMore, setTagShowMore] = useState(4);
-  const [formatShowMore, setFormatShowMore] = useState(4);
+  const [publisherShowMore, setPublisherShowMore] = useState(5);
+  const [tagShowMore, setTagShowMore] = useState(5);
+  const [formatShowMore, setFormatShowMore] = useState(5);
   const router = useRouter();
   if (typeof window === 'object') {
     // Check if document is finally loaded
@@ -363,9 +363,9 @@ const Results = (data) => {
     setSelectedFormats([]);                // *
     setSelectedTags([]);                   // *
     setTopicShowMore(4);                   // *
-    setPublisherShowMore(4);               // *
-    setTagShowMore(4);                     // *
-    setFormatShowMore(4);                  // *
+    setPublisherShowMore(5);               // *
+    setTagShowMore(5);                     // *
+    setFormatShowMore(5);                  // *
     router.push('?q=', null, { shallow: true });                    // and resets search results
   }
 
@@ -406,7 +406,7 @@ const Results = (data) => {
                               setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1'}} htmlFor={topic[0]+'-topic'}>{formatString(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({topic[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={topic[0] + '-topic'}>{formatString(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({topic[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -426,7 +426,7 @@ const Results = (data) => {
                     </ul>
                   </li>
                   <li style={{ color: "#4B4B4B" }} className="filter-publisher">
-                    <div onClick={() => { publisherSvg == 'svg-rotate-up' ? setPublisherSvg('svg-rotate-down') : setPublisherSvg('svg-rotate-up'); setPublisherShowMore(4) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
+                    <div onClick={() => { publisherSvg == 'svg-rotate-up' ? setPublisherSvg('svg-rotate-down') : setPublisherSvg('svg-rotate-up'); setPublisherShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={publisherSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontWeight: 'bold' }}>Publisher</span>
                     </div>
@@ -441,7 +441,7 @@ const Results = (data) => {
                               setSelectedPublishers(selectedPublishers.filter(item => item != publisher[0].toLowerCase()))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${publisher[0]}-publisher`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1'}} htmlFor={publisher[0]+"-publisher"}>{formatString(publisher[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({publisher[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={publisher[0] + "-publisher"}>{formatString(publisher[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({publisher[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -451,7 +451,7 @@ const Results = (data) => {
                             More
                           </div>
                         </button>
-                        <button hidden={!(publisherShowMore > 4)} onClick={() => setPublisherShowMore(4)} style={{ cursor: 'pointer' }}>
+                        <button hidden={!(publisherShowMore > 5)} onClick={() => setPublisherShowMore(5)} style={{ cursor: 'pointer' }}>
                           <div style={{ display: 'flex', alignItems: 'center' }}>
                             <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
@@ -461,7 +461,7 @@ const Results = (data) => {
                     </ul>
                   </li>
                   <li style={{ color: "#4B4B4B" }} className="filter-format">
-                    <div onClick={() => { formatSvg == 'svg-rotate-up' ? setFormatSvg('svg-rotate-down') : setFormatSvg('svg-rotate-up'); setFormatShowMore(4) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
+                    <div onClick={() => { formatSvg == 'svg-rotate-up' ? setFormatSvg('svg-rotate-down') : setFormatSvg('svg-rotate-up'); setFormatShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={formatSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontWeight: 'bold' }}>Format</span>
                     </div>
@@ -477,7 +477,7 @@ const Results = (data) => {
                             }
                           }}
                             style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${format[0]}-format`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1'}} htmlFor={format[0]+"-format"}>{formatString(format[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({format[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={format[0] + "-format"}>{formatString(format[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({format[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -487,7 +487,7 @@ const Results = (data) => {
                             More
                           </div>
                         </button>
-                        <button hidden={!(formatShowMore > 4)} onClick={() => setFormatShowMore(4)} style={{ cursor: 'pointer' }}>
+                        <button hidden={!(formatShowMore > 5)} onClick={() => setFormatShowMore(5)} style={{ cursor: 'pointer' }}>
                           <div style={{ display: 'flex', alignItems: 'center' }}>
                             <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
@@ -497,7 +497,7 @@ const Results = (data) => {
                     </ul>
                   </li>
                   <li style={{ color: "#4B4B4B" }} className="filter-tag">
-                    <div onClick={() => { tagSvg == 'svg-rotate-up' ? setTagSvg('svg-rotate-down') : setTagSvg('svg-rotate-up'); setTagShowMore(4) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
+                    <div onClick={() => { tagSvg == 'svg-rotate-up' ? setTagSvg('svg-rotate-down') : setTagSvg('svg-rotate-up'); setTagShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={tagSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontWeight: 'bold' }}>Tag</span>
                     </div>
@@ -512,7 +512,7 @@ const Results = (data) => {
                               setSelectedTags(selectedtags.filter(item => item != tag[0]))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${tag[0]}-tag`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={tag[0]+"-tag"}>{formatString(tag[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({tag[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={tag[0] + "-tag"}>{formatString(tag[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({tag[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -522,7 +522,7 @@ const Results = (data) => {
                             More
                           </div>
                         </button>
-                        <button hidden={!(tagShowMore > 4)} onClick={() => setTagShowMore(4)} style={{ cursor: 'pointer' }}>
+                        <button hidden={!(tagShowMore > 5)} onClick={() => setTagShowMore(5)} style={{ cursor: 'pointer' }}>
                           <div style={{ display: 'flex', alignItems: 'center' }}>
                             <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
@@ -540,7 +540,7 @@ const Results = (data) => {
                   setReset(true);
                   await resetSearch();
                   setReset(false);
-                }} style={{ border: '1px solid #4B4B4B', borderRadius: '5px', padding: '10px 15px', cursor: 'pointer', }}>Reset</button>
+                }} style={{ border: '1px solid #727272', borderRadius: '4px', height: '48px', padding: '8px 16px', cursor: 'pointer', width: '82px' }}>Reset</button>
               </nav>
             </div>
           </div>
@@ -607,7 +607,7 @@ const Results = (data) => {
               </form>
             </div>
             <div>
-              <h2>{dataState.matches > 1 ? dataState.matches + ' matches' : dataState.matches + ' match'} </h2>
+              <h2>{dataState.matches > 1 ? dataState.matches + ' datasets' : dataState.matches + ' dataset'} </h2>
             </div>
             <div className="result-page">
               {dataState.allResults.map((dataset, index) => (
@@ -636,7 +636,7 @@ const Results = (data) => {
                     </li>
                   </ul>
                   <p className="description">
-                    {dataset.notes.substring(0, 200)}...
+                    {dataset.notes.substring(0, 150)}...
                   </p>
                 </div>
               ))}
