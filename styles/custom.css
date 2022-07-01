@@ -1,6 +1,6 @@
 * {
-  font-size:18px;
-  line-height:32px;
+  font-size:16px;
+  line-height:30px;
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #72717C;
@@ -15,6 +15,11 @@
 }
 .padding-y {
   padding: 2rem 0 2rem 0;
+}
+
+.result-dataset-info > li {
+  font-size: 18px;
+  line-height: 32px;
 }
 
 .search-textfield {
