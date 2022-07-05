@@ -132,7 +132,7 @@
   border: 1px solid #fafafa;
   color:#4B4B4B;
 }
-.topics-page .card-block {
+.topics-page a.card-block {
   border: 1px solid #d4d4d4;
 }
 .card-block a {
