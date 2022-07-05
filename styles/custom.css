@@ -17,6 +17,11 @@
   padding: 2rem 0 2rem 0;
 }
 
+.result-dataset-info > li {
+  font-size: 18px;
+  line-height: 32px;
+}
+
 .search-textfield {
   width: 100%;
   max-width: 876px;
@@ -132,7 +137,7 @@
   border: 1px solid #fafafa;
   color:#4B4B4B;
 }
-.topics-page .card-block {
+.topics-page a.card-block {
   border: 1px solid #d4d4d4;
 }
 .card-block a {
@@ -287,16 +292,21 @@ table.data-files-table, table.supporting-files-table {
   padding-left: 0px;
 }
 .page-navigation {
-  padding-top: 2rem;
-  float: left;
+  display: flex;
+  /* padding-top: 2rem; */
+  /* float: left; */
 }
 .page-previous, .page-current, .page-next {
-  padding: .25rem .75rem;
-  border: 1px solid #cecece;
-  text-decoration: none;
-  line-height: 0;
+  border: 1px solid #d4d4d4;
   border-radius: 3px;
+  font-size: 14px;
+  height: 42px;
+  /* line-height: 0; */
   margin: .25rem;
+  padding: .25rem .75rem;
+  text-align: center;
+  text-decoration: none;
+  width: 42px;
 }
 .page-previous:hover, .page-next:hover {
   color: white;
@@ -673,7 +683,7 @@ input[type=checkbox] {
   margin: 0;
 }
 #page-navigation-label {
-  padding-bottom: 1rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid #DEDEDE;
 }
 .cagov-article h1 {
@@ -1017,9 +1027,10 @@ font-size: 1rem;
 }
 .topic-recentviews {
   margin-top:1.6rem;
+  font-size: 18px;
 }
 .topic-recentviews span {
-  font-size: 2rem;
+  font-size: 37px;
   color: #046a99;
 }
 .topic-popular-container .dataset-icon {
@@ -1030,6 +1041,8 @@ font-size: 1rem;
 }
 .topic-organization {
   flex-grow: 1;
+  font-size: 18px;
+  line-height: 32px;
 }
 
 /* Popular datasets */
