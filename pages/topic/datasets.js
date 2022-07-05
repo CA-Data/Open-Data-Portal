@@ -616,7 +616,7 @@ const Results = (data) => {
                   className="topic-popular-dataset"
                 >
                   <h2 style={{marginBottom:'5px'}} className="h5">
-                    <span style={{fontWeight:'700', fontSize:'18px', lineHeight:'32px'}}>{dataset.title}</span>
+                    <span style={{fontWeight:'700', fontSize:'23px', lineHeight:'37.5px'}}>{dataset.title}</span>
                   </h2>
                   <div className="topic-organization">
                     {dataset.organization}
