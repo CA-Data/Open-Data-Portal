@@ -13,11 +13,6 @@ export default function preview(dataset) {
               <a>Open Data</a>
             </Link>
           </li>
-          <li>
-            <Link href="/" passHref>
-              <a>About</a>
-            </Link>
-          </li>
           <li>Licenses</li>
         </ol>
       </nav>
