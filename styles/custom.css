@@ -1037,9 +1037,10 @@ font-size: 1rem;
 }
 .topic-recentviews {
   margin-top:1.6rem;
+  font-size: 18px;
 }
 .topic-recentviews span {
-  font-size: 2rem;
+  font-size: 37px;
   color: #046a99;
 }
 .topic-popular-container .dataset-icon {
@@ -1050,6 +1051,8 @@ font-size: 1rem;
 }
 .topic-organization {
   flex-grow: 1;
+  font-size: 18px;
+  line-height: 32px;
 }
 
 /* Popular datasets */
