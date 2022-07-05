@@ -1,7 +1,44 @@
-
+import React, { useEffect } from 'react';
 import Link from "next/link";
 
 export default function preview(dataset) {
+  useEffect(() => {
+    function showBanner() {
+      const banner = document.getElementById('error-banner')
+      if (document.getElementById('contact-form').getElementsByClassName('input-error').length > 0) {
+          banner.style.display = "grid";
+        } else {
+          banner.style.display = "none";
+        }
+    }
+    function validate(field) {
+      var label = field.parentElement
+      if (label.innerText != 'Page link (optional)') {
+        label.classList.add("input-error");
+        label.getElementsByClassName('input-error-icon')[0].style.display = "block"
+        if (label.getElementsByClassName('input-error-text').length > 0) {
+          label.getElementsByClassName('input-error-text')[0].style.display = "block"
+        }
+      }
+    }
+    if (document.getElementsByTagName('main')[0].classList.contains('contact-us')) {
+      const form = document.getElementById('contact-form')
+      form.addEventListener('focusout', (event) => {
+        if (event.target.value == "") {
+          validate(event.target)
+        }
+        else {
+          event.target.parentElement.classList.remove('input-error')
+          event.target.parentElement.getElementsByClassName('input-error-icon')[0].style.display = "none"
+          if (event.target.parentElement.getElementsByClassName('input-error-text').length > 0) {
+            event.target.parentElement.getElementsByClassName('input-error-text')[0].style.display = "none"
+          }
+        }
+        showBanner()
+      }, true);
+    }
+  }, []);
+    
   return (
     <main id="body-content" className="cagov-main contact-us">
       <nav className="nav-breadcrumb">
