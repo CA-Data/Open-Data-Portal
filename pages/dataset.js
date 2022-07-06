@@ -27,15 +27,12 @@ export async function getServerSideProps(context) {
 
   const name = context.query.name;
   const response = await fetch(
-    "https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=" + name,
+    "https://data.ca.gov/api/3/action/package_show?name_or_id=" + name,
     { headers: {
         'User-Agent': 'NextGenAPI/0.0.1',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET',
-        'Access-Control-Allow-Headers': 'Authorization'
       }
     }).then((response) => response.json());
-  console.log("https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=" + name);
+  console.log("https://data.ca.gov/api/3/action/package_show?name_or_id=" + name);
   //  console.log(response);
 
   var groups = response.result.groups;
@@ -162,8 +159,8 @@ export default function DataSet(data) {
 
     //add file id to api query inputs
     function addFileId(fileId) {
-      document.getElementById("simple-query").value = `https://test-data.technology.ca.gov/api/3/action/datastore_search?resource_id=${fileId}&limit=5`
-      document.getElementById("sql-query").value = `https://test-data.technology.ca.gov/api/3/action/datastore_search_sql?sql=select * from "${fileId}" LIMIT 5`
+      document.getElementById("simple-query").value = `https://data.ca.gov/api/3/action/datastore_search?resource_id=${fileId}&limit=5`
+      document.getElementById("sql-query").value = `https://data.ca.gov/api/3/action/datastore_search_sql?sql=select * from "${fileId}" LIMIT 5`
       document.getElementById("odata-query").value = `https://test-data.technology.ca.gov/datastore/odata3.0/${fileId}`
     }
 

@@ -1,14 +1,14 @@
 export async function getServerSideProps(context) {
-  var apirequest = "https://test-data.technology.ca.gov/api/3/action/package_search?q="+context.query.q;
+  var apirequest = "https://data.ca.gov/api/3/action/package_search?q="+context.query.q;
 
   if ('format' in context.query) {
-    apirequest = "https://test-data.technology.ca.gov/api/3/action/resource_search?query=format:"+context.query.format
-    //apirequest = "https://test-data.technology.ca.gov/api/3/action/package_search?fq=(title:"+context.query.q.replace(/ /g, '-')+"%20AND%20resources:"+context.query.format.replace(/ /g, '-')+")";
+    apirequest = "https://data.ca.gov/api/3/action/resource_search?query=format:"+context.query.format
+    //apirequest = "https://data.ca.gov/api/3/action/package_search?fq=(title:"+context.query.q.replace(/ /g, '-')+"%20AND%20resources:"+context.query.format.replace(/ /g, '-')+")";
   }
 
 
   if ('sort' in context.query) {
-  apirequest = "https://test-data.technology.ca.gov/api/3/action/package_search?q="+context.query.q.replace(/ /g, '-')+"&sort="+context.query.sort;
+  apirequest = "https://data.ca.gov/api/3/action/package_search?q="+context.query.q.replace(/ /g, '-')+"&sort="+context.query.sort;
   }
 
    //pagination 
@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
     qpirequest = 
     page = {}
   }
-  const response = await fetch(apirequest).then((response) => response.json());
+  const response = await fetch(apirequest,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then((response) => response.json());
   
   //search results
   const resultsArray = []

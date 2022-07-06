@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useRouter } from 'next/router'
 
 export async function getServerSideProps(context) {
-  var apirequest = "https://test-data.technology.ca.gov/api/3/action/package_search?q="+context.query.q;
+  var apirequest = "https://data.ca.gov/api/3/action/package_search?q="+context.query.q;
   var thereWasAFilter = 0; // flag, did user select any filter?
   if ('topic' in context.query && context.query.topic.length>0) {
     let groups = context.query.topic.split(',');
@@ -109,7 +109,7 @@ export async function getServerSideProps(context) {
   //[0]previous, [1]current, [2]next, [3]total, [4]next 
 
 
-  const response = await fetch(apirequest).then((response) => response.json());
+  const response = await fetch(apirequest,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then((response) => response.json());
   pageData["total"].value = Math.ceil(parseInt(response.result.count) / 10);
 
   if (pageData["next"].value >= pageData["total"].value) {
@@ -198,12 +198,12 @@ const Results =(data)=>{
   var urlParamSort = (data.parameters.sort) ? "&sort=" + data.parameters.sort : "";
   useEffect(()=>{
     // grab lists on page load
-    fetch('https://test-data.technology.ca.gov/api/3/action/group_list').then(res=>res.json()).then(data=>setTopicList(data.result)).catch(error=>console.error(error))
-    fetch('https://test-data.technology.ca.gov/api/3/action/organization_list').then(res=>res.json()).then(data=>setPublisherList(data.result)).catch(error=>console.error(error))
-    fetch('https://test-data.technology.ca.gov/api/3/action/tag_list').then(res=>res.json()).then(data=>setTagList(data.result)).catch(error=>console.error(error))
+    fetch('https://data.ca.gov/api/3/action/group_list',{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(res=>res.json()).then(data=>setTopicList(data.result)).catch(error=>console.error(error))
+    fetch('https://data.ca.gov/api/3/action/organization_list'),{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}.then(res=>res.json()).then(data=>setPublisherList(data.result)).catch(error=>console.error(error))
+    fetch('https://data.ca.gov/api/3/action/tag_list',{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(res=>res.json()).then(data=>setTagList(data.result)).catch(error=>console.error(error))
 
     // get formats
-    fetch('https://test-data.technology.ca.gov/api/3/action/package_search?q=&rows=3000')
+    fetch('https://data.ca.gov/api/3/action/package_search?q=&rows=3000',{headers: {'User-Agent': 'NextGenAPI/0.0.1',}})
     .then(res=>res.json())
     .then(data=>{
       const dataSet = new Set();
