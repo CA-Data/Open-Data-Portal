@@ -1,4 +1,5 @@
 import Link from "next/link";
+import React, { useEffect } from 'react';
 
 export async function getServerSideProps(context) {
   function ValidateSize(FileSize) {
@@ -53,6 +54,7 @@ export async function getServerSideProps(context) {
   const tags = response.result.tags;
 
   const dataFiles = [];
+  
   const supportingFiles = [];
   for (let index = 0; index < response.result.resources.length; index++) {
     const date = new Date(response.result.resources[index].created);
@@ -132,6 +134,7 @@ export async function getServerSideProps(context) {
     "water":`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path fill="#fff" d="M1 1H49V49H1z"/><g fill="#046a99"><path d="M35 35a12 12 0 0 0-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2s-2.8-.5-4.1-1.2c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2v3.9A12 12 0 0 0 11 40c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Zm0-9c-2.6 0-4.3 1-5.8 1.7-1.3.6-2.4 1.2-4.1 1.2s-2.8-.5-4.1-1.2c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2v3.9c2.7 0 4.4-.9 5.9-1.6a7.6 7.6 0 0 1 8.2 0c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6a7.6 7.6 0 0 1 8.2 0c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Zm6-16a11.8 11.8 0 0 0-11.8 0c-1.3.6-2.4 1.1-4.1 1.1s-2.8-.5-4.1-1.2c-1.5-.7-3.2-1.6-6-1.6s-4.3.9-5.8 1.6c-1.3.7-2.4 1.2-4.1 1.2V15c2.7 0 4.4-.9 5.9-1.6 1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4a8 8 0 0 1-4.1-1Z" opacity=".5"/><path d="M35 17.2c-2.6 0-4.3.8-5.8 1.6a7.6 7.6 0 0 1-8.2 0c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6A7.6 7.6 0 0 1 5 20v3.9c2.7 0 4.4-.9 5.9-1.6 1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Z"/></g></svg>` 
   };
   var topicIcn = (response.result.groups[0] && response.result.groups[0].name && topicIconArray[response.result.groups[0].name]) ? topicIconArray[response.result.groups[0].name] : "";
+  console.log(dataFiles)
 
   return {
     props: {
@@ -149,6 +152,42 @@ export async function getServerSideProps(context) {
 }
 
 export default function dataSet(data) {
+  useEffect(() => {
+    //**-- api modal start
+    var modal = document.getElementById("myModal");
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    //add file id to api query inputs
+    function addFileId(fileId) {
+      document.getElementById("simple-query").value = `https://test-data.technology.ca.gov/api/3/action/datastore_search?resource_id=${fileId}&limit=5`
+      document.getElementById("sql-query").value = `https://test-data.technology.ca.gov/api/3/action/datastore_search_sql?sql=select * from "${fileId}" LIMIT 5`
+      document.getElementById("odata-query").value = `https://test-data.technology.ca.gov/datastore/odata3.0/${fileId}`
+    }
+
+    const apiButtons = document.querySelectorAll('.api-button');
+    apiButtons.forEach(el => el.addEventListener('click', event => {
+      var file_id = event.target.dataset.fileId;
+      var resource_name = event.target.dataset.resourceName;
+      addFileId(file_id)
+      document.getElementById("resource-name").innerHTML = resource_name
+      modal.style.display = "block";
+    }));
+
+    //copy inputs to clipboard
+    document.querySelectorAll('.copy-button').forEach(el => el.addEventListener('click', event => {
+      event.target.classList.add("copied");
+      event.target.parentNode.querySelectorAll('input')[0].select();
+      document.execCommand("copy");
+      setTimeout(() => {
+        event.target.classList.remove("copied");
+      }, "750")
+    }));
+    //api modal end --**
+  }, []);
+
   const date_created = new Date(data.data_object.result.metadata_created);
   const date_modified = new Date(data.data_object.result.metadata_modified);
   const options = {
@@ -265,10 +304,13 @@ export default function dataSet(data) {
                 }
               </p>
             </div>
-            <button className="btn-read-more">
+            {data.data_object.result.notes &&
+              <button className="btn-read-more">
               Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
-            </button>
-            <div className="data-files">
+              </button>
+            }
+            {data.dataFiles.length > 0 && 
+              <div className="data-files">
               <h2 className="h3">Data files</h2>
               <table className="data-files-table">
                 <thead>
@@ -329,122 +371,136 @@ export default function dataSet(data) {
                 </tbody>
               </table>
             </div>
-            <div className="supporting-files">
-              <h2 className="h3">Supporting files</h2>
-              <div className="shadow"></div>
-              <table className="supporting-files-table">
-                <thead>
-                  <tr>
-                    <th>Data title and description</th>
-                    <th>Access data</th>
-                    <th>File details</th>
-                    <th>Last updated</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.supportingFiles.map((dataset, index) => (
-                    <tr key={index}>
-                      <td>
-                        <p><strong>{dataset.name}</strong></p>
-                        {dataset.description &&
-                          <div className="resource-description line-clamp-1">
-                            <p>{dataset.description}</p>
-                            <button className="btn-read-more">
-                              Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
-                            </button>
-                          </div>
-                        }
-                      </td>
-                      <td>
-                        {
-                          data.previewableDataTypes.includes(dataset.format) &&
-                            <div><Link
-                              href={
-                                "/preview?name=" +
-                                data.parameters.name +
-                                "&id=" +
-                                dataset.id +
-                                "&rname=" +
-                                dataset.name +
-                                "&state=" +
-                                dataset.active
-                              }
-                              passHref
-                            >
-                            <a>Preview</a>
-                          </Link></div>
-                        }
-
-                      <button
-                        className="api-button"
-                        data-resource-name={dataset.name}
-                        data-file-id={dataset.id}
-                      >
-                      API
-                      </button>
-                      <br />
-                      <a href={dataset.url}>Download</a>
-                      </td>
-                      <td>
-                        {dataset.format}<br />
-                        {dataset.size}
-                      </td>
-                      <td>{dataset.created}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="additional-info">
-              <h2 className="h4">More details</h2>
-              <div className="additional-info-table">
-                <div className="row">
-                    <div className="column">
-                    <strong>Additional information</strong>
-                    </div>
-                    <div className="column">
+          }
+          { data.supportingFiles.length > 0 &&
+          
+          <div className="supporting-files">
+          <h2 className="h3">Supporting files</h2>
+          <div className="shadow"></div>
+          <table className="supporting-files-table">
+            <thead>
+              <tr>
+                <th>Data title and description</th>
+                <th>Access data</th>
+                <th>File details</th>
+                <th>Last updated</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.supportingFiles.map((dataset, index) => (
+                <tr key={index}>
+                  <td>
+                    <p><strong>{dataset.name}</strong></p>
+                    {dataset.description &&
                       <div className="resource-description line-clamp-1">
-                        <p>{data.data_object.result.additional_information ? data.data_object.result.additional_information: "N/A"}</p>
-                        
+                        <p>{dataset.description}</p>
                         <button className="btn-read-more">
                           Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
                         </button>
                       </div>
-                    </div>
-                </div>
+                    }
+                  </td>
+                  <td>
+                    {
+                      data.previewableDataTypes.includes(dataset.format) &&
+                        <div><Link
+                          href={
+                            "/preview?name=" +
+                            data.parameters.name +
+                            "&id=" +
+                            dataset.id +
+                            "&rname=" +
+                            dataset.name +
+                            "&state=" +
+                            dataset.active
+                          }
+                          passHref
+                        >
+                        <a>Preview</a>
+                      </Link></div>
+                    }
 
+                  <button
+                    className="api-button"
+                    data-resource-name={dataset.name}
+                    data-file-id={dataset.id}
+                  >
+                  API
+                  </button>
+                  <br />
+                  <a href={dataset.url}>Download</a>
+                  </td>
+                  <td>
+                    {dataset.format}<br />
+                    {dataset.size}
+                  </td>
+                  <td>{dataset.created}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+          }
+            <div className="additional-info">
+              <h2 className="h4">More details</h2>
+              <div className="additional-info-table">
+                {data.data_object.result.additional_information &&
+                  <div className="row">
+                      <div className="column">
+                      <strong>Additional information</strong>
+                      </div>
+                      <div className="column">
+                        <div className="resource-description line-clamp-1">
+                          <p>{data.data_object.result.additional_information ? data.data_object.result.additional_information: "N/A"}</p>
+                          <button className="btn-read-more">
+                            Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
+                          </button>
+                        </div>
+                      </div>
+                  </div>
+                }
+                
+                {data.data_object.result.geo_coverage &&
                 <div className="row">
                     <div className="column">
                     <strong>Geographic coverage location</strong>
                     </div>
                     <div className="column">
-                      <p>{data.data_object.result.geo_coverage ? data.data_object.result.geo_coverage: "N/A"}</p>
+                      <p>{data.data_object.result.geo_coverage}</p>
                     </div>
                 </div>
+                }
+                {data.data_object.result.granularity &&
                 <div className="row">
                     <div className="column">
                     <strong>Granularity</strong>
                     </div>
                     <div className="column">
-                      <p>{data.data_object.result.granularity ? data.data_object.result.granularity: "N/A"}</p>
+                      <p>{data.data_object.result.granularity}</p>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="column">
-                    <strong>Language</strong>
-                    </div>
-                    <div className="column">
-                      <p>{data.data_object.result.language ? data.data_object.result.language: "N/A"}</p>
-                    </div>
-                </div>
+                }
+                {data.data_object.result.language &&
+                  <div className="row">
+                      <div className="column">
+                      <strong>Language</strong>
+                      </div>
+                      <div className="column">
+                        <p>{data.data_object.result.language}</p>
+                      </div>
+                  </div>
+                }
+                {data.data_object.result.conformsTo &&
                 <div className="row">
                     <div className="column">
                     <strong>Data standard</strong>
                     </div>
                     <div className="column">
-                      <p>{data.data_object.result.conformsTo ? data.data_object.result.conformsTo: "N/A"}</p>
+                      <p>{data.data_object.result.conformsTo}</p>
                     </div>
                 </div>
+                }
+                {data.data_object.result.tags.length > 0 &&
                 <div className="row">
                     <div className="column">
                     <strong>Tags</strong>
@@ -459,6 +515,7 @@ export default function dataSet(data) {
                       ))}
                     </div>
                 </div>
+                }
               </div>
               {/*<table className="additional-info-table">
                 <tbody>
