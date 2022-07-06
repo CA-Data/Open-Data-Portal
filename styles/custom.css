@@ -17,7 +17,7 @@
   padding: 2rem 0 2rem 0;
 }
 
-.result-dataset-info > li {
+.result-dataset-info > li > strong {
   font-size: 18px;
   line-height: 32px;
 }
