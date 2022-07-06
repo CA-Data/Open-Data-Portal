@@ -185,7 +185,7 @@ const Results = (data) => {
   const [selectedTopics, setSelectedTopics] = useState([]);
   const [selectedPublishers, setSelectedPublishers] = useState([]);
   const [selectedFormats, setSelectedFormats] = useState([]);
-  const [selectedtags, setSelectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [reset, setReset] = useState(false);
   const [topicList, setTopicList] = useState(Object.entries(data.filters.result.facets.groups).sort((a, b) => a[1] > b[1] ? -1 : 1));
   const [publisherList, setPublisherList] = useState(Object.entries(data.filters.result.facets.organization).sort((a, b) => a[1] > b[1] ? -1 : 1));
@@ -226,7 +226,7 @@ const Results = (data) => {
   var urlParamSort = (dataState.parameters.sort) ? "&sort=" + dataState.parameters.sort : "";
 
   // UseEffects will fire when its corresponding array is updated. 
-  // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedtags)
+  // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedTags)
   // Each array will append a value to the url
   useEffect(() => {
     getFormattedData(router).then(response => setDataState(response.props));
@@ -285,16 +285,16 @@ const Results = (data) => {
   useEffect(() => {
     if (!reset) {
       const url = new URL(window.location.href);
-      if (selectedtags.length == 0 || !url.searchParams.get('tag')) {
+      if (selectedTags.length == 0 || !url.searchParams.get('tag')) {
         url.searchParams.delete('tag')
         router.push(url, null, { shallow: true });
       }
-      if (selectedtags.length >= 1) {
-        url.searchParams.set('tag', selectedtags)
+      if (selectedTags.length >= 1) {
+        url.searchParams.set('tag', selectedTags)
         router.push(url, null, { shallow: true });
       }
     }
-  }, [selectedtags])
+  }, [selectedTags])
 
   // Persist selected checkboxes on page refresh
   useEffect(() => {
@@ -357,6 +357,13 @@ const Results = (data) => {
 
   // End of UseEffect section **********************************************
 
+  const displayTitle = () => {
+    if (selectedTopics.length > 0 || selectedPublishers.length > 0 || selectedFormats.length > 0 || selectedTags.length > 0 || dataState.parameters.q.length > 0) {
+      return 'Selected results';
+    }
+    return 'All datasets';
+  }
+
   // resetSearch resets the page
   const resetSearch = async () => {
     setFormatSvg('svg-rotate-down');       // resets any dropdowns to default state
@@ -374,11 +381,24 @@ const Results = (data) => {
     router.push('?q=', null, { shallow: true });                    // and resets search results
   }
 
-  // Format string to sentence case
-  const formatString = (str) => {
+  const formatSentenceCase = (str) => {
     let tempStr = str.charAt(0).toUpperCase().concat(str.substring(1)).replace(/-/g, ' ');
     return tempStr;
   }
+
+
+  const formatTitleCase = (str) => {
+    const tempStr = str.charAt(0).toUpperCase().concat(str.substring(1)).replace(/-/g, ' ');
+
+    const words = tempStr.split(" ");
+
+    for (let i = 0; i < words.length; i++) {
+      words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+    }
+
+    return words.join(" ");
+  }
+
   return (
     <>
       <main id="body-content" className="cagov-main">
@@ -411,7 +431,7 @@ const Results = (data) => {
                               setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0] + '-topic'}>{formatString(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({topic[1]})</span>
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0] + '-topic'}>{formatSentenceCase(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({topic[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -446,7 +466,7 @@ const Results = (data) => {
                               setSelectedPublishers(selectedPublishers.filter(item => item != publisher[0].toLowerCase()))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${publisher[0]}-publisher`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={publisher[0] + "-publisher"}>{formatString(publisher[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({publisher[1]})</span>
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={publisher[0] + "-publisher"}>{formatTitleCase(publisher[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({publisher[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -482,7 +502,7 @@ const Results = (data) => {
                             }
                           }}
                             style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${format[0]}-format`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={format[0] + "-format"}>{formatString(format[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({format[1]})</span>
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={format[0] + "-format"}>{formatSentenceCase(format[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({format[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -511,13 +531,13 @@ const Results = (data) => {
                         <li key={tag[0]} style={{ display: 'flex', gap: '10px' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
-                              setSelectedTags([...selectedtags, tag[0]])
+                              setSelectedTags([...selectedTags, tag[0]])
                             }
                             else {
-                              setSelectedTags(selectedtags.filter(item => item != tag[0]))
+                              setSelectedTags(selectedTags.filter(item => item != tag[0]))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${tag[0]}-tag`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={tag[0] + "-tag"}>{formatString(tag[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({tag[1]})</span>
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={tag[0] + "-tag"}>{formatSentenceCase(tag[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({tag[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -550,7 +570,7 @@ const Results = (data) => {
             </div>
           </div>
           <div className="cagov-content content-cell">
-            <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>All datasets</h1>
+            <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>{displayTitle()}</h1>
             <div className="search-container grid-search">
               <form className="site-search" action="/datasets">
                 <span className="sr-only" id="SearchInput">

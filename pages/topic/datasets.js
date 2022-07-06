@@ -402,6 +402,13 @@ const Results = (data) => {
 
   // End of UseEffect section **********************************************
 
+  const displayTitle = () => {
+    if (selectedTopics.length > 0 || selectedPublishers.length > 0 || selectedFormats.length > 0 || selectedTags.length > 0 || dataState.parameters.q.length > 0) {
+      return 'Selected results';
+    }
+    return 'All datasets';
+  }
+
   // resetSearch resets the page
   const resetSearch = async () => {
     setFormatSvg('svg-rotate-down');       // resets any dropdowns to default state
