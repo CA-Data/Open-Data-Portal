@@ -45,7 +45,7 @@ export async function getServerSideProps() {
   };
 
   async function archive() {
-    const response = await fetch('https://test-data.technology.ca.gov/api/action/package_search?qf=water&facet.field=[%22groups%22]&facet.limit=10&rows=0',{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json());
+    const response = await fetch('https://data.ca.gov/api/action/package_search?qf=water&facet.field=[%22groups%22]&facet.limit=10&rows=0',{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json());
     return response.result.search_facets.groups.items
   }
   const topicArray = await buildTopics()
