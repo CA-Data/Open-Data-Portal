@@ -452,7 +452,7 @@ const Results = (data) => {
                               setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={topic[0]}>{formatString(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0]}>{formatString(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -487,7 +487,7 @@ const Results = (data) => {
                               setSelectedPublishers(selectedPublishers.filter(item => item != publisher[0].toLowerCase()))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${publisher[0]}-publisher`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={publisher[0]}>{formatString(publisher[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({publisher[1]})</span>
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={publisher[0]}>{formatString(publisher[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({publisher[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -523,7 +523,7 @@ const Results = (data) => {
                             }
                           }}
                             style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${format[0]}-format`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={format[0]}>{formatString(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={format[0]}>{formatString(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -558,7 +558,7 @@ const Results = (data) => {
                               setSelectedTags(selectedtags.filter(item => item != tag[0]))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${tag[0]}-tag`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1' }} htmlFor={tag[0]}>{formatString(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={tag[0]}>{formatString(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -681,13 +681,13 @@ const Results = (data) => {
                 <input type="hidden" name="tag" value={dataState.parameters.tag}></input>
                 <input type="hidden" name="format" value={dataState.parameters.format}></input>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <label htmlFor="sort">Sort by</label>
+                  <label htmlFor="sort" style={{ fontSize: '18px', lineHeight: '32px' }}>Sort by</label>
                   <BasicSelect submit={submit} />
                 </div>
               </form>
             </div>
             <div>
-              <h2>{dataState.matches > 1 ? dataState.matches + ' matches' : dataState.matches + ' match'} </h2>
+              <h2>{dataState.matches > 1 ? dataState.matches + ' datasets' : dataState.matches + ' dataset'} </h2>
             </div>
             <div className="result-page">
               {dataState.allResults.map((dataset, index) => (
