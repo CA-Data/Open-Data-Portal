@@ -151,7 +151,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default function dataSet(data) {
+export default function DataSet(data) {
   useEffect(() => {
     //**-- api modal start
     var modal = document.getElementById("myModal");

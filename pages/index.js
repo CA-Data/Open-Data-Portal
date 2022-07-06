@@ -2,7 +2,7 @@ import { margin } from "@mui/system";
 import Image from "next/image";
 import Link from "next/link";
 
-export async function getServerSideProps() {
+export async function getServerSideProps({req, res}) {
   // Saving for later.. current process will be manual..
   // data.recent.map((dataset, index) => (
   //              <a key={index} href={"/dataset?name=" + dataset.data.package.name} className="no-deco cagov-card">

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Link from "next/link";
 
-export default function preview(dataset) {
+export default function Preview(dataset) {
   useEffect(() => {
     function showBanner() {
       const banner = document.getElementById('error-banner')
