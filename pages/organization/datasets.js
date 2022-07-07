@@ -466,7 +466,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={topicSvg != 'svg-rotate-up' ? true : false} style={{ cursor: 'default' }}>
                       {topicList.slice(0, topicShowMore).map((topic, index) => (
-                        <li key={topic[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <li key={topic[0]} style={{ display: 'flex', gap: '10px' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedTopics([...selectedTopics, topic[0].toLowerCase()])
@@ -501,7 +501,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={publisherSvg != 'svg-rotate-up' ? true : false}>
                       {publisherList.slice(0, publisherShowMore).map((publisher, index) => (
-                        <li key={publisher[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <li key={publisher[0]} style={{ display: 'flex', gap: '10px' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedPublishers([...selectedPublishers, publisher[0].toLowerCase()])
@@ -536,7 +536,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={formatSvg != 'svg-rotate-up' ? true : false}>
                       {formatList.slice(0, formatShowMore).map((format, index) => (
-                        <li key={format[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <li key={format[0]} style={{ display: 'flex', gap: '10px' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedFormats([...selectedFormats, format[0].toLowerCase()])
@@ -572,7 +572,7 @@ const Results = (data) => {
                     </div>
                     <ul hidden={tagSvg != 'svg-rotate-up' ? true : false}>
                       {tagList.slice(0, tagShowMore).map((tag, index) => (
-                        <li key={tag[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <li key={tag[0]} style={{ display: 'flex', gap: '10px' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedTags([...selectedtags, tag[0]])
@@ -648,7 +648,7 @@ const Results = (data) => {
                 </div>
               </div>
             }
-            <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>{areObjectKeysEmpty(dataState.parameters) ? 'All datasets' : 'Selected result'}</h1>
+            <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>{areObjectKeysEmpty(dataState.parameters) ? 'All datasets' : 'Search results'}</h1>
             <div className="search-container grid-search">
               <form className="site-search" action="/datasets">
                 <span className="sr-only" id="SearchInput">
