@@ -309,10 +309,10 @@ export default function dataSet(data) {
               Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
               </button>
             }
-            {data.dataFiles.length > 0 && 
-              <div className="data-files">
-              <h2 className="h3">Data files</h2>
-              <table className="data-files-table">
+            <div className="data-files">
+            <h2 className="h3">Data files</h2>
+            {data.dataFiles.length > 0
+            ? <table className="data-files-table">
                 <thead>
                   <tr>
                     <th>Data title and description</th>
@@ -370,8 +370,9 @@ export default function dataSet(data) {
                   ))}
                 </tbody>
               </table>
-            </div>
+            : <div style={{ fontWeight: 'bold', fontSize: '1.125rem' }}>No files available</div>
           }
+          </div>
           { data.supportingFiles.length > 0 &&
           
           <div className="supporting-files">
