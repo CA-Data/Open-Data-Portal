@@ -665,7 +665,7 @@ const Results = (data) => {
             {/* Topic ------------------------------------------------------------------------------------------------------------------------ */}
 
             <div className="search-container grid-search">
-              <form className="site-search" action="/datasets">
+              <form className="site-search" action={`/topic/datasets`}>
                 <span className="sr-only" id="SearchInput">
                   Dataset search
                 </span>
@@ -679,6 +679,7 @@ const Results = (data) => {
                     className="search-textfield"
                     defaultValue={dataState.parameters.q}
                   />
+                  <input type="hidden" name="topic" value={dataState.parameters.topic} />
                   <button
                     style={{
                       outlineOffset: -2,
