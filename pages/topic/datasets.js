@@ -659,7 +659,7 @@ const Results = (data) => {
 
             {data.topicDisplayName
               ? <h1 className="h3" style={{ marginTop: 0, color: '#034A6B' }}>Search {data.topicDisplayName} datasets</h1>
-              : <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>{areObjectKeysEmpty(dataState.parameters) ? 'All datasets' : 'Selected result'}</h1>
+              : <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>{areObjectKeysEmpty(dataState.parameters) ? 'All datasets' : 'Search results'}</h1>
             }
 
             {/* Topic ------------------------------------------------------------------------------------------------------------------------ */}

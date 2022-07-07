@@ -574,7 +574,7 @@ const Results = (data) => {
             </div>
           </div>
           <div className="cagov-content content-cell">
-            <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>{areObjectKeysEmpty(dataState.parameters) ? 'All datasets' : 'Selected result'}</h1>
+            <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>{areObjectKeysEmpty(dataState.parameters) ? 'All datasets' : 'Search results'}</h1>
             <div className="search-container grid-search">
               <form className="site-search" action="/datasets">
                 <span className="sr-only" id="SearchInput">
