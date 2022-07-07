@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export async function getServerSideProps({req, res}) {
+export async function getStaticProps({req, res}) {
   // Saving for later.. current process will be manual..
   // data.recent.map((dataset, index) => (
   //              <a key={index} href={"/dataset?name=" + dataset.data.package.name} className="no-deco cagov-card">
@@ -76,6 +76,8 @@ export async function getServerSideProps({req, res}) {
   
   return {
     props: {topics: topicArray},
+    revalidate: 300, // In seconds
+
   }
 }
 export default function Home(data) {

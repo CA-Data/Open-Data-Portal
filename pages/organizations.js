@@ -16,7 +16,7 @@ export async function getStaticProps() {
     props: {
       org: organizations,
     },
-    revalidate: 10, // In seconds
+    revalidate: 60, // In seconds
   };
 }
 
