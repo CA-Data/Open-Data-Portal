@@ -237,10 +237,10 @@ const Results = (data) => {
   const [tagList, setTagList] = useState(Object.entries(data.filters.result.facets.tags).sort((a, b) => a[1] > b[1] ? -1 : 1));
   const [formatList, setFormatList] = useState(Object.entries(data.filters.result.facets.res_format).sort((a, b) => a[1] > b[1] ? -1 : 1));
   const [dataState, setDataState] = useState(data);
-  const [topicShowMore, setTopicShowMore] = useState(4);
-  const [publisherShowMore, setPublisherShowMore] = useState(4);
-  const [tagShowMore, setTagShowMore] = useState(4);
-  const [formatShowMore, setFormatShowMore] = useState(4);
+  const [topicShowMore, setTopicShowMore] = useState(5);
+  const [publisherShowMore, setPublisherShowMore] = useState(5);
+  const [tagShowMore, setTagShowMore] = useState(5);
+  const [formatShowMore, setFormatShowMore] = useState(5);
   const router = useRouter();
   if (typeof window === 'object') {
     // Check if document is finally loaded
@@ -402,6 +402,14 @@ const Results = (data) => {
 
   // End of UseEffect section **********************************************
 
+  const areObjectKeysEmpty = (obj) => {
+    for (var key in obj) {
+      if (obj[key] !== null && obj[key] != "")
+        return false;
+    }
+    return true;
+  }
+
   // resetSearch resets the page
   const resetSearch = async () => {
     setFormatSvg('svg-rotate-down');       // resets any dropdowns to default state
@@ -412,17 +420,32 @@ const Results = (data) => {
     setSelectedPublishers([]);             // *
     setSelectedFormats([]);                // *
     setSelectedTags([]);                   // *
-    setTopicShowMore(4);                   // *
-    setPublisherShowMore(4);               // *
-    setTagShowMore(4);                     // *
-    setFormatShowMore(4);                  // *
+    setTopicShowMore(5);                   // *
+    setPublisherShowMore(5);               // *
+    setTagShowMore(5);                     // *
+    setFormatShowMore(5);                  // *
     router.push('?q=', null, { shallow: true });                    // and resets search results
   }
 
-  // Format string to sentence case
-  const formatString = (str) => {
+  const formatSentenceCase = (str) => {
+    if (str.includes('covid')) {
+      return 'COVID-19';
+    }
+
     let tempStr = str.charAt(0).toUpperCase().concat(str.substring(1)).replace(/-/g, ' ');
     return tempStr;
+  }
+
+  const formatTitleCase = (str) => {
+    const tempStr = str.charAt(0).toUpperCase().concat(str.substring(1)).replace(/-/g, ' ');
+    const words = tempStr.split(" ");
+
+    for (let i = 0; i < words.length; i++) {
+      if (words[i] !== 'of' && words[i] !== 'and') {
+        words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+      }
+    }
+    return words.join(" ");
   }
 
   return (
@@ -443,13 +466,13 @@ const Results = (data) => {
                 </div>
                 <ul className="search-filters align">
                   <li style={{ color: "#4B4B4B" }} className="filter-topic">
-                    <div onClick={() => { topicSvg == 'svg-rotate-up' ? setTopicSvg('svg-rotate-down') : setTopicSvg('svg-rotate-up'); setTopicShowMore(4) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
+                    <div onClick={() => { topicSvg == 'svg-rotate-up' ? setTopicSvg('svg-rotate-down') : setTopicSvg('svg-rotate-up'); setTopicShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={topicSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Topic</span>
                     </div>
                     <ul hidden={topicSvg != 'svg-rotate-up' ? true : false} style={{ cursor: 'default' }}>
                       {topicList.slice(0, topicShowMore).map((topic, index) => (
-                        <li key={topic[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <li key={topic[0]} style={{ display: 'flex', gap: '10px' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedTopics([...selectedTopics, topic[0].toLowerCase()])
@@ -458,18 +481,18 @@ const Results = (data) => {
                               setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0]}>{formatString(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0]}>{formatSentenceCase(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={topicList.length <= topicShowMore} onClick={() => topicShowMore > topicList.length ? '' : setTopicShowMore(topicShowMore + 5)} style={{ cursor: 'pointer' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px', lineHeight: '32px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
                           </div>
                         </button>
-                        <button hidden={!(topicShowMore > 4)} onClick={() => setTopicShowMore(4)} style={{ cursor: 'pointer' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px', lineHeight: '32px' }}>
+                        <button hidden={!(topicShowMore > 5)} onClick={() => setTopicShowMore(5)} style={{ cursor: 'pointer' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
                           </div>
@@ -478,13 +501,13 @@ const Results = (data) => {
                     </ul>
                   </li>
                   <li style={{ color: "#4B4B4B" }} className="filter-publisher">
-                    <div onClick={() => { publisherSvg == 'svg-rotate-up' ? setPublisherSvg('svg-rotate-down') : setPublisherSvg('svg-rotate-up'); setPublisherShowMore(4) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
+                    <div onClick={() => { publisherSvg == 'svg-rotate-up' ? setPublisherSvg('svg-rotate-down') : setPublisherSvg('svg-rotate-up'); setPublisherShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={publisherSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontWeight: 'bold', fontSize: '18px', lineHeight: '32px', }}>Publisher</span>
                     </div>
                     <ul hidden={publisherSvg != 'svg-rotate-up' ? true : false}>
                       {publisherList.slice(0, publisherShowMore).map((publisher, index) => (
-                        <li key={publisher[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <li key={publisher[0]} style={{ display: 'flex', gap: '10px' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedPublishers([...selectedPublishers, publisher[0].toLowerCase()])
@@ -493,18 +516,18 @@ const Results = (data) => {
                               setSelectedPublishers(selectedPublishers.filter(item => item != publisher[0].toLowerCase()))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${publisher[0]}-publisher`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={publisher[0]}>{formatString(publisher[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({publisher[1]})</span>
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={publisher[0]}>{formatTitleCase(publisher[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({publisher[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={publisherList.length <= publisherShowMore} onClick={() => publisherShowMore > publisherList.length ? '' : setPublisherShowMore(publisherShowMore + 5)} style={{ cursor: 'pointer' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px', lineHeight: '32px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
                           </div>
                         </button>
-                        <button hidden={!(publisherShowMore > 4)} onClick={() => setPublisherShowMore(4)} style={{ cursor: 'pointer' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '18px', lineHeight: '32px' }}>
+                        <button hidden={!(publisherShowMore > 5)} onClick={() => setPublisherShowMore(5)} style={{ cursor: 'pointer' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
                           </div>
@@ -513,13 +536,13 @@ const Results = (data) => {
                     </ul>
                   </li>
                   <li style={{ color: "#4B4B4B" }} className="filter-format">
-                    <div onClick={() => { formatSvg == 'svg-rotate-up' ? setFormatSvg('svg-rotate-down') : setFormatSvg('svg-rotate-up'); setFormatShowMore(4) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
+                    <div onClick={() => { formatSvg == 'svg-rotate-up' ? setFormatSvg('svg-rotate-down') : setFormatSvg('svg-rotate-up'); setFormatShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={formatSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontWeight: 'bold', fontSize: '18px', lineHeight: '32px', }}>Format</span>
                     </div>
                     <ul hidden={formatSvg != 'svg-rotate-up' ? true : false}>
                       {formatList.slice(0, formatShowMore).map((format, index) => (
-                        <li key={format[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <li key={format[0]} style={{ display: 'flex', gap: '10px' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedFormats([...selectedFormats, format[0].toLowerCase()])
@@ -529,7 +552,7 @@ const Results = (data) => {
                             }
                           }}
                             style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${format[0]}-format`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1', lineHeight: '28px' }} htmlFor={format[0]}>{formatString(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1', lineHeight: '28px' }} htmlFor={format[0]}>{formatSentenceCase(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -539,7 +562,7 @@ const Results = (data) => {
                             More
                           </div>
                         </button>
-                        <button hidden={!(formatShowMore > 4)} onClick={() => setFormatShowMore(4)} style={{ cursor: 'pointer' }}>
+                        <button hidden={!(formatShowMore > 5)} onClick={() => setFormatShowMore(5)} style={{ cursor: 'pointer' }}>
                           <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
@@ -549,13 +572,13 @@ const Results = (data) => {
                     </ul>
                   </li>
                   <li style={{ color: "#4B4B4B" }} className="filter-tag">
-                    <div onClick={() => { tagSvg == 'svg-rotate-up' ? setTagSvg('svg-rotate-down') : setTagSvg('svg-rotate-up'); setTagShowMore(4) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
+                    <div onClick={() => { tagSvg == 'svg-rotate-up' ? setTagSvg('svg-rotate-down') : setTagSvg('svg-rotate-up'); setTagShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={tagSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontWeight: 'bold', fontSize: '18px', lineHeight: '32px' }}>Tag</span>
                     </div>
                     <ul hidden={tagSvg != 'svg-rotate-up' ? true : false}>
                       {tagList.slice(0, tagShowMore).map((tag, index) => (
-                        <li key={tag[0]} style={{ display: 'flex', alignItems: 'baseline' }}>
+                        <li key={tag[0]} style={{ display: 'flex', gap: '10px' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedTags([...selectedtags, tag[0]])
@@ -564,7 +587,7 @@ const Results = (data) => {
                               setSelectedTags(selectedtags.filter(item => item != tag[0]))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${tag[0]}-tag`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1', lineHeight: '28px' }} htmlFor={tag[0]}>{formatString(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1', lineHeight: '28px' }} htmlFor={tag[0]}>{formatSentenceCase(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -574,7 +597,7 @@ const Results = (data) => {
                             More
                           </div>
                         </button>
-                        <button hidden={!(tagShowMore > 4)} onClick={() => setTagShowMore(4)} style={{ cursor: 'pointer' }}>
+                        <button hidden={!(tagShowMore > 5)} onClick={() => setTagShowMore(5)} style={{ cursor: 'pointer' }}>
                           <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
@@ -636,7 +659,7 @@ const Results = (data) => {
 
             {data.topicDisplayName
               ? <h1 className="h3" style={{ marginTop: 0, color: '#034A6B' }}>Search {data.topicDisplayName} datasets</h1>
-              : <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>Search results</h1>
+              : <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>{areObjectKeysEmpty(dataState.parameters) ? 'All datasets' : 'Selected result'}</h1>
             }
 
             {/* Topic ------------------------------------------------------------------------------------------------------------------------ */}
