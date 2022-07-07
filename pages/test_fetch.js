@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export async function getServerSideProps() {
     const topicArray = []
-    const response = await fetch('https://data.ca.gov/api/3/action/organization_list',{headers: {'User-Agent': 'NextGenAPI/0.0.1',}})
+    const response = await fetch('https://test-data.technology.ca.gov/api/3/action/organization_list',{headers: {'User-Agent': 'NextGenAPI/0.0.1',}})
     .then(async response => {
         if (!response.ok) {
             const text = await response.text();

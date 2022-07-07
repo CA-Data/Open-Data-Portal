@@ -18,20 +18,20 @@ export async function getServerSideProps({req, res}) {
   //                </svg>
   //              </a> 
   async function recentDatasets() {
-    const response = await fetch('https://data.ca.gov/api/3/action/recently_changed_packages_activity_list',{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json());
+    const response = await fetch('https://test-data.technology.ca.gov/api/3/action/recently_changed_packages_activity_list',{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json());
     return response.result
   }
   async function buildTopics() {
     const topicArray = []
 
-    const response = await fetch('https://data.ca.gov/api/3/action/group_list',{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json());
+    const response = await fetch('https://test-data.technology.ca.gov/api/3/action/group_list',{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json());
     const group_array = await response.result
     
     for (let index = 0; index < group_array.length; index++) {
       const topics = {}
       const groupName = group_array[index]
 
-      const res =  await fetch('https://data.ca.gov/api/3/action/group_show?id='+groupName,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}})
+      const res =  await fetch('https://test-data.technology.ca.gov/api/3/action/group_show?id='+groupName,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}})
 
       const data =  await res.json();
       const groupTitle =  data.result.title.replace(" Resources", " resources").replace(" Demographics", " demographics").replace(" Human Services", " human services");
@@ -50,7 +50,7 @@ export async function getServerSideProps({req, res}) {
 
   async function archive() {
 
-    const response = await fetch('https://data.ca.gov/api/action/package_search?qf=water&facet.field=[%22groups%22]&facet.limit=10&rows=0',{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json());
+    const response = await fetch('https://test-data.technology.ca.gov/api/action/package_search?qf=water&facet.field=[%22groups%22]&facet.limit=10&rows=0',{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json());
     return response.result.search_facets.groups.items
   }
   const topicArray = await buildTopics()

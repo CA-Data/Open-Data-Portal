@@ -6,7 +6,7 @@ export async function getServerSideProps(context) {
 }
 
 const getFormattedData = async (context) => {
-  var apirequest = "https://data.ca.gov/api/3/action/package_search?q=" + context.query.q;
+  var apirequest = "https://test-data.technology.ca.gov/api/3/action/package_search?q=" + context.query.q;
   var thereWasAFilter = 0; // flag, did user select any filter?
   if ('topic' in context.query && context.query.topic.length > 0) {
     let groups = context.query.topic.split(',');
@@ -128,7 +128,7 @@ const getFormattedData = async (context) => {
 
   // Getting Filters
 
-  const filters = await fetch(`https://data.ca.gov/api/3/action/package_search?${apirequest.split('?')[1]}&facet.field=["groups","tags","organization","res_format"]&rows=0`,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json()).catch(error => console.log(error))
+  const filters = await fetch(`https://test-data.technology.ca.gov/api/3/action/package_search?${apirequest.split('?')[1]}&facet.field=["groups","tags","organization","res_format"]&rows=0`,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json()).catch(error => console.log(error))
 
   //search results
   const resultsArray = []
