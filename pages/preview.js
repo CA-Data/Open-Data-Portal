@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
   }
 
   async function buildTable(resourceId) {
-    const response = await fetch('https://test-data.technology.ca.gov/api/3/action/datastore_search?resource_id='+resourceId,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json());
+    const response = await fetch('https://data.ca.gov/api/3/action/datastore_search?resource_id='+resourceId,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json());
     const columns = []
     for (const key in response.result.fields) {
       if (key > 0) {
@@ -45,8 +45,8 @@ export async function getServerSideProps(context) {
     return {columns, rows}
   }
 
-  const datasetResponse = await fetch("https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id="+context.query.name,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then((response) => response.json());
-  //https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=ground-water-water-quality-results
+  const datasetResponse = await fetch("https://data.ca.gov/api/3/action/package_show?name_or_id="+context.query.name,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then((response) => response.json());
+  //https://data.ca.gov/api/3/action/package_show?name_or_id=ground-water-water-quality-results
 
 
   const options = {year: "numeric", month: "long", day: "numeric"};
@@ -81,7 +81,7 @@ export async function getServerSideProps(context) {
   }
 
   /* Finds the right resource file */
-  const response = await fetch('https://test-data.technology.ca.gov/api/3/action/datastore_search?resource_id='+context.query.id,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json());
+  const response = await fetch('https://data.ca.gov/api/3/action/datastore_search?resource_id='+context.query.id,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json());
   tableData = {
     columns: [],
     rows: []
@@ -233,78 +233,87 @@ export default function Preview(dataset) {
             <ul className="input-group">
               <li>
                 <label>Simple query</label>
-                <input id="simple-query" type="text" value="" readOnly />
-                <button className="copy-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="19"
-                    height="22"
-                    fill="none"
-                    viewBox="0 0 19 22"
-                  >
-                    <g clipPath="url(#clip0_425_18691)">
-                      <path
-                        fill="#4B4B4B"
-                        d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
-                      ></path>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_425_18691">
-                        <path fill="#fff" d="M0 0H19V22H0z"></path>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </button>
+                <div className="group">
+                  <input id="simple-query" type="text" value="" readOnly />
+                  <button className="copy-button">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="19"
+                      height="22"
+                      fill="none"
+                      viewBox="0 0 19 22"
+                    >
+                      <g clipPath="url(#clip0_425_18691)">
+                        <path
+                          fill="#4B4B4B"
+                          d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_425_18691">
+                          <path fill="#fff" d="M0 0H19V22H0z"></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </button>
+                </div>
+                
               </li>
               <li>
                 <label>SQL query</label>
-                <input id="sql-query" type="text" value="" readOnly />
-                <button className="copy-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="19"
-                    height="22"
-                    fill="none"
-                    viewBox="0 0 19 22"
-                  >
-                    <g clipPath="url(#clip0_425_18691)">
-                      <path
-                        fill="#4B4B4B"
-                        d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
-                      ></path>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_425_18691">
-                        <path fill="#fff" d="M0 0H19V22H0z"></path>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </button>
+                <div className="group">
+                  <input id="sql-query" type="text" value="" readOnly />
+                  <button className="copy-button">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="19"
+                      height="22"
+                      fill="none"
+                      viewBox="0 0 19 22"
+                    >
+                      <g clipPath="url(#clip0_425_18691)">
+                        <path
+                          fill="#4B4B4B"
+                          d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_425_18691">
+                          <path fill="#fff" d="M0 0H19V22H0z"></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </button>
+                </div>
+                
               </li>
               <li>
                 <label>OData query</label>
-                <input id="odata-query" type="text" value="" readOnly />
-                <button className="copy-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="19"
-                    height="22"
-                    fill="none"
-                    viewBox="0 0 19 22"
-                  >
-                    <g clipPath="url(#clip0_425_18691)">
-                      <path
-                        fill="#4B4B4B"
-                        d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
-                      ></path>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_425_18691">
-                        <path fill="#fff" d="M0 0H19V22H0z"></path>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </button>
+                <div className="group">
+                  <input id="odata-query" type="text" value="" readOnly />
+                  <button className="copy-button">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="19"
+                      height="22"
+                      fill="none"
+                      viewBox="0 0 19 22"
+                    >
+                      <g clipPath="url(#clip0_425_18691)">
+                        <path
+                          fill="#4B4B4B"
+                          d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_425_18691">
+                          <path fill="#fff" d="M0 0H19V22H0z"></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </button>
+                </div>
+                
               </li>
             </ul>
           </div>
