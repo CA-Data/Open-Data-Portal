@@ -425,19 +425,22 @@ const Results = (data) => {
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Topic</span>
                     </div>
                     <ul hidden={topicSvg != 'svg-rotate-up' ? true : false} style={{ cursor: 'default' }}>
-                      {topicList.slice(0, topicShowMore).map((topic, index) => (
-                        <li key={topic[0]} style={{ display: 'flex', gap: '10px' }}>
-                          <input onChange={(e) => {
-                            if (e.target.checked) {
-                              setSelectedTopics([...selectedTopics, topic[0].toLowerCase()])
-                            }
-                            else {
-                              setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
-                            }
-                          }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0] + '-topic'}>{formatSentenceCase(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({topic[1]})</span>
-                        </li>
-                      ))}
+                      {topicList.slice(0, topicShowMore)
+                        .filter(item => item[0] !== 'javiertest')
+                        .map((topic, index) => (
+                          <li key={topic[0]} style={{ display: 'flex', gap: '10px' }}>
+                            <input onChange={(e) => {
+                              if (e.target.checked) {
+                                setSelectedTopics([...selectedTopics, topic[0].toLowerCase()])
+                              }
+                              else {
+                                setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
+                              }
+                            }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
+                            <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0] + '-topic'}>{formatSentenceCase(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({topic[1]})</span>
+                          </li>
+                        )
+                        )}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={topicList.length <= topicShowMore} onClick={() => topicShowMore > topicList.length ? '' : setTopicShowMore(topicShowMore + 5)} style={{ cursor: 'pointer' }}>
                           <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
