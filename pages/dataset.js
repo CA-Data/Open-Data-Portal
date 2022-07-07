@@ -27,13 +27,12 @@ export async function getServerSideProps(context) {
 
   const name = context.query.name;
   const response = await fetch(
-    "https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=" + name,
+    "https://data.ca.gov/api/3/action/package_show?name_or_id=" + name,
     { headers: {
         'User-Agent': 'NextGenAPI/0.0.1',
       }
     }).then((response) => response.json());
-
-  var groups = response.result.groups;
+  var groups = response.result.groups ?? [];
   if (groups.length == 0) {
     groups = [
       {
@@ -129,7 +128,6 @@ export async function getServerSideProps(context) {
     "water":`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path fill="#fff" d="M1 1H49V49H1z"/><g fill="#046a99"><path d="M35 35a12 12 0 0 0-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2s-2.8-.5-4.1-1.2c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2v3.9A12 12 0 0 0 11 40c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Zm0-9c-2.6 0-4.3 1-5.8 1.7-1.3.6-2.4 1.2-4.1 1.2s-2.8-.5-4.1-1.2c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2v3.9c2.7 0 4.4-.9 5.9-1.6a7.6 7.6 0 0 1 8.2 0c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6a7.6 7.6 0 0 1 8.2 0c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Zm6-16a11.8 11.8 0 0 0-11.8 0c-1.3.6-2.4 1.1-4.1 1.1s-2.8-.5-4.1-1.2c-1.5-.7-3.2-1.6-6-1.6s-4.3.9-5.8 1.6c-1.3.7-2.4 1.2-4.1 1.2V15c2.7 0 4.4-.9 5.9-1.6 1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4a8 8 0 0 1-4.1-1Z" opacity=".5"/><path d="M35 17.2c-2.6 0-4.3.8-5.8 1.6a7.6 7.6 0 0 1-8.2 0c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6A7.6 7.6 0 0 1 5 20v3.9c2.7 0 4.4-.9 5.9-1.6 1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Z"/></g></svg>` 
   };
   var topicIcn = (response.result.groups[0] && response.result.groups[0].name && topicIconArray[response.result.groups[0].name]) ? topicIconArray[response.result.groups[0].name] : "";
-  console.log(dataFiles)
 
   return {
     props: {
@@ -147,7 +145,23 @@ export async function getServerSideProps(context) {
 }
 
 export default function DataSet(data) {
+
   useEffect(() => {
+    console.log('running useEffect');
+    /* needs testing
+    document.querySelectorAll('.btn-read-more').forEach(el => el.addEventListener('click', event => {
+      //event.target.parentNode.querySelectorAll('p')[0].classList.toggle('expanded')
+      if (event.target.parentNode.querySelectorAll('p')[0].classList.contains("expanded")) {
+        event.target.parentNode.querySelectorAll('p')[0].classList.remove('expanded')
+        console.log(event.target.parentNode.querySelectorAll('p')[0].classList)
+        event.target.innerHTML = `Read less <span class="caret rotate-180"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12" style="margin-left: 0.5rem;transform: rotate(180deg);"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>`;
+      } else {
+        event.target.parentNode.querySelectorAll('p')[0].classList.add('expanded')
+        console.log(event.target.parentNode.querySelectorAll('p')[0].classList)
+        event.target.innerHTML = `Read more <span class="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12" style="margin-left: 0.5rem;"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>`;
+      }
+    })); */
+
     //**-- api modal start
     var modal = document.getElementById("myModal");
     var span = document.getElementsByClassName("close")[0];
@@ -298,12 +312,13 @@ export default function DataSet(data) {
                   .replace(/__/g, "")
                 }
               </p>
+              {data.data_object.result.notes &&
+                <button className="btn-read-more">
+                Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
+                </button>
+              }
             </div>
-            {data.data_object.result.notes &&
-              <button className="btn-read-more">
-              Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
-              </button>
-            }
+            
             <div className="data-files">
             <h2 className="h3">Data files</h2>
             {data.dataFiles.length > 0
@@ -504,9 +519,9 @@ export default function DataSet(data) {
                     <div className="column">
                     {data.data_object.result.tags.map((tag, index) => (
                         <li className="tag" key={tag.id}>
-                          <a href={"/datasets?q=" + tag.name + "&tag=" + tag.name}>
-                            {tag.name}
-                          </a>
+                          <Link href={"/datasets?q=" + tag.name + "&tag=" + tag.name} passHref>
+                            <a>{tag.name}</a>
+                          </Link>
                         </li>
                       ))}
                     </div>
@@ -540,9 +555,9 @@ export default function DataSet(data) {
                     <td>
                       {data.data_object.result.tags.map((tag, index) => (
                         <li className="tag" key={tag.id}>
-                          <a href={"/datasets?q=" + tag.name + "&tag=" + tag.name}>
-                            {tag.name}
-                          </a>
+                        <Link href={"/datasets?q=" + tag.name + "&tag=" + tag.name} passHref>
+                          <a>{tag.name}</a>
+                        </Link>
                         </li>
                       ))}
                     </td>

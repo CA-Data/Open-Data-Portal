@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import BasicSelect from '../components/BasicSelect';
+import Link from 'next/link';
+
 export async function getServerSideProps(context) {
   return getFormattedData(context);
 }
 
 const getFormattedData = async (context) => {
-  var apirequest = "https://test-data.technology.ca.gov/api/3/action/package_search?q=" + context.query.q;
+  var apirequest = "https://data.ca.gov/api/3/action/package_search?q=" + context.query.q;
   var thereWasAFilter = 0; // flag, did user select any filter?
   if ('topic' in context.query && context.query.topic.length > 0) {
     let groups = context.query.topic.split(',');
@@ -128,7 +130,7 @@ const getFormattedData = async (context) => {
 
   // Getting Filters
 
-  const filters = await fetch(`https://test-data.technology.ca.gov/api/3/action/package_search?${apirequest.split('?')[1]}&facet.field=["groups","tags","organization","res_format"]&rows=0`,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json()).catch(error => console.log(error))
+  const filters = await fetch(`https://data.ca.gov/api/3/action/package_search?${apirequest.split('?')[1]}&facet.field=["groups","tags","organization","res_format"]&rows=0`,{headers: {'User-Agent': 'NextGenAPI/0.0.1',}}).then(response => response.json()).catch(error => console.log(error))
 
   //search results
   const resultsArray = []
@@ -604,7 +606,6 @@ const Results = (data) => {
                       display: 'flex',
                       alignItems: 'center'
                     }}
-                    type="submit"
                     className="search-submit"
                   >
                     <svg
@@ -647,9 +648,11 @@ const Results = (data) => {
                   className="result"
                 >
                   <h2 style={{ marginBottom: '5px' }} className="h5">
-                    <a href={"/dataset?name=" + dataset.name}>
-                      <span style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>{dataset.title}</span>
-                    </a>
+                    <Link href={"/dataset?name=" + dataset.name} passHref>
+                      <a>
+                        <span style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>{dataset.title}</span>
+                      </a>
+                    </Link>
                   </h2>
                   <ul className="result-dataset-info">
                     <li>

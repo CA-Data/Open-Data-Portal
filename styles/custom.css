@@ -16,7 +16,10 @@
 .padding-y {
   padding: 2rem 0 2rem 0;
 }
-
+.result-dataset-info > li{
+  font-size: 18px;
+  line-height: 32px;
+}
 .result-dataset-info > li > strong {
   font-size: 18px;
   line-height: 32px;
@@ -217,6 +220,7 @@ table.data-files-table td,
 table.data-files-table th,
 table.supporting-files-table td,
 table.supporting-files-table th {
+  font-size: 1.125rem;
   border-width: 1px;
   border-color: #a19fa7;
   border-style: solid;
@@ -495,6 +499,7 @@ ul.align ul {
   padding-right: 9px;
 }
 .api-button {
+  font-size: 1.125rem;
   color: var(--primary-color);
   text-decoration: underline;
   cursor: pointer;

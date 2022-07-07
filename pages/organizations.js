@@ -1,7 +1,4 @@
-import styles from "../styles/Home.module.css";
 import Link from "next/link";
-
-//
 export async function getStaticProps() {
   const response = await fetch(
     "https://test-data.technology.ca.gov/api/3/action/organization_list?all_fields=true&include_extras=true", {headers: {'User-Agent': 'NextGenAPI/0.0.1'}}
@@ -19,6 +16,7 @@ export async function getStaticProps() {
     props: {
       org: organizations,
     },
+    revalidate: 10, // In seconds
   };
 }
 
@@ -61,7 +59,9 @@ export default function render(data) {
             {data.org.map((org, index) => (
               <div key={index} className="organization-row">
                 <div className="organization-column">
-                  <a href={"/organization/datasets?q=&publisher="+org.id}>{org.title}</a>
+                  <Link href={"/organization/datasets?q=&publisher="+org.id} passHref>
+                    <a>{org.title}</a>
+                  </Link>
                 </div>
                 <div className="organization-column">
                   {org.package_count}

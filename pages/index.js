@@ -1,5 +1,3 @@
-import { margin } from "@mui/system";
-import Image from "next/image";
 import Link from "next/link";
 
 export async function getServerSideProps({req, res}) {

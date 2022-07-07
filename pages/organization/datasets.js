@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import BasicSelect from '../../components/BasicSelect';
+import Link from 'next/link';
+
 export async function getServerSideProps(context) {
   return getFormattedData(context);
 }
@@ -384,7 +386,6 @@ const Results = (data) => {
   useEffect(() => {
     if (!reset) {
       const url = new URL(window.location.href);
-      console.log('in tags', selectedtags + ' ***** ' + url.searchParams.get('tag'))
       if (selectedtags.length == 0 || !url.searchParams.get('tag')) {
         url.searchParams.delete('tag')
         router.push(url, null, { shallow: true });
@@ -720,9 +721,9 @@ const Results = (data) => {
                   className="result"
                 >
                   <h2 style={{ marginBottom: '5px' }} className="h5">
-                    <a href={"/dataset?name=" + dataset.name}>
+                    <Link href={"/dataset?name=" + dataset.name} passHref>
                       <span style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>{dataset.title}</span>
-                    </a>
+                    </Link>
                   </h2>
                   <ul className="result-dataset-info">
                     <li>
