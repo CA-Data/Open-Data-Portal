@@ -1,7 +1,5 @@
-import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import Link from 'next/link'
-import { spacing, style } from '@mui/system';
+import React, { useEffect } from 'react';
 
 export async function getServerSideProps(context) {
   function ValidateSize(FileSize) {
@@ -28,7 +26,7 @@ export async function getServerSideProps(context) {
   }
 
   async function buildTable(resourceId) {
-    const response = await fetch('https://test-data.technology.ca.gov/api/3/action/datastore_search?resource_id='+resourceId).then(response => response.json());
+    const response = await fetch('https://data.ca.gov/api/3/action/datastore_search?resource_id='+resourceId).then(response => response.json());
     const columns = []
     for (const key in response.result.fields) {
       if (key > 0) {
@@ -47,11 +45,10 @@ export async function getServerSideProps(context) {
     return {columns, rows}
   }
 
-  const datasetResponse = await fetch("https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id="+context.query.name).then((response) => response.json());
-  //https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=ground-water-water-quality-results
+  const datasetResponse = await fetch("https://data.ca.gov/api/3/action/package_show?name_or_id="+context.query.name).then((response) => response.json());
+  //https://data.ca.gov/api/3/action/package_show?name_or_id=ground-water-water-quality-results
 
-
-  const options = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
+  const options = {year: "numeric", month: "long", day: "numeric"};
   const datasetInfo = {
     title: datasetResponse.result.title,
     author: datasetResponse.result.organization.title,
@@ -83,7 +80,7 @@ export async function getServerSideProps(context) {
   }
 
   /* Finds the right resource file */
-  const response = await fetch('https://test-data.technology.ca.gov/api/3/action/datastore_search?resource_id='+context.query.id).then(response => response.json());
+  const response = await fetch('https://data.ca.gov/api/3/action/datastore_search?resource_id='+context.query.id).then(response => response.json());
   tableData = {
     columns: [],
     rows: []
@@ -103,16 +100,50 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default function preview(dataset) {
+export default function Preview(dataset) {
+  useEffect(() => {
+    //**-- api modal start
+    var modal = document.getElementById("myModal");
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    //add file id to api query inputs
+    function addFileId(fileId) {
+      document.getElementById("simple-query").value = `https://data.ca.gov/api/3/action/datastore_search?resource_id=${fileId}&limit=5`
+      document.getElementById("sql-query").value = `https://data.ca.gov/api/3/action/datastore_search_sql?sql=select * from "${fileId}" LIMIT 5`
+      document.getElementById("odata-query").value = `https://data.ca.gov/datastore/odata3.0/${fileId}`
+    }
+
+    const apiButtons = document.querySelectorAll('.api-button');
+    apiButtons.forEach(el => el.addEventListener('click', event => {
+      var file_id = event.target.dataset.fileId;
+      var resource_name = event.target.dataset.resourceName;
+      addFileId(file_id)
+      document.getElementById("resource-name").innerHTML = resource_name
+      modal.style.display = "block";
+    }));
+
+    //copy inputs to clipboard
+    document.querySelectorAll('.copy-button').forEach(el => el.addEventListener('click', event => {
+      event.target.classList.add("copied");
+      event.target.parentNode.querySelectorAll('input')[0].select();
+      document.execCommand("copy");
+      setTimeout(() => {
+        event.target.classList.remove("copied");
+      }, "750")
+    }));
+    //api modal end --**
+  }, []);
   return (
     <main id="body-content" className="cagov-main dataset-preview">
       <nav className="nav-breadcrumb">
         <ol>
           <li>
-          <Link href={"/dataset?name="+dataset.parameters.name} passHref>
-              <a><svg style={{paddingLeft:'0.3rem'}} xmlns="http://www.w3.org/2000/svg" width="6" viewBox="0 0 9.6 16"><path fill="#046a99" d="M9.3 14.2L2.7 8.1l6.6-6.3c.4-.4.4-1 0-1.4a1 1 0 00-1.5 0l-7.4 7a1 1 0 00-.4.8c0 .2.1.6.3.7l7.4 6.7a1 1 0 001.5 0c.5-.3.5-1 .1-1.4z"></path></svg>{"  "}
-Back to dataset</a>
-            </Link>
+          <svg xmlns="http://www.w3.org/2000/svg" width="6" viewBox="0 0 9.6 16"><path fill="#046a99" d="M9.3 14.2L2.7 8.1l6.6-6.3c.4-.4.4-1 0-1.4a1 1 0 00-1.5 0l-7.4 7a1 1 0 00-.4.8c0 .2.1.6.3.7l7.4 6.7a1 1 0 001.5 0c.5-.3.5-1 .1-1.4z"></path></svg>{"  "}
+{" "}<a style={{marginLeft: '3px'}} href={"/dataset?name="+dataset.parameters.name}>
+                Back to dataset</a>
           </li>
         </ol>
       </nav>
@@ -135,7 +166,7 @@ Back to dataset</a>
           <div className="dataset-value">{dataset.details.size? dataset.details.size: "N/A"}</div>
           <div className="dataset-label">Access data:</div>
           <div className="dataset-value">
-            <a href={dataset.details.download}>Download File</a> |{" "}
+            <a href={dataset.details.download}>Download file</a> |{" "}
             <button
               className="api-button"
               data-resource-name={dataset.details.name}
@@ -158,22 +189,28 @@ Back to dataset</a>
           {/*<div className="dataset-value">{dataset.details.description}</div>*/}
 
         </div>
-        
+        {dataset.table.rows.length > 0 &&
         <div id="data-table-section">
-          <h3 className="h4">Data preview</h3>
+          <h3>Data preview</h3>
           <p>You’re previewing the first 50 rows of this file.</p>
           <div style={{ height: 600, width: '100%' }}>
-            <DataGrid rows={dataset.table.rows} columns={dataset.table.columns} />
+            
+              <DataGrid rows={dataset.table.rows} columns={dataset.table.columns} />
+           
           </div>
         </div>
-        
-        <div id="data-dictionary-section">
-          <h3 className="h4">Data dictionary</h3>
-          <p>You’re previewing the first 50 rows of this file.</p>
-          <div style={{ height: 214, width: '100%' }}>
-            <DataGrid rows={dataset.dictionary.rows} columns={dataset.dictionary.columns} />
+        }
+        {dataset.dictionary.columns.length > 0 &&
+          <div id="data-dictionary-section">
+            <h3>Data dictionary</h3>
+            <p>You’re previewing the first 50 rows of this file.</p>
+            <div style={{ height: 214, width: '100%' }}>
+              
+                <DataGrid rows={dataset.dictionary.rows} columns={dataset.dictionary.columns} />
+            
+            </div>
           </div>
-        </div>
+        }
       </div>
       </article>
       <div id="myModal" className="modal">
@@ -195,78 +232,87 @@ Back to dataset</a>
             <ul className="input-group">
               <li>
                 <label>Simple query</label>
-                <input id="simple-query" type="text" value="" readOnly />
-                <button className="copy-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="19"
-                    height="22"
-                    fill="none"
-                    viewBox="0 0 19 22"
-                  >
-                    <g clipPath="url(#clip0_425_18691)">
-                      <path
-                        fill="#000"
-                        d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
-                      ></path>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_425_18691">
-                        <path fill="#fff" d="M0 0H19V22H0z"></path>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </button>
+                <div className="group">
+                  <input id="simple-query" type="text" value="" readOnly />
+                  <button className="copy-button">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="19"
+                      height="22"
+                      fill="none"
+                      viewBox="0 0 19 22"
+                    >
+                      <g clipPath="url(#clip0_425_18691)">
+                        <path
+                          fill="#4B4B4B"
+                          d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_425_18691">
+                          <path fill="#fff" d="M0 0H19V22H0z"></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </button>
+                </div>
+                
               </li>
               <li>
                 <label>SQL query</label>
-                <input id="sql-query" type="text" value="" readOnly />
-                <button className="copy-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="19"
-                    height="22"
-                    fill="none"
-                    viewBox="0 0 19 22"
-                  >
-                    <g clipPath="url(#clip0_425_18691)">
-                      <path
-                        fill="#000"
-                        d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
-                      ></path>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_425_18691">
-                        <path fill="#fff" d="M0 0H19V22H0z"></path>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </button>
+                <div className="group">
+                  <input id="sql-query" type="text" value="" readOnly />
+                  <button className="copy-button">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="19"
+                      height="22"
+                      fill="none"
+                      viewBox="0 0 19 22"
+                    >
+                      <g clipPath="url(#clip0_425_18691)">
+                        <path
+                          fill="#4B4B4B"
+                          d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_425_18691">
+                          <path fill="#fff" d="M0 0H19V22H0z"></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </button>
+                </div>
+                
               </li>
               <li>
-                <label>Odata query</label>
-                <input id="odata-query" type="text" value="" readOnly />
-                <button className="copy-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="19"
-                    height="22"
-                    fill="none"
-                    viewBox="0 0 19 22"
-                  >
-                    <g clipPath="url(#clip0_425_18691)">
-                      <path
-                        fill="#000"
-                        d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
-                      ></path>
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_425_18691">
-                        <path fill="#fff" d="M0 0H19V22H0z"></path>
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </button>
+                <label>OData query</label>
+                <div className="group">
+                  <input id="odata-query" type="text" value="" readOnly />
+                  <button className="copy-button">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="19"
+                      height="22"
+                      fill="none"
+                      viewBox="0 0 19 22"
+                    >
+                      <g clipPath="url(#clip0_425_18691)">
+                        <path
+                          fill="#4B4B4B"
+                          d="M14 0H2a2 2 0 00-2 2v14h2V2h12V0zm3 4H6a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H6V6h11v14z"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_425_18691">
+                          <path fill="#fff" d="M0 0H19V22H0z"></path>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </button>
+                </div>
+                
               </li>
             </ul>
           </div>

@@ -2339,7 +2339,7 @@ select[data-class-icon] {
 .page-container-ds {
   max-width: var(--w-lg, 1176px);
   width: 98%;
-  margin: 2rem auto 2rem auto!important;
+  margin: 2rem auto 4rem auto!important;
   padding-right: 0;
   padding-left: 0;
 }
@@ -3036,7 +3036,7 @@ h6 {
 @media (max-width: 767px) {
   .h1,
   h1 {
-    font-size: var(--font-size-9, 2.625rem);
+    font-size: var(--font-size-8, 2.3175rem);
   }
 
   .h2,
@@ -6072,16 +6072,16 @@ cagov-site-navigation .search-container--small.hidden-search {
 .cagov-card .card-text {
   color: var(--black, #4B4B4B);
   font-size: 1.4rem;/*dropped from 1.5 to 1.4 making sure it fit the card*/
-  line-height: 2.5rem;
+  line-height: 37.4px;
   font-weight: 400;
   padding: 0;
   margin: 0;
 }
 
 .cagov-card svg {
-  color: var(--gray-900, #6c6b77);
+  color: var(--black, #4B4B4B);
   width: 1rem;
-  margin-top: 0.2rem;
+  margin-top: 0.5rem;
   max-height: 25px;
   min-width: 1rem;
 }
@@ -6089,7 +6089,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 .cagov-grid,
 .cagov-grid .block-editor-block-list__layout {
   display: grid;
-  grid-gap: 1.5rem;
+  grid-gap: 0.5rem;
 }
 
 .cagov-grid .block-editor-block-list__block {
@@ -7167,6 +7167,7 @@ cagov-site-navigation .expanded-menu-section {
   cagov-site-navigation .expanded-menu-section.expanded {
     z-index: 3;
   }
+  
 }
 
 cagov-site-navigation .expanded-menu-section.expanded .expanded-menu-dropdown {
@@ -7383,7 +7384,8 @@ cagov-site-navigation.display-menu .expanded-menu:focus {
 @media (max-width: 767px) {
   cagov-site-navigation.display-menu .expanded-menu {
     margin-left: 0;
-    border-bottom: solid 1px var(--gray-300, #e1e0e3);
+    margin-top: 1rem;
+    /*border-bottom: solid 1px var(--gray-300, #e1e0e3);*/
   }
 }
 
@@ -7902,18 +7904,12 @@ cagov-highlight-section article .highlight-body .highlight-text h3 {
 }
 
 .contact-us .form-select::after {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  right: 1px;
-  top: 5%;
+  right: 14px;
+  top: 10px;
   position: absolute;
-  height: 90%;
-  width: 2rem;
-  font-weight: 900;
+  width: auto;
   pointer-events: none;
-  content: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='11' height='7' className='expanded-menu-section-header-arrow-svg' viewBox='0 0 11 7' fill='%23034A6B' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fillRule='evenodd' clipRule='evenodd' d='M1.15596 0.204797L5.49336 5.06317L9.8545 0.204797C10.4293 -0.452129 11.4124 0.625368 10.813 1.28143L5.90083 6.82273C5.68519 7.05909 5.32606 7.05909 5.1342 6.82273L0.174341 1.28143C-0.400433 0.6245 0.581838 -0.452151 1.15661 0.204797H1.15596Z'%3E%3C/path%3E%3C/svg%3E");
+  content: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='11' height='7' className='' viewBox='0 0 11 7' fill='%234B4B4B' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fillRule='evenodd' clipRule='evenodd' d='M1.15596 0.204797L5.49336 5.06317L9.8545 0.204797C10.4293 -0.452129 11.4124 0.625368 10.813 1.28143L5.90083 6.82273C5.68519 7.05909 5.32606 7.05909 5.1342 6.82273L0.174341 1.28143C-0.400433 0.6245 0.581838 -0.452151 1.15661 0.204797H1.15596Z'%3E%3C/path%3E%3C/svg%3E");
 }
 
 cagov-airtable-form .form-responded {
@@ -8339,7 +8335,9 @@ code.hljs {
 }
 
 .cagov-article.with-page-nav {
-  grid-template-areas: "sidebar content" "sidebar content";
+  grid-template-areas: 
+  "sidebar title"
+  "sidebar content";
 }
 
 .title-cell {

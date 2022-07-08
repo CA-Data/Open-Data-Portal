@@ -16,7 +16,7 @@ export default function preview(dataset) {
           <li>Sitemap</li>
         </ol>
       </nav>
-      <article id="post-design" className="cagov-article with-page-nav">
+      <article id="post-design" className="cagov-article with-page-nav sitemap">
         <div className="content-container">
           <h1>Sitemap</h1>
           <ul className="site-map-ul">
