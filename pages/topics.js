@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   // Saving for later.. current process will be manual..
   // data.recent.map((dataset, index) => (
   //              <a key={index} href={"/dataset?name=" + dataset.data.package.name} className="no-deco cagov-card">
@@ -17,33 +17,35 @@ export async function getServerSideProps() {
   //                </svg>
   //              </a> 
   async function recentDatasets() {
-    const response = await fetch('https://test-data.technology.ca.gov/api/3/action/recently_changed_packages_activity_list').then(response => response.json());
+    const response = await fetch('https://data.ca.gov/api/3/action/recently_changed_packages_activity_list').then(response => response.json());
     return response.result
   }
   async function buildTopics() {
     const topicArray = []
-    const response = await fetch('https://test-data.technology.ca.gov/api/3/action/group_list').then(response => response.json());
+    const response = await fetch('https://data.ca.gov/api/3/action/group_list').then(response => response.json());
     const group_array = await response.result
     
     for (let index = 0; index < group_array.length; index++) {
       const topics = {}
       const groupName = group_array[index]
-      const res =  await fetch('https://test-data.technology.ca.gov/api/3/action/group_show?id='+groupName)
+      const res =  await fetch('https://data.ca.gov/api/3/action/group_show?id='+groupName)
       const data =  await res.json();
-      const groupTitle =  data.result.title
+      const groupTitle =  data.result.title.replace(" Resources", " resources").replace(" Demographics", " demographics").replace(" Human Services", " human services");
       const groupCount =  data.result.package_count
       const groupDescription =  data.result.description
       topics["id"] = groupName
       topics["title"] = groupTitle
       topics["count"] = groupCount
       topics["description"] = groupDescription
-      topicArray.push(topics)
+      if (groupCount) {
+        topicArray.push(topics)
+      }
     }
     return topicArray
   };
 
   async function archive() {
-    const response = await fetch('https://test-data.technology.ca.gov/api/action/package_search?qf=water&facet.field=[%22groups%22]&facet.limit=10&rows=0').then(response => response.json());
+    const response = await fetch('https://data.ca.gov/api/action/package_search?qf=water&facet.field=[%22groups%22]&facet.limit=10&rows=0').then(response => response.json());
     return response.result.search_facets.groups.items
   }
   const topicArray = await buildTopics()
@@ -72,6 +74,7 @@ export async function getServerSideProps() {
   
   return {
     props: {topics: topicArray},
+    revalidate: 60, // In seconds
   }
 }
 export default function Home(data) {
