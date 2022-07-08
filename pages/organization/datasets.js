@@ -8,7 +8,7 @@ export async function getServerSideProps(context) {
 }
 
 const getFormattedData = async (context) => {
-  var apirequest = "https://test-data.technology.ca.gov/api/3/action/package_search?q=" + context.query.q;
+  var apirequest = "https://data.ca.gov/api/3/action/package_search?q=" + context.query.q;
   var thereWasAFilter = 0; // flag, did user select any filter?
   if ('topic' in context.query && context.query.topic.length > 0) {
     let groups = context.query.topic.split(',');
@@ -114,7 +114,7 @@ const getFormattedData = async (context) => {
 
   //[0]previous, [1]current, [2]next, [3]total, [4]next 
 
-  const response = await fetch(apirequest, { headers: { 'User-Agent': 'NextGenAPI/0.0.1', } }).then((response) => response.json());
+  const response = await fetch(apirequest).then((response) => response.json());
 
   pageData["total"].value = Math.ceil(parseInt(response.result.count) / 10);
 
@@ -124,7 +124,7 @@ const getFormattedData = async (context) => {
 
   // Getting Filters
 
-  const filters = await fetch(`https://test-data.technology.ca.gov/api/3/action/package_search?${apirequest.split('?')[1]}&facet.field=["groups","tags","organization","res_format"]&rows=0`, { headers: { 'User-Agent': 'NextGenAPI/0.0.1', } }).then(response => response.json()).catch(error => console.log(error))
+  const filters = await fetch(`https://data.ca.gov/api/3/action/package_search?${apirequest.split('?')[1]}&facet.field=["groups","tags","organization","res_format"]&rows=0`).then(response => response.json()).catch(error => console.log(error))
 
   //search results
   const resultsArray = []
@@ -180,7 +180,7 @@ const getFormattedData = async (context) => {
     publisherDetails.website = ""
     publisherDetails.popular = []
 
-    const popular_datasets = await fetch(`https://test-data.technology.ca.gov/api/3/action/package_search?q=${q}&sort=views_recent%20desc&fq=organization:${publisher}&rows=3`, { headers: { 'User-Agent': 'NextGenAPI/0.0.1', } }).then(response => response.json()).catch(error => console.log(error))
+    const popular_datasets = await fetch(`https://data.ca.gov/api/3/action/package_search?q=${q}&sort=views_recent%20desc&fq=organization:${publisher}&rows=3`).then(response => response.json()).catch(error => console.log(error))
 
     if (popular_datasets.result.count > 0) {
       publisherDetails.title = popular_datasets.result.results[0].organization.title
@@ -192,9 +192,7 @@ const getFormattedData = async (context) => {
         popularDataset.id = item.id
 
         const views = await fetch(
-          `https://test-data.technology.ca.gov/api/3/action/package_show?name_or_id=${item.id}&include_tracking=true`,
-          { headers: { 'User-Agent': 'NextGenAPI/0.0.1' } }
-        )
+          `https://data.ca.gov/api/3/action/package_show?name_or_id=${item.id}&include_tracking=true`)
           .then(response => response.json())
           .catch(error => console.log("ERROR"))
 

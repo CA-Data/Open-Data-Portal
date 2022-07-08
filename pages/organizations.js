@@ -1,8 +1,7 @@
 import Link from "next/link";
 export async function getStaticProps() {
   const response = await fetch(
-    "https://test-data.technology.ca.gov/api/3/action/organization_list?all_fields=true&include_extras=true", {headers: {'User-Agent': 'NextGenAPI/0.0.1'}}
-  ).then((response) => response.json());
+    "https://data.ca.gov/api/3/action/organization_list?all_fields=true&include_extras=true").then((response) => response.json());
 
   const organizations = []
   for (var organization of response.result) {

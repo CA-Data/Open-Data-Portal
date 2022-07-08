@@ -26,12 +26,7 @@ export async function getServerSideProps(context) {
   }
 
   const name = context.query.name;
-  const response = await fetch(
-    "https://data.ca.gov/api/3/action/package_show?name_or_id=" + name,
-    { headers: {
-        'User-Agent': 'NextGenAPI/0.0.1',
-      }
-    }).then((response) => response.json());
+  const response = await fetch("https://data.ca.gov/api/3/action/package_show?name_or_id=" + name).then((response) => response.json());
   var groups = response.result.groups ?? [];
   if (groups.length == 0) {
     groups = [

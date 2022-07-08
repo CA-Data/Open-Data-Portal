@@ -76,7 +76,7 @@ export default function Header() {
                 placeholder="Search this website"
                 className="search-textfield"
               />
-              <button type="submit" className="search-submit">
+              <button className="search-submit">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   enableBackground="new 0 0 17 17"
