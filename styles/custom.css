@@ -1023,7 +1023,7 @@ font-size: 1rem;
 
 /* topic-results Popular datasets*/
 .topic-popular-container {
-  margin-bottom:1rem;
+  margin-bottom:3rem;
 }
 .topic-popular-cards-container {
   display:flex;
