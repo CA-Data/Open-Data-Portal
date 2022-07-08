@@ -6,6 +6,9 @@
   color: #72717C;
   opacity: 1; /* Firefox */
 }
+input[type="checkbox"]:disabled, input[type="checkbox"][disabled] {
+  background: #727272;
+}
 .content-cell h1 {
   color: var(--primary-dark-color, #034A6B);
 }
