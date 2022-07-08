@@ -688,7 +688,7 @@ const Results = (data) => {
                     className="search-textfield"
                     defaultValue={dataState.parameters.q}
                   />
-                  <input type="hidden" name="topic" value={`${dataState.parameters.topic},`} />
+                  <input type="hidden" name="topic" value={dataState.parameters.topic} />
                   <button
                     style={{
                       outlineOffset: -2,
