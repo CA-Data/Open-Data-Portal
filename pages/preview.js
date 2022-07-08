@@ -45,9 +45,8 @@ export async function getServerSideProps(context) {
     return {columns, rows}
   }
 
-  const datasetResponse = await fetch("https://data.ca.gov/api/3/action/package_show?name_or_id="+context.query.names).then((response) => response.json());
+  const datasetResponse = await fetch("https://data.ca.gov/api/3/action/package_show?name_or_id="+context.query.name).then((response) => response.json());
   //https://data.ca.gov/api/3/action/package_show?name_or_id=ground-water-water-quality-results
-
 
   const options = {year: "numeric", month: "long", day: "numeric"};
   const datasetInfo = {
