@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Head from 'next/head';
 
 export async function getStaticProps({req, res}) {
   // Saving for later.. current process will be manual..
@@ -83,6 +84,9 @@ export async function getStaticProps({req, res}) {
 export default function Home(data) {
   return (
     <>
+      <Head>
+        <title>Homepage | Open Data California</title>
+      </Head>
       <main className="home-page">
         <div className="wp-block-ca-design-system-hero cagov-with-sidebar cagov-no-reverse cagov-with-sidebar-left cagov-featured-section cagov-bkgrd-primary-gradient cagov-block wp-block-cagov-hero">
           <div className="page-container-ds margin-right-clear">

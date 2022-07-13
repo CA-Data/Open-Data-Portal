@@ -1,9 +1,23 @@
 import "../styles/styles.css";
 import "../styles/custom.css";
 import Link from "next/link";
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 function MyApp({ Component, pageProps }) {
   const fullYear = new Date().getFullYear();
+  const router = useRouter();
+
+  const currentUrl = router.pathname;
+  console.log(currentUrl);
+
+  useEffect(() => {
+      window.gtag('config', 'UA-3419582-2', {
+        page_path: currentUrl,
+      });
+      console.log('GA page view on ' + currentUrl);
+    }, [currentUrl]);
+
   return (
     <>
       <div>
