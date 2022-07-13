@@ -9,14 +9,22 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   const currentUrl = router.pathname;
-  console.log(currentUrl);
+
+  const gaIds = [
+    "UA-3419582-2",
+    "UA-23110710-38",
+    "G-69TD0KNT0F",
+    "G-FE1LM63K50"
+  ];
 
   useEffect(() => {
-      window.gtag('config', 'UA-3419582-2', {
+    gaIds.forEach(gaId => {
+      window.gtag('config', gaId, {
         page_path: currentUrl,
       });
-      console.log('GA page view on ' + currentUrl);
-    }, [currentUrl]);
+      console.log('GA ID: ', gaId, 'Page Path: ', currentUrl);
+    });
+  }, [currentUrl]);
 
   return (
     <>
