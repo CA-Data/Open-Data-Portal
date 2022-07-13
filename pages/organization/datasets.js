@@ -464,19 +464,21 @@ const Results = (data) => {
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Topic</span>
                     </div>
                     <ul hidden={topicSvg != 'svg-rotate-up' ? true : false} style={{ cursor: 'default' }}>
-                      {topicList.slice(0, topicShowMore).map((topic, index) => (
-                        <li key={topic[0]} style={{ display: 'flex', gap: '10px' }}>
-                          <input onChange={(e) => {
-                            if (e.target.checked) {
-                              setSelectedTopics([...selectedTopics, topic[0].toLowerCase()])
-                            }
-                            else {
-                              setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
-                            }
-                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0]}>{formatSentenceCase(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
-                        </li>
-                      ))}
+                      {topicList.slice(0, topicShowMore)
+                        .filter(item => item[0] !== 'javiertest')
+                        .map((topic, index) => (
+                          <li key={topic[0]} style={{ display: 'flex', gap: '10px' }}>
+                            <input onChange={(e) => {
+                              if (e.target.checked) {
+                                setSelectedTopics([...selectedTopics, topic[0].toLowerCase()])
+                              }
+                              else {
+                                setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
+                              }
+                            }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
+                            <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0]}>{formatSentenceCase(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
+                          </li>
+                        ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={topicList.length <= topicShowMore} onClick={() => topicShowMore > topicList.length ? '' : setTopicShowMore(topicShowMore + 5)} style={{ cursor: 'pointer' }}>
                           <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
@@ -493,7 +495,8 @@ const Results = (data) => {
                       </div>
                     </ul>
                   </li>
-                  <li style={{ color: "#4B4B4B" }} className="filter-publisher">
+                  {/* Hidden publisher filters */}
+                  <li hidden style={{ color: "#4B4B4B" }} className="filter-publisher">
                     <div onClick={() => { publisherSvg == 'svg-rotate-up' ? setPublisherSvg('svg-rotate-down') : setPublisherSvg('svg-rotate-up'); setPublisherShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={publisherSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Publisher</span>
@@ -647,9 +650,9 @@ const Results = (data) => {
                 </div>
               </div>
             }
-            <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>{areObjectKeysEmpty(dataState.parameters) ? 'All datasets' : 'Search results'}</h1>
+            <h3 style={{ marginTop: 0, color: '#034A6B' }}>{areObjectKeysEmpty(dataState.parameters) ? 'All datasets' : `Search ${data.publisherDetails.title} datasets`}</h3>
             <div className="search-container grid-search">
-              <form className="site-search" action="/datasets">
+              <form className="site-search" action="/organization/datasets">
                 <span className="sr-only" id="SearchInput">
                   Dataset search
                 </span>
@@ -663,6 +666,7 @@ const Results = (data) => {
                     className="search-textfield"
                     defaultValue={dataState.parameters.q}
                   />
+                  <input type="hidden" name="publisher" value={dataState.parameters.publisher} />
                   <button
                     style={{
                       outlineOffset: -2,
@@ -709,7 +713,7 @@ const Results = (data) => {
               </form>
             </div>
             <div>
-              <h2>{dataState.matches > 1 ? dataState.matches + ' datasets' : dataState.matches + ' dataset'} </h2>
+              <h4>{dataState.matches > 1 ? dataState.matches + ' datasets' : dataState.matches + ' dataset'} </h4>
             </div>
             <div className="result-page">
               {dataState.allResults.map((dataset, index) => (
@@ -725,10 +729,6 @@ const Results = (data) => {
                   </h2>
                   <ul className="result-dataset-info">
                     <li>
-                      <strong>Published by: </strong>
-                      {dataset.organization}
-                    </li>
-                    <li>
                       <strong>Last updated: </strong>
                       {dataset.updated}
                     </li>
@@ -737,8 +737,8 @@ const Results = (data) => {
                       {dataset.formats.join(', ')}
                     </li>
                   </ul>
-                  <p className="description">
-                    {dataset.notes.substring(0, 200)}...
+                  <p className="description" style={{ marginTop: '12px' }}>
+                    {dataset.notes.substring(0, 150)}...
                   </p>
                 </div>
               ))}
