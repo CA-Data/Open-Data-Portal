@@ -125,13 +125,9 @@ const getFormattedData = async (context) => {
         topicDescription = responsetopic.result.results[0].groups[index].description;
       }
     }
-
     topicIcn = topicIconArray[context.query.topic];
   }
-
   /* Topic End ------------------------------------------------------------------------------------------------------------------------ */
-
-
   //pages
   const pageData = {}
 
@@ -455,8 +451,6 @@ const Results = (data) => {
     return words.join(" ");
   }
 
-  console.log(initialTopic);
-
   return (
     <>
     <Head>
@@ -693,7 +687,6 @@ const Results = (data) => {
             </div>
           </div>
           <div className="cagov-content content-cell">
-
             {/* Topic ------------------------------------------------------------------------------------------------------------------------ */}
 
             {data.topicDisplayName &&
@@ -724,10 +717,8 @@ const Results = (data) => {
                       </div>
                     </a>
                   ))}
-
                 </div>
               </div>
-
             }
 
             {data.topicDisplayName
