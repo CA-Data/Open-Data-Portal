@@ -86,6 +86,7 @@ export default function Home(data) {
     <>
       <Head>
         <title>Homepage | CA Open Data</title>
+        <meta name="description" content="Find and access thousands of State of California datasets to support your next analysis or project."></meta>
       </Head>
       <main className="home-page">
         <div className="wp-block-ca-design-system-hero cagov-with-sidebar cagov-no-reverse cagov-with-sidebar-left cagov-featured-section cagov-bkgrd-primary-gradient cagov-block wp-block-cagov-hero">

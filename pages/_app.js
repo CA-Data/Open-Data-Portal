@@ -39,6 +39,7 @@ function MyApp({ Component, pageProps }) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                <span className="sr-only">Ca.gov homepage</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   enableBackground="new 0 0 20 14.6"
@@ -194,7 +195,6 @@ function MyApp({ Component, pageProps }) {
                 <div className="expanded-menu-grid">
                   <div
                     className="expanded-menu-col js-cagov-navoverlay-expandable"
-                    aria-expanded="false"
                   >
                     <div className="expanded-menu-section">
                       <strong className="expanded-menu-section-header">

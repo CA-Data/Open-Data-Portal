@@ -405,6 +405,7 @@ const Results = (data) => {
     <>
       <Head>
         <title>Datasets | CA Open Data</title>
+        <meta name="description" content="Search all datasets from State of California Open Data."></meta>
       </Head>
       <main id="body-content" className="cagov-main">
         <article

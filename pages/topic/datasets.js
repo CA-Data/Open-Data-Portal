@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import BasicSelect from '../../components/BasicSelect';
 import Link from 'next/link';
+import Head from 'next/head';
 
 export async function getServerSideProps(context) {
   return getFormattedData(context);
@@ -458,6 +459,11 @@ const Results = (data) => {
 
   return (
     <>
+    <Head>
+      <title>Topic datasets | CA Open Data</title>
+      <meta name="description" content="Search specific topic datasets from State of California Open Data."></meta>
+    </Head>
+
       <main id="body-content" className="cagov-main">
         <article
           id="post-design"

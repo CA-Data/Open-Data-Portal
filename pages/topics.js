@@ -83,6 +83,7 @@ export default function Home(data) {
     <>
       <Head>
         <title>Topics | CA Open Data</title>
+        <meta name="description" content="Find all topics inluded in State of California Open Data."></meta>
       </Head>
       <main id="body-content" className="cagov-main">
       <nav className="nav-breadcrumb">

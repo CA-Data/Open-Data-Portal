@@ -44,6 +44,7 @@ export default function Preview(dataset) {
     <>
     <Head>
         <title>Contact us | CA Open Data</title>
+        <meta name="description" content="Contact us at State of California Open Data"></meta>
     </Head>
     <main id="body-content" className="cagov-main contact-us">
       <nav className="nav-breadcrumb">

@@ -6,6 +6,7 @@ export default function Custom404() {
     <>
     <Head>
       <title>Page not found | CA Open Data</title>
+      <meta name="description" content="We’re sorry, that link didn’t work or the page is not found."></meta>
     </Head>
     <main id="body-content" className="cagov-main">
         <article

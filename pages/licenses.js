@@ -6,8 +6,10 @@ export default function preview(dataset) {
     <>
     <Head>
       <title>Licenses | CA Open Data</title>
+      <meta name="description" content="Available licenses for State of California Open Data."></meta>
     </Head>
     <main id="body-content" className="cagov-main">
+      
       <nav className="nav-breadcrumb">
         <ol>
           <li>

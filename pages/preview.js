@@ -141,7 +141,11 @@ export default function Preview(dataset) {
     <>
     <Head>
         <title>{dataset.details.name} | Open Data California</title>
-    </Head>
+        <meta
+            name="description"
+            content={dataset.details.description? dataset.details.description: "No discription available for "+ dataset.details.name}
+          >     
+          </meta>    </Head>
     <main id="body-content" className="cagov-main dataset-preview">
       <nav className="nav-breadcrumb">
         <ol>

@@ -6,6 +6,7 @@ export default function preview(dataset) {
     <>
     <Head>
       <title>Sitemap | CA Open Data</title>
+      <meta name="description" content="View the sitemap for State of California Open Data"></meta>
     </Head>
     <main id="body-content" className="cagov-main">
       <nav className="nav-breadcrumb">

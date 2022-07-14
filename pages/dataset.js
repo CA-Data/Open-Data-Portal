@@ -220,6 +220,18 @@ export default function DataSet(data) {
     <>
       <Head>
           <title>{data.data_object.result.title} | CA Open Data</title>
+          <meta
+            name="description"
+            content={
+              data.data_object.result.notes.substring(0, '150').replace(/<br>/g, "\n")
+              .replace(/\<.*?\>/g, "")
+              .replace(/^"|^ /g, "")
+              .replace(/ $|"$/g, "")
+              .replace(/"+/g, "\"")
+              .replace(/__/g, "")+"..."
+            }
+          >     
+          </meta>
       </Head>
       <main id="body-content" className="cagov-main dataset">
         <nav className="nav-breadcrumb">
@@ -565,9 +577,9 @@ export default function DataSet(data) {
             </div>
           </div>
         </article>
-        <div id="myModal" className="modal">
+        <div id="myModal" className="modal" aria-modal="true">
           <div className="modal-content">
-            <span className="close">&times;</span>
+            <button className="close">&times;</button>
             <h2 className="h3">API endpoint</h2>
             <h3 id="resource-name" className="h4 thin">
               Dataset Name
