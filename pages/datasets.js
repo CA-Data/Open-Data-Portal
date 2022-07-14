@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import BasicSelect from '../components/BasicSelect';
 import Link from 'next/link';
-import Head from 'next/head'
-
 
 export async function getServerSideProps(context) {
   return getFormattedData(context);
@@ -404,9 +402,6 @@ const Results = (data) => {
 
   return (
     <>
-      <Head>
-        <title>Open Data: All Datasets</title>
-      </Head>
       <main id="body-content" className="cagov-main">
         <article
           id="post-design"
@@ -474,7 +469,7 @@ const Results = (data) => {
                   <li
                     style={{ color: "#4B4B4B" }}
                     className={'filter-topic'}
-                    tabIndex={'0  '}
+                    tabIndex={'0'}
                     onKeyDown={(e) => {
                       if (e.which === 13 && e.target.tagName === 'LI') {
                         if (topicSvg === 'svg-rotate-up') {
@@ -484,7 +479,6 @@ const Results = (data) => {
                           setTopicSvg('svg-rotate-up')
                         }
                       }
-                      setTopicShowMore(5);
                     }}
                   >
                     <div onClick={() => { topicSvg == 'svg-rotate-up' ? setTopicSvg('svg-rotate-down') : setTopicSvg('svg-rotate-up'); setTopicShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
@@ -509,7 +503,10 @@ const Results = (data) => {
                         )
                         )}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <button hidden={topicList.length <= topicShowMore} onClick={() => topicShowMore > topicList.length ? '' : setTopicShowMore(topicShowMore + 5)} style={{ cursor: 'pointer' }}>
+                        <button
+                          hidden={topicList.length <= topicShowMore}
+                          onClick={() => topicShowMore > topicList.length ? '' : setTopicShowMore(topicShowMore + 5)}
+                          style={{ cursor: 'pointer' }}>
                           <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
@@ -537,7 +534,6 @@ const Results = (data) => {
                           setPublisherSvg('svg-rotate-up')
                         }
                       }
-                      setPublisherShowMore(5);
                     }}
                   >
 
@@ -588,7 +584,6 @@ const Results = (data) => {
                           setFormatSvg('svg-rotate-up')
                         }
                       }
-                      setFormatShowMore(5);
                     }}
                   >
                     <div onClick={() => { formatSvg == 'svg-rotate-up' ? setFormatSvg('svg-rotate-down') : setFormatSvg('svg-rotate-up'); setFormatShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
@@ -639,7 +634,6 @@ const Results = (data) => {
                           setTagSvg('svg-rotate-up')
                         }
                       }
-                      setTagShowMore(5);
                     }}
                   >
                     <div onClick={() => { tagSvg == 'svg-rotate-up' ? setTagSvg('svg-rotate-down') : setTagSvg('svg-rotate-up'); setTagShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
