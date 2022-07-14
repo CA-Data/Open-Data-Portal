@@ -85,7 +85,7 @@ export default function Home(data) {
   return (
     <>
       <Head>
-        <title>Homepage | Open Data California</title>
+        <title>Homepage | CA Open Data</title>
       </Head>
       <main className="home-page">
         <div className="wp-block-ca-design-system-hero cagov-with-sidebar cagov-no-reverse cagov-with-sidebar-left cagov-featured-section cagov-bkgrd-primary-gradient cagov-block wp-block-cagov-hero">

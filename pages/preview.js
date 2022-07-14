@@ -1,5 +1,6 @@
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useEffect } from 'react';
+import Head from 'next/head';
 
 export async function getServerSideProps(context) {
   function ValidateSize(FileSize) {
@@ -137,6 +138,10 @@ export default function Preview(dataset) {
     //api modal end --**
   }, []);
   return (
+    <>
+    <Head>
+        <title>{dataset.details.name} | Open Data California</title>
+    </Head>
     <main id="body-content" className="cagov-main dataset-preview">
       <nav className="nav-breadcrumb">
         <ol>
@@ -319,5 +324,6 @@ export default function Preview(dataset) {
         </div>
     </main>
     
+    </>
   )
 }

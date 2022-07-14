@@ -1,7 +1,12 @@
 import Link from "next/link";
+import Head from 'next/head';
 
 export default function preview(dataset) {
   return (
+    <>
+    <Head>
+      <title>Licenses | CA Open Data</title>
+    </Head>
     <main id="body-content" className="cagov-main">
       <nav className="nav-breadcrumb">
         <ol>
@@ -34,5 +39,6 @@ export default function preview(dataset) {
         </div>
       </article>
     </main>
+    </>
   );
 }

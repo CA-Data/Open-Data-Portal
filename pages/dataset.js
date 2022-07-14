@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React, { useEffect } from 'react';
+import Head from 'next/head';
 
 export async function getServerSideProps(context) {
   function ValidateSize(FileSize) {
@@ -217,6 +218,9 @@ export default function DataSet(data) {
 */
   return (
     <>
+      <Head>
+          <title>{data.data_object.result.title} | CA Open Data</title>
+      </Head>
       <main id="body-content" className="cagov-main dataset">
         <nav className="nav-breadcrumb">
           <ol>

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Link from "next/link";
+import Head from 'next/head';
 
 export default function Preview(dataset) {
   useEffect(() => {
@@ -40,6 +41,10 @@ export default function Preview(dataset) {
   }, []);
     
   return (
+    <>
+    <Head>
+        <title>Contact us | CA Open Data</title>
+    </Head>
     <main id="body-content" className="cagov-main contact-us">
       <nav className="nav-breadcrumb">
         <ol>
@@ -165,5 +170,6 @@ export default function Preview(dataset) {
         </div>
       </article>
     </main>
+    </>
   );
 }

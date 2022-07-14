@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
+
 function MyApp({ Component, pageProps }) {
   const fullYear = new Date().getFullYear();
   const router = useRouter();

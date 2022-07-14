@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Head from 'next/head';
+
 export async function getStaticProps() {
   const response = await fetch(
     "https://data.ca.gov/api/3/action/organization_list?all_fields=true&include_extras=true").then((response) => response.json());
@@ -22,6 +24,9 @@ export async function getStaticProps() {
 export default function render(data) {
   return (
     <>
+    <Head>
+      <title>Organizations | CA Open Data</title>
+    </Head>
     <main id="body-content" className="cagov-main">
       <nav className="nav-breadcrumb">
         <ol>

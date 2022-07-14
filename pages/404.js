@@ -1,8 +1,12 @@
 import Link from "next/link";
+import Head from 'next/head';
 
 export default function Custom404() {
   return (
     <>
+    <Head>
+      <title>Page not found | CA Open Data</title>
+    </Head>
     <main id="body-content" className="cagov-main">
         <article
           id="post-design"

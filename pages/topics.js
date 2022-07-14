@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Head from 'next/head';
 
 export async function getStaticProps() {
   // Saving for later.. current process will be manual..
@@ -80,7 +81,10 @@ export async function getStaticProps() {
 export default function Home(data) {
   return (
     <>
-       <main id="body-content" className="cagov-main">
+      <Head>
+        <title>Topics | CA Open Data</title>
+      </Head>
+      <main id="body-content" className="cagov-main">
       <nav className="nav-breadcrumb">
         <ol>
           <li>
