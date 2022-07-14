@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import BasicSelect from '../../components/BasicSelect';
 import Link from 'next/link';
 import Head from 'next/head';
-
 export async function getServerSideProps(context) {
   return getFormattedData(context);
 }
@@ -87,7 +86,49 @@ const getFormattedData = async (context) => {
   if ('sort' in context.query) {
     apirequest += "&sort=" + context.query.sort;
   }
+  /* Organization -------------------------------------------------------- */
+  var publisherDetails = {}
+  publisherDetails.title = ""
+  publisherDetails.description = ""
+  publisherDetails.website = ""
+  publisherDetails.popular = []
 
+  if ('publisher' in context.query && context.query.publisher.length > 0) {
+    if ('q' in context.query) {
+      var q = context.query.q
+    } else {
+      q = ""
+    }
+    var publisher = context.query.publisher
+    if (publisher.match(/,/gm)) {
+      publisher = publisher.replace(/,[a-zA-Z0-9]{1,}/gm, '')
+      publisherDetails = {}
+    }
+
+    
+
+    const popular_datasets = await fetch(`https://data.ca.gov/api/3/action/package_search?q=${q}&sort=views_recent%20desc&fq=organization:${publisher}&rows=3`).then(response => response.json()).catch(error => console.log(error))
+
+    if (popular_datasets.result.count > 0) {
+      publisherDetails.title = popular_datasets.result.results[0].organization.title
+      publisherDetails.description = popular_datasets.result.results[0].organization.description
+      for (const item of popular_datasets.result.results) {
+        var popularDataset = {}
+        popularDataset.title = item.title
+        popularDataset.name = item.name
+        popularDataset.id = item.id
+
+        const views = await fetch(
+          `https://data.ca.gov/api/3/action/package_show?name_or_id=${item.id}&include_tracking=true`)
+          .then(response => response.json())
+          .catch(error => console.log("ERROR"))
+
+        popularDataset.views = views.result.tracking_summary.total
+        publisherDetails.popular.push(popularDataset)
+      }
+    }
+  }
+  /* Organization End ---------------------------------------------------- */
   //pages
   const pageData = {}
 
@@ -162,48 +203,6 @@ const getFormattedData = async (context) => {
       resultsArray.push(dataset)
     }
   }
-  /* Organization -------------------------------------------------------- */
-  var publisherDetails = {}
-  if ('publisher' in context.query && context.query.publisher.length > 0) {
-    if ('q' in context.query) {
-      var q = context.query.q
-    } else {
-      q = ""
-    }
-    var publisher = context.query.publisher
-    if (publisher.match(/,/gm)) {
-      publisher = publisher.replace(/,[a-zA-Z0-9]{1,}/gm, '')
-      publisherDetails = {}
-    }
-
-    publisherDetails.title = ""
-    publisherDetails.description = ""
-    publisherDetails.website = ""
-    publisherDetails.popular = []
-
-    const popular_datasets = await fetch(`https://data.ca.gov/api/3/action/package_search?q=${q}&sort=views_recent%20desc&fq=organization:${publisher}&rows=3`).then(response => response.json()).catch(error => console.log(error))
-
-    if (popular_datasets.result.count > 0) {
-      publisherDetails.title = popular_datasets.result.results[0].organization.title
-      publisherDetails.description = popular_datasets.result.results[0].organization.description
-      for (const item of popular_datasets.result.results) {
-        var popularDataset = {}
-        popularDataset.title = item.title
-        popularDataset.name = item.name
-        popularDataset.id = item.id
-
-        const views = await fetch(
-          `https://data.ca.gov/api/3/action/package_show?name_or_id=${item.id}&include_tracking=true`)
-          .then(response => response.json())
-          .catch(error => console.log("ERROR"))
-
-        popularDataset.views = views.result.tracking_summary.total
-        publisherDetails.popular.push(popularDataset)
-      }
-    }
-
-  }
-  /* Organization End ---------------------------------------------------- */
 
   return {
     props: {
@@ -268,66 +267,6 @@ const Results = (data) => {
   // UseEffects will fire when its corresponding array is updated. 
   // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedtags)
   // Each array will append a value to the url
-  // Persist selected checkboxes on page refresh
-  useEffect(() => {
-    let url = new URL(window.location.href);
-    let checkboxes = Array.from(document.getElementsByClassName('checkBox'));
-
-    // Get URL params
-    const topicParams = url.searchParams?.get('topic');
-    const publisherParams = url.searchParams?.get('publisher');
-    const formatParams = url.searchParams?.get('format');
-    const tagParams = url.searchParams?.get('tag');
-    const toBeChecked = {};
-    toBeChecked.topic = topicParams?.split(',');
-    toBeChecked.publisher = publisherParams?.split(',');
-    toBeChecked.format = formatParams?.split(',');
-    toBeChecked.tag = tagParams?.split(',');
-
-    // Set local state from params
-    topicParams ? setSelectedTopics(topicParams.split(',')) : null;
-    publisherParams ? setSelectedPublishers(publisherParams.split(',')) : null;
-    formatParams ? setSelectedFormats(formatParams.split(',')) : null;
-    tagParams ? setSelectedTags(tagParams.split(',')) : null;
-
-    // Loop through checkboxes 
-    checkboxes.forEach(checkbox => {
-      const formatting = checkbox?.id.split('-');
-      const filter = formatting.pop();
-      const checkboxId = formatting.join('-');
-      toBeChecked[filter]?.forEach(item => {
-        switch (filter) {
-          case 'topic':
-            if (topicSvg === 'svg-rotate-down') {
-              setTopicSvg('svg-rotate-up');
-            }
-            break;
-          case 'publisher':
-            if (publisherSvg === 'svg-rotate-down') {
-              setPublisherSvg('svg-rotate-up');
-            }
-            break;
-          case 'format':
-            if (formatSvg === 'svg-rotate-down') {
-              setFormatSvg('svg-rotate-up');
-            }
-            break;
-          case 'tag':
-            if (tagSvg === 'svg-rotate-down') {
-              setTagSvg('svg-rotate-up');
-            }
-            break;
-          default:
-            return null;
-        }
-        if (item === checkboxId.toLowerCase()) {
-          checkbox.checked = true;
-        }
-      })
-    });
-  }, []);
-
-
   useEffect(() => {
     getFormattedData(router).then(response => setDataState(response.props));
   }, [router])
@@ -395,7 +334,78 @@ const Results = (data) => {
       }
     }
   }, [selectedtags])
+
+  // Persist selected checkboxes on page refresh
+  useEffect(() => {
+    let url = new URL(window.location.href);
+    let checkboxes = Array.from(document.getElementsByClassName('checkBox'));
+
+    // Get URL params
+    const topicParams = url.searchParams?.get('topic');
+    const publisherParams = url.searchParams?.get('publisher');
+    const formatParams = url.searchParams?.get('format');
+    const tagParams = url.searchParams?.get('tag');
+    const toBeChecked = {};
+    toBeChecked.topic = topicParams?.split(',');
+    toBeChecked.publisher = publisherParams?.split(',');
+    toBeChecked.format = formatParams?.split(',');
+    toBeChecked.tag = tagParams?.split(',');
+
+    // Set local state from params
+    if (topicParams) {
+      setSelectedTopics(topicParams.split(','));
+      setInitalTopic(topicParams);
+    }
+    publisherParams ? setSelectedPublishers(publisherParams.split(',')) : null;
+    formatParams ? setSelectedFormats(formatParams.split(',')) : null;
+    tagParams ? setSelectedTags(tagParams.split(',')) : null;
+
+    // Loop through checkboxes 
+    checkboxes.forEach(checkbox => {
+      const formatting = checkbox?.id.split('-');
+      const filter = formatting.pop();
+      const checkboxId = formatting.join('-');
+      toBeChecked[filter]?.forEach(item => {
+        switch (filter) {
+          case 'topic':
+            if (topicSvg === 'svg-rotate-down') {
+              setTopicSvg('svg-rotate-up');
+            }
+            break;
+          case 'publisher':
+            if (publisherSvg === 'svg-rotate-down') {
+              setPublisherSvg('svg-rotate-up');
+            }
+            break;
+          case 'format':
+            if (formatSvg === 'svg-rotate-down') {
+              setFormatSvg('svg-rotate-up');
+            }
+            break;
+          case 'tag':
+            if (tagSvg === 'svg-rotate-down') {
+              setTagSvg('svg-rotate-up');
+            }
+            break;
+          default:
+            return null;
+        }
+        if (item === checkboxId.toLowerCase()) {
+          checkbox.checked = true;
+        }
+      })
+    });
+  }, []);
+
   // End of UseEffect section **********************************************
+
+  const areObjectKeysEmpty = (obj) => {
+    for (var key in obj) {
+      if (obj[key] !== null && obj[key] != "")
+        return false;
+    }
+    return true;
+  }
 
   // resetSearch resets the page
   const resetSearch = async () => {
@@ -435,27 +445,20 @@ const Results = (data) => {
     return words.join(" ");
   }
 
-  const areObjectKeysEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj[key] !== null && obj[key] != "")
-        return false;
-    }
-    return true;
-  }
-
   return (
     <>
-      <Head>
-        <title>Orgnization datasets | CA Open Data</title>
-        <meta name="description" content="Search specific organization datasets from State of California Open Data."></meta>
-      </Head>
+    <Head>
+      <title>Organization datasets | CA Open Data</title>
+      <meta name="description" content="Search specific topic datasets from State of California Open Data."></meta>
+    </Head>
       <main id="body-content" className="cagov-main">
         <article
           id="post-design"
-          className="cagov-article with-sidebar with-page-nav results-page results-page"
+          className="cagov-article with-sidebar with-page-nav results-page"
         >
           <div
             className="sidebar-container everylayout sidebar-cell"
+            style={{ marginTop: '130px' }}
           >
             <div className="sidebar" space="0" side="left">
               <nav aria-labelledby="page-navigation-label">
@@ -500,7 +503,6 @@ const Results = (data) => {
                       </div>
                     </ul>
                   </li>
-                  {/* Hidden publisher filters */}
                   <li hidden style={{ color: "#4B4B4B" }} className="filter-publisher">
                     <div onClick={() => { publisherSvg == 'svg-rotate-up' ? setPublisherSvg('svg-rotate-down') : setPublisherSvg('svg-rotate-up'); setPublisherShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={publisherSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
@@ -539,7 +541,7 @@ const Results = (data) => {
                   <li style={{ color: "#4B4B4B" }} className="filter-format">
                     <div onClick={() => { formatSvg == 'svg-rotate-up' ? setFormatSvg('svg-rotate-down') : setFormatSvg('svg-rotate-up'); setFormatShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={formatSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
-                      <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Format</span>
+                      <span style={{ fontWeight: 'bold', fontSize: '18px', lineHeight: '32px', }}>Format</span>
                     </div>
                     <ul hidden={formatSvg != 'svg-rotate-up' ? true : false}>
                       {formatList.slice(0, formatShowMore).map((format, index) => (
@@ -553,18 +555,18 @@ const Results = (data) => {
                             }
                           }}
                             style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${format[0]}-format`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={format[0]}>{formatSentenceCase(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1', lineHeight: '28px' }} htmlFor={format[0]}>{formatSentenceCase(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={formatList.length <= formatShowMore} onClick={() => formatShowMore > formatList.length ? '' : setFormatShowMore(formatShowMore + 5)} style={{ cursor: 'pointer' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
                           </div>
                         </button>
                         <button hidden={!(formatShowMore > 5)} onClick={() => setFormatShowMore(5)} style={{ cursor: 'pointer' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
                           </div>
@@ -575,7 +577,7 @@ const Results = (data) => {
                   <li style={{ color: "#4B4B4B" }} className="filter-tag">
                     <div onClick={() => { tagSvg == 'svg-rotate-up' ? setTagSvg('svg-rotate-down') : setTagSvg('svg-rotate-up'); setTagShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={tagSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
-                      <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Tag</span>
+                      <span style={{ fontWeight: 'bold', fontSize: '18px', lineHeight: '32px' }}>Tag</span>
                     </div>
                     <ul hidden={tagSvg != 'svg-rotate-up' ? true : false}>
                       {tagList.slice(0, tagShowMore).map((tag, index) => (
@@ -588,18 +590,18 @@ const Results = (data) => {
                               setSelectedTags(selectedtags.filter(item => item != tag[0]))
                             }
                           }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${tag[0]}-tag`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={tag[0]}>{formatSentenceCase(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
+                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1', lineHeight: '28px' }} htmlFor={tag[0]}>{formatSentenceCase(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={tagList.length <= tagShowMore} onClick={() => tagShowMore > tagList.length ? '' : setTagShowMore(tagShowMore + 5)} style={{ cursor: 'pointer' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
                           </div>
                         </button>
                         <button hidden={!(tagShowMore > 5)} onClick={() => setTagShowMore(5)} style={{ cursor: 'pointer' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
                           </div>
@@ -616,8 +618,8 @@ const Results = (data) => {
                   setReset(true);
                   await resetSearch();
                   setReset(false);
-                }} style={{ border: '1px solid #4B4B4B', borderRadius: '5px', padding: '10px 15px', cursor: 'pointer', }}>Reset</button>
-              </nav>
+                }} style={{ border: '1px solid #727272', borderRadius: '4px', height: '48px', padding: '8px 16px', cursor: 'pointer', width: '82px' }}>Reset</button>
+                </nav>
             </div>
           </div>
           <div className="cagov-content content-cell">
@@ -712,13 +714,13 @@ const Results = (data) => {
                 <input type="hidden" name="tag" value={dataState.parameters.tag}></input>
                 <input type="hidden" name="format" value={dataState.parameters.format}></input>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <label htmlFor="sort" style={{ fontSize: '18px', lineHeight: '32px' }}>Sort by</label>
+                  <label htmlFor="sort" style={{ fontSize: '18px', lineHeight: '32px', }}>Sort by</label>
                   <BasicSelect submit={submit} />
                 </div>
               </form>
             </div>
             <div>
-              <h4>{dataState.matches > 1 ? dataState.matches + ' datasets' : dataState.matches + ' dataset'} </h4>
+              <h4>{dataState.matches > 1 ? dataState.matches + ' datasets' : dataState.matches + ' dataset'}</h4>
             </div>
             <div className="result-page">
               {dataState.allResults.map((dataset, index) => (
@@ -729,10 +731,16 @@ const Results = (data) => {
                 >
                   <h2 style={{ marginBottom: '5px' }} className="h5">
                     <Link href={"/dataset?name=" + dataset.name} passHref>
-                      <span style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>{dataset.title}</span>
+                      <a>
+                        <span style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>{dataset.title}</span>
+                      </a>
                     </Link>
                   </h2>
                   <ul className="result-dataset-info">
+                    <li>
+                      <strong>Published by: </strong>
+                      {dataset.organization}
+                    </li>
                     <li>
                       <strong>Last updated: </strong>
                       {dataset.updated}
