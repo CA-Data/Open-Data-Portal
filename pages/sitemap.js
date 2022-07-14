@@ -1,7 +1,13 @@
 import Link from "next/link";
+import Head from 'next/head';
 
 export default function preview(dataset) {
   return (
+    <>
+    <Head>
+      <title>Sitemap | CA Open Data</title>
+      <meta name="description" content="View the sitemap for State of California Open Data"></meta>
+    </Head>
     <main id="body-content" className="cagov-main">
       <nav className="nav-breadcrumb">
         <ol>
@@ -69,5 +75,6 @@ export default function preview(dataset) {
         </div>
       </article>
     </main>
+    </>
   );
 }

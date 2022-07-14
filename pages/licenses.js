@@ -1,8 +1,15 @@
 import Link from "next/link";
+import Head from 'next/head';
 
 export default function preview(dataset) {
   return (
+    <>
+    <Head>
+      <title>Licenses | CA Open Data</title>
+      <meta name="description" content="Available licenses for State of California Open Data."></meta>
+    </Head>
     <main id="body-content" className="cagov-main">
+      
       <nav className="nav-breadcrumb">
         <ol>
           <li>
@@ -34,5 +41,6 @@ export default function preview(dataset) {
         </div>
       </article>
     </main>
+    </>
   );
 }
