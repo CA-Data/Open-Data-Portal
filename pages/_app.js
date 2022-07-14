@@ -23,7 +23,6 @@ function MyApp({ Component, pageProps }) {
       window.gtag('config', gaId, {
         page_path: currentUrl,
       });
-      console.log('GA ID: ', gaId, 'Page Path: ', currentUrl);
     });
   }, [currentUrl]);
 

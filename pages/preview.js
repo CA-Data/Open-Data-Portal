@@ -140,7 +140,7 @@ export default function Preview(dataset) {
   return (
     <>
     <Head>
-        <title>{dataset.details.name} | Open Data California</title>
+        <title>{dataset.details.name} | CA Open Data</title>
         <meta
             name="description"
             content={dataset.details.description? dataset.details.description: "No discription available for "+ dataset.details.name}
