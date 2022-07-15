@@ -217,14 +217,14 @@ const getFormattedData = async (context) => {
 }
 
 const Results = (data) => {
-  const [topicSvg, setTopicSvg] = useState('svg-rotate-up');
-  const [publisherSvg, setPublisherSvg] = useState('svg-rotate-down');
+  const [topicSvg, setTopicSvg] = useState('svg-rotate-down');
+  const [publisherSvg, setPublisherSvg] = useState('svg-rotate-up');
   const [formatSvg, setFormatSvg] = useState('svg-rotate-down');
   const [tagSvg, setTagSvg] = useState('svg-rotate-down');
   const [selectedTopics, setSelectedTopics] = useState([]);
   const [selectedPublishers, setSelectedPublishers] = useState([]);
   const [selectedFormats, setSelectedFormats] = useState([]);
-  const [selectedtags, setSelectedTags] = useState([]);
+  const [selectedTags, setselectedTags] = useState([]);
   const [reset, setReset] = useState(false);
   const [topicList, setTopicList] = useState(Object.entries(data.filters.result.facets.groups).sort((a, b) => a[1] > b[1] ? -1 : 1));
   const [publisherList, setPublisherList] = useState(Object.entries(data.filters.result.facets.organization).sort((a, b) => a[1] > b[1] ? -1 : 1));
@@ -265,7 +265,7 @@ const Results = (data) => {
   var urlParamSort = (dataState.parameters.sort) ? "&sort=" + dataState.parameters.sort : "";
 
   // UseEffects will fire when its corresponding array is updated. 
-  // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedtags)
+  // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedTags)
   // Each array will append a value to the url
   useEffect(() => {
     getFormattedData(router).then(response => setDataState(response.props));
@@ -324,16 +324,16 @@ const Results = (data) => {
   useEffect(() => {
     if (!reset) {
       const url = new URL(window.location.href);
-      if (selectedtags.length == 0 || !url.searchParams.get('tag')) {
+      if (selectedTags.length == 0 || !url.searchParams.get('tag')) {
         url.searchParams.delete('tag')
         router.push(url, null, { shallow: true });
       }
-      if (selectedtags.length >= 1) {
-        url.searchParams.set('tag', selectedtags)
+      if (selectedTags.length >= 1) {
+        url.searchParams.set('tag', selectedTags)
         router.push(url, null, { shallow: true });
       }
     }
-  }, [selectedtags])
+  }, [selectedTags])
 
   // Persist selected checkboxes on page refresh
   useEffect(() => {
@@ -352,13 +352,10 @@ const Results = (data) => {
     toBeChecked.tag = tagParams?.split(',');
 
     // Set local state from params
-    if (topicParams) {
-      setSelectedTopics(topicParams.split(','));
-      setInitalTopic(topicParams);
-    }
+    topicParams ? setSelectedTopics(topicParams.split(',')) : null;
     publisherParams ? setSelectedPublishers(publisherParams.split(',')) : null;
     formatParams ? setSelectedFormats(formatParams.split(',')) : null;
-    tagParams ? setSelectedTags(tagParams.split(',')) : null;
+    tagParams ? setselectedTags(tagParams.split(',')) : null;
 
     // Loop through checkboxes 
     checkboxes.forEach(checkbox => {
@@ -399,14 +396,6 @@ const Results = (data) => {
 
   // End of UseEffect section **********************************************
 
-  const areObjectKeysEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj[key] !== null && obj[key] != "")
-        return false;
-    }
-    return true;
-  }
-
   // resetSearch resets the page
   const resetSearch = async () => {
     setFormatSvg('svg-rotate-down');       // resets any dropdowns to default state
@@ -416,7 +405,7 @@ const Results = (data) => {
     setSelectedTopics([]);                 // resets useState arrays
     setSelectedPublishers([]);             // *
     setSelectedFormats([]);                // *
-    setSelectedTags([]);                   // *
+    setselectedTags([]);                   // *
     setTopicShowMore(5);                   // *
     setPublisherShowMore(5);               // *
     setTagShowMore(5);                     // *
@@ -445,11 +434,18 @@ const Results = (data) => {
     return words.join(" ");
   }
 
+  const areObjectKeysEmpty = (obj) => {
+    for (var key in obj) {
+      if (obj[key] !== null && obj[key] != "")
+        return false;
+    }
+    return true;
+  }
   return (
     <>
     <Head>
       <title>Organization datasets | CA Open Data</title>
-      <meta name="description" content="Search specific topic datasets from State of California Open Data."></meta>
+      <meta name="description" content="Search all datasets from State of California Open Data."></meta>
     </Head>
       <main id="body-content" className="cagov-main">
         <article
@@ -483,10 +479,11 @@ const Results = (data) => {
                               else {
                                 setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
                               }
-                            }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
-                            <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0]}>{formatSentenceCase(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
+                            }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
+                            <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0] + '-topic'}>{formatSentenceCase(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({topic[1]})</span>
                           </li>
-                        ))}
+                        )
+                        )}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={topicList.length <= topicShowMore} onClick={() => topicShowMore > topicList.length ? '' : setTopicShowMore(topicShowMore + 5)} style={{ cursor: 'pointer' }}>
                           <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
@@ -503,7 +500,7 @@ const Results = (data) => {
                       </div>
                     </ul>
                   </li>
-                  <li hidden style={{ color: "#4B4B4B" }} className="filter-publisher">
+                  <li style={{ color: "#4B4B4B" }} className="filter-publisher">
                     <div onClick={() => { publisherSvg == 'svg-rotate-up' ? setPublisherSvg('svg-rotate-down') : setPublisherSvg('svg-rotate-up'); setPublisherShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={publisherSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Publisher</span>
@@ -518,8 +515,8 @@ const Results = (data) => {
                             else {
                               setSelectedPublishers(selectedPublishers.filter(item => item != publisher[0].toLowerCase()))
                             }
-                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${publisher[0]}-publisher`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={publisher[0]}>{formatTitleCase(publisher[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({publisher[1]})</span>
+                          }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${publisher[0]}-publisher`} className='checkBox' type={'checkbox'} />
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={publisher[0] + "-publisher"}>{formatTitleCase(publisher[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({publisher[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -541,7 +538,7 @@ const Results = (data) => {
                   <li style={{ color: "#4B4B4B" }} className="filter-format">
                     <div onClick={() => { formatSvg == 'svg-rotate-up' ? setFormatSvg('svg-rotate-down') : setFormatSvg('svg-rotate-up'); setFormatShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={formatSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
-                      <span style={{ fontWeight: 'bold', fontSize: '18px', lineHeight: '32px', }}>Format</span>
+                      <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Format</span>
                     </div>
                     <ul hidden={formatSvg != 'svg-rotate-up' ? true : false}>
                       {formatList.slice(0, formatShowMore).map((format, index) => (
@@ -554,19 +551,19 @@ const Results = (data) => {
                               setSelectedFormats(selectedFormats.filter(item => item != format[0].toLowerCase()))
                             }
                           }}
-                            style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${format[0]}-format`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1', lineHeight: '28px' }} htmlFor={format[0]}>{formatSentenceCase(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
+                          style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${format[0]}-format`} className='checkBox' type={'checkbox'} />
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={format[0] + "-format"}>{formatSentenceCase(format[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({format[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={formatList.length <= formatShowMore} onClick={() => formatShowMore > formatList.length ? '' : setFormatShowMore(formatShowMore + 5)} style={{ cursor: 'pointer' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
                           </div>
                         </button>
                         <button hidden={!(formatShowMore > 5)} onClick={() => setFormatShowMore(5)} style={{ cursor: 'pointer' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
                           </div>
@@ -577,31 +574,31 @@ const Results = (data) => {
                   <li style={{ color: "#4B4B4B" }} className="filter-tag">
                     <div onClick={() => { tagSvg == 'svg-rotate-up' ? setTagSvg('svg-rotate-down') : setTagSvg('svg-rotate-up'); setTagShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={tagSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
-                      <span style={{ fontWeight: 'bold', fontSize: '18px', lineHeight: '32px' }}>Tag</span>
+                      <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Tag</span>
                     </div>
                     <ul hidden={tagSvg != 'svg-rotate-up' ? true : false}>
                       {tagList.slice(0, tagShowMore).map((tag, index) => (
                         <li key={tag[0]} style={{ display: 'flex', gap: '10px' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
-                              setSelectedTags([...selectedtags, tag[0]])
+                              setSelectedTags([...selectedTags, tag[0]])
                             }
                             else {
-                              setSelectedTags(selectedtags.filter(item => item != tag[0]))
+                              setSelectedTags(selectedTags.filter(item => item != tag[0]))
                             }
-                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${tag[0]}-tag`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', width: '149px', flexGrow: '1', lineHeight: '28px' }} htmlFor={tag[0]}>{formatSentenceCase(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
+                          }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${tag[0]}-tag`} className='checkBox' type={'checkbox'} />
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={tag[0] + "-tag"}>{formatSentenceCase(tag[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({tag[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={tagList.length <= tagShowMore} onClick={() => tagShowMore > tagList.length ? '' : setTagShowMore(tagShowMore + 5)} style={{ cursor: 'pointer' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
                           </div>
                         </button>
                         <button hidden={!(tagShowMore > 5)} onClick={() => setTagShowMore(5)} style={{ cursor: 'pointer' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', lineHeight: '28px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
                           </div>
@@ -731,8 +728,8 @@ const Results = (data) => {
                 >
                   <h2 style={{ marginBottom: '5px' }} className="h5">
                     <Link href={"/dataset?name=" + dataset.name} passHref>
-                      <a>
-                        <span style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>{dataset.title}</span>
+                      <a style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>
+                        {dataset.title}
                       </a>
                     </Link>
                   </h2>

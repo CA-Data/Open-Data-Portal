@@ -414,6 +414,7 @@ const Results = (data) => {
         >
           <div
             className="sidebar-container everylayout sidebar-cell"
+            style={{ marginTop: '130px' }}
           >
             <div className="sidebar" space="0" side="left">
               <nav aria-labelledby="page-navigation-label">
@@ -651,8 +652,8 @@ const Results = (data) => {
                 >
                   <h2 style={{ marginBottom: '5px' }} className="h5">
                     <Link href={"/dataset?name=" + dataset.name} passHref>
-                      <a>
-                        <span style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>{dataset.title}</span>
+                      <a style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>
+                        {dataset.title}
                       </a>
                     </Link>
                   </h2>
