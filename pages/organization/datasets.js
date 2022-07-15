@@ -514,27 +514,7 @@ const Results = (data) => {
                       </div>
                     </ul>
                   </li>
-<<<<<<< HEAD
                   <li style={{ color: "#4B4B4B" }} className="filter-publisher">
-=======
-                  {/* Hidden publisher filters */}
-                  <li
-                    hidden
-                    style={{ color: "#4B4B4B" }}
-                    className="filter-publisher"
-                    tabIndex={'0'}
-                    onKeyDown={(e) => {
-                      if (e.which === 13 && e.target.tagName === 'LI') {
-                        if (publisherSvg === 'svg-rotate-up') {
-                          setPublisherSvg('svg-rotate-down')
-                        }
-                        if (publisherSvg === 'svg-rotate-down') {
-                          setPublisherSvg('svg-rotate-up')
-                        }
-                      }
-                    }}
-                  >
->>>>>>> bd9016a5c8105b1727abad1e297461b2c368da65
                     <div onClick={() => { publisherSvg == 'svg-rotate-up' ? setPublisherSvg('svg-rotate-down') : setPublisherSvg('svg-rotate-up'); setPublisherShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={publisherSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Publisher</span>
