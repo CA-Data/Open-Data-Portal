@@ -86,6 +86,27 @@ const getFormattedData = async (context) => {
   if ('sort' in context.query) {
     apirequest += "&sort=" + context.query.sort;
   }
+
+  // linkify - https://stackoverflow.com/questions/37684/how-to-replace-plain-urls-with-links
+  if(!String.linkify) {
+    String.prototype.linkify = function() {
+
+        // http://, https://, ftp://
+        var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
+
+        // www. sans http:// or https://
+        var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+
+        // Email addresses
+        //var emailAddressPattern = /[\w.]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+/gim;
+
+        return this
+            .replace(urlPattern, '<a href="$&">$&</a>')
+            .replace(pseudoUrlPattern, '$1<a href="http://$2">$2</a>')
+            //.replace(emailAddressPattern, '<a href="mailto:$&">$&</a>');
+    };
+  }
+
   /* Organization -------------------------------------------------------- */
   var publisherDetails = {}
   publisherDetails.title = ""
@@ -111,7 +132,7 @@ const getFormattedData = async (context) => {
 
     if (popular_datasets.result.count > 0) {
       publisherDetails.title = popular_datasets.result.results[0].organization.title
-      publisherDetails.description = popular_datasets.result.results[0].organization.description
+      publisherDetails.description = popular_datasets.result.results[0].organization.description.linkify().replace(/(?:\r\n|\r|\n)/g, '<br>');
       for (const item of popular_datasets.result.results) {
         var popularDataset = {}
         popularDataset.title = item.title
@@ -670,7 +691,7 @@ const Results = (data) => {
                   {data.publisherDetails.website &&
                     <p>Organization website: <a href={data.publisherDetails.website}>{data.publisherDetails.title}</a></p>
                   }
-                  <p className="organization-description">{data.publisherDetails.description}</p>
+                  <p className="organization-description" dangerouslySetInnerHTML={{__html:data.publisherDetails.description}}></p>
                 </div>
                 <div className="popular-datasets">
                   <h2>Popular datasets</h2>
