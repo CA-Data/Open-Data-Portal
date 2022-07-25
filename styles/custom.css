@@ -432,6 +432,15 @@ ul.align ul {
   grid-template-columns: auto 1fr;
   padding: .25rem;
 }
+
+.desktop-content {
+  display: block;
+}
+
+.mobile-content {
+  display: none;
+}
+
 @media (max-width: 767px) {
   .input-group li {
     grid-template-columns: 1fr;
@@ -1023,7 +1032,7 @@ font-size: 1rem;
 
 /* topic-results Popular datasets*/
 .topic-popular-container {
-  margin-bottom:1rem;
+  margin-bottom:3rem;
 }
 .topic-popular-cards-container {
   display:flex;
@@ -1249,5 +1258,13 @@ cagov-site-navigation .expanded-menu-section-header-link {
   }
   .page-container-ds.margin-right-clear {
     margin-right: 0px!important;
+  }
+
+  .desktop-content {
+    display: none;
+  }
+
+  .mobile-content {
+    display: block;
   }
 }

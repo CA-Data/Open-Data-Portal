@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import BasicSelect from '../../components/BasicSelect';
 import Link from 'next/link';
-
+import Head from 'next/head';
 export async function getServerSideProps(context) {
   return getFormattedData(context);
 }
@@ -87,6 +87,69 @@ const getFormattedData = async (context) => {
     apirequest += "&sort=" + context.query.sort;
   }
 
+  // linkify - https://stackoverflow.com/questions/37684/how-to-replace-plain-urls-with-links
+  if(!String.linkify) {
+    String.prototype.linkify = function() {
+
+        // http://, https://, ftp://
+        var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
+
+        // www. sans http:// or https://
+        var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+
+        // Email addresses
+        //var emailAddressPattern = /[\w.]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+/gim;
+
+        return this
+            .replace(urlPattern, '<a href="$&">$&</a>')
+            .replace(pseudoUrlPattern, '$1<a href="http://$2">$2</a>')
+            //.replace(emailAddressPattern, '<a href="mailto:$&">$&</a>');
+    };
+  }
+
+  /* Organization -------------------------------------------------------- */
+  var publisherDetails = {}
+  publisherDetails.title = ""
+  publisherDetails.description = ""
+  publisherDetails.website = ""
+  publisherDetails.popular = []
+
+  if ('publisher' in context.query && context.query.publisher.length > 0) {
+    if ('q' in context.query) {
+      var q = context.query.q
+    } else {
+      q = ""
+    }
+    var publisher = context.query.publisher
+    if (publisher.match(/,/gm)) {
+      publisher = publisher.replace(/,[a-zA-Z0-9]{1,}/gm, '')
+      publisherDetails = {}
+    }
+
+    
+
+    const popular_datasets = await fetch(`https://data.ca.gov/api/3/action/package_search?q=${q}&sort=views_recent%20desc&fq=organization:${publisher}&rows=3`).then(response => response.json()).catch(error => console.log(error))
+
+    if (popular_datasets.result.count > 0) {
+      publisherDetails.title = popular_datasets.result.results[0].organization.title
+      publisherDetails.description = popular_datasets.result.results[0].organization.description.linkify().replace(/(?:\r\n|\r|\n)/g, '<br>');
+      for (const item of popular_datasets.result.results) {
+        var popularDataset = {}
+        popularDataset.title = item.title
+        popularDataset.name = item.name
+        popularDataset.id = item.id
+
+        const views = await fetch(
+          `https://data.ca.gov/api/3/action/package_show?name_or_id=${item.id}&include_tracking=true`)
+          .then(response => response.json())
+          .catch(error => console.log("ERROR"))
+
+        popularDataset.views = views.result.tracking_summary.total
+        publisherDetails.popular.push(popularDataset)
+      }
+    }
+  }
+  /* Organization End ---------------------------------------------------- */
   //pages
   const pageData = {}
 
@@ -161,48 +224,6 @@ const getFormattedData = async (context) => {
       resultsArray.push(dataset)
     }
   }
-  /* Organization -------------------------------------------------------- */
-  var publisherDetails = {}
-  if ('publisher' in context.query && context.query.publisher.length > 0) {
-    if ('q' in context.query) {
-      var q = context.query.q
-    } else {
-      q = ""
-    }
-    var publisher = context.query.publisher
-    if (publisher.match(/,/gm)) {
-      publisher = publisher.replace(/,[a-zA-Z0-9]{1,}/gm, '')
-      publisherDetails = {}
-    }
-
-    publisherDetails.title = ""
-    publisherDetails.description = ""
-    publisherDetails.website = ""
-    publisherDetails.popular = []
-
-    const popular_datasets = await fetch(`https://data.ca.gov/api/3/action/package_search?q=${q}&sort=views_recent%20desc&fq=organization:${publisher}&rows=3`).then(response => response.json()).catch(error => console.log(error))
-
-    if (popular_datasets.result.count > 0) {
-      publisherDetails.title = popular_datasets.result.results[0].organization.title
-      publisherDetails.description = popular_datasets.result.results[0].organization.description
-      for (const item of popular_datasets.result.results) {
-        var popularDataset = {}
-        popularDataset.title = item.title
-        popularDataset.name = item.name
-        popularDataset.id = item.id
-
-        const views = await fetch(
-          `https://data.ca.gov/api/3/action/package_show?name_or_id=${item.id}&include_tracking=true`)
-          .then(response => response.json())
-          .catch(error => console.log("ERROR"))
-
-        popularDataset.views = views.result.tracking_summary.total
-        publisherDetails.popular.push(popularDataset)
-      }
-    }
-
-  }
-  /* Organization End ---------------------------------------------------- */
 
   return {
     props: {
@@ -217,14 +238,14 @@ const getFormattedData = async (context) => {
 }
 
 const Results = (data) => {
-  const [topicSvg, setTopicSvg] = useState('svg-rotate-up');
-  const [publisherSvg, setPublisherSvg] = useState('svg-rotate-down');
+  const [topicSvg, setTopicSvg] = useState('svg-rotate-down');
+  const [publisherSvg, setPublisherSvg] = useState('svg-rotate-up');
   const [formatSvg, setFormatSvg] = useState('svg-rotate-down');
   const [tagSvg, setTagSvg] = useState('svg-rotate-down');
   const [selectedTopics, setSelectedTopics] = useState([]);
   const [selectedPublishers, setSelectedPublishers] = useState([]);
   const [selectedFormats, setSelectedFormats] = useState([]);
-  const [selectedtags, setSelectedTags] = useState([]);
+  const [selectedTags, setselectedTags] = useState([]);
   const [reset, setReset] = useState(false);
   const [topicList, setTopicList] = useState(Object.entries(data.filters.result.facets.groups).sort((a, b) => a[1] > b[1] ? -1 : 1));
   const [publisherList, setPublisherList] = useState(Object.entries(data.filters.result.facets.organization).sort((a, b) => a[1] > b[1] ? -1 : 1));
@@ -265,68 +286,8 @@ const Results = (data) => {
   var urlParamSort = (dataState.parameters.sort) ? "&sort=" + dataState.parameters.sort : "";
 
   // UseEffects will fire when its corresponding array is updated. 
-  // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedtags)
+  // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedTags)
   // Each array will append a value to the url
-  // Persist selected checkboxes on page refresh
-  useEffect(() => {
-    let url = new URL(window.location.href);
-    let checkboxes = Array.from(document.getElementsByClassName('checkBox'));
-
-    // Get URL params
-    const topicParams = url.searchParams?.get('topic');
-    const publisherParams = url.searchParams?.get('publisher');
-    const formatParams = url.searchParams?.get('format');
-    const tagParams = url.searchParams?.get('tag');
-    const toBeChecked = {};
-    toBeChecked.topic = topicParams?.split(',');
-    toBeChecked.publisher = publisherParams?.split(',');
-    toBeChecked.format = formatParams?.split(',');
-    toBeChecked.tag = tagParams?.split(',');
-
-    // Set local state from params
-    topicParams ? setSelectedTopics(topicParams.split(',')) : null;
-    publisherParams ? setSelectedPublishers(publisherParams.split(',')) : null;
-    formatParams ? setSelectedFormats(formatParams.split(',')) : null;
-    tagParams ? setSelectedTags(tagParams.split(',')) : null;
-
-    // Loop through checkboxes 
-    checkboxes.forEach(checkbox => {
-      const formatting = checkbox?.id.split('-');
-      const filter = formatting.pop();
-      const checkboxId = formatting.join('-');
-      toBeChecked[filter]?.forEach(item => {
-        switch (filter) {
-          case 'topic':
-            if (topicSvg === 'svg-rotate-down') {
-              setTopicSvg('svg-rotate-up');
-            }
-            break;
-          case 'publisher':
-            if (publisherSvg === 'svg-rotate-down') {
-              setPublisherSvg('svg-rotate-up');
-            }
-            break;
-          case 'format':
-            if (formatSvg === 'svg-rotate-down') {
-              setFormatSvg('svg-rotate-up');
-            }
-            break;
-          case 'tag':
-            if (tagSvg === 'svg-rotate-down') {
-              setTagSvg('svg-rotate-up');
-            }
-            break;
-          default:
-            return null;
-        }
-        if (item === checkboxId.toLowerCase()) {
-          checkbox.checked = true;
-        }
-      })
-    });
-  }, []);
-
-
   useEffect(() => {
     getFormattedData(router).then(response => setDataState(response.props));
   }, [router])
@@ -384,16 +345,76 @@ const Results = (data) => {
   useEffect(() => {
     if (!reset) {
       const url = new URL(window.location.href);
-      if (selectedtags.length == 0 || !url.searchParams.get('tag')) {
+      if (selectedTags.length == 0 || !url.searchParams.get('tag')) {
         url.searchParams.delete('tag')
         router.push(url, null, { shallow: true });
       }
-      if (selectedtags.length >= 1) {
-        url.searchParams.set('tag', selectedtags)
+      if (selectedTags.length >= 1) {
+        url.searchParams.set('tag', selectedTags)
         router.push(url, null, { shallow: true });
       }
     }
-  }, [selectedtags])
+  }, [selectedTags])
+
+  // Persist selected checkboxes on page refresh
+  useEffect(() => {
+    let url = new URL(window.location.href);
+    let checkboxes = Array.from(document.getElementsByClassName('checkBox'));
+
+    // Get URL params
+    const topicParams = url.searchParams?.get('topic');
+    const publisherParams = url.searchParams?.get('publisher');
+    const formatParams = url.searchParams?.get('format');
+    const tagParams = url.searchParams?.get('tag');
+    const toBeChecked = {};
+    toBeChecked.topic = topicParams?.split(',');
+    toBeChecked.publisher = publisherParams?.split(',');
+    toBeChecked.format = formatParams?.split(',');
+    toBeChecked.tag = tagParams?.split(',');
+
+    // Set local state from params
+    topicParams ? setSelectedTopics(topicParams.split(',')) : null;
+    publisherParams ? setSelectedPublishers(publisherParams.split(',')) : null;
+    formatParams ? setSelectedFormats(formatParams.split(',')) : null;
+    tagParams ? setselectedTags(tagParams.split(',')) : null;
+
+    // Loop through checkboxes 
+    checkboxes.forEach(checkbox => {
+      const formatting = checkbox?.id.split('-');
+      const filter = formatting.pop();
+      const checkboxId = formatting.join('-');
+      toBeChecked[filter]?.forEach(item => {
+        switch (filter) {
+          case 'topic':
+            if (topicSvg === 'svg-rotate-down') {
+              setTopicSvg('svg-rotate-up');
+            }
+            break;
+          case 'publisher':
+            if (publisherSvg === 'svg-rotate-down') {
+              setPublisherSvg('svg-rotate-up');
+            }
+            break;
+          case 'format':
+            if (formatSvg === 'svg-rotate-down') {
+              setFormatSvg('svg-rotate-up');
+            }
+            break;
+          case 'tag':
+            if (tagSvg === 'svg-rotate-down') {
+              setTagSvg('svg-rotate-up');
+            }
+            break;
+          default:
+            return null;
+        }
+        if (item === checkboxId.toLowerCase()) {
+          checkbox.checked = true;
+        }
+      })
+    });
+  }, []);
+
   // End of UseEffect section **********************************************
 
   // resetSearch resets the page
@@ -405,7 +426,7 @@ const Results = (data) => {
     setSelectedTopics([]);                 // resets useState arrays
     setSelectedPublishers([]);             // *
     setSelectedFormats([]);                // *
-    setSelectedTags([]);                   // *
+    setselectedTags([]);                   // *
     setTopicShowMore(5);                   // *
     setPublisherShowMore(5);               // *
     setTagShowMore(5);                     // *
@@ -441,16 +462,20 @@ const Results = (data) => {
     }
     return true;
   }
-
   return (
     <>
+    <Head>
+      <title>Organization datasets | CA Open Data</title>
+      <meta name="description" content="Search all datasets from State of California Open Data."></meta>
+    </Head>
       <main id="body-content" className="cagov-main">
         <article
           id="post-design"
-          className="cagov-article with-sidebar with-page-nav results-page results-page"
+          className="cagov-article with-sidebar with-page-nav results-page"
         >
           <div
             className="sidebar-container everylayout sidebar-cell"
+            style={{ marginTop: '130px' }}
           >
             <div className="sidebar" space="0" side="left">
               <nav aria-labelledby="page-navigation-label">
@@ -458,7 +483,21 @@ const Results = (data) => {
                   <strong style={{ fontSize: '24px' }}>Filter by</strong>
                 </div>
                 <ul className="search-filters align">
-                  <li style={{ color: "#4B4B4B" }} className="filter-topic">
+                  <li
+                    style={{ color: "#4B4B4B" }}
+                    className="filter-topic"
+                    tabIndex={'0'}
+                    onKeyDown={(e) => {
+                      if (e.which === 13 && e.target.tagName === 'LI') {
+                        if (topicSvg === 'svg-rotate-up') {
+                          setTopicSvg('svg-rotate-down')
+                        }
+                        if (topicSvg === 'svg-rotate-down') {
+                          setTopicSvg('svg-rotate-up')
+                        }
+                      }
+                    }}
+                  >
                     <div onClick={() => { topicSvg == 'svg-rotate-up' ? setTopicSvg('svg-rotate-down') : setTopicSvg('svg-rotate-up'); setTopicShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={topicSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Topic</span>
@@ -475,10 +514,11 @@ const Results = (data) => {
                               else {
                                 setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
                               }
-                            }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
-                            <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0]}>{formatSentenceCase(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({topic[1]})</span>
+                            }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
+                            <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0] + '-topic'}>{formatSentenceCase(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({topic[1]})</span>
                           </li>
-                        ))}
+                        )
+                        )}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={topicList.length <= topicShowMore} onClick={() => topicShowMore > topicList.length ? '' : setTopicShowMore(topicShowMore + 5)} style={{ cursor: 'pointer' }}>
                           <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
@@ -495,8 +535,7 @@ const Results = (data) => {
                       </div>
                     </ul>
                   </li>
-                  {/* Hidden publisher filters */}
-                  <li hidden style={{ color: "#4B4B4B" }} className="filter-publisher">
+                  <li style={{ color: "#4B4B4B" }} className="filter-publisher">
                     <div onClick={() => { publisherSvg == 'svg-rotate-up' ? setPublisherSvg('svg-rotate-down') : setPublisherSvg('svg-rotate-up'); setPublisherShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={publisherSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Publisher</span>
@@ -511,8 +550,8 @@ const Results = (data) => {
                             else {
                               setSelectedPublishers(selectedPublishers.filter(item => item != publisher[0].toLowerCase()))
                             }
-                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${publisher[0]}-publisher`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={publisher[0]}>{formatTitleCase(publisher[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({publisher[1]})</span>
+                          }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${publisher[0]}-publisher`} className='checkBox' type={'checkbox'} />
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={publisher[0] + "-publisher"}>{formatTitleCase(publisher[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({publisher[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -531,7 +570,21 @@ const Results = (data) => {
                       </div>
                     </ul>
                   </li>
-                  <li style={{ color: "#4B4B4B" }} className="filter-format">
+                  <li
+                    style={{ color: "#4B4B4B" }}
+                    className="filter-format"
+                    tabIndex={'0'}
+                    onKeyDown={(e) => {
+                      if (e.which === 13 && e.target.tagName === 'LI') {
+                        if (formatSvg === 'svg-rotate-up') {
+                          setFormatSvg('svg-rotate-down')
+                        }
+                        if (formatSvg === 'svg-rotate-down') {
+                          setFormatSvg('svg-rotate-up')
+                        }
+                      }
+                    }}
+                  >
                     <div onClick={() => { formatSvg == 'svg-rotate-up' ? setFormatSvg('svg-rotate-down') : setFormatSvg('svg-rotate-up'); setFormatShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={formatSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Format</span>
@@ -547,19 +600,19 @@ const Results = (data) => {
                               setSelectedFormats(selectedFormats.filter(item => item != format[0].toLowerCase()))
                             }
                           }}
-                            style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${format[0]}-format`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={format[0]}>{formatSentenceCase(format[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({format[1]})</span>
+                          style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${format[0]}-format`} className='checkBox' type={'checkbox'} />
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={format[0] + "-format"}>{formatSentenceCase(format[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({format[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={formatList.length <= formatShowMore} onClick={() => formatShowMore > formatList.length ? '' : setFormatShowMore(formatShowMore + 5)} style={{ cursor: 'pointer' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
                           </div>
                         </button>
                         <button hidden={!(formatShowMore > 5)} onClick={() => setFormatShowMore(5)} style={{ cursor: 'pointer' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
                           </div>
@@ -567,7 +620,21 @@ const Results = (data) => {
                       </div>
                     </ul>
                   </li>
-                  <li style={{ color: "#4B4B4B" }} className="filter-tag">
+                  <li
+                    style={{ color: "#4B4B4B" }}
+                    className="filter-tag"
+                    tabIndex={'0'}
+                    onKeyDown={(e) => {
+                      if (e.which === 13 && e.target.tagName === 'LI') {
+                        if (tagSvg === 'svg-rotate-up') {
+                          setTagSvg('svg-rotate-down')
+                        }
+                        if (tagSvg === 'svg-rotate-down') {
+                          setTagSvg('svg-rotate-up')
+                        }
+                      }
+                    }}
+                  >
                     <div onClick={() => { tagSvg == 'svg-rotate-up' ? setTagSvg('svg-rotate-down') : setTagSvg('svg-rotate-up'); setTagShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={tagSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Tag</span>
@@ -577,24 +644,24 @@ const Results = (data) => {
                         <li key={tag[0]} style={{ display: 'flex', gap: '10px' }}>
                           <input onChange={(e) => {
                             if (e.target.checked) {
-                              setSelectedTags([...selectedtags, tag[0]])
+                              setSelectedTags([...selectedTags, tag[0]])
                             }
                             else {
-                              setSelectedTags(selectedtags.filter(item => item != tag[0]))
+                              setSelectedTags(selectedTags.filter(item => item != tag[0]))
                             }
-                          }} style={{ cursor: 'pointer', margin: '5px 10px 5px 4px' }} id={`${tag[0]}-tag`} className='checkBox' type={'checkbox'} />
-                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={tag[0]}>{formatSentenceCase(tag[0])} </label><span style={{ color: '#727272', flexGrow: '1', textAlign: 'right' }}>({tag[1]})</span>
+                          }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${tag[0]}-tag`} className='checkBox' type={'checkbox'} />
+                          <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={tag[0] + "-tag"}>{formatSentenceCase(tag[0])} </label><span style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({tag[1]})</span>
                         </li>
                       ))}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <button hidden={tagList.length <= tagShowMore} onClick={() => tagShowMore > tagList.length ? '' : setTagShowMore(tagShowMore + 5)} style={{ cursor: 'pointer' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
                           </div>
                         </button>
                         <button hidden={!(tagShowMore > 5)} onClick={() => setTagShowMore(5)} style={{ cursor: 'pointer' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="12" height="2" viewBox="0 0 18 2" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.43702 1.87499H16.438C16.956 1.87499 17.376 1.45499 17.376 0.936994C17.376 0.418994 16.956 -0.00100708 16.438 -0.00100708H1.43702C0.919023 -0.00100708 0.499023 0.418994 0.499023 0.936994C0.499023 1.45499 0.919023 1.87499 1.43702 1.87499V1.87499Z" fill="black"></path></svg>
                             Show less
                           </div>
@@ -611,8 +678,8 @@ const Results = (data) => {
                   setReset(true);
                   await resetSearch();
                   setReset(false);
-                }} style={{ border: '1px solid #4B4B4B', borderRadius: '5px', padding: '10px 15px', cursor: 'pointer', }}>Reset</button>
-              </nav>
+                }} style={{ border: '1px solid #727272', borderRadius: '4px', height: '48px', padding: '8px 16px', cursor: 'pointer', width: '82px' }}>Reset</button>
+                </nav>
             </div>
           </div>
           <div className="cagov-content content-cell">
@@ -624,7 +691,7 @@ const Results = (data) => {
                   {data.publisherDetails.website &&
                     <p>Organization website: <a href={data.publisherDetails.website}>{data.publisherDetails.title}</a></p>
                   }
-                  <p className="organization-description">{data.publisherDetails.description}</p>
+                  <p className="organization-description" dangerouslySetInnerHTML={{__html:data.publisherDetails.description}}></p>
                 </div>
                 <div className="popular-datasets">
                   <h2>Popular datasets</h2>
@@ -707,13 +774,13 @@ const Results = (data) => {
                 <input type="hidden" name="tag" value={dataState.parameters.tag}></input>
                 <input type="hidden" name="format" value={dataState.parameters.format}></input>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <label htmlFor="sort" style={{ fontSize: '18px', lineHeight: '32px' }}>Sort by</label>
+                  <label htmlFor="sort" style={{ fontSize: '18px', lineHeight: '32px', }}>Sort by</label>
                   <BasicSelect submit={submit} />
                 </div>
               </form>
             </div>
             <div>
-              <h4>{dataState.matches > 1 ? dataState.matches + ' datasets' : dataState.matches + ' dataset'} </h4>
+              <h4>{dataState.matches > 1 ? dataState.matches + ' datasets' : dataState.matches + ' dataset'}</h4>
             </div>
             <div className="result-page">
               {dataState.allResults.map((dataset, index) => (
@@ -724,10 +791,16 @@ const Results = (data) => {
                 >
                   <h2 style={{ marginBottom: '5px' }} className="h5">
                     <Link href={"/dataset?name=" + dataset.name} passHref>
-                      <span style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>{dataset.title}</span>
+                      <a style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>
+                        {dataset.title}
+                      </a>
                     </Link>
                   </h2>
                   <ul className="result-dataset-info">
+                    <li>
+                      <strong>Published by: </strong>
+                      {dataset.organization}
+                    </li>
                     <li>
                       <strong>Last updated: </strong>
                       {dataset.updated}
@@ -746,7 +819,7 @@ const Results = (data) => {
 
             {/*<div className="page-navigation"><a className="page-previous" href={"datasets?q=water&tag=regulatory&page="+data.pages.previous}>&lt;</a> <span className="page-current">{data.pages.current}</span> <a className="page-next" href={"datasets?q=water&tag=regulatory&page="+data.pages.next}>{data.pages.next}</a> <span className="page-dots">...</span> <a className="page-next" href={"datasets?q=water&tag=regulatory&page="+data.pages.total}>{data.pages.total}</a> <a className="page-next" href={"datasets?q=water&tag=regulatory&page="+data.pages.next}>&gt;</a></div>*/}
             <div className="page-navigation">
-              <a style={{ 'display': dataState.pages.previous.display }} className="page-previous" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.previous.value}><svg className={'rotate-90'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><text>Previous page arrow</text><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg></a>
+              <a style={{ 'display': dataState.pages.previous.display }} className="page-previous" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.previous.value}><svg className={'rotate-90'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><title>Previous page arrow</title><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg></a>
 
               <a style={{ 'display': dataState.pages.previous.display }} className="page-previous" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.previous.value}>{dataState.pages.previous.value + 1}</a>
 
@@ -754,7 +827,7 @@ const Results = (data) => {
 
               <a style={{ 'display': dataState.pages.next.display }} className="page-next" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.next.value}>{dataState.pages.next.value + 1}</a>
 
-              <a style={{ 'display': dataState.pages.next.display }} className="page-next" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.next.value}><svg className={'rotate-270'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><text>Next page arrow</text><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg></a>
+              <a style={{ 'display': dataState.pages.next.display }} className="page-next" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.next.value}><svg className={'rotate-270'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><title>Next page arrow</title><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg></a>
             </div>
           </div>
         </article>

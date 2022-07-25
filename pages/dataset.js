@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React, { useEffect } from 'react';
+import Head from 'next/head';
 
 export async function getServerSideProps(context) {
   function ValidateSize(FileSize) {
@@ -217,6 +218,21 @@ export default function DataSet(data) {
 */
   return (
     <>
+      <Head>
+          <title>{data.data_object.result.title} | CA Open Data</title>
+          <meta
+            name="description"
+            content={
+              data.data_object.result.notes.substring(0, '150').replace(/<br>/g, "\n")
+              .replace(/\<.*?\>/g, "")
+              .replace(/^"|^ /g, "")
+              .replace(/ $|"$/g, "")
+              .replace(/"+/g, "\"")
+              .replace(/__/g, "")+"..."
+            }
+          >     
+          </meta>
+      </Head>
       <main id="body-content" className="cagov-main dataset">
         <nav className="nav-breadcrumb">
           <ol>
@@ -354,14 +370,18 @@ export default function DataSet(data) {
                             >
                             Preview</a></div>
                         }
-                      <button
-                        className="api-button"
-                        data-resource-name={dataset.name}
-                        data-file-id={dataset.id}
-                      >
-                      API
-                      </button>
-                      <br />
+
+                        {
+                          dataset.format=="CSV" &&
+                          <div><button
+                            className="api-button"
+                            data-resource-name={dataset.name}
+                            data-file-id={dataset.id}
+                            >
+                            API
+                            </button></div>
+                        }
+
                       <a href={dataset.url}>Download</a>
                       </td>
                       <td>
@@ -424,15 +444,29 @@ export default function DataSet(data) {
                       </Link></div>
                     }
 
-                  <button
-                    className="api-button"
-                    data-resource-name={dataset.name}
-                    data-file-id={dataset.id}
-                  >
-                  API
-                  </button>
-                  <br />
-                  <a href={dataset.url}>Download</a>
+                    {
+                      dataset.format=="CSV" &&
+                        <div><button
+                          className="api-button"
+                          data-resource-name={dataset.name}
+                          data-file-id={dataset.id}
+                        >
+                        API
+                        </button></div>
+                    }
+
+                    {
+                      dataset.name=="ArcGIS Hub Dataset" && <div><a href={dataset.url}>View map</a></div>
+                    }
+
+                    {
+                      dataset.name=="ArcGIS GeoService" && <div><a href={dataset.url}>View</a></div>
+                    }
+
+                    {
+                      dataset.name!="ArcGIS Hub Dataset" && dataset.name!="ArcGIS GeoService" && <div><a href={dataset.url}>Download</a></div>
+                    }
+
                   </td>
                   <td>
                     {dataset.format}<br />
@@ -561,9 +595,9 @@ export default function DataSet(data) {
             </div>
           </div>
         </article>
-        <div id="myModal" className="modal">
+        <div id="myModal" className="modal" aria-modal="true">
           <div className="modal-content">
-            <span className="close">&times;</span>
+            <button className="close">&times;</button>
             <h2 className="h3">API endpoint</h2>
             <h3 id="resource-name" className="h4 thin">
               Dataset Name

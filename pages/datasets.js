@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import BasicSelect from '../components/BasicSelect';
 import Link from 'next/link';
+import Head from 'next/head';
 
 export async function getServerSideProps(context) {
   return getFormattedData(context);
@@ -402,13 +403,68 @@ const Results = (data) => {
 
   return (
     <>
+      <Head>
+        <title>Datasets | CA Open Data</title>
+        <meta name="description" content="Search all datasets from State of California Open Data."></meta>
+      </Head>
       <main id="body-content" className="cagov-main">
         <article
           id="post-design"
           className="cagov-article with-sidebar with-page-nav results-page"
         >
+          <div className="cagov-content desktop-content">
+            <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>{areObjectKeysEmpty(dataState.parameters) ? 'All datasets' : 'Search results'}</h1>
+            <div className="search-container grid-search">
+              <form className="site-search" action="/datasets">
+                <span className="sr-only" id="SearchInput">
+                  Dataset search
+                </span>
+                <span style={{ display: "flex" }}>
+                  <input
+                    type="text"
+                    id="q"
+                    name="q"
+                    aria-labelledby="SearchInput"
+                    placeholder="Search datasets"
+                    className="search-textfield"
+                    defaultValue={dataState.parameters.q}
+                  />
+                  <button
+                    type={'submit'}
+                    style={{
+                      outlineOffset: -2,
+                      right: 5,
+                      backgroundColor: "var(--primary-color, #046A99)",
+                      border: "1px solid var(--primary-color, #046A99)",
+                      borderRadius: "0px 4px 4px 0px",
+                      padding: "8px 14px",
+                      position: "relative",
+                      backgroundColor: '#034A6B',
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
+                    className="search-submit"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      enableBackground="new 0 0 17 17"
+                      viewBox="0 0 17 17"
+                      style={{ width: '23.43px', backgroundColor: '#034A6B' }}
+                    >
+                      <path
+                        fill="#fff"
+                        d="M16.4 15.2l-4-4c2-2.6 1.8-6.5-.6-8.9-1.3-1.3-3-2-4.8-2s-3.5.7-4.8 2c-2.6 2.6-2.6 6.9 0 9.6 1.3 1.3 3 2 4.8 2 1.4 0 2.9-.5 4.1-1.4l4.1 4c.2.2.4.3.7.3.2 0 .5-.1.7-.3.1-.3.1-.9-.2-1.3zM7 12c-1.3 0-2.6-.5-3.5-1.4-1.9-1.9-1.9-5.1 0-7 .9-.9 2.1-1.5 3.5-1.5s2.6.5 3.5 1.4 1.4 2.2 1.4 3.5-.5 2.6-1.4 3.5c-1 1-2.2 1.5-3.5 1.5z"
+                      ></path>
+                    </svg>
+                    <span className="sr-only">Submit</span>
+                  </button>
+                </span>
+              </form>
+            </div>
+          </div>
           <div
             className="sidebar-container everylayout sidebar-cell"
+            style={{ marginTop: '130px' }}
           >
             <div className="sidebar" space="0" side="left">
               <nav aria-labelledby="page-navigation-label">
@@ -416,7 +472,21 @@ const Results = (data) => {
                   <strong style={{ fontSize: '24px' }}>Filter by</strong>
                 </div>
                 <ul className="search-filters align">
-                  <li style={{ color: "#4B4B4B" }} className="filter-topic">
+                  <li
+                    style={{ color: "#4B4B4B" }}
+                    className={'filter-topic'}
+                    tabIndex={'0'}
+                    onKeyDown={(e) => {
+                      if (e.which === 13 && e.target.tagName === 'LI') {
+                        if (topicSvg === 'svg-rotate-up') {
+                          setTopicSvg('svg-rotate-down')
+                        }
+                        if (topicSvg === 'svg-rotate-down') {
+                          setTopicSvg('svg-rotate-up')
+                        }
+                      }
+                    }}
+                  >
                     <div onClick={() => { topicSvg == 'svg-rotate-up' ? setTopicSvg('svg-rotate-down') : setTopicSvg('svg-rotate-up'); setTopicShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={topicSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Topic</span>
@@ -433,13 +503,16 @@ const Results = (data) => {
                               else {
                                 setSelectedTopics(selectedTopics.filter(item => item != topic[0].toLowerCase()))
                               }
-                            }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} />
+                            }} style={{ cursor: 'pointer', margin: '5px 0 0 4px' }} id={`${topic[0]}-topic`} className='checkBox' type={'checkbox'} tabIndex={'0'} />
                             <label style={{ cursor: 'pointer', lineHeight: '28px', width: '149px', flexGrow: '1' }} htmlFor={topic[0] + '-topic'}>{formatSentenceCase(topic[0])}</label><span className={'topic-count'} style={{ color: '#727272', marginLeft: 'auto', textAlign: 'right' }}>({topic[1]})</span>
                           </li>
                         )
                         )}
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <button hidden={topicList.length <= topicShowMore} onClick={() => topicShowMore > topicList.length ? '' : setTopicShowMore(topicShowMore + 5)} style={{ cursor: 'pointer' }}>
+                        <button
+                          hidden={topicList.length <= topicShowMore}
+                          onClick={() => topicShowMore > topicList.length ? '' : setTopicShowMore(topicShowMore + 5)}
+                          style={{ cursor: 'pointer' }}>
                           <div style={{ display: 'flex', alignItems: 'center', fontSize: '16px', lineHeight: '28px' }}>
                             <svg style={{ paddingRight: '5px' }} width="15" height="12" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.45799 8.58301H6.99999V14.125C6.99999 14.562 7.35499 14.917 7.79199 14.917C8.22898 14.917 8.58398 14.562 8.58398 14.125V8.58301H14.126C14.563 8.58301 14.918 8.22801 14.918 7.79101C14.918 7.35401 14.563 6.99901 14.126 6.99901H8.58398V1.45701C8.58398 1.02001 8.22898 0.665009 7.79199 0.665009C7.35499 0.665009 6.99999 1.02001 6.99999 1.45701V6.99901H1.45799C1.02099 6.99901 0.665985 7.35401 0.665985 7.79101C0.665985 8.22801 1.02099 8.58301 1.45799 8.58301Z" fill="black"></path></svg>
                             More
@@ -454,7 +527,22 @@ const Results = (data) => {
                       </div>
                     </ul>
                   </li>
-                  <li style={{ color: "#4B4B4B" }} className="filter-publisher">
+                  <li
+                    style={{ color: "#4B4B4B" }}
+                    className="filter-publisher"
+                    tabIndex={'0'}
+                    onKeyDown={(e) => {
+                      if (e.which === 13 && e.target.tagName === 'LI') {
+                        if (publisherSvg === 'svg-rotate-up') {
+                          setPublisherSvg('svg-rotate-down')
+                        }
+                        if (publisherSvg === 'svg-rotate-down') {
+                          setPublisherSvg('svg-rotate-up')
+                        }
+                      }
+                    }}
+                  >
+
                     <div onClick={() => { publisherSvg == 'svg-rotate-up' ? setPublisherSvg('svg-rotate-down') : setPublisherSvg('svg-rotate-up'); setPublisherShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={publisherSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Publisher</span>
@@ -489,7 +577,21 @@ const Results = (data) => {
                       </div>
                     </ul>
                   </li>
-                  <li style={{ color: "#4B4B4B" }} className="filter-format">
+                  <li
+                    style={{ color: "#4B4B4B" }}
+                    className="filter-format"
+                    tabIndex={'0'}
+                    onKeyDown={(e) => {
+                      if (e.which === 13 && e.target.tagName === 'LI') {
+                        if (formatSvg === 'svg-rotate-up') {
+                          setFormatSvg('svg-rotate-down')
+                        }
+                        if (formatSvg === 'svg-rotate-down') {
+                          setFormatSvg('svg-rotate-up')
+                        }
+                      }
+                    }}
+                  >
                     <div onClick={() => { formatSvg == 'svg-rotate-up' ? setFormatSvg('svg-rotate-down') : setFormatSvg('svg-rotate-up'); setFormatShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={formatSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Format</span>
@@ -525,7 +627,21 @@ const Results = (data) => {
                       </div>
                     </ul>
                   </li>
-                  <li style={{ color: "#4B4B4B" }} className="filter-tag">
+                  <li
+                    style={{ color: "#4B4B4B" }}
+                    className="filter-tag"
+                    tabIndex={'0'}
+                    onKeyDown={(e) => {
+                      if (e.which === 13 && e.target.tagName === 'LI') {
+                        if (tagSvg === 'svg-rotate-up') {
+                          setTagSvg('svg-rotate-down')
+                        }
+                        if (tagSvg === 'svg-rotate-down') {
+                          setTagSvg('svg-rotate-up')
+                        }
+                      }
+                    }}
+                  >
                     <div onClick={() => { tagSvg == 'svg-rotate-up' ? setTagSvg('svg-rotate-down') : setTagSvg('svg-rotate-up'); setTagShowMore(5) }} style={{ display: 'flex', alignItems: 'center', margin: '10px 0px' }}>
                       <svg style={{ margin: '9px 21px 9px 4px' }} className={tagSvg} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg>
                       <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: '32px' }}>Tag</span>
@@ -574,52 +690,54 @@ const Results = (data) => {
             </div>
           </div>
           <div className="cagov-content content-cell">
-            <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>{areObjectKeysEmpty(dataState.parameters) ? 'All datasets' : 'Search results'}</h1>
-            <div className="search-container grid-search">
-              <form className="site-search" action="/datasets">
-                <span className="sr-only" id="SearchInput">
-                  Dataset search
-                </span>
-                <span style={{ display: "flex" }}>
-                  <input
-                    type="text"
-                    id="q"
-                    name="q"
-                    aria-labelledby="SearchInput"
-                    placeholder="Search datasets"
-                    className="search-textfield"
-                    defaultValue={dataState.parameters.q}
-                  />
-                  <button
-                    style={{
-                      outlineOffset: -2,
-                      right: 5,
-                      backgroundColor: "var(--primary-color, #046A99)",
-                      border: "1px solid var(--primary-color, #046A99)",
-                      borderRadius: "0px 4px 4px 0px",
-                      padding: "8px 14px",
-                      position: "relative",
-                      backgroundColor: '#034A6B',
-                      display: 'flex',
-                      alignItems: 'center'
-                    }}
-                    className="search-submit"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      enableBackground="new 0 0 17 17"
-                      viewBox="0 0 17 17"
-                      style={{ width: '23.43px', backgroundColor: '#034A6B' }}
+            <div className={"mobile-content"}>
+              <h1 style={{ marginTop: 0, color: '#034A6B', fontSize: '47px', lineHeight: '58.8px' }}>{areObjectKeysEmpty(dataState.parameters) ? 'All datasets' : 'Search results'}</h1>
+              <div className="search-container grid-search">
+                <form className="site-search" action="/datasets">
+                  <span className="sr-only" id="SearchInputMobile">
+                    Dataset search
+                  </span>
+                  <span style={{ display: "flex" }}>
+                    <input
+                      type="text"
+                      id="qMobile"
+                      name="qMobile"
+                      aria-labelledby="SearchInputMobile"
+                      placeholder="Search datasets"
+                      className="search-textfield"
+                      defaultValue={dataState.parameters.q}
+                    />
+                    <button
+                      style={{
+                        outlineOffset: -2,
+                        right: 5,
+                        backgroundColor: "var(--primary-color, #046A99)",
+                        border: "1px solid var(--primary-color, #046A99)",
+                        borderRadius: "0px 4px 4px 0px",
+                        padding: "8px 14px",
+                        position: "relative",
+                        backgroundColor: '#034A6B',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}
+                      className="search-submit"
                     >
-                      <path
-                        fill="#fff"
-                        d="M16.4 15.2l-4-4c2-2.6 1.8-6.5-.6-8.9-1.3-1.3-3-2-4.8-2s-3.5.7-4.8 2c-2.6 2.6-2.6 6.9 0 9.6 1.3 1.3 3 2 4.8 2 1.4 0 2.9-.5 4.1-1.4l4.1 4c.2.2.4.3.7.3.2 0 .5-.1.7-.3.1-.3.1-.9-.2-1.3zM7 12c-1.3 0-2.6-.5-3.5-1.4-1.9-1.9-1.9-5.1 0-7 .9-.9 2.1-1.5 3.5-1.5s2.6.5 3.5 1.4 1.4 2.2 1.4 3.5-.5 2.6-1.4 3.5c-1 1-2.2 1.5-3.5 1.5z"
-                      ></path>
-                    </svg>
-                    <span className="sr-only">Submit</span>
-                  </button>
-                </span>
-              </form>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        enableBackground="new 0 0 17 17"
+                        viewBox="0 0 17 17"
+                        style={{ width: '23.43px', backgroundColor: '#034A6B' }}
+                      >
+                        <path
+                          fill="#fff"
+                          d="M16.4 15.2l-4-4c2-2.6 1.8-6.5-.6-8.9-1.3-1.3-3-2-4.8-2s-3.5.7-4.8 2c-2.6 2.6-2.6 6.9 0 9.6 1.3 1.3 3 2 4.8 2 1.4 0 2.9-.5 4.1-1.4l4.1 4c.2.2.4.3.7.3.2 0 .5-.1.7-.3.1-.3.1-.9-.2-1.3zM7 12c-1.3 0-2.6-.5-3.5-1.4-1.9-1.9-1.9-5.1 0-7 .9-.9 2.1-1.5 3.5-1.5s2.6.5 3.5 1.4 1.4 2.2 1.4 3.5-.5 2.6-1.4 3.5c-1 1-2.2 1.5-3.5 1.5z"
+                        ></path>
+                      </svg>
+                      <span className="sr-only">Submit</span>
+                    </button>
+                  </span>
+                </form>
+              </div>
             </div>
             <div className="filter-sort">
               <form id="sortresults" method="GET" action="/datasets" name="sort">
@@ -646,8 +764,8 @@ const Results = (data) => {
                 >
                   <h2 style={{ marginBottom: '5px' }} className="h5">
                     <Link href={"/dataset?name=" + dataset.name} passHref>
-                      <a>
-                        <span style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>{dataset.title}</span>
+                      <a style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>
+                        {dataset.title}
                       </a>
                     </Link>
                   </h2>
@@ -674,7 +792,7 @@ const Results = (data) => {
 
             {/*<div className="page-navigation"><a className="page-previous" href={"datasets?q=water&tag=regulatory&page="+data.pages.previous}>&lt;</a> <span className="page-current">{data.pages.current}</span> <a className="page-next" href={"datasets?q=water&tag=regulatory&page="+data.pages.next}>{data.pages.next}</a> <span className="page-dots">...</span> <a className="page-next" href={"datasets?q=water&tag=regulatory&page="+data.pages.total}>{data.pages.total}</a> <a className="page-next" href={"datasets?q=water&tag=regulatory&page="+data.pages.next}>&gt;</a></div>*/}
             <div className="page-navigation">
-              <a style={{ 'display': dataState.pages.previous.display }} className="page-previous" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.previous.value}><svg className={'rotate-90'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><text>Previous page arrow</text><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg></a>
+              <a style={{ 'display': dataState.pages.previous.display }} className="page-previous" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.previous.value}><svg className={'rotate-90'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><title>Previous page arrow</title><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg></a>
 
               <a style={{ 'display': dataState.pages.previous.display }} className="page-previous" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.previous.value}>{dataState.pages.previous.value + 1}</a>
 
@@ -682,7 +800,7 @@ const Results = (data) => {
 
               <a style={{ 'display': dataState.pages.next.display }} className="page-next" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.next.value}>{dataState.pages.next.value + 1}</a>
 
-              <a style={{ 'display': dataState.pages.next.display }} className="page-next" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.next.value}><svg className={'rotate-270'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><text>Next page arrow</text><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg></a>
+              <a style={{ 'display': dataState.pages.next.display }} className="page-next" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.next.value}><svg className={'rotate-270'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><title>Next page arrow</title><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg></a>
             </div>
           </div>
         </article>
