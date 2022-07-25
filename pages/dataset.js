@@ -370,14 +370,18 @@ export default function DataSet(data) {
                             >
                             Preview</a></div>
                         }
-                      <button
-                        className="api-button"
-                        data-resource-name={dataset.name}
-                        data-file-id={dataset.id}
-                      >
-                      API
-                      </button>
-                      <br />
+
+                        {
+                          dataset.format=="CSV" &&
+                          <div><button
+                            className="api-button"
+                            data-resource-name={dataset.name}
+                            data-file-id={dataset.id}
+                            >
+                            API
+                            </button></div>
+                        }
+
                       <a href={dataset.url}>Download</a>
                       </td>
                       <td>
@@ -440,15 +444,29 @@ export default function DataSet(data) {
                       </Link></div>
                     }
 
-                  <button
-                    className="api-button"
-                    data-resource-name={dataset.name}
-                    data-file-id={dataset.id}
-                  >
-                  API
-                  </button>
-                  <br />
-                  <a href={dataset.url}>Download</a>
+                    {
+                      dataset.format=="CSV" &&
+                        <div><button
+                          className="api-button"
+                          data-resource-name={dataset.name}
+                          data-file-id={dataset.id}
+                        >
+                        API
+                        </button></div>
+                    }
+
+                    {
+                      dataset.name=="ArcGIS Hub Dataset" && <div><a href={dataset.url}>View map</a></div>
+                    }
+
+                    {
+                      dataset.name=="ArcGIS GeoService" && <div><a href={dataset.url}>View</a></div>
+                    }
+
+                    {
+                      dataset.name!="ArcGIS Hub Dataset" && dataset.name!="ArcGIS GeoService" && <div><a href={dataset.url}>Download</a></div>
+                    }
+
                   </td>
                   <td>
                     {dataset.format}<br />
