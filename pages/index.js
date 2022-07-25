@@ -124,6 +124,9 @@ export default function Home(data) {
                       </svg>
                       <span className="sr-only">Submit</span>
                     </button>
+                    <label id="SearchInput" className="sr-only">
+                      Dataset search
+                    </label>
                     <input
                       type="text"
                       id="q"

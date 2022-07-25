@@ -144,19 +144,25 @@ export default function DataSet(data) {
 
   useEffect(() => {
     console.log('running useEffect');
-    /* needs testing
-    document.querySelectorAll('.btn-read-more').forEach(el => el.addEventListener('click', event => {
-      //event.target.parentNode.querySelectorAll('p')[0].classList.toggle('expanded')
+    /* needs testing */
+    const readMorebuttons = document.querySelectorAll('.btn-read-more');
+    readMorebuttons.forEach(el => el.addEventListener('click', event => {
       if (event.target.parentNode.querySelectorAll('p')[0].classList.contains("expanded")) {
         event.target.parentNode.querySelectorAll('p')[0].classList.remove('expanded')
-        console.log(event.target.parentNode.querySelectorAll('p')[0].classList)
+        //console.log(event.target.parentNode.querySelectorAll('p')[0].classList)
         event.target.innerHTML = `Read less <span class="caret rotate-180"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12" style="margin-left: 0.5rem;transform: rotate(180deg);"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>`;
       } else {
         event.target.parentNode.querySelectorAll('p')[0].classList.add('expanded')
-        console.log(event.target.parentNode.querySelectorAll('p')[0].classList)
+        //console.log(event.target.parentNode.querySelectorAll('p')[0].classList)
         event.target.innerHTML = `Read more <span class="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12" style="margin-left: 0.5rem;"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>`;
       }
-    })); */
+
+    }));
+
+    /*
+      //event.target.parentNode.querySelectorAll('p')[0].classList.toggle('expanded')
+      
+    }));*/
 
     //**-- api modal start
     var modal = document.getElementById("myModal");
@@ -323,7 +329,7 @@ export default function DataSet(data) {
                   .replace(/__/g, "")
                 }
               </p>
-              {data.data_object.result.notes &&
+              {data.data_object.result.notes.length > 400 &&
                 <button className="btn-read-more">
                 Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
                 </button>
