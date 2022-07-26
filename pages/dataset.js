@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import Head from 'next/head';
 
 export async function getServerSideProps(context) {
+
   function ValidateSize(FileSize) {
     var marker = 1024;
     var decimal = 2;
@@ -50,7 +51,7 @@ export async function getServerSideProps(context) {
     const date = new Date(response.result.resources[index].created);
     const options = { year: "2-digit", month: "2-digit", day: "2-digit" };
     const dateFromat = date.toLocaleDateString("en-EN", options);
-    //console.log(response.result.resources[index].description)
+
     const resource = {};
     resource["id"] = response.result.resources[index].id;
     resource["name"] = response.result.resources[index].name;
@@ -106,8 +107,8 @@ export async function getServerSideProps(context) {
     "R/P1W":"Weekly",
     "R/PT1H":"Hourly"
   };
+
   var updateFrequency = arrayUpdateFreq[response.result.accrualPeriodicity];
-  //console.log(updateFrequency);
   if (updateFrequency) {
     updateFrequency = arrayUpdateFreq[updateFrequency] ? arrayUpdateFreq[updateFrequency] : updateFrequency;
   } else {
@@ -123,7 +124,7 @@ export async function getServerSideProps(context) {
     "transportation":`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path fill="#fff" d="M1 1H49V49H1z"/><g fill="#046a99"><path d="M45.2 19.5c-.3-1-1.2-1.6-2.3-1.6H26c-1 0-2 .7-2.3 1.6l-3.3 9.7v13c0 .8.7 1.6 1.6 1.6h1.5c.9 0 1.6-.9 1.6-1.8v-2.9h18.8v3c0 .8.7 1.7 1.6 1.7h1.4c.9 0 1.6-.8 1.6-1.7V29.2l-3.3-9.7Zm-19.2.8h17l2.3 7H23.6l2.4-7Zm-1 14.1c-1.2 0-2.3-1-2.3-2.4s1-2.3 2.4-2.3 2.3 1 2.3 2.3-1 2.4-2.3 2.4Zm18.9 0c-1.3 0-2.4-1-2.4-2.4s1-2.3 2.4-2.3 2.3 1 2.3 2.3-1 2.4-2.3 2.4Z"/><path d="M25 6.2H8.7a7 7 0 0 0-7 7v18.9a7 7 0 0 0 7 7l-2.3 2.3v2.4h2.3l4.7-4.7H18V27.3H6.3V11h21.1v4.7h4.7v-2.4a7 7 0 0 0-7-7ZM8.7 29.7c1.3 0 2.4 1 2.4 2.4s-1.1 2.3-2.4 2.3a2.4 2.4 0 0 1 0-4.7Z" opacity=".5"/></g></svg>` ,
     "water":`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path fill="#fff" d="M1 1H49V49H1z"/><g fill="#046a99"><path d="M35 35a12 12 0 0 0-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2s-2.8-.5-4.1-1.2c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2v3.9A12 12 0 0 0 11 40c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Zm0-9c-2.6 0-4.3 1-5.8 1.7-1.3.6-2.4 1.2-4.1 1.2s-2.8-.5-4.1-1.2c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2v3.9c2.7 0 4.4-.9 5.9-1.6a7.6 7.6 0 0 1 8.2 0c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6a7.6 7.6 0 0 1 8.2 0c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Zm6-16a11.8 11.8 0 0 0-11.8 0c-1.3.6-2.4 1.1-4.1 1.1s-2.8-.5-4.1-1.2c-1.5-.7-3.2-1.6-6-1.6s-4.3.9-5.8 1.6c-1.3.7-2.4 1.2-4.1 1.2V15c2.7 0 4.4-.9 5.9-1.6 1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4a8 8 0 0 1-4.1-1Z" opacity=".5"/><path d="M35 17.2c-2.6 0-4.3.8-5.8 1.6a7.6 7.6 0 0 1-8.2 0c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6A7.6 7.6 0 0 1 5 20v3.9c2.7 0 4.4-.9 5.9-1.6 1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Z"/></g></svg>` 
   };
-  var topicIcn = (response.result.groups[0] && response.result.groups[0].name && topicIconArray[response.result.groups[0].name]) ? topicIconArray[response.result.groups[0].name] : "";
+  var topicIcn = (response.result.groups[0] && response.result.groups[0].name && topicIconArray[response.result.groups[0].name]) ? topicIconArray[response.result.groups[0].name] : "N/A";
 
   return {
     props: {
@@ -149,10 +150,14 @@ export default function DataSet(data) {
       const description = event.target.parentNode.querySelectorAll('p')[0]
       if (description.classList.contains("expanded")) {
         description.classList.remove('expanded')
-        event.target.innerHTML = `Read less <span class="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12" style="margin-left: 0.5rem;transform: rotate(180deg);"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>`;
+        event.target.innerHtml = `<span class="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"></path></svg></span>`;
+        event.target.getElementsByTagName('svg')[0].classList.remove('rotate-180')
+
       } else {
         description.classList.add('expanded')
-        event.target.innerHTML = `Read more <span class="caret rotate-180"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12" style="margin-left: 0.5rem;"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>`;
+        event.target.innerHtml = `<span class="caret"><svg mlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"></path></svg></span>`;
+        event.target.getElementsByTagName('svg')[0].classList.add('rotate-180')
+
       }
     }));
 
@@ -191,10 +196,10 @@ export default function DataSet(data) {
 
   }, []);
 
+  /* Date trasnformation */
   const date_created = new Date(data.data_object.result.metadata_created);
   const date_modified = new Date(data.data_object.result.metadata_modified);
   const options = {
-    //weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -202,18 +207,6 @@ export default function DataSet(data) {
   const metadata_created = date_created.toLocaleDateString("en-EN", options);
   const metadata_modified = date_modified.toLocaleDateString("en-EN", options);
 
-/*  const readMore = () => {
-    if (
-      document.getElementById("dataset-description").getElementsByTagName('p')[0].classList.contains("expanded")
-    ) {
-      document.getElementById("dataset-description").getElementsByTagName('p')[0].classList.remove("expanded")
-      document.querySelectorAll(".btn-read-more")[0].innerHTML = "Read more ";
-    } else {
-      document.getElementById("dataset-description").getElementsByTagName('p')[0].classList.add("expanded")
-      document.querySelectorAll(".btn-read-more")[0].innerHTML = "Read less ";
-    }
-  };
-*/
   return (
     <>
       <Head>
@@ -264,7 +257,6 @@ export default function DataSet(data) {
               <div className="dataset-info">
                 <h2 className="h4">About this dataset</h2>
                 <p className="dataset-info-label">
-                  {/*data.group_object.map((e) => e.title).join(", ")*/}
                   <span className="dataset-icon" style={{}} dangerouslySetInnerHTML={{ __html:data.topicIcn}}></span>
                   {data.group_object[0].title ? data.group_object[0].title: ""}
                 </p>
@@ -323,7 +315,7 @@ export default function DataSet(data) {
               </p>
               {data.data_object.result.notes.length > 400 &&
                 <button className="btn-read-more">
-                Read more <span className="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
+                Read more <span className="caret"> <svg className="caret-readmore" xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>
                 </button>
               }
             </div>

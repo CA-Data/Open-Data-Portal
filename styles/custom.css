@@ -613,7 +613,8 @@ button.copied::after {
   height: 7px;
   pointer-events: none;
 }
-.rotate-180 svg{
+
+.rotate-180 {
   transform: rotate(180deg);
 }
 .rotate-90{
