@@ -689,6 +689,11 @@ input[type=checkbox] {
   padding: .5rem 0;
   font-size: 1.125rem;
 }
+.additional-info-table .column>h3 {
+  padding: 0;
+  margin: 0;
+  font-size: 1.125rem;
+}
 .additional-info-table .column p {
   font-size: 1.125rem;
   line-height: 2rem;
