@@ -103,7 +103,20 @@ export async function getServerSideProps(context) {
 
 export default function Preview(dataset) {
   useEffect(() => {
-    //**-- api modal start
+    /* -- Read more button */
+    const readMorebuttons = document.querySelectorAll('.btn-read-more');
+    readMorebuttons.forEach(el => el.addEventListener('click', event => {
+      const description = event.target.parentNode.querySelectorAll('p')[0]
+      if (description.classList.contains("expanded")) {
+        description.classList.remove('expanded')
+        event.target.innerHTML = `Read less <span class="caret"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12" style="margin-left: 0.5rem;transform: rotate(180deg);"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>`;
+      } else {
+        description.classList.add('expanded')
+        event.target.innerHTML = `Read more <span class="caret rotate-180"><svg xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 20 12" style="margin-left: 0.5rem;"><path fill="#727272" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z"/></svg></span>`;
+      }
+    }));
+
+    //* -- API Modal */
     var modal = document.getElementById("myModal");
     var span = document.getElementsByClassName("close")[0];
     span.onclick = function() {
@@ -135,7 +148,7 @@ export default function Preview(dataset) {
         event.target.classList.remove("copied");
       }, "750")
     }));
-    //api modal end --**
+
   }, []);
   return (
     <>
