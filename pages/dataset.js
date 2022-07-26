@@ -164,8 +164,10 @@ export default function DataSet(data) {
     //* -- API Modal */
     var modal = document.getElementById("myModal");
     var span = document.getElementsByClassName("close")[0];
+    var lastItem = "";
     span.onclick = function() {
       modal.style.display = "none";
+      lastItem.focus()
     }
 
     //add file id to api query inputs
@@ -182,6 +184,9 @@ export default function DataSet(data) {
       addFileId(file_id)
       document.getElementById("resource-name").innerHTML = resource_name
       modal.style.display = "block";
+      modal.getElementsByClassName('close')[0].focus()
+      lastItem = event.target;
+
     }));
 
     //copy inputs to clipboard
