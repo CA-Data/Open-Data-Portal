@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <link rel="shortcut icon" type="image/jpg" href="/favicon.ico"/>
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23110710-38"></script> 
         <script
             dangerouslySetInnerHTML={{
