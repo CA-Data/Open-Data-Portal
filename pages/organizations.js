@@ -63,6 +63,7 @@ export default function render(data) {
               </div>
             </div>
             {data.org.map((org, index) => (
+              org.package_count > 0 &&
               <div key={index} className="organization-row">
                 <div className="organization-column">
                   <Link href={"/organization/datasets?q=&publisher="+org.id} passHref>
