@@ -379,7 +379,7 @@ export default function DataSet(data) {
                             </button></div>
                         }
 
-                      <a href={dataset.url}>Download</a>
+                      <a href={dataset.url} className="exclude-external-link-icon">Download</a>
                       </td>
                       <td>
                         {dataset.format}<br />
@@ -463,7 +463,7 @@ export default function DataSet(data) {
                     }
 
                     {
-                      dataset.name!="ArcGIS Hub Dataset" && dataset.name!="ArcGIS GeoService" && <div><a href={dataset.url}>Download</a></div>
+                      dataset.name!="ArcGIS Hub Dataset" && dataset.name!="ArcGIS GeoService" && <div><a href={dataset.url} className="exclude-external-link-icon">Download</a></div>
                     }
 
                   </td>
