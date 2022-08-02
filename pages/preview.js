@@ -192,7 +192,7 @@ export default function Preview(dataset) {
           <div className="dataset-value">{dataset.details.size? dataset.details.size: "N/A"}</div>
           <div className="dataset-label">Access data:</div>
           <div className="dataset-value">
-            <a href={dataset.details.download}>Download file</a> |{" "}
+            <a href={dataset.details.download} className="exclude-external-link-icon">Download file</a> |{" "}
             <button
               className="api-button"
               data-resource-name={dataset.details.name}

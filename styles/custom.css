@@ -1288,6 +1288,6 @@ article a[href^="http"]::after, #myModal a[href^="http"]::after {
   display: inline-block;
 }
 /* remove external link icon for these domains */
-article a[href^="https://data.ca.gov/"]::after, #myModal a[href^="https://data.ca.gov/"]::after {
+article a[href^="https://data.ca.gov/"]::after, #myModal a[href^="https://data.ca.gov/"]::after, #body-content a[href^="http"].exclude-external-link-icon::after {
   display: none !important;
 }
