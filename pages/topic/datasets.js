@@ -700,7 +700,7 @@ const Results = (data) => {
 
                   {data.popularDatasets.map((dataset, index) => (
                     <a
-                      href={"/dataset?name=" + dataset.name}
+                      href={"/dataset/" + dataset.name}
                       key={index}
                       style={{}}
                       className="topic-popular-dataset"
@@ -800,7 +800,7 @@ const Results = (data) => {
                   className="result"
                 >
                   <h2 style={{ marginBottom: '5px' }} className="h5">
-                    <Link href={"/dataset?name=" + dataset.name} passHref>
+                    <Link href={"/dataset/" + dataset.name} passHref>
                       <a>
                         <span style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>{dataset.title}</span>
                       </a>

@@ -155,7 +155,7 @@ export default function Home(data) {
           <h2 className="primary-color">Popular datasets</h2>
           <div className="cagov-grid">
 
-          <Link href="/dataset?name=covid-19-hospital-data1" passHref>
+          <Link href="/dataset/covid-19-hospital-data1" passHref>
             <a className="no-deco cagov-card">
               <span className="card-text">COVID-19 hospital data</span>
               <svg
@@ -168,7 +168,7 @@ export default function Home(data) {
               </svg>
             </a>
             </Link>
-            <Link href="/dataset?name=ca-geographic-boundaries" passHref>
+            <Link href="/dataset/ca-geographic-boundaries" passHref>
             <a className="no-deco cagov-card">
               <span className="card-text">CA geographic boundaries</span>
               <svg
@@ -181,7 +181,7 @@ export default function Home(data) {
               </svg>
             </a>
             </Link>
-            <Link href="/dataset?name=covid-19-vaccine-progress-dashboard-data" passHref>
+            <Link href="/dataset/covid-19-vaccine-progress-dashboard-data" passHref>
             <a className="no-deco cagov-card">
               <span className="card-text">COVID-19 vaccine progress</span>
               <svg
@@ -194,7 +194,7 @@ export default function Home(data) {
               </svg>
             </a>
             </Link>
-            <Link href="/dataset?name=dwc-medical-provider-network-mpn" passHref>
+            <Link href="/dataset/dwc-medical-provider-network-mpn" passHref>
             <a className="no-deco cagov-card">
               <span className="card-text">List of Approved Medical Provider Network</span>
               <svg
@@ -208,7 +208,7 @@ export default function Home(data) {
             </a>
             </Link>
             
-            <Link href="/dataset?name=county-and-zip-code-references" passHref>
+            <Link href="/dataset/county-and-zip-code-references" passHref>
             <a className="no-deco cagov-card">
               <span className="card-text">County and ZIP code reference</span>
               <svg
@@ -221,7 +221,7 @@ export default function Home(data) {
               </svg>
             </a>
             </Link>
-            <Link href="/dataset?name=covid-19-time-series-metrics-by-county-and-state"  passHref>
+            <Link href="/dataset/covid-19-time-series-metrics-by-county-and-state"  passHref>
             <a className="no-deco cagov-card">
               <span className="card-text">COVID-19 Time-Series Metrics by County and State</span>
               <svg
