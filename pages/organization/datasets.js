@@ -700,7 +700,7 @@ const Results = (data) => {
                       <a
                         key={index}
                         className="popular-dataset-card"
-                        href={"/dataset?name=" + details.name}
+                        href={"/dataset/" + details.name}
                       >
                         <p className="dataset-title">
                           {details.title}
@@ -790,7 +790,7 @@ const Results = (data) => {
                   className="result"
                 >
                   <h2 style={{ marginBottom: '5px' }} className="h5">
-                    <Link href={"/dataset?name=" + dataset.name} passHref>
+                    <Link href={"/dataset/" + dataset.name} passHref>
                       <a style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>
                         {dataset.title}
                       </a>
