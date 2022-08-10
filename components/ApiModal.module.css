@@ -1,0 +1,184 @@
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(140, 140, 140, 0.45);
+  z-index: 9999;
+}
+
+/* Modal Content */
+.modal_content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 1.5rem;
+  width: 60%;
+  border-radius: 6px;
+  max-width: 700px;
+}
+.modal_content label {
+  font-weight: bold;
+}
+.modal_content h2 {
+  margin: 0;
+}
+.modal_content input {
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-size: 0.875rem;
+  line-height: 2rem;
+}
+.modal_content > p > a {
+  font-size: 1.125rem;
+  line-height: 2rem;
+}
+#resource-name {
+  font-size: 1.4375rem;
+}
+
+/* The Close Button */
+.close {
+  color: #727272;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 50%;
+  height: 42px;
+  width: 42px;
+  text-align: center;
+  line-height: 42px;
+}
+
+.close:hover,
+.close:focus {
+  color: #4b4b4b;
+  text-decoration: none;
+  cursor: pointer;
+  background: #fafafa;
+  line-height: 42px;
+}
+
+/* API Links */
+.input_group {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0 0;
+}
+.input_group li {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  padding: 0.25rem;
+}
+
+.group {
+  display: flex;
+  width: 100%;
+}
+.input_group label {
+  font-size: 1.125rem;
+  min-width: 120px;
+  display: inline-block;
+}
+.input_group input {
+  height: 3rem;
+  width: 90%;
+  background: #fafafa;
+  border: 1px solid #d4d4d4;
+  box-sizing: border-box;
+  border-radius: 6px 0px 0px 6px;
+  padding: 16px 0 16px 16px;
+  margin: 0;
+}
+
+.input_group input:hover,
+.input_group input:focus {
+  background: #ffffff;
+  outline: 0px solid var(--primary-color);
+  padding: 16px 0 16px 16px;
+  border: 1px solid var(--primary-color);
+}
+
+.input_group button:focus {
+  padding: 0.575rem;
+  background: #ffffff;
+  border: 2px solid var(--primary-color);
+  border-left: 2px solid var(--primary-color);
+  margin-left: -1px;
+  outline: 1px !important;
+}
+.copy_button {
+  height: 3rem;
+  width: 48px;
+  padding: 0.5rem;
+  background: #fafafa;
+  margin: 0;
+  border: 1px solid #d4d4d4;
+  border-left: 1px solid #d4d4d4;
+  border-radius: 0px 5px 5px 0px;
+  line-height: 0;
+  position: relative;
+}
+.copy_button svg {
+  pointer-events: none;
+}
+
+.copy_button:active,
+.copy_button:focus {
+  width: 48px;
+  background: #ffffff;
+  border: 1px solid var(--primary-color);
+  border-left: 2px solid var(--primary-color);
+  outline: 0px solid var(--primary-color);
+  margin-left: -2px;
+}
+.copy_button:focus {
+  width: 48px;
+  background: #ffffff;
+  border: 1px solid var(--primary-color);
+  border-left: 2px solid var(--primary-color);
+  margin-left: -2px;
+}
+.copy_button:hover {
+  background: #f5f5f5;
+  border: 1px solid #a09fa7;
+  border-left: 2px solid #a09fa7;
+  padding-right: 9px;
+}
+
+button.copied::before {
+  background: #505050;
+  content: "";
+  padding: 6px;
+  position: absolute;
+  transform: rotate(45deg);
+  bottom: 95%;
+  right: 13px;
+}
+
+button.copied::after {
+  content: "Copied!";
+  position: absolute;
+  border-radius: 4px;
+  padding: 18px 12px 18px 12px;
+  bottom: 100%;
+  right: 6px;
+  background: #505050;
+  color: white;
+  font-size: 1rem;
+}
+
+@media (max-width: 767px) {
+  .modal_content {
+    width: 96%;
+  }
+  .input_group li {
+    grid-template-columns: 1fr;
+  }
+}

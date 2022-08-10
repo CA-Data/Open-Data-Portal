@@ -1,11 +1,9 @@
 @media (min-width: 992px) {
-  
-.full-width-nav .main-navigation {
+  .full-width-nav .main-navigation {
     margin-top: 5px;
     padding-left: 0px;
     min-height: 55px;
-}
-
+  }
 }
 /* translate widget loader */
 #google_translate_element {
@@ -85,10 +83,17 @@
 .official-header .official-languages button.offcial-more:hover {
   color: var(--primary-dark-color, #4a1106);
 }
-.official-header .official-languages button.offcial-more[aria-expanded=false] .caret-down {
+.official-header
+  .official-languages
+  button.offcial-more[aria-expanded="false"]
+  .caret-down {
   transition: all 0.3s;
 }
-.official-header .official-languages button.offcial-more[aria-expanded=false] .caret-down svg {
+.official-header
+  .official-languages
+  button.offcial-more[aria-expanded="false"]
+  .caret-down
+  svg {
   padding: 0 0 0 0;
   width: 20px;
   height: 18px;
@@ -96,10 +101,17 @@
   position: relative;
   right: 5px;
 }
-.official-header .official-languages button.offcial-more[aria-expanded=true] .caret-down {
+.official-header
+  .official-languages
+  button.offcial-more[aria-expanded="true"]
+  .caret-down {
   transition: transform 0.3s;
 }
-.official-header .official-languages button.offcial-more[aria-expanded=true] .caret-down svg {
+.official-header
+  .official-languages
+  button.offcial-more[aria-expanded="true"]
+  .caret-down
+  svg {
   padding: 0 0 0 0;
   width: 20px;
   height: 18px;
@@ -299,7 +311,8 @@
 .site-header .menu-trigger:hover {
   color: var(--primary-dark-color, #043747);
 }
-.site-header .menu-trigger:hover .hamburger-inner:before, .site-header .menu-trigger:hover .hamburger-inner:after {
+.site-header .menu-trigger:hover .hamburger-inner:before,
+.site-header .menu-trigger:hover .hamburger-inner:after {
   background-color: var(--primary-dark-color, #043747);
 }
 .site-header .hamburger {
@@ -331,7 +344,9 @@
   transition-duration: 0.22s;
   transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
-.site-header .hamburger-inner, .site-header .hamburger-inner:before, .site-header .hamburger-inner:after {
+.site-header .hamburger-inner,
+.site-header .hamburger-inner:before,
+.site-header .hamburger-inner:after {
   height: 2px;
   border-radius: 0;
   position: absolute;
@@ -339,18 +354,22 @@
   transition-duration: 0.15s;
   transition-timing-function: ease;
 }
-.site-header .hamburger-inner:before, .site-header .hamburger-inner:after {
+.site-header .hamburger-inner:before,
+.site-header .hamburger-inner:after {
   width: 20px;
   content: "";
   display: block;
 }
 .site-header .hamburger-inner:before {
   top: -6px;
-  transition: top 0.1s 0.25s ease-in, opacity 0.1s ease-in, width 0.1s 0.12s ease-out;
+  transition: top 0.1s 0.25s ease-in, opacity 0.1s ease-in,
+    width 0.1s 0.12s ease-out;
 }
 .site-header .hamburger-inner:after {
   bottom: -6px;
-  transition: bottom 0.1s 0.25s ease-in, transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19), width 0.1s 0.12s ease-out;
+  transition: bottom 0.1s 0.25s ease-in,
+    transform 0.22s cubic-bezier(0.55, 0.055, 0.675, 0.19),
+    width 0.1s 0.12s ease-out;
 }
 
 .display-menu .cagov-nav.hamburger .hamburger-inner {
@@ -359,7 +378,9 @@
   transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   width: 12px;
 }
-.display-menu .cagov-nav.hamburger .hamburger-inner, .display-menu .cagov-nav.hamburger .hamburger-inner:before, .display-menu .cagov-nav.hamburger .hamburger-inner:after {
+.display-menu .cagov-nav.hamburger .hamburger-inner,
+.display-menu .cagov-nav.hamburger .hamburger-inner:before,
+.display-menu .cagov-nav.hamburger .hamburger-inner:after {
   width: 20px !important;
 }
 .display-menu .cagov-nav.hamburger .hamburger-inner:before {
@@ -370,7 +391,8 @@
 .display-menu .cagov-nav.hamburger .hamburger-inner:after {
   bottom: 0;
   transform: rotate(-90deg);
-  transition: bottom 0.1s ease-out, transform 0.22s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transition: bottom 0.1s ease-out,
+    transform 0.22s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
 .site-header .search-container .site-search,
@@ -381,7 +403,7 @@ cagov-navoverlay .search-container .site-search {
 .site-header .search-container .site-search .search-textfield,
 cagov-navoverlay .search-container .site-search .search-textfield {
   border: 1px solid;
-  border-color: var(--primary-color, #046A99);
+  border-color: var(--primary-color, #046a99);
   border-radius: 4px;
   padding: 10px;
   width: 100%;
@@ -397,8 +419,8 @@ cagov-navoverlay .search-container .site-search .search-submit {
   position: relative;
   right: 5px;
   outline-offset: -2px;
-  background-color: var(--primary-color, #046A99);
-  border: 1px solid var(--primary-color, #046A99);
+  background-color: var(--primary-color, #046a99);
+  border: 1px solid var(--primary-color, #046a99);
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   padding: 7px 14px 4px 14px;
@@ -418,7 +440,7 @@ cagov-navoverlay .search-container .site-search .search-submit svg path {
 }
 .site-header .search-container .site-search .search-close,
 cagov-navoverlay .search-container .site-search .search-close {
-  color: var(--primary-color, #046A99);
+  color: var(--primary-color, #046a99);
   text-decoration: underline;
   border: none;
   background-color: var(--gray-100, #f9f9fa);
@@ -445,7 +467,7 @@ cagov-navoverlay .search-container--small.hidden-search {
 
 @media (min-width: 768px) {
   .mobile-icons,
-.search-close {
+  .search-close {
     display: none !important;
   }
 
@@ -580,7 +602,9 @@ h3 {
 }
 /* call to action */
 /* styles applied to elements WordPress is adding to the markup */
-.cagov-hero-body-content .wp-block-button:not(.is-style-outline) .wp-block-button__link:not(:hover):not(:active):not(.has-background) {
+.cagov-hero-body-content
+  .wp-block-button:not(.is-style-outline)
+  .wp-block-button__link:not(:hover):not(:active):not(.has-background) {
   /* defined here for when css vars are not supported */
   background-color: var(--primary-color, #33705b);
   /* variable used with fallback in case it is not defined */
@@ -593,7 +617,9 @@ h3 {
   text-decoration: none;
 }
 
-.cagov-hero-body-content .wp-block-button:not(.is-style-outline) .wp-block-button__link:hover {
+.cagov-hero-body-content
+  .wp-block-button:not(.is-style-outline)
+  .wp-block-button__link:hover {
   /* defined here for when css vars are not supported */
   background-color: var(--primary-hover-color, #33705b);
   /* variable used with fallback in case it is not defined */
@@ -672,7 +698,7 @@ section.site-footer .footer-social-links a:hover svg path {
 
 @media (min-width: 991px) {
   .footer-secondary-links,
-section.site-footer .container {
+  section.site-footer .container {
     flex-direction: row !important;
     align-items: center;
   }

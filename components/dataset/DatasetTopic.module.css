@@ -1,0 +1,15 @@
+.dataset_info_label {
+  color: #4b4b4b;
+  font-weight: bold;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+  border-top: 1px solid #cecece;
+  border-bottom: 1px solid #cecece;
+  padding: 1rem 0 0.5rem 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 0.5rem;
+}
+.dataset_icon svg {
+  width: 2.0625rem;
+}

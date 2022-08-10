@@ -1,0 +1,26 @@
+.table {
+  border: 1px solid #d4d4d4;
+  max-width: 700px;
+  margin-top: 3rem;
+}
+.row {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  width: 100%;
+  border-bottom: 1px solid #d4d4d4;
+  line-height: 2rem;
+}
+.row:last-child {
+  border: 0px;
+}
+.header {
+  background: #ededed;
+  font-weight: 600;
+}
+.column {
+  font-size: 1.125rem;
+  padding: 0.75rem 0.5rem;
+}
+.column:first-child {
+  border-right: 1px solid #d4d4d4;
+}

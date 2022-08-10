@@ -1,14 +1,18 @@
-import * as React from 'react';
-import SelectUnstyled, { selectUnstyledClasses } from '@mui/base/SelectUnstyled';
-import OptionUnstyled, { optionUnstyledClasses } from '@mui/base/OptionUnstyled';
-import PopperUnstyled from '@mui/base/PopperUnstyled';
-import { styled } from '@mui/system';
+import * as React from "react";
+import SelectUnstyled, {
+  selectUnstyledClasses,
+} from "@mui/base/SelectUnstyled";
+import OptionUnstyled, {
+  optionUnstyledClasses,
+} from "@mui/base/OptionUnstyled";
+import PopperUnstyled from "@mui/base/PopperUnstyled";
+import { styled } from "@mui/system";
 
-const blue = '#046A99';
-const lightBlue = '#0679af'
-const white = '#ffffff00'
+const blue = "#046A99";
+const lightBlue = "#0679af";
+const white = "#ffffff00";
 
-const StyledButton = styled('button')(
+const StyledButton = styled("button")(
   ({ theme }) => `
   font-family: Public Sans;
   font-weight: 400;
@@ -42,22 +46,22 @@ const StyledButton = styled('button')(
     padding-bottom:5px;
 
   }
-  `,
+  `
 );
 
-const StyledListbox = styled('ul')(
+const StyledListbox = styled("ul")(
   ({ theme }) => `
   font-family: IBM Plex Sans, sans-serif;
   font-size: 0.875rem;
   box-sizing: border-box;
   min-width: 126.2px;
-  background: ${'#ffff'};
+  background: ${"#ffff"};
   border: 2px solid ${blue};
   color: ${blue};
   overflow: auto;
   outline: 0px;
   margin:0px;
-  `,
+  `
 );
 
 const StyledOption = styled(OptionUnstyled)(
@@ -77,17 +81,17 @@ const StyledOption = styled(OptionUnstyled)(
 
   &.${optionUnstyledClasses.selected} {
     background-color: ${blue};
-    color: ${'#ffffff'};
+    color: ${"#ffffff"};
   }
 
   &.${optionUnstyledClasses.highlighted} {
     background-color: ${blue};
-    color: ${'#ffffff'};
+    color: ${"#ffffff"};
   }
 
   &.${optionUnstyledClasses.highlighted}.${optionUnstyledClasses.selected} {
     background-color: ${blue};
-    color: ${'#ffffff'};
+    color: ${"#ffffff"};
   }
 
   &.${optionUnstyledClasses.disabled} {
@@ -96,9 +100,9 @@ const StyledOption = styled(OptionUnstyled)(
 
   &:hover:not(.${optionUnstyledClasses.disabled}) {
     background-color: ${lightBlue};
-    color: ${'#ffffff'};
+    color: ${"#ffffff"};
   }
-  `,
+  `
 );
 
 const StyledPopper = styled(PopperUnstyled)`
@@ -113,14 +117,21 @@ const CustomSelect = React.forwardRef(function CustomSelect(props, ref) {
     ...props.components,
   };
 
-  return <SelectUnstyled onChange={(e)=>props.submit(e)} {...props} ref={ref} components={components} />;
+  return (
+    <SelectUnstyled
+      onChange={(e) => props.submit(e)}
+      {...props}
+      ref={ref}
+      components={components}
+    />
+  );
 });
 
-export default function BasicSelect({submit}) {
+export default function BasicSelect({ submit }) {
   return (
-    <CustomSelect submit={submit} defaultValue={'score desc'}>
-      <StyledOption value={'score desc'}>Best match</StyledOption>
-      <StyledOption value={'metadata_modified desc'}>Most recent</StyledOption>
+    <CustomSelect submit={submit} defaultValue={"score desc"}>
+      <StyledOption value={"score desc"}>Best match</StyledOption>
+      <StyledOption value={"metadata_modified desc"}>Most recent</StyledOption>
     </CustomSelect>
   );
 }
