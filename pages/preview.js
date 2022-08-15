@@ -263,7 +263,13 @@ export default function Preview(dataset) {
               </div>
               <div className="dataset-label">Access data:</div>
               <div className="dataset-value">
-                <a href={dataset.details.download}>Download file</a> |{" "}
+                <a
+                  href={dataset.details.download}
+                  className="exclude-external-link-icon"
+                >
+                  Download file
+                </a>{" "}
+                |{" "}
                 <button
                   className="api-button"
                   data-resource-name={dataset.details.name}
@@ -284,8 +290,6 @@ export default function Preview(dataset) {
                   />
                 </div>
               </div>
-
-              {/*<div className="dataset-value">{dataset.details.description}</div>*/}
             </div>
             {dataset.table.rows.length > 0 && (
               <div id="data-table-section">

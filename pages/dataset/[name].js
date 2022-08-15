@@ -384,6 +384,7 @@ export default function DataSet(data) {
                             </div>
                           )}
 
+<<<<<<< HEAD:pages/dataset.js
                           <a href={dataset.url}>Download</a>
                         </td>
                         <td>
@@ -413,6 +414,15 @@ export default function DataSet(data) {
                       <th>Access data</th>
                       <th>File details</th>
                       <th>Last updated</th>
+=======
+                      <a href={dataset.url} className="exclude-external-link-icon">Download</a>
+                      </td>
+                      <td>
+                        {dataset.format}<br />
+                        {dataset.size}
+                      </td>
+                      <td>{dataset.created}</td>
+>>>>>>> a122aadbc988895277982b78ab7428020312f899:pages/dataset/[name].js
                     </tr>
                   </thead>
                   <tbody>
@@ -472,11 +482,17 @@ export default function DataSet(data) {
                             </div>
                           )}
 
+<<<<<<< HEAD:pages/dataset.js
                           {dataset.name == "ArcGIS GeoService" && (
                             <div>
                               <a href={dataset.url}>View</a>
                             </div>
                           )}
+=======
+                    {
+                      dataset.name!="ArcGIS Hub Dataset" && dataset.name!="ArcGIS GeoService" && <div><a href={dataset.url} className="exclude-external-link-icon">Download</a></div>
+                    }
+>>>>>>> a122aadbc988895277982b78ab7428020312f899:pages/dataset/[name].js
 
                           {dataset.name != "ArcGIS Hub Dataset" &&
                             dataset.name != "ArcGIS GeoService" && (

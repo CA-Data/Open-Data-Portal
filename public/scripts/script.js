@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 if (document.querySelector('#apiModal')) {
   const  focusableElements = '[href], input, button, [tabindex]:not([tabindex="-1"])';
   const modal = document.querySelector('#apiModal');
@@ -5,12 +6,24 @@ if (document.querySelector('#apiModal')) {
   const firstFocusableElement = modal.querySelectorAll(focusableElements)[0];
   const focusableContent = modal.querySelectorAll(focusableElements);
   const lastFocusableElement = focusableContent[focusableContent.length - 1];
+=======
+const  focusableElements =
+    '[href], input, button, [tabindex]:not([tabindex="-1"])';
+const modal = document.querySelector('#myModal'); // select the modal by it's id
+
+if (modal) {
+  const firstFocusableElement = modal.querySelectorAll(focusableElements)[0]; // get first element to be focused inside modal
+  const focusableContent = modal.querySelectorAll(focusableElements);
+  const lastFocusableElement = focusableContent[focusableContent.length - 1]; // get last element to be focused inside modal
+  
+>>>>>>> a122aadbc988895277982b78ab7428020312f899
   
   document.addEventListener('keydown', function(e) {
     let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
   
     if (!isTabPressed) {
       return;
+<<<<<<< HEAD
     }
   
     if (e.shiftKey) {
@@ -22,6 +35,41 @@ if (document.querySelector('#apiModal')) {
       if (document.activeElement === lastFocusableElement) {
         firstFocusableElement.focus();
         e.preventDefault();
+=======
+    }
+  
+    if (e.shiftKey) { // if shift key pressed for shift + tab combination
+      if (document.activeElement === firstFocusableElement) {
+        lastFocusableElement.focus(); // add focus for the last focusable element
+        e.preventDefault();
+      }
+    } else { // if tab key is pressed
+      if (document.activeElement === lastFocusableElement) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
+        firstFocusableElement.focus(); // add focus for the first focusable element
+        e.preventDefault();
+      }
+    }
+  });
+  
+  firstFocusableElement.focus();
+}
+
+window.addEventListener('load', function (event) {
+  if (document.getElementsByTagName('main').length > 0) {
+    if (document.getElementsByTagName('main')[0].classList.contains('home-page')) {
+      document.querySelectorAll('.site-header')[0].style.border = "0px"
+    }
+  }
+  if (document.getElementsByTagName('main').length > 0) {
+    if (document.getElementsByTagName('main')[0].classList.contains('dataset') || document.getElementsByTagName('main')[0].classList.contains('dataset-preview')) {
+      
+      //remove read more button, if no data
+      if (document.getElementById("dataset-description").getElementsByTagName('p')[0].offsetHeight === document.getElementById("dataset-description").getElementsByTagName('p')[0].scrollHeight && document.getElementsByClassName('btn-read-more')[0]) {
+        document.getElementsByClassName('btn-read-more')[0].style.display = "none"
+      }
+      if (document.getElementById("dataset-description").getElementsByTagName('p')[0].offsetHeight == 28 && document.getElementsByClassName('btn-read-more')[0]) {
+        document.getElementsByClassName('btn-read-more')[0].style.display = "none"
+>>>>>>> a122aadbc988895277982b78ab7428020312f899
       }
     }
   });

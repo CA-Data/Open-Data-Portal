@@ -123,7 +123,92 @@ export default function Home(data) {
 
         <div className="page-container-ds">
           <h2 className="primary-color">Popular datasets</h2>
+<<<<<<< HEAD
           <DatasetGrid datasets={data.datasets} />
+=======
+          <div className="cagov-grid">
+
+          <Link href="/dataset/covid-19-hospital-data1" passHref>
+            <a className="no-deco cagov-card">
+              <span className="card-text">COVID-19 hospital data</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path fill="currentColor" d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+              </svg>
+            </a>
+            </Link>
+            <Link href="/dataset/ca-geographic-boundaries" passHref>
+            <a className="no-deco cagov-card">
+              <span className="card-text">CA geographic boundaries</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+              <path fill="currentColor" d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+              </svg>
+            </a>
+            </Link>
+            <Link href="/dataset/covid-19-vaccine-progress-dashboard-data" passHref>
+            <a className="no-deco cagov-card">
+              <span className="card-text">COVID-19 vaccine progress</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+              <path fill="currentColor" d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+              </svg>
+            </a>
+            </Link>
+            <Link href="/dataset/dwc-medical-provider-network-mpn" passHref>
+            <a className="no-deco cagov-card">
+              <span className="card-text">List of Approved Medical Provider Network</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+              <path fill="currentColor" d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+              </svg>
+            </a>
+            </Link>
+            
+            <Link href="/dataset/county-and-zip-code-references" passHref>
+            <a className="no-deco cagov-card">
+              <span className="card-text">County and ZIP code reference</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+              <path fill="currentColor" d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+              </svg>
+            </a>
+            </Link>
+            <Link href="/dataset/covid-19-time-series-metrics-by-county-and-state"  passHref>
+            <a className="no-deco cagov-card">
+              <span className="card-text">COVID-19 Time-Series Metrics by County and State</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+              <path fill="currentColor" d="M6.23 20.23L8 22 18 12 8 2 6.23 3.77 14.46 12z"></path>
+              </svg>
+            </a>
+            </Link>
+          </div>
+>>>>>>> a122aadbc988895277982b78ab7428020312f899
         </div>
         <div className="cagov-bkgrd-gry padding-y">
           <div className="page-container-ds">
