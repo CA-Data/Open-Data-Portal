@@ -1,12 +1,12 @@
 import Link from "next/link";
 import React, { useEffect } from "react";
 import Head from "next/head";
-import DatasetTopic from "../components/dataset/DatasetTopic";
-import DatasetAbout from "../components/dataset/DatasetAbout";
-import DatasetTimeframe from "../components/dataset/DatasetTimeframe";
-import DatasetRelated from "../components/dataset/DatasetRelated";
-import DatasetDescription from "../components/dataset/DatasetDescription";
-import ApiModal from "../components/ApiModal";
+import DatasetTopic from "../../components/dataset/DatasetTopic";
+import DatasetAbout from "../../components/dataset/DatasetAbout";
+import DatasetTimeframe from "../../components/dataset/DatasetTimeframe";
+import DatasetRelated from "../../components/dataset/DatasetRelated";
+import DatasetDescription from "../../components/dataset/DatasetDescription";
+import ApiModal from "../../components/common/ApiModal";
 
 export async function getServerSideProps(context) {
   function ValidateSize(FileSize) {
@@ -132,13 +132,14 @@ export async function getServerSideProps(context) {
     "natural-resources": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path fill="#fff" d="M1 1H49V49H1z"/><g fill="#046a99"><path d="M25 6a19 19 0 0 0-14.7 31L6 41l2.8 3 4.2-4.3a19 19 0 0 0 31-14.8V6H25Zm15 19a14.8 14.8 0 0 1-15 15 15 15 0 0 1 0-30h15v15Z" opacity=".5"/><path d="m18.3 26.6 7.9.5-5.5 7a1 1 0 0 0 .1 1.4c.4.4 1 .4 1.5 0l10.5-9.7c.9-.8.3-2.3-.9-2.4l-8-.5 5.5-7c.3-.4.3-1 0-1.4a1 1 0 0 0-1.6 0l-10.5 9.7c-.9.8-.3 2.3 1 2.4Z"/></g></svg>`,
     transportation: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path fill="#fff" d="M1 1H49V49H1z"/><g fill="#046a99"><path d="M45.2 19.5c-.3-1-1.2-1.6-2.3-1.6H26c-1 0-2 .7-2.3 1.6l-3.3 9.7v13c0 .8.7 1.6 1.6 1.6h1.5c.9 0 1.6-.9 1.6-1.8v-2.9h18.8v3c0 .8.7 1.7 1.6 1.7h1.4c.9 0 1.6-.8 1.6-1.7V29.2l-3.3-9.7Zm-19.2.8h17l2.3 7H23.6l2.4-7Zm-1 14.1c-1.2 0-2.3-1-2.3-2.4s1-2.3 2.4-2.3 2.3 1 2.3 2.3-1 2.4-2.3 2.4Zm18.9 0c-1.3 0-2.4-1-2.4-2.4s1-2.3 2.4-2.3 2.3 1 2.3 2.3-1 2.4-2.3 2.4Z"/><path d="M25 6.2H8.7a7 7 0 0 0-7 7v18.9a7 7 0 0 0 7 7l-2.3 2.3v2.4h2.3l4.7-4.7H18V27.3H6.3V11h21.1v4.7h4.7v-2.4a7 7 0 0 0-7-7ZM8.7 29.7c1.3 0 2.4 1 2.4 2.4s-1.1 2.3-2.4 2.3a2.4 2.4 0 0 1 0-4.7Z" opacity=".5"/></g></svg>`,
     water: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path fill="#fff" d="M1 1H49V49H1z"/><g fill="#046a99"><path d="M35 35a12 12 0 0 0-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2s-2.8-.5-4.1-1.2c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2v3.9A12 12 0 0 0 11 40c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Zm0-9c-2.6 0-4.3 1-5.8 1.7-1.3.6-2.4 1.2-4.1 1.2s-2.8-.5-4.1-1.2c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6c-1.3.6-2.4 1.2-4.1 1.2v3.9c2.7 0 4.4-.9 5.9-1.6a7.6 7.6 0 0 1 8.2 0c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6a7.6 7.6 0 0 1 8.2 0c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Zm6-16a11.8 11.8 0 0 0-11.8 0c-1.3.6-2.4 1.1-4.1 1.1s-2.8-.5-4.1-1.2c-1.5-.7-3.2-1.6-6-1.6s-4.3.9-5.8 1.6c-1.3.7-2.4 1.2-4.1 1.2V15c2.7 0 4.4-.9 5.9-1.6 1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4a8 8 0 0 1-4.1-1Z" opacity=".5"/><path d="M35 17.2c-2.6 0-4.3.8-5.8 1.6a7.6 7.6 0 0 1-8.2 0c-1.5-.8-3.2-1.6-6-1.6s-4.3.8-5.8 1.6A7.6 7.6 0 0 1 5 20v3.9c2.7 0 4.4-.9 5.9-1.6 1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6s4.4-.9 5.9-1.6c1.3-.7 2.3-1.2 4-1.2s2.9.5 4.2 1.2c1.5.7 3.1 1.6 5.9 1.6v-4c-1.8 0-2.8-.4-4.1-1.1a12 12 0 0 0-6-1.6Z"/></g></svg>`,
+    general: `<svg width="33" viewBox="0 0 129 128" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="22.9" cy="22.9" r="22.9" fill="#FDB81D"/><circle cx="97" cy="57.2" r="31.1" fill="#046A99"/><circle cx="97" cy="57.2" r="31.1" fill="url(#a)" fill-opacity=".8"/><circle cx="61.2" cy="84.5" r="28.5" stroke="#4F97B8" stroke-width="30"/><defs><linearGradient id="a" x1="66" y1="40" x2="106" y2="69" gradientUnits="userSpaceOnUse"><stop stop-opacity="1"/><stop offset="0" stop-opacity=".4"/><stop offset="1" stop-opacity="0"/></linearGradient></defs></svg>`,
   };
   var topicIcn =
-    response.result.groups[0] &&
+    response.result.groups.length == 1 &&
     response.result.groups[0].name &&
     topicIconArray[response.result.groups[0].name]
       ? topicIconArray[response.result.groups[0].name]
-      : `<svg width="33" viewBox="0 0 129 128" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="22.9" cy="22.9" r="22.9" fill="#FDB81D"/><circle cx="97" cy="57.2" r="31.1" fill="#046A99"/><circle cx="97" cy="57.2" r="31.1" fill="url(#a)" fill-opacity=".8"/><circle cx="61.2" cy="84.5" r="28.5" stroke="#4F97B8" stroke-width="30"/><defs><linearGradient id="a" x1="66" y1="40" x2="106" y2="69" gradientUnits="userSpaceOnUse"><stop stop-opacity="1"/><stop offset="0" stop-opacity=".4"/><stop offset="1" stop-opacity="0"/></linearGradient></defs></svg>`;
+      : topicIconArray["general"];
 
   return {
     props: {
@@ -290,7 +291,7 @@ export default function DataSet(data) {
               <div className="dataset-info">
                 <DatasetTopic
                   icon={data.topicIcn}
-                  title={data.group_object[0].title}
+                  group_object={data.group_object}
                 />
                 <DatasetAbout
                   title={data.data_object.result.organization.title}
@@ -361,7 +362,7 @@ export default function DataSet(data) {
                             <div>
                               <a
                                 href={
-                                  "/preview?name=" +
+                                  "/preview/" +
                                   data.parameters.name +
                                   "&id=" +
                                   dataset.id
@@ -384,8 +385,12 @@ export default function DataSet(data) {
                             </div>
                           )}
 
-<<<<<<< HEAD:pages/dataset.js
-                          <a href={dataset.url}>Download</a>
+                          <a
+                            href={dataset.url}
+                            className="exclude-external-link-icon"
+                          >
+                            Download
+                          </a>
                         </td>
                         <td>
                           {dataset.format}
@@ -414,15 +419,6 @@ export default function DataSet(data) {
                       <th>Access data</th>
                       <th>File details</th>
                       <th>Last updated</th>
-=======
-                      <a href={dataset.url} className="exclude-external-link-icon">Download</a>
-                      </td>
-                      <td>
-                        {dataset.format}<br />
-                        {dataset.size}
-                      </td>
-                      <td>{dataset.created}</td>
->>>>>>> a122aadbc988895277982b78ab7428020312f899:pages/dataset/[name].js
                     </tr>
                   </thead>
                   <tbody>
@@ -448,7 +444,7 @@ export default function DataSet(data) {
                             <div>
                               <Link
                                 href={
-                                  "/preview?name=" +
+                                  "/preview/" +
                                   data.parameters.name +
                                   "&id=" +
                                   dataset.id +
@@ -482,22 +478,21 @@ export default function DataSet(data) {
                             </div>
                           )}
 
-<<<<<<< HEAD:pages/dataset.js
                           {dataset.name == "ArcGIS GeoService" && (
                             <div>
                               <a href={dataset.url}>View</a>
                             </div>
                           )}
-=======
-                    {
-                      dataset.name!="ArcGIS Hub Dataset" && dataset.name!="ArcGIS GeoService" && <div><a href={dataset.url} className="exclude-external-link-icon">Download</a></div>
-                    }
->>>>>>> a122aadbc988895277982b78ab7428020312f899:pages/dataset/[name].js
 
                           {dataset.name != "ArcGIS Hub Dataset" &&
                             dataset.name != "ArcGIS GeoService" && (
                               <div>
-                                <a href={dataset.url}>Download</a>
+                                <a
+                                  href={dataset.url}
+                                  className="exclude-external-link-icon"
+                                >
+                                  Download
+                                </a>
                               </div>
                             )}
                         </td>

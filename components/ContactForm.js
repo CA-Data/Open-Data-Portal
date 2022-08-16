@@ -1,3 +1,5 @@
+import style from "./ContactForm.module.scss";
+
 function Component(props) {
   return (
     <>

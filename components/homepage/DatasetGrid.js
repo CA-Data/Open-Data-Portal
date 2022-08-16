@@ -5,7 +5,7 @@ function Component(props) {
     <>
       <div className="cagov-grid">
         {props.datasets.map((topic, index) => (
-          <Link key={index} href={"/dataset?name=" + topic.url} passHref>
+          <Link key={index} href={"/dataset/" + topic.url} passHref>
             <a className="no-deco cagov-card">
               <span className="card-text">{topic.title}</span>
               <svg

@@ -9,7 +9,18 @@ function DatasetTopic(props) {
           className={`${style.dataset_icon}`}
           dangerouslySetInnerHTML={{ __html: props.icon }}
         ></span>
-        {props.title ? props.title : "General"}
+        {props.group_object[0].title ? (
+          <span style={{ display: "block" }}>
+            {props.group_object.map((topic, index) => (
+              <span key={topic.id}>
+                {topic.title}
+                <br />
+              </span>
+            ))}
+          </span>
+        ) : (
+          "General"
+        )}
       </p>
     </>
   );

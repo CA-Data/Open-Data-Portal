@@ -41,27 +41,27 @@ export default function Custom404() {
                 Check out these popular links
                 <ul className="list-reset">
                   <li>
-                    <Link href="/dataset?name=covid-19-hospital-data1">
+                    <Link href="/dataset/covid-19-hospital-data1">
                       <a>COVID-19 hospital data</a>
                     </Link>
                   </li>
                   <li>
-                    <Link href="/dataset?name=ca-geographic-boundaries">
+                    <Link href="/dataset/ca-geographic-boundaries">
                       <a>California geographic boundaries</a>
                     </Link>
                   </li>
                   <li>
-                    <Link href="/dataset?name=covid-19-vaccine-progress-dashboard-data">
+                    <Link href="/dataset/covid-19-vaccine-progress-dashboard-data">
                       <a>COVID-19 vaccine progress</a>
                     </Link>
                   </li>
                   <li>
-                    <Link href="/dataset?name=dwc-medical-provider-network-mpn">
+                    <Link href="/dataset/dwc-medical-provider-network-mpn">
                       <a>List of Approved Medical Provider Network</a>
                     </Link>
                   </li>
                   <li>
-                    <Link href="/dataset?name=county-and-zip-code-references">
+                    <Link href="/dataset/county-and-zip-code-references">
                       <a>County and ZIP code</a>
                     </Link>
                   </li>

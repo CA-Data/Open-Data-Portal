@@ -1,31 +1,19 @@
-<<<<<<< HEAD
-if (document.querySelector('#apiModal')) {
-  const  focusableElements = '[href], input, button, [tabindex]:not([tabindex="-1"])';
-  const modal = document.querySelector('#apiModal');
-  
+if (document.querySelector("#apiModal")) {
+  const focusableElements =
+    '[href], input, button, [tabindex]:not([tabindex="-1"])';
+  const modal = document.querySelector("#apiModal");
+
   const firstFocusableElement = modal.querySelectorAll(focusableElements)[0];
   const focusableContent = modal.querySelectorAll(focusableElements);
   const lastFocusableElement = focusableContent[focusableContent.length - 1];
-=======
-const  focusableElements =
-    '[href], input, button, [tabindex]:not([tabindex="-1"])';
-const modal = document.querySelector('#myModal'); // select the modal by it's id
 
-if (modal) {
-  const firstFocusableElement = modal.querySelectorAll(focusableElements)[0]; // get first element to be focused inside modal
-  const focusableContent = modal.querySelectorAll(focusableElements);
-  const lastFocusableElement = focusableContent[focusableContent.length - 1]; // get last element to be focused inside modal
-  
->>>>>>> a122aadbc988895277982b78ab7428020312f899
-  
-  document.addEventListener('keydown', function(e) {
-    let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
-  
+  document.addEventListener("keydown", function (e) {
+    let isTabPressed = e.key === "Tab" || e.keyCode === 9;
+
     if (!isTabPressed) {
       return;
-<<<<<<< HEAD
     }
-  
+
     if (e.shiftKey) {
       if (document.activeElement === firstFocusableElement) {
         lastFocusableElement.focus();
@@ -35,58 +23,27 @@ if (modal) {
       if (document.activeElement === lastFocusableElement) {
         firstFocusableElement.focus();
         e.preventDefault();
-=======
-    }
-  
-    if (e.shiftKey) { // if shift key pressed for shift + tab combination
-      if (document.activeElement === firstFocusableElement) {
-        lastFocusableElement.focus(); // add focus for the last focusable element
-        e.preventDefault();
-      }
-    } else { // if tab key is pressed
-      if (document.activeElement === lastFocusableElement) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
-        firstFocusableElement.focus(); // add focus for the first focusable element
-        e.preventDefault();
       }
     }
   });
-  
-  firstFocusableElement.focus();
-}
 
-window.addEventListener('load', function (event) {
-  if (document.getElementsByTagName('main').length > 0) {
-    if (document.getElementsByTagName('main')[0].classList.contains('home-page')) {
-      document.querySelectorAll('.site-header')[0].style.border = "0px"
-    }
-  }
-  if (document.getElementsByTagName('main').length > 0) {
-    if (document.getElementsByTagName('main')[0].classList.contains('dataset') || document.getElementsByTagName('main')[0].classList.contains('dataset-preview')) {
-      
-      //remove read more button, if no data
-      if (document.getElementById("dataset-description").getElementsByTagName('p')[0].offsetHeight === document.getElementById("dataset-description").getElementsByTagName('p')[0].scrollHeight && document.getElementsByClassName('btn-read-more')[0]) {
-        document.getElementsByClassName('btn-read-more')[0].style.display = "none"
-      }
-      if (document.getElementById("dataset-description").getElementsByTagName('p')[0].offsetHeight == 28 && document.getElementsByClassName('btn-read-more')[0]) {
-        document.getElementsByClassName('btn-read-more')[0].style.display = "none"
->>>>>>> a122aadbc988895277982b78ab7428020312f899
+  firstFocusableElement.focus();
+
+  window.addEventListener("load", function (event) {
+    if (document.getElementsByTagName("main").length > 0) {
+      if (
+        document.getElementsByTagName("main")[0].classList.contains("home-page")
+      ) {
+        document.querySelectorAll(".site-header")[0].style.border = "0px";
       }
     }
   });
-  
-  firstFocusableElement.focus();
-  
-  window.addEventListener('load', function (event) {
-    if (document.getElementsByTagName('main').length > 0) {
-      if (document.getElementsByTagName('main')[0].classList.contains('home-page')) {
-        document.querySelectorAll('.site-header')[0].style.border = "0px"
-      }
-    }
-  })
 }
-if (document.getElementsByTagName('main').length > 0) {
-  if (document.getElementsByTagName('main')[0].classList.contains('home-page')) {
-    document.querySelectorAll('.site-header')[0].style.border = "0px"
+if (document.getElementsByTagName("main").length > 0) {
+  if (
+    document.getElementsByTagName("main")[0].classList.contains("home-page")
+  ) {
+    document.querySelectorAll(".site-header")[0].style.border = "0px";
   }
 }
 //site navigation
@@ -105,115 +62,115 @@ if (document.getElementsByTagName('main').length > 0) {
 // Function determining if it's mobile view (max 767px)
 function mobileView() {
   const mobileElement = document.querySelector(
-    '.site-header .grid-mobile-icons',
+    ".site-header .grid-mobile-icons"
   );
   if (mobileElement) {
-    return getComputedStyle(mobileElement).display !== 'none';
+    return getComputedStyle(mobileElement).display !== "none";
   }
   return false;
 }
 class CAGovSiteNavigation extends window.HTMLElement {
   connectedCallback() {
     document
-      .querySelector('.cagov-nav.open-menu')
-      .addEventListener('click', this.toggleMainMenu.bind(this));
+      .querySelector(".cagov-nav.open-menu")
+      .addEventListener("click", this.toggleMainMenu.bind(this));
 
     // Mobile search events
     const mobileSearchBtn = document.querySelector(
-      '.cagov-nav.mobile-search .search-btn',
+      ".cagov-nav.mobile-search .search-btn"
     );
     if (mobileSearchBtn) {
-      mobileSearchBtn.setAttribute('aria-expanded', 'false');
+      mobileSearchBtn.setAttribute("aria-expanded", "false");
       document
-        .querySelector('.search-container--small .site-search input')
-        .setAttribute('tabindex', '-1');
+        .querySelector(".search-container--small .site-search input")
+        .setAttribute("tabindex", "-1");
       document
         .querySelector(
-          '.search-container--small .site-search button.search-submit',
+          ".search-container--small .site-search button.search-submit"
         )
-        .setAttribute('tabindex', '-1');
+        .setAttribute("tabindex", "-1");
       document
-        .querySelector('.search-container--small')
-        .setAttribute('aria-hidden', 'true');
+        .querySelector(".search-container--small")
+        .setAttribute("aria-hidden", "true");
       if (mobileView()) {
-        mobileSearchBtn.addEventListener('click', () => {
+        mobileSearchBtn.addEventListener("click", () => {
           document
-            .querySelector('.search-container--small')
-            .classList.toggle('hidden-search');
+            .querySelector(".search-container--small")
+            .classList.toggle("hidden-search");
           const searchactive = document
-            .querySelector('.search-container--small')
-            .classList.contains('hidden-search');
+            .querySelector(".search-container--small")
+            .classList.contains("hidden-search");
           if (searchactive) {
-            mobileSearchBtn.setAttribute('aria-expanded', 'false');
+            mobileSearchBtn.setAttribute("aria-expanded", "false");
             document
-              .querySelector('.search-container--small .site-search input')
-              .setAttribute('tabindex', '-1');
+              .querySelector(".search-container--small .site-search input")
+              .setAttribute("tabindex", "-1");
             document
               .querySelector(
-                '.search-container--small .site-search button.search-submit',
+                ".search-container--small .site-search button.search-submit"
               )
-              .setAttribute('tabindex', '-1');
+              .setAttribute("tabindex", "-1");
             document
-              .querySelector('.search-container--small')
-              .setAttribute('aria-hidden', 'true');
+              .querySelector(".search-container--small")
+              .setAttribute("aria-hidden", "true");
           } else {
-            mobileSearchBtn.setAttribute('aria-expanded', 'true');
+            mobileSearchBtn.setAttribute("aria-expanded", "true");
             document
-              .querySelector('.search-container--small .site-search input')
+              .querySelector(".search-container--small .site-search input")
               .focus();
             document
-              .querySelector('.search-container--small .site-search input')
-              .removeAttribute('tabindex');
+              .querySelector(".search-container--small .site-search input")
+              .removeAttribute("tabindex");
             document
               .querySelector(
-                '.search-container--small .site-search button.search-submit',
+                ".search-container--small .site-search button.search-submit"
               )
-              .removeAttribute('tabindex');
+              .removeAttribute("tabindex");
             document
-              .querySelector('.search-container--small')
-              .setAttribute('aria-hidden', 'false');
+              .querySelector(".search-container--small")
+              .setAttribute("aria-hidden", "false");
           }
         });
       }
     }
 
     // reset mobile search on resize
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       document
-        .querySelector('.search-container--small')
-        .classList.add('hidden-search');
+        .querySelector(".search-container--small")
+        .classList.add("hidden-search");
       if (mobileSearchBtn) {
         document
-          .querySelector('.cagov-nav.mobile-search .search-btn')
-          .setAttribute('aria-expanded', 'false');
+          .querySelector(".cagov-nav.mobile-search .search-btn")
+          .setAttribute("aria-expanded", "false");
       }
       document
-        .querySelector('.search-container--small .site-search input')
-        .setAttribute('tabindex', '-1');
+        .querySelector(".search-container--small .site-search input")
+        .setAttribute("tabindex", "-1");
       document
         .querySelector(
-          '.search-container--small .site-search button.search-submit',
+          ".search-container--small .site-search button.search-submit"
         )
-        .setAttribute('tabindex', '-1');
+        .setAttribute("tabindex", "-1");
       document
-        .querySelector('.search-container--small')
-        .setAttribute('aria-hidden', 'true');
+        .querySelector(".search-container--small")
+        .setAttribute("aria-hidden", "true");
       // reset navigation on resize
       this.closeAllMenus();
       this.closeMainMenu();
     });
 
     this.expansionListeners();
-    document.addEventListener('keydown', this.escapeMainMenu.bind(this));
-    document.body.addEventListener('click', this.bodyClick.bind(this));
+    document.addEventListener("keydown", this.escapeMainMenu.bind(this));
+    document.body.addEventListener("click", this.bodyClick.bind(this));
     this.highlightCurrentPage();
   }
 
   toggleMainMenu() {
     if (
       document
-        .querySelector('.cagov-nav.hamburger')
-        .classList.contains('is-active')
+        .querySelector(".cagov-nav.hamburger")
+        .classList.contains("is-active")
     ) {
       this.closeMainMenu();
     } else {
@@ -222,39 +179,39 @@ class CAGovSiteNavigation extends window.HTMLElement {
   }
 
   highlightCurrentPage() {
-    this.querySelectorAll('a.expanded-menu-dropdown-link').forEach((link) => {
+    this.querySelectorAll("a.expanded-menu-dropdown-link").forEach((link) => {
       if (link.href === window.location.href) {
-        link.classList.add('current-page-highlight');
+        link.classList.add("current-page-highlight");
       }
     });
   }
 
   openMainMenu() {
-    document.querySelector('.mobile-icons').classList.add('display-menu');
-    this.classList.add('display-menu');
-    document.querySelector('.cagov-nav.hamburger').classList.add('is-active');
-    document.querySelector('.cagov-nav.menu-trigger').classList.add('is-fixed');
+    document.querySelector(".mobile-icons").classList.add("display-menu");
+    this.classList.add("display-menu");
+    document.querySelector(".cagov-nav.hamburger").classList.add("is-active");
+    document.querySelector(".cagov-nav.menu-trigger").classList.add("is-fixed");
     document
-      .querySelector('.cagov-nav.menu-trigger')
-      .setAttribute('aria-expanded', 'true');
-    const menLabel = document.querySelector('.cagov-nav.menu-trigger-label');
-    menLabel.innerHTML = menLabel.getAttribute('data-closelabel');
+      .querySelector(".cagov-nav.menu-trigger")
+      .setAttribute("aria-expanded", "true");
+    const menLabel = document.querySelector(".cagov-nav.menu-trigger-label");
+    menLabel.innerHTML = menLabel.getAttribute("data-closelabel");
   }
 
   closeMainMenu() {
-    document.querySelector('.mobile-icons').classList.remove('display-menu');
-    this.classList.remove('display-menu');
+    document.querySelector(".mobile-icons").classList.remove("display-menu");
+    this.classList.remove("display-menu");
     document
-      .querySelector('.cagov-nav.hamburger')
-      .classList.remove('is-active');
+      .querySelector(".cagov-nav.hamburger")
+      .classList.remove("is-active");
     document
-      .querySelector('.cagov-nav.menu-trigger')
-      .classList.remove('is-fixed');
+      .querySelector(".cagov-nav.menu-trigger")
+      .classList.remove("is-fixed");
     document
-      .querySelector('.cagov-nav.menu-trigger')
-      .setAttribute('aria-expanded', 'false');
-    const menLabel = document.querySelector('.cagov-nav.menu-trigger-label');
-    menLabel.innerHTML = menLabel.getAttribute('data-openlabel');
+      .querySelector(".cagov-nav.menu-trigger")
+      .setAttribute("aria-expanded", "false");
+    const menLabel = document.querySelector(".cagov-nav.menu-trigger-label");
+    menLabel.innerHTML = menLabel.getAttribute("data-openlabel");
   }
 
   escapeMainMenu(event) {
@@ -265,63 +222,63 @@ class CAGovSiteNavigation extends window.HTMLElement {
   }
 
   bodyClick(event) {
-    if (!event.target.closest('cagov-site-navigation')) {
+    if (!event.target.closest("cagov-site-navigation")) {
       this.closeAllMenus();
     }
   }
 
   closeAllMenus() {
-    const allMenus = this.querySelectorAll('.js-cagov-navoverlay-expandable');
+    const allMenus = this.querySelectorAll(".js-cagov-navoverlay-expandable");
     allMenus.forEach((menu) => {
-      const expandedEl = menu.querySelector('.expanded-menu-section');
-      expandedEl.classList.remove('expanded');
-      menu.setAttribute('aria-expanded', 'false');
-      const closestDropDown = menu.querySelector('.expanded-menu-dropdown');
+      const expandedEl = menu.querySelector(".expanded-menu-section");
+      expandedEl.classList.remove("expanded");
+      menu.setAttribute("aria-expanded", "false");
+      const closestDropDown = menu.querySelector(".expanded-menu-dropdown");
       if (closestDropDown) {
-        closestDropDown.setAttribute('aria-hidden', 'true');
-        const allLinks = closestDropDown.querySelectorAll('a');
+        closestDropDown.setAttribute("aria-hidden", "true");
+        const allLinks = closestDropDown.querySelectorAll("a");
         allLinks.forEach((link) => {
-          link.setAttribute('tabindex', '-1'); // set tabindex to -1 so you cannot tab through these hidden links
+          link.setAttribute("tabindex", "-1"); // set tabindex to -1 so you cannot tab through these hidden links
         });
       }
     });
   }
 
   expansionListeners() {
-    const allMenus = this.querySelectorAll('.js-cagov-navoverlay-expandable');
+    const allMenus = this.querySelectorAll(".js-cagov-navoverlay-expandable");
     allMenus.forEach((menu) => {
-      const nearestMenu = menu.querySelector('.expanded-menu-section');
+      const nearestMenu = menu.querySelector(".expanded-menu-section");
       if (nearestMenu) {
         const nearestMenuDropDown = nearestMenu.querySelector(
-          '.expanded-menu-dropdown',
+          ".expanded-menu-dropdown"
         );
         if (nearestMenuDropDown) {
-          nearestMenuDropDown.setAttribute('aria-hidden', 'true');
-          menu.setAttribute('aria-expanded', 'false');
+          nearestMenuDropDown.setAttribute("aria-hidden", "true");
+          menu.setAttribute("aria-expanded", "false");
         }
       }
       const menuComponent = this;
-      menu.addEventListener('click', function addingClickListener(event) {
-        if (event.target.nodeName !== 'A') {
+      menu.addEventListener("click", function addingClickListener(event) {
+        if (event.target.nodeName !== "A") {
           event.preventDefault();
         }
-        const expandedEl = this.querySelector('.expanded-menu-section');
+        const expandedEl = this.querySelector(".expanded-menu-section");
         if (expandedEl) {
-          if (expandedEl.classList.contains('expanded')) {
+          if (expandedEl.classList.contains("expanded")) {
             // closing an open menu
             menuComponent.closeAllMenus();
           } else {
             menuComponent.closeAllMenus();
-            expandedEl.classList.add('expanded');
-            menu.setAttribute('aria-expanded', 'true');
+            expandedEl.classList.add("expanded");
+            menu.setAttribute("aria-expanded", "true");
             const closestDropDown = this.querySelector(
-              '.expanded-menu-dropdown',
+              ".expanded-menu-dropdown"
             );
             if (closestDropDown) {
-              closestDropDown.setAttribute('aria-hidden', 'false');
-              const allLinks = closestDropDown.querySelectorAll('a');
+              closestDropDown.setAttribute("aria-hidden", "false");
+              const allLinks = closestDropDown.querySelectorAll("a");
               allLinks.forEach((link) => {
-                link.removeAttribute('tabindex'); // remove tabindex from all the links
+                link.removeAttribute("tabindex"); // remove tabindex from all the links
               });
             }
           }
@@ -330,11 +287,11 @@ class CAGovSiteNavigation extends window.HTMLElement {
     });
   }
 }
-window.customElements.define('cagov-site-navigation', CAGovSiteNavigation);
+window.customElements.define("cagov-site-navigation", CAGovSiteNavigation);
 
 //Page Navigation
 var styles =
-  '/* PAGE NAVIGATION */\nsidebar cagov-page-navigation .label {\n  font-weight: 700;\n  font-size: 24px;\n  line-height: 28.2px;\n  padding: 0;\n  margin: 0;\n  padding-bottom: 16px;\n}\n\nsidebar cagov-page-navigation ul,\nsidebar cagov-page-navigation ol:not([class*=menu]):not([class*=nav]):not([class*=footer-links]),\nsidebar cagov-page-navigation ul:not([class*=menu]):not([class*=nav]):not([class*=footer-links]) {\n  margin: 0;\n  text-indent: 0;\n  padding: 0;\n}\n\nsidebar cagov-page-navigation ul li {\n  padding-top: 14px;\n  padding-bottom: 18px;\n  margin-left: 0;\n  margin-top: 0px;\n  margin-bottom: 0px;\n  border-bottom: 1px solid var(--gray-300, #e1e0e3);\n  line-height: 28.2px;\n  list-style: none;\n}\nsidebar cagov-page-navigation ul li:first-child {\n  border-top: 1px solid var(--gray-300, #e1e0e3);\n}\nsidebar cagov-page-navigation ul li a {\n  text-decoration: none;\n}\nsidebar cagov-page-navigation ul li a:hover {\n  text-decoration: underline;\n}\n\n@media only screen and (max-width: 992px) {\n  cagov-page-navigation .label {\n    display: none;\n  }\n\n  .sidebar-container {\n    display: block;\n    width: 100%;\n    max-width: 100%;\n  }\n\n  cagov-page-navigation ul li a {\n    font-size: 16px;\n    line-height: 24px;\n  }\n}\n\n/*# sourceMappingURL=index.css.map */\n';
+  "/* PAGE NAVIGATION */\nsidebar cagov-page-navigation .label {\n  font-weight: 700;\n  font-size: 24px;\n  line-height: 28.2px;\n  padding: 0;\n  margin: 0;\n  padding-bottom: 16px;\n}\n\nsidebar cagov-page-navigation ul,\nsidebar cagov-page-navigation ol:not([class*=menu]):not([class*=nav]):not([class*=footer-links]),\nsidebar cagov-page-navigation ul:not([class*=menu]):not([class*=nav]):not([class*=footer-links]) {\n  margin: 0;\n  text-indent: 0;\n  padding: 0;\n}\n\nsidebar cagov-page-navigation ul li {\n  padding-top: 14px;\n  padding-bottom: 18px;\n  margin-left: 0;\n  margin-top: 0px;\n  margin-bottom: 0px;\n  border-bottom: 1px solid var(--gray-300, #e1e0e3);\n  line-height: 28.2px;\n  list-style: none;\n}\nsidebar cagov-page-navigation ul li:first-child {\n  border-top: 1px solid var(--gray-300, #e1e0e3);\n}\nsidebar cagov-page-navigation ul li a {\n  text-decoration: none;\n}\nsidebar cagov-page-navigation ul li a:hover {\n  text-decoration: underline;\n}\n\n@media only screen and (max-width: 992px) {\n  cagov-page-navigation .label {\n    display: none;\n  }\n\n  .sidebar-container {\n    display: block;\n    width: 100%;\n    max-width: 100%;\n  }\n\n  cagov-page-navigation ul li a {\n    font-size: 16px;\n    line-height: 24px;\n  }\n}\n\n/*# sourceMappingURL=index.css.map */\n";
 
 /**
  * Page Navigation web component
@@ -348,7 +305,7 @@ var styles =
 
 class CAGovPageNavigation extends window.HTMLElement {
   connectedCallback() {
-    this.type = 'wordpress';
+    this.type = "wordpress";
 
     /* eslint-disable */
     /* https://unpkg.com/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js */
@@ -359,7 +316,7 @@ class CAGovPageNavigation extends window.HTMLElement {
         const t = document;
         if (
           !(
-            'scrollBehavior' in t.documentElement.style &&
+            "scrollBehavior" in t.documentElement.style &&
             !0 !== o.__forceSmoothScrollPolyfill__
           )
         ) {
@@ -378,7 +335,7 @@ class CAGovPageNavigation extends window.HTMLElement {
               : Date.now;
           var c =
             ((l = o.navigator.userAgent),
-            new RegExp(['MSIE ', 'Trident/', 'Edge/'].join('|')).test(l)
+            new RegExp(["MSIE ", "Trident/", "Edge/"].join("|")).test(l)
               ? 1
               : 0);
           (o.scroll = o.scrollTo =
@@ -393,20 +350,20 @@ class CAGovPageNavigation extends window.HTMLElement {
                         : o.scrollX || o.pageXOffset,
                       void 0 !== arguments[0].top
                         ? ~~arguments[0].top
-                        : o.scrollY || o.pageYOffset,
+                        : o.scrollY || o.pageYOffset
                     )
                   : i.scroll.call(
                       o,
                       void 0 !== arguments[0].left
                         ? arguments[0].left
-                        : typeof arguments[0] !== 'object'
+                        : typeof arguments[0] !== "object"
                         ? arguments[0]
                         : o.scrollX || o.pageXOffset,
                       void 0 !== arguments[0].top
                         ? arguments[0].top
                         : void 0 !== arguments[1]
                         ? arguments[1]
-                        : o.scrollY || o.pageYOffset,
+                        : o.scrollY || o.pageYOffset
                     ));
             }),
             (o.scrollBy = function () {
@@ -416,20 +373,20 @@ class CAGovPageNavigation extends window.HTMLElement {
                       o,
                       void 0 !== arguments[0].left
                         ? arguments[0].left
-                        : typeof arguments[0] !== 'object'
+                        : typeof arguments[0] !== "object"
                         ? arguments[0]
                         : 0,
                       void 0 !== arguments[0].top
                         ? arguments[0].top
                         : void 0 !== arguments[1]
                         ? arguments[1]
-                        : 0,
+                        : 0
                     )
                   : h.call(
                       o,
                       t.body,
                       ~~arguments[0].left + (o.scrollX || o.pageXOffset),
-                      ~~arguments[0].top + (o.scrollY || o.pageYOffset),
+                      ~~arguments[0].top + (o.scrollY || o.pageYOffset)
                     ));
             }),
             (e.prototype.scroll = e.prototype.scrollTo =
@@ -442,26 +399,26 @@ class CAGovPageNavigation extends window.HTMLElement {
                       this,
                       this,
                       void 0 === o ? this.scrollLeft : ~~o,
-                      void 0 === t ? this.scrollTop : ~~t,
+                      void 0 === t ? this.scrollTop : ~~t
                     );
                   } else {
                     if (
-                      typeof arguments[0] === 'number' &&
+                      typeof arguments[0] === "number" &&
                       void 0 === arguments[1]
                     )
-                      throw new SyntaxError('Value could not be converted');
+                      throw new SyntaxError("Value could not be converted");
                     i.elementScroll.call(
                       this,
                       void 0 !== arguments[0].left
                         ? ~~arguments[0].left
-                        : typeof arguments[0] !== 'object'
+                        : typeof arguments[0] !== "object"
                         ? ~~arguments[0]
                         : this.scrollLeft,
                       void 0 !== arguments[0].top
                         ? ~~arguments[0].top
                         : void 0 !== arguments[1]
                         ? ~~arguments[1]
-                        : this.scrollTop,
+                        : this.scrollTop
                     );
                   }
               }),
@@ -480,7 +437,7 @@ class CAGovPageNavigation extends window.HTMLElement {
                         : ~~arguments[0] + this.scrollLeft,
                       void 0 !== arguments[0].top
                         ? ~~arguments[0].top + this.scrollTop
-                        : ~~arguments[1] + this.scrollTop,
+                        : ~~arguments[1] + this.scrollTop
                     ));
             }),
             (e.prototype.scrollIntoView = function () {
@@ -490,8 +447,8 @@ class CAGovPageNavigation extends window.HTMLElement {
                     ;
                     o !== t.body &&
                     !1 ===
-                      ((e = p((l = o), 'Y') && a(l, 'Y')),
-                      (r = p(l, 'X') && a(l, 'X')),
+                      ((e = p((l = o), "Y") && a(l, "Y")),
+                      (r = p(l, "X") && a(l, "X")),
                       e || r);
 
                   )
@@ -508,23 +465,23 @@ class CAGovPageNavigation extends window.HTMLElement {
                       this,
                       l,
                       l.scrollLeft + r.left - e.left,
-                      l.scrollTop + r.top - e.top,
+                      l.scrollTop + r.top - e.top
                     ),
-                    o.getComputedStyle(l).position !== 'fixed' &&
+                    o.getComputedStyle(l).position !== "fixed" &&
                       o.scrollBy({
                         left: e.left,
                         top: e.top,
-                        behavior: 'smooth',
+                        behavior: "smooth",
                       }))
                   : o.scrollBy({
                       left: r.left,
                       top: r.top,
-                      behavior: 'smooth',
+                      behavior: "smooth",
                     });
               } else
                 i.scrollIntoView.call(
                   this,
-                  void 0 === arguments[0] || arguments[0],
+                  void 0 === arguments[0] || arguments[0]
                 );
             });
         }
@@ -534,27 +491,27 @@ class CAGovPageNavigation extends window.HTMLElement {
         function f(o) {
           if (
             o === null ||
-            typeof o !== 'object' ||
+            typeof o !== "object" ||
             void 0 === o.behavior ||
-            o.behavior === 'auto' ||
-            o.behavior === 'instant'
+            o.behavior === "auto" ||
+            o.behavior === "instant"
           )
             return !0;
-          if (typeof o === 'object' && o.behavior === 'smooth') return !1;
+          if (typeof o === "object" && o.behavior === "smooth") return !1;
           throw new TypeError(
-            `behavior member of ScrollOptions ${o.behavior} is not a valid value for enumeration ScrollBehavior.`,
+            `behavior member of ScrollOptions ${o.behavior} is not a valid value for enumeration ScrollBehavior.`
           );
         }
         function p(o, t) {
-          return t === 'Y'
+          return t === "Y"
             ? o.clientHeight + c < o.scrollHeight
-            : t === 'X'
+            : t === "X"
             ? o.clientWidth + c < o.scrollWidth
             : void 0;
         }
         function a(t, l) {
           const e = o.getComputedStyle(t, null)[`overflow${l}`];
-          return e === 'auto' || e === 'scroll';
+          return e === "auto" || e === "scroll";
         }
         function d(t) {
           let l;
@@ -592,20 +549,20 @@ class CAGovPageNavigation extends window.HTMLElement {
             });
         }
       }
-      typeof exports === 'object' && typeof module !== 'undefined'
+      typeof exports === "object" && typeof module !== "undefined"
         ? (module.exports = { polyfill: o })
         : o();
     })();
     /* eslint-enable */
 
-    if (this.type === 'wordpress') {
-      document.addEventListener('DOMContentLoaded', () =>
-        this.buildContentNavigation(),
+    if (this.type === "wordpress") {
+      document.addEventListener("DOMContentLoaded", () =>
+        this.buildContentNavigation()
       );
     }
     if (
-      document.readyState === 'complete' ||
-      document.readyState === 'loaded'
+      document.readyState === "complete" ||
+      document.readyState === "loaded"
     ) {
       this.buildContentNavigation();
     }
@@ -616,26 +573,26 @@ class CAGovPageNavigation extends window.HTMLElement {
     const markup = this.getHeaderTags();
     let label = null;
     if (markup !== null) {
-      label = this.dataset.label || 'On this page';
+      label = this.dataset.label || "On this page";
     }
     let content = null;
     if (markup !== null) {
       content = `<nav aria-labelledby="page-navigation-label"> <div id="page-navigation-label" className="label">${label}</div> ${markup}</nav>`;
     }
 
-    this.template({ content }, 'wordpress');
+    this.template({ content }, "wordpress");
   }
 
   template(data, type) {
     if (data !== undefined && data !== null && data.content !== null) {
-      if (type === 'wordpress') {
+      if (type === "wordpress") {
         this.innerHTML = `${data.content}`;
       }
     }
 
-    document.querySelectorAll('a[data-page-navigation]').forEach((anchor) => {
-      anchor.addEventListener('click', (e) => {
-        const hashval = decodeURI(anchor.getAttribute('href'));
+    document.querySelectorAll("a[data-page-navigation]").forEach((anchor) => {
+      anchor.addEventListener("click", (e) => {
+        const hashval = decodeURI(anchor.getAttribute("href"));
         try {
           const target = document.querySelector(hashval);
           if (target !== null) {
@@ -662,14 +619,14 @@ class CAGovPageNavigation extends window.HTMLElement {
   }
 
   renderNoContent() {
-    this.innerHTML = '';
+    this.innerHTML = "";
   }
 
   getHeaderTags() {
     const { selector } = this.dataset;
     // const { callback } = this.dataset; // Editor only right now
 
-    const h = ['h2'];
+    const h = ["h2"];
     for (let i = 0; i < h.length; i += 1) {
       // Pull out the header tags, in order & render as links with anchor tags
       // auto convert h tags with tag names
@@ -687,12 +644,12 @@ class CAGovPageNavigation extends window.HTMLElement {
   }
 
   static outliner(content) {
-    const headers = content.querySelectorAll('h2');
-    let output = '';
+    const headers = content.querySelectorAll("h2");
+    let output = "";
     if (headers !== undefined && headers !== null && headers.length > 0) {
       headers.forEach((tag) => {
-        const tagId = tag.getAttribute('id');
-        const tagName = tag.getAttribute('name');
+        const tagId = tag.getAttribute("id");
+        const tagName = tag.getAttribute("name");
 
         const title = tag.innerHTML;
 
@@ -711,27 +668,27 @@ class CAGovPageNavigation extends window.HTMLElement {
         const anchor = anchorLabel
           .toLowerCase()
           .trim()
-          .replace(/ /g, '-')
+          .replace(/ /g, "-")
           // Strip out unallowed CSS characters (Selector API is used with the anchor links)
           // !, ", #, $, %, &, ', (, ), *, +, ,, -, ., /, :, ;,
           // <, =, >, ?, @, [, \, ], ^, `, {, |, }, and ~.
           .replace(
             /\(|\)|!|"|#|\$|%|&|'|\*|\+|,|\.|\/|:|;|<|=|>|\?|@|\[|\]|\\|\^|`|\{|\||\|\}|~/g,
-            '',
+            ""
           )
           // All other characters are encoded and decoded using encodeURI/decodeURI
           // which escapes UTF-8 characters.
           // If we want to do this with allowed characters only
           // .replace(/a-zA-ZÃ€-Ã–Ã™-Ã¶Ã¹-Ã¿Ä€-Å¾á¸€-á»¿0-9/g,"")
           // Alt: [a-zA-Z\u00C0-\u017F]+,\s[a-zA-Z\u00C0-\u017F]+
-          .replace(/a-zA-ZÃ€-Ã–Ã™-Ã¶Ã¹-Ã¿Ä€-Å¾á¸€-á»¿0-9\u00A0-\u017F/g, '');
+          .replace(/a-zA-ZÃ€-Ã–Ã™-Ã¶Ã¹-Ã¿Ä€-Å¾á¸€-á»¿0-9\u00A0-\u017F/g, "");
 
         output += `<li><a data-page-navigation href="#${encodeURI(
-          anchor,
+          anchor
         )}">${title}</a></li>`;
 
-        tag.setAttribute('id', anchor);
-        tag.setAttribute('name', anchor);
+        tag.setAttribute("id", anchor);
+        tag.setAttribute("name", anchor);
       });
       return `<ul>${output}</ul>`;
     }
@@ -739,10 +696,10 @@ class CAGovPageNavigation extends window.HTMLElement {
   }
 }
 
-if (customElements.get('cagov-page-navigation') === undefined) {
-  window.customElements.define('cagov-page-navigation', CAGovPageNavigation);
+if (customElements.get("cagov-page-navigation") === undefined) {
+  window.customElements.define("cagov-page-navigation", CAGovPageNavigation);
 }
 
-const style = document.createElement('style');
+const style = document.createElement("style");
 style.textContent = styles;
-document.querySelector('head').appendChild(style);
+document.querySelector("head").appendChild(style);

@@ -2,7 +2,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect } from "react";
 import Head from "next/head";
 import DatasetDescription from "../components/dataset/DatasetDescription";
-import ApiModal from "../components/ApiModal";
+/*import ApiModal from "../components/common/ApiModal";*/
 
 export async function getServerSideProps(context) {
   function ValidateSize(FileSize) {
@@ -237,7 +237,7 @@ export default function Preview(dataset) {
               {"  "}{" "}
               <a
                 style={{ marginLeft: "3px" }}
-                href={"/dataset?name=" + dataset.parameters.name}
+                href={"/dataset/" + dataset.parameters.name}
               >
                 Back to dataset
               </a>
@@ -317,7 +317,7 @@ export default function Preview(dataset) {
             )}
           </div>
         </article>
-        <ApiModal />
+        {/*<ApiModal />*/}
       </main>
     </>
   );
