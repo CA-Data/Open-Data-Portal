@@ -82,8 +82,8 @@ export default function Preview(dataset) {
           </svg>
           <p>Correct the errors to continue</p>
           </div>
-          <form id="contact-form" className="contact-form" action="mailto:opendata@state.ca.gov" method="post" encType="text/plain">
-            <label>
+          <form id="contact-form" className="contact-form" method="post" encType="text/plain" novalidate="novalidate">
+            <label class="requiredField">
               Name
               <input type="text" name="name" required/>
               <span className="input-error-icon">
@@ -98,7 +98,7 @@ export default function Preview(dataset) {
                 Enter your name
               </span>
             </label>
-            <label>
+            <label class="requiredField">
               Email
               <input type="text" name="email" required/>
               <span className="input-error-icon">
@@ -113,7 +113,7 @@ export default function Preview(dataset) {
                 Enter your email
               </span>
             </label>
-            <label>
+            <label class="requiredField">
               Topic
               <div className="form-select">
               <select name="subject" defaultValue={''} required>
@@ -151,7 +151,7 @@ export default function Preview(dataset) {
               </span>
               
             </label>
-            <label>
+            <label class="requiredField">
               Comment
               <textarea type="text" name="body" rows="4" cols="50" placeholder="Be sure to include links, if needed." required></textarea>
               <span className="input-error-icon">
@@ -166,11 +166,78 @@ export default function Preview(dataset) {
                 Provide information about why you’re contacting us.
               </span>
             </label>
-            <input className="contact-button" type="submit" value="Submit" />
+            <input className="contact-button" type="submit" value="Submit" class="g-recaptcha" data-sitekey="6LdsVoAhAAAAAMVLBexkuC9rOFAh0gLIZBECUpX_" data-callback='onSubmit' data-action='submit' />
           </form>
+          <div id="confirmationMessage" style={{display:"none"}} className="lead-text">Thanks for contacting us! We will be in touch with you shortly.</div>
         </div>
       </article>
     </main>
+
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+    </script>
+
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+        (function(){
+          emailjs.init("Dpb9-WXGtDMJ1SL9v")
+        })();
+        `,
+      }}
+    />
+
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+          window.onload = function() {
+            document.getElementById('contact-form').addEventListener('submit', function(event) {
+              event.preventDefault();
+
+              var formLabels = document.querySelectorAll('.requiredField'), i;
+              var thereWasAnError = 0;
+
+              for (i = 0; i < formLabels.length; ++i) {
+                if (formLabels[i].querySelector("textarea, input, select").value == "") {
+                  formLabels[i].classList.add("input-error");
+                  formLabels[i].getElementsByClassName('input-error-icon')[0].style.display = "block";
+                  formLabels[i].getElementsByClassName('input-error-text')[0].style.display = "block";
+                  document.getElementById('error-banner').style.display = "grid";
+                  thereWasAnError = 1;
+                }
+              }
+
+              if (!thereWasAnError) {
+                emailjs.sendForm('service_c900y85', 'template_hqd9w0v', this)
+                  .then(function() {
+                      console.log('SUCCESS!');
+                  }, function(error) {
+                      console.log('FAILED...', error);
+                  });
+
+                document.querySelector("#error-banner").style.display = "none";
+                document.querySelector("#error-banner").style.visibility = "hidden";
+                document.querySelector("#contact-form").style.display = "none";
+                document.querySelector("#confirmationMessage").style.display = "block";
+              }
+
+            });
+          }
+        `,
+      }}
+    />
+
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+        function onSubmit(token) {
+          document.getElementById("demo-form").submit();
+        }
+        `,
+      }}
+    />
+
     </>
   );
 }
