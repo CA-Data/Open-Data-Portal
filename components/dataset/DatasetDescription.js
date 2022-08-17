@@ -1,4 +1,4 @@
-import ReadMore from "../readMore.js";
+import ReadMore from "../common/ReadMore";
 
 function DatasetDescription(props) {
   return (
