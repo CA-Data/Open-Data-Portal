@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import BasicSelect from "../../components/BasicSelect";
+import SearchResultListing from "../../components/SearchResultListing";
 import Link from "next/link";
 import Head from "next/head";
 
@@ -112,8 +113,7 @@ const getFormattedData = async (context) => {
     const responsetopic = await fetch(apireqtopic).then((responsetopic) =>
       responsetopic.json()
     );
-    //console.log(apireqtopic);
-    //console.log(responsetopic);
+
     for (let index = 0; index < responsetopic.result.results.length; index++) {
       const dataset = {};
       dataset.name = responsetopic.result.results[index].name;

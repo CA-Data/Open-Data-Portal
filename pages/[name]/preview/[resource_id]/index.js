@@ -1,10 +1,14 @@
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect } from "react";
 import Head from "next/head";
-import DatasetDescription from "../components/dataset/DatasetDescription";
-/*import ApiModal from "../components/common/ApiModal";*/
+import DatasetDescription from "../../../../components/dataset/DatasetDescription";
+
+import ApiModal from "../../../../components/common/ApiModal";
 
 export async function getServerSideProps(context) {
+  const name = context.query.name;
+  const resource_id = context.query.resource_id;
+
   function ValidateSize(FileSize) {
     var marker = 1024;
     var decimal = 2;
@@ -28,10 +32,10 @@ export async function getServerSideProps(context) {
     }
   }
 
-  async function buildTable(resourceId) {
+  async function buildTable(resource_id) {
     const response = await fetch(
       "https://data.ca.gov/api/3/action/datastore_search?resource_id=" +
-        resourceId
+        resource_id
     ).then((response) => response.json());
     const columns = [];
     for (const key in response.result.fields) {
@@ -56,8 +60,7 @@ export async function getServerSideProps(context) {
   }
 
   const datasetResponse = await fetch(
-    "https://data.ca.gov/api/3/action/package_show?name_or_id=" +
-      context.query.name
+    "https://data.ca.gov/api/3/action/package_show?name_or_id=" + name
   ).then((response) => response.json());
   //https://data.ca.gov/api/3/action/package_show?name_or_id=ground-water-water-quality-results
 
@@ -68,6 +71,7 @@ export async function getServerSideProps(context) {
     metadata_modified: new Date(
       datasetResponse.result.metadata_modified
     ).toLocaleDateString("en-EN", options),
+    description: "",
   };
   var dictionaryData = {
     columns: [],
@@ -86,7 +90,7 @@ export async function getServerSideProps(context) {
     index < datasetResponse.result.resources.length;
     index++
   ) {
-    if (context.query.id === datasetResponse.result.resources[index].id) {
+    if (resource_id === datasetResponse.result.resources[index].id) {
       datasetInfo.id = datasetResponse.result.resources[index].id;
       datasetInfo.name = datasetResponse.result.resources[index].name;
       datasetInfo.description =
@@ -116,14 +120,14 @@ export async function getServerSideProps(context) {
   /* Finds the right resource file */
   const response = await fetch(
     "https://data.ca.gov/api/3/action/datastore_search?resource_id=" +
-      context.query.id
+      resource_id
   ).then((response) => response.json());
   tableData = {
     columns: [],
     rows: [],
   };
   if (response.success) {
-    var tableData = await buildTable(context.query.id);
+    var tableData = await buildTable(resource_id);
   }
 
   return {
@@ -317,7 +321,7 @@ export default function Preview(dataset) {
             )}
           </div>
         </article>
-        {/*<ApiModal />*/}
+        <ApiModal />
       </main>
     </>
   );

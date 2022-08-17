@@ -13,11 +13,10 @@ function Component(props) {
           <div className={style.row}>
             <div className={style.column}>
               <Link
-                key={index}
                 href={"/organization/datasets?q=&publisher=" + organization.id}
                 passHref
               >
-                <a>{organization.title}</a>
+                <a key={index}>{organization.title}</a>
               </Link>
             </div>
             <div className={style.column}>{organization.package_count}</div>
