@@ -36,7 +36,9 @@ export async function getServerSideProps(context) {
   const response = await fetch(
     "https://data.ca.gov/api/3/action/package_show?name_or_id=" + name
   ).then((response) => response.json());
+
   var groups = response.result.groups ?? [];
+  console.log(groups);
   if (groups.length == 0) {
     groups = [
       {
@@ -356,16 +358,12 @@ export default function DataSet(data) {
                             dataset.format
                           ) && (
                             <div>
-                              <a
-                                href={
-                                  "/preview/" +
-                                  data.parameters.name +
-                                  "&id=" +
-                                  dataset.id
-                                }
+                              <Link
+                                href={data.parameters.name + "/" + dataset.id}
+                                passHref
                               >
-                                Preview
-                              </a>
+                                <a>Preview</a>
+                              </Link>
                             </div>
                           )}
 
@@ -439,16 +437,7 @@ export default function DataSet(data) {
                           ) && (
                             <div>
                               <Link
-                                href={
-                                  "/preview/" +
-                                  data.parameters.name +
-                                  "&id=" +
-                                  dataset.id +
-                                  "&rname=" +
-                                  dataset.name +
-                                  "&state=" +
-                                  dataset.active
-                                }
+                                href={data.parameters.name + "/" + dataset.id}
                                 passHref
                               >
                                 <a>Preview</a>

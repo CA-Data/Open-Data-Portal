@@ -1,44 +1,3 @@
-if (document.querySelector("#apiModal")) {
-  const focusableElements =
-    '[href], input, button, [tabindex]:not([tabindex="-1"])';
-  const modal = document.querySelector("#apiModal");
-
-  const firstFocusableElement = modal.querySelectorAll(focusableElements)[0];
-  const focusableContent = modal.querySelectorAll(focusableElements);
-  const lastFocusableElement = focusableContent[focusableContent.length - 1];
-
-  document.addEventListener("keydown", function (e) {
-    let isTabPressed = e.key === "Tab" || e.keyCode === 9;
-
-    if (!isTabPressed) {
-      return;
-    }
-
-    if (e.shiftKey) {
-      if (document.activeElement === firstFocusableElement) {
-        lastFocusableElement.focus();
-        e.preventDefault();
-      }
-    } else {
-      if (document.activeElement === lastFocusableElement) {
-        firstFocusableElement.focus();
-        e.preventDefault();
-      }
-    }
-  });
-
-  firstFocusableElement.focus();
-
-  window.addEventListener("load", function (event) {
-    if (document.getElementsByTagName("main").length > 0) {
-      if (
-        document.getElementsByTagName("main")[0].classList.contains("home-page")
-      ) {
-        document.querySelectorAll(".site-header")[0].style.border = "0px";
-      }
-    }
-  });
-}
 if (document.getElementsByTagName("main").length > 0) {
   if (
     document.getElementsByTagName("main")[0].classList.contains("home-page")
@@ -291,7 +250,7 @@ window.customElements.define("cagov-site-navigation", CAGovSiteNavigation);
 
 //Page Navigation
 var styles =
-  "/* PAGE NAVIGATION */\nsidebar cagov-page-navigation .label {\n  font-weight: 700;\n  font-size: 24px;\n  line-height: 28.2px;\n  padding: 0;\n  margin: 0;\n  padding-bottom: 16px;\n}\n\nsidebar cagov-page-navigation ul,\nsidebar cagov-page-navigation ol:not([class*=menu]):not([class*=nav]):not([class*=footer-links]),\nsidebar cagov-page-navigation ul:not([class*=menu]):not([class*=nav]):not([class*=footer-links]) {\n  margin: 0;\n  text-indent: 0;\n  padding: 0;\n}\n\nsidebar cagov-page-navigation ul li {\n  padding-top: 14px;\n  padding-bottom: 18px;\n  margin-left: 0;\n  margin-top: 0px;\n  margin-bottom: 0px;\n  border-bottom: 1px solid var(--gray-300, #e1e0e3);\n  line-height: 28.2px;\n  list-style: none;\n}\nsidebar cagov-page-navigation ul li:first-child {\n  border-top: 1px solid var(--gray-300, #e1e0e3);\n}\nsidebar cagov-page-navigation ul li a {\n  text-decoration: none;\n}\nsidebar cagov-page-navigation ul li a:hover {\n  text-decoration: underline;\n}\n\n@media only screen and (max-width: 992px) {\n  cagov-page-navigation .label {\n    display: none;\n  }\n\n  .sidebar-container {\n    display: block;\n    width: 100%;\n    max-width: 100%;\n  }\n\n  cagov-page-navigation ul li a {\n    font-size: 16px;\n    line-height: 24px;\n  }\n}\n\n/*# sourceMappingURL=index.css.map */\n";
+  "/* PAGE NAVIGATION */\nsidebar cagov-page-navigation .label {\n  font-weight: 700;\n  font-size: 24px;\n  line-height: 28.2px;\n  padding: 0;\n  margin: 0;\n  padding-bottom: 16px;\n}\n\nsidebar cagov-page-navigation ul,\nsidebar cagov-page-navigation ol:not([class*=menu]):not([class*=nav]):not([class*=footer-links]),\nsidebar cagov-page-navigation ul:not([class*=menu]):not([class*=nav]):not([class*=footer-links]) {\n  margin: 0;\n  text-indent: 0;\n  padding: 0;\n}\n\nsidebar cagov-page-navigation ul li {\n  padding-top: 14px;\n  padding-bottom: 18px;\n  margin-left: 0;\n  margin-top: 0px;\n  margin-bottom: 0px;\n  border-bottom: 1px solid var(--gray-300, #e1e0e3);\n  line-height: 28.2px;\n  list-style: none;\n}\nsidebar cagov-page-navigation ul li:first-child {\n  border-top: 1px solid var(--gray-300, #e1e0e3);\n}\nsidebar cagov-page-navigation ul li a {\n  text-decoration: none;\n}\nsidebar cagov-page-navigation ul li a:hover {\n  text-decoration: underline;\n}\n\n@media only screen and (max-width: 992px) {\n  cagov-page-navigation .label {\n    display: none;\n  }\n\n  .sidebar-container {\n    display: block;\n    width: 100%;\n    max-width: 100%;\n  }\n\n  cagov-page-navigation ul li a {\n    font-size: 16px;\n    line-height: 24px;\n  }\n}\n";
 
 /**
  * Page Navigation web component

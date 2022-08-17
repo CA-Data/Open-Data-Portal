@@ -104,6 +104,76 @@ export default function Preview(dataset) {
           </div>
         </article>
       </main>
+      {/*
+      BUILD ERROR: 107:7  Error: External synchronous scripts are forbidden. See: https://nextjs.org/docs/messages/no-sync-scripts  @next/next/no-sync-scripts
+      Uncomment and run "yarn build" to check for additional errors.
+      <script
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+      ></script>
+
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+        (function(){
+          emailjs.init("Dpb9-WXGtDMJ1SL9v")
+        })();
+        `,
+        }}
+      />
+
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+          window.onload = function() {
+            document.getElementById('contact-form').addEventListener('submit', function(event) {
+              event.preventDefault();
+
+              var formLabels = document.querySelectorAll('.requiredField'), i;
+              var thereWasAnError = 0;
+
+              for (i = 0; i < formLabels.length; ++i) {
+                if (formLabels[i].querySelector("textarea, input, select").value == "") {
+                  formLabels[i].classList.add("input-error");
+                  formLabels[i].getElementsByClassName('input-error-icon')[0].style.display = "block";
+                  formLabels[i].getElementsByClassName('input-error-text')[0].style.display = "block";
+                  document.getElementById('error-banner').style.display = "grid";
+                  thereWasAnError = 1;
+                }
+              }
+
+              if (!thereWasAnError) {
+                emailjs.sendForm('service_c900y85', 'template_hqd9w0v', this)
+                  .then(function() {
+                      console.log('SUCCESS!');
+                  }, function(error) {
+                      console.log('FAILED...', error);
+                  });
+
+                document.querySelector("#error-banner").style.display = "none";
+                document.querySelector("#error-banner").style.visibility = "hidden";
+                document.querySelector("#contact-form").style.display = "none";
+                document.querySelector("#confirmationMessage").style.display = "block";
+              }
+
+            });
+          }
+        `,
+        }}
+      />
+
+      <script src="https://www.google.com/recaptcha/api.js"></script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+        function onSubmit(token) {
+          document.getElementById("demo-form").submit();
+        }
+        `,
+        }}
+      />
+
+      */}
     </>
   );
 }

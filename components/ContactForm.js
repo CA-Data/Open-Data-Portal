@@ -1,5 +1,3 @@
-import style from "./ContactForm.module.scss";
-
 function Component(props) {
   return (
     <>
@@ -20,9 +18,9 @@ function Component(props) {
       <form
         id="contact-form"
         className="contact-form"
-        action="mailto:opendata@state.ca.gov"
         method="post"
         encType="text/plain"
+        noValidate="novalidate"
       >
         <label>
           Name
@@ -140,6 +138,13 @@ function Component(props) {
         </label>
         <input className="contact-button" type="submit" value="Submit" />
       </form>
+      <div
+        id="confirmationMessage"
+        style={{ display: "none" }}
+        className="lead-text"
+      >
+        Thanks for contacting us! We will be in touch with you shortly.
+      </div>
     </>
   );
 }
