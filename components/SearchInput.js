@@ -10,6 +10,8 @@ function Component(props) {
             borderRadius: "4px 0px 0px 4px",
             padding: "8px 14px 0px 14px",
             position: "relative",
+            width: "47px",
+            zIndex: 10
           }}
           type="submit"
           className="search-submit"
@@ -45,8 +47,10 @@ function Component(props) {
             color: "#ffffff",
             padding: "7px",
             borderRadius: ".25rem",
-            padding: "5px 0px 9px 10px",
+            padding: "5px 0px 9px 53px",
             border: "none",
+            position: "relative",
+            left: "-43px"
           }}
         />
       </form>
