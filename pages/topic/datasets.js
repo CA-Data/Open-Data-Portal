@@ -1374,7 +1374,7 @@ const Results = (data) => {
                   <button
                     style={{
                       outlineOffset: -2,
-                      right: 5,
+                      right: "53px",
                       backgroundColor: "var(--primary-color, #046A99)",
                       border: "1px solid var(--primary-color, #046A99)",
                       borderRadius: "0px 4px 4px 0px",
@@ -1383,6 +1383,7 @@ const Results = (data) => {
                       backgroundColor: "#034A6B",
                       display: "flex",
                       alignItems: "center",
+                      width: "55px"
                     }}
                     type="submit"
                     className="search-submit"
