@@ -22,7 +22,7 @@ function Component(props) {
         encType="text/plain"
         noValidate="novalidate"
       >
-        <label>
+        <label className="requiredField">
           Name
           <input type="text" name="name" required />
           <span className="input-error-icon">
@@ -40,7 +40,7 @@ function Component(props) {
           </span>
           <span className="input-error-text">Enter your name</span>
         </label>
-        <label>
+        <label className="requiredField">
           Email
           <input type="text" name="email" required />
           <span className="input-error-icon">
@@ -58,7 +58,7 @@ function Component(props) {
           </span>
           <span className="input-error-text">Enter your email</span>
         </label>
-        <label>
+        <label className="requiredField">
           Topic
           <div className="form-select">
             <select name="subject" defaultValue={""} required>
@@ -72,8 +72,6 @@ function Component(props) {
                 Report an issue with the site
               </option>
               <option value="Share feedback">Share feedback</option>
-              <option value="Upload">Upload</option>
-              <option value="Search">Search</option>
               <option value="Something else">Something else</option>
             </select>
             <span className="input-error-icon">
@@ -109,7 +107,7 @@ function Component(props) {
             </svg>
           </span>
         </label>
-        <label>
+        <label className="requiredField">
           Comment
           <textarea
             type="text"
@@ -136,7 +134,7 @@ function Component(props) {
             Provide information about why you’re contacting us.
           </span>
         </label>
-        <input className="contact-button" type="submit" value="Submit" />
+        <input className="contact-button TEMP-g-recaptcha" type="submit" value="Submit" data-sitekey="6LdsVoAhAAAAAMVLBexkuC9rOFAh0gLIZBECUpX_" data-callback='onSubmit' data-action='submit' />
       </form>
       <div
         id="confirmationMessage"

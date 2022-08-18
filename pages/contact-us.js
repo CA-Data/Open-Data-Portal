@@ -104,20 +104,28 @@ export default function Preview(dataset) {
           </div>
         </article>
       </main>
-      {/*
-      BUILD ERROR: 107:7  Error: External synchronous scripts are forbidden. See: https://nextjs.org/docs/messages/no-sync-scripts  @next/next/no-sync-scripts
-      Uncomment and run "yarn build" to check for additional errors.
-      <script
-        type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
-      ></script>
 
-      <script
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" async></script>
+
+      <script 
         dangerouslySetInnerHTML={{
           __html: `
-        (function(){
-          emailjs.init("Dpb9-WXGtDMJ1SL9v")
-        })();
+
+          function whenAvailable(name, callback) {
+            var interval = 100; // ms
+            window.setTimeout(function() {
+                if (window[name]) {
+                    callback(window[name]);
+                } else {
+                    whenAvailable(name, callback);
+                }
+            }, interval);
+          }
+
+          whenAvailable("emailjs", function(t) {
+            emailjs.init("Dpb9-WXGtDMJ1SL9v")
+          });
+
         `,
         }}
       />
@@ -162,18 +170,17 @@ export default function Preview(dataset) {
         }}
       />
 
-      <script src="https://www.google.com/recaptcha/api.js"></script>
+      <script src="https://www.google.com/recaptcha/api.js" async></script>
       <script
         dangerouslySetInnerHTML={{
           __html: `
         function onSubmit(token) {
-          document.getElementById("demo-form").submit();
+          document.getElementById("contact-form").submit();
         }
         `,
         }}
       />
 
-      */}
     </>
   );
 }
