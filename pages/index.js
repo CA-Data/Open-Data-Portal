@@ -104,6 +104,15 @@ export async function getStaticProps({ req, res }) {
   };
 }
 export default function Home(data) {
+  const alertCss = `
+  #__next {
+    display:flex;
+    flex-direction:column;
+  }
+  #hideAlert:checked ~ .cagov-page-alert {
+    display: none !important;
+  }
+  `
   return (
     <>
       <Head>
@@ -113,6 +122,23 @@ export default function Home(data) {
           content="Find and access thousands of State of California datasets to support your next analysis or project."
         ></meta>
       </Head>
+      <input id="hideAlert" type="checkbox" style={{display:"none"}} />
+      <div className="cagov-page-alert" style={{order:-1,background:"#ededed",border:0,margin:0}}>
+        <div style={{maxWidth: "var(--w-lg, 1176px)",margin: "0 auto 0 auto",width: "98%",display:"flex",justifyContent:"space-between", flexWrap:"wrap"}}>
+          <div>
+            <span style={{textTransform:"uppercase", border:"1px solid black", fontSize:"0.8em", fontWeight:"700", padding:"0 0.2em", marginRight:"1.5em"}}>Experimental</span>
+            We used data and feedback to make a user-friendly site. We’d love your <a href="https://airtable.com/shr0BOnwFKKqmGPeB">feedback</a>.
+          </div>
+          <div>
+            Back to <a href="https://data.ca.gov/">data.ca.gov</a>.
+            <label htmlFor="hideAlert" style={{borderLeft:"1px solid black",paddingLeft:"0.7em",marginLeft:"0.6em"}}>
+              <span aria-hidden="true" style={{fontSize:"0.7em",fontWeight:"bold",cursor: "pointer"}}>&#x2573;</span>
+              <span className="sr-only">Dismiss page alert</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <style>{alertCss}</style>
       <main className="home-page">
         <HeroBanner
           heading={"Find California data"}
