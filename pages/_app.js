@@ -27,6 +27,21 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
+      <div id="alert-experimental" className="cagov-page-alert" style={{display:"none",background:"#ededed",border:0,margin:0}}>
+        <div style={{maxWidth: "var(--w-lg, 1176px)",margin: "0 auto 0 auto",width: "98%",display:"flex",justifyContent:"space-between", flexWrap:"wrap"}}>
+          <div>
+            <span style={{textTransform:"uppercase", border:"1px solid black", fontSize:"0.8em", fontWeight:"700", letterSpacing:".08em", padding:"0 .8em", marginRight:"1.5em"}}>Experimental</span>
+            We used data and feedback to make a user-friendly site. We’d love your <a href="https://airtable.com/shr0BOnwFKKqmGPeB">feedback</a>.
+          </div>
+          <div>
+            Back to <a href="https://data.ca.gov/">data.ca.gov</a>.
+            <label htmlFor="hideAlert" style={{borderLeft:"1px solid black",paddingLeft:"0.7em",marginLeft:"0.6em"}}>
+              <span id="hideAlert" aria-hidden="true" style={{fontSize:"0.7em",fontWeight:"bold",cursor: "pointer"}}>&#x2573;</span>
+              <span className="sr-only">Dismiss page alert</span>
+            </label>
+          </div>
+        </div>
+      </div>
       <div>
         <div className="official-header">
           <div className="container">
