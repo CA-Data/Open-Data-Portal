@@ -95,7 +95,7 @@ export default function preview() {
                 </a>
               </li>
               <li>
-                <Link href="/contact-us" passHref>
+                <Link href="https://airtable.com/shr0BOnwFKKqmGPeB" passHref>
                   <a>Provide feedback</a>
                 </Link>
               </li>
