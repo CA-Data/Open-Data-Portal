@@ -108,7 +108,7 @@ export default function Preview(dataset) {
 
       <Script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" async></Script>
 
-      <Script>
+      <Script id="script-init-emailjs">
         {`
 
           function whenAvailable(name, callback) {
@@ -131,7 +131,7 @@ export default function Preview(dataset) {
 
       <Script src="https://www.google.com/recaptcha/api.js" async></Script>
 
-      <Script>
+      <Script id="script-send-email">
         {`
 
         function onSubmit(token) {
