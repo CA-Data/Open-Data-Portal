@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import ContactForm from "../components/ContactForm";
+import Script from 'next/script'
 
 export default function Preview(dataset) {
   useEffect(() => {
@@ -105,82 +106,66 @@ export default function Preview(dataset) {
         </article>
       </main>
 
-      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" async></script>
+      <Script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" async></Script>
 
-      <script 
-        dangerouslySetInnerHTML={{
-          __html: `
+      <Script>
+        {`
 
           function whenAvailable(name, callback) {
             var interval = 100; // ms
             window.setTimeout(function() {
-                if (window[name]) {
-                    callback(window[name]);
-                } else {
-                    whenAvailable(name, callback);
-                }
+              if (window[name]) {
+                callback(window[name]);
+              } else {
+                whenAvailable(name, callback);
+              }
             }, interval);
           }
 
           whenAvailable("emailjs", function(t) {
-            emailjs.init("Dpb9-WXGtDMJ1SL9v")
+            emailjs.init("Dpb9-WXGtDMJ1SL9v") // emailjs public key
           });
 
-        `,
-        }}
-      />
+        `}
+      </Script>
 
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-          window.onload = function() {
-            document.getElementById('contact-form').addEventListener('submit', function(event) {
-              event.preventDefault();
+      <Script src="https://www.google.com/recaptcha/api.js" async></Script>
 
-              var formLabels = document.querySelectorAll('.requiredField'), i;
-              var thereWasAnError = 0;
+      <Script>
+        {`
 
-              for (i = 0; i < formLabels.length; ++i) {
-                if (formLabels[i].querySelector("textarea, input, select").value == "") {
-                  formLabels[i].classList.add("input-error");
-                  formLabels[i].getElementsByClassName('input-error-icon')[0].style.display = "block";
-                  formLabels[i].getElementsByClassName('input-error-text')[0].style.display = "block";
-                  document.getElementById('error-banner').style.display = "grid";
-                  thereWasAnError = 1;
-                }
-              }
-
-              if (!thereWasAnError) {
-                emailjs.sendForm('service_c900y85', 'template_hqd9w0v', this)
-                  .then(function() {
-                      console.log('SUCCESS!');
-                  }, function(error) {
-                      console.log('FAILED...', error);
-                  });
-
-                document.querySelector("#error-banner").style.display = "none";
-                document.querySelector("#error-banner").style.visibility = "hidden";
-                document.querySelector("#contact-form").style.display = "none";
-                document.querySelector("#confirmationMessage").style.display = "block";
-              }
-
-            });
-          }
-        `,
-        }}
-      />
-
-      <script src="https://www.google.com/recaptcha/api.js" async></script>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
         function onSubmit(token) {
-          document.getElementById("contact-form").submit();
-        }
-        `,
-        }}
-      />
 
+          var formLabels = document.querySelectorAll('.requiredField'), i;
+          var thereWasAnError = 0;
+
+          for (i = 0; i < formLabels.length; ++i) {
+            if (formLabels[i].querySelector("textarea, input, select").value == "") {
+              formLabels[i].classList.add("input-error");
+              formLabels[i].getElementsByClassName('input-error-icon')[0].style.display = "block";
+              formLabels[i].getElementsByClassName('input-error-text')[0].style.display = "block";
+              document.getElementById('error-banner').style.display = "grid";
+              thereWasAnError = 1;
+            }
+          }
+          if (!thereWasAnError) {
+            emailjs.sendForm('service_c900y85', 'template_hqd9w0v', document.getElementById('contact-form'))
+              .then(function() {
+                  console.log('SUCCESS!');
+              }, function(error) {
+                  console.log('FAILED...', error);
+              });
+            document.querySelector("#error-banner").style.display = "none";
+            document.querySelector("#error-banner").style.visibility = "hidden";
+            document.querySelector("#contact-form").style.display = "none";
+            document.querySelector("#confirmationMessage").style.display = "block";
+          }
+
+        }
+
+        `}
+      </Script>
+  
     </>
   );
 }

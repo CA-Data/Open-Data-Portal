@@ -60,7 +60,7 @@ function Component(props) {
         </label>
         <label className="requiredField">
           Topic
-          <div className="form-select">
+          <span className="form-select">
             <select name="subject" defaultValue={""} required>
               <option value="" disabled>
                 Select an option
@@ -88,7 +88,7 @@ function Component(props) {
               </svg>
             </span>
             <span className="input-error-text">Select a topic</span>
-          </div>
+          </span>
         </label>
         <label>
           Page link <span className="thin">(optional)</span>
@@ -110,7 +110,6 @@ function Component(props) {
         <label className="requiredField">
           Comment
           <textarea
-            type="text"
             name="body"
             rows="4"
             cols="50"
@@ -134,7 +133,7 @@ function Component(props) {
             Provide information about why you’re contacting us.
           </span>
         </label>
-        <input className="contact-button TEMP-g-recaptcha" type="submit" value="Submit" data-sitekey="6LdsVoAhAAAAAMVLBexkuC9rOFAh0gLIZBECUpX_" data-callback='onSubmit' data-action='submit' />
+        <input className="contact-button g-recaptcha" type="submit" value="Submit" data-sitekey="6LdsVoAhAAAAAMVLBexkuC9rOFAh0gLIZBECUpX_" data-callback='onSubmit' data-action='submit' />
       </form>
       <div
         id="confirmationMessage"
