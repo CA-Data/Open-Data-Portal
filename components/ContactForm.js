@@ -60,7 +60,7 @@ function Component(props) {
         </label>
         <label className="requiredField">
           Topic
-          <span className="form-select">
+          <span className="form-select" style={{ display: "block" }}>
             <select name="subject" defaultValue={""} required>
               <option value="" disabled>
                 Select an option
