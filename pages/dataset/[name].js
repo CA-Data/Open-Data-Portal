@@ -38,7 +38,7 @@ export async function getServerSideProps(context) {
   ).then((response) => response.json());
 
   var groups = response.result.groups ?? [];
-  console.log(groups);
+  //console.log(groups);
   if (groups.length == 0) {
     groups = [
       {
@@ -239,11 +239,12 @@ export default function DataSet(data) {
   };
   const metadata_created = date_created.toLocaleDateString("en-EN", options);
   const metadata_modified = date_modified.toLocaleDateString("en-EN", options);
+  const title_tag = `${data.data_object.result.title} | CA Open Data`;
 
   return (
     <>
       <Head>
-        <title>{data.data_object.result.title} | CA Open Data</title>
+        <title>{title_tag}</title>
         <meta
           name="description"
           content={
