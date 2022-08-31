@@ -187,10 +187,10 @@ const Results = (data) => {
   const [selectedFormats, setSelectedFormats] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [reset, setReset] = useState(false);
-  const [topicList, setTopicList] = useState(Object.entries(data.filters.result.facets.groups).sort((a, b) => a[1] > b[1] ? -1 : 1));
-  const [publisherList, setPublisherList] = useState(Object.entries(data.filters.result.facets.organization).sort((a, b) => a[1] > b[1] ? -1 : 1));
+  const [topicList, setTopicList] = useState(Object.entries(data.filters.result.facets.groups));
+  const [publisherList, setPublisherList] = useState(Object.entries(data.filters.result.facets.organization));
   const [tagList, setTagList] = useState(Object.entries(data.filters.result.facets.tags));
-  const [formatList, setFormatList] = useState(Object.entries(data.filters.result.facets.res_format).sort((a, b) => a[1] > b[1] ? -1 : 1));
+  const [formatList, setFormatList] = useState(Object.entries(data.filters.result.facets.res_format));
   const [dataState, setDataState] = useState(data);
   const [topicShowMore, setTopicShowMore] = useState(5);
   const [publisherShowMore, setPublisherShowMore] = useState(5);
