@@ -189,7 +189,7 @@ const Results = (data) => {
   const [reset, setReset] = useState(false);
   const [topicList, setTopicList] = useState(Object.entries(data.filters.result.facets.groups).sort((a, b) => a[1] > b[1] ? -1 : 1));
   const [publisherList, setPublisherList] = useState(Object.entries(data.filters.result.facets.organization).sort((a, b) => a[1] > b[1] ? -1 : 1));
-  const [tagList, setTagList] = useState(Object.entries(data.filters.result.facets.tags).sort((a, b) => a[1] > b[1] ? -1 : 1));
+  const [tagList, setTagList] = useState(Object.entries(data.filters.result.facets.tags));
   const [formatList, setFormatList] = useState(Object.entries(data.filters.result.facets.res_format).sort((a, b) => a[1] > b[1] ? -1 : 1));
   const [dataState, setDataState] = useState(data);
   const [topicShowMore, setTopicShowMore] = useState(5);
