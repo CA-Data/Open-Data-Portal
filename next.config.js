@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  productionBrowserSourceMaps: false,
   experimental: {
     scrollRestoration: true,
   },
@@ -11,7 +12,7 @@ const nextConfig = {
     } else {
       return `${new Date().getTime()}`;
     }
-  }
-}
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

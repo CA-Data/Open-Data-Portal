@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import BasicSelect from '../components/BasicSelect';
+import SearchResultListing from '/components/SearchResultListing';
 import Link from 'next/link';
 import Head from 'next/head';
 
@@ -9,6 +10,7 @@ export async function getServerSideProps(context) {
 }
 
 const getFormattedData = async (context) => {
+  if (typeof context.query.q === "undefined") {context.query.q = ""};
   var apirequest = "https://data.ca.gov/api/3/action/package_search?q=" + context.query.q;
   var thereWasAFilter = 0; // flag, did user select any filter?
   if ('topic' in context.query && context.query.topic.length > 0) {
@@ -185,10 +187,10 @@ const Results = (data) => {
   const [selectedFormats, setSelectedFormats] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [reset, setReset] = useState(false);
-  const [topicList, setTopicList] = useState(Object.entries(data.filters.result.facets.groups).sort((a, b) => a[1] > b[1] ? -1 : 1));
-  const [publisherList, setPublisherList] = useState(Object.entries(data.filters.result.facets.organization).sort((a, b) => a[1] > b[1] ? -1 : 1));
-  const [tagList, setTagList] = useState(Object.entries(data.filters.result.facets.tags).sort((a, b) => a[1] > b[1] ? -1 : 1));
-  const [formatList, setFormatList] = useState(Object.entries(data.filters.result.facets.res_format).sort((a, b) => a[1] > b[1] ? -1 : 1));
+  const [topicList, setTopicList] = useState(Object.entries(data.filters.result.facets.groups));
+  const [publisherList, setPublisherList] = useState(Object.entries(data.filters.result.facets.organization));
+  const [tagList, setTagList] = useState(Object.entries(data.filters.result.facets.tags));
+  const [formatList, setFormatList] = useState(Object.entries(data.filters.result.facets.res_format));
   const [dataState, setDataState] = useState(data);
   const [topicShowMore, setTopicShowMore] = useState(5);
   const [publisherShowMore, setPublisherShowMore] = useState(5);
@@ -217,11 +219,6 @@ const Results = (data) => {
       router.push(newPath, null, { shallow: true });
     }
   };
-  var urlParamTopic = (dataState.parameters.topic) ? "&topic=" + dataState.parameters.topic : "";
-  var urlParamPublisher = (dataState.parameters.publisher) ? "&publisher=" + dataState.parameters.publisher : "";
-  var urlParamFormat = (dataState.parameters.format) ? "&format=" + dataState.parameters.format : "";
-  var urlParamTag = (dataState.parameters.tag) ? "&tag=" + dataState.parameters.tag : "";
-  var urlParamSort = (dataState.parameters.sort) ? "&sort=" + dataState.parameters.sort : "";
 
   // UseEffects will fire when its corresponding array is updated. 
   // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedTags)
@@ -433,7 +430,7 @@ const Results = (data) => {
                     type={'submit'}
                     style={{
                       outlineOffset: -2,
-                      right: 5,
+                      right: "53px",
                       backgroundColor: "var(--primary-color, #046A99)",
                       border: "1px solid var(--primary-color, #046A99)",
                       borderRadius: "0px 4px 4px 0px",
@@ -441,7 +438,8 @@ const Results = (data) => {
                       position: "relative",
                       backgroundColor: '#034A6B',
                       display: 'flex',
-                      alignItems: 'center'
+                      alignItems: 'center',
+                      width: "55px"
                     }}
                     className="search-submit"
                   >
@@ -710,7 +708,7 @@ const Results = (data) => {
                     <button
                       style={{
                         outlineOffset: -2,
-                        right: 5,
+                        right: "53px",
                         backgroundColor: "var(--primary-color, #046A99)",
                         border: "1px solid var(--primary-color, #046A99)",
                         borderRadius: "0px 4px 4px 0px",
@@ -718,7 +716,8 @@ const Results = (data) => {
                         position: "relative",
                         backgroundColor: '#034A6B',
                         display: 'flex',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        width: "55px"
                       }}
                       className="search-submit"
                     >
@@ -755,53 +754,9 @@ const Results = (data) => {
             <div>
               <h2>{dataState.matches > 1 ? dataState.matches + ' datasets' : dataState.matches + ' dataset'} </h2>
             </div>
-            <div className="result-page">
-              {dataState.allResults.map((dataset, index) => (
-                <div
-                  key={index}
-                  style={{ marginBottom: "3rem" }}
-                  className="result"
-                >
-                  <h2 style={{ marginBottom: '5px' }} className="h5">
-                    <Link href={"/dataset?name=" + dataset.name} passHref>
-                      <a style={{ fontWeight: '700', fontSize: '18px', lineHeight: '32px', color: '#046A99' }}>
-                        {dataset.title}
-                      </a>
-                    </Link>
-                  </h2>
-                  <ul className="result-dataset-info">
-                    <li>
-                      <strong>Published by: </strong>
-                      {dataset.organization}
-                    </li>
-                    <li>
-                      <strong>Last updated: </strong>
-                      {dataset.updated}
-                    </li>
-                    <li>
-                      <strong>File types: </strong>
-                      {dataset.formats.join(', ')}
-                    </li>
-                  </ul>
-                  <p className="description" style={{ marginTop: '12px' }}>
-                    {dataset.notes.substring(0, 150)}...
-                  </p>
-                </div>
-              ))}
-            </div>
 
-            {/*<div className="page-navigation"><a className="page-previous" href={"datasets?q=water&tag=regulatory&page="+data.pages.previous}>&lt;</a> <span className="page-current">{data.pages.current}</span> <a className="page-next" href={"datasets?q=water&tag=regulatory&page="+data.pages.next}>{data.pages.next}</a> <span className="page-dots">...</span> <a className="page-next" href={"datasets?q=water&tag=regulatory&page="+data.pages.total}>{data.pages.total}</a> <a className="page-next" href={"datasets?q=water&tag=regulatory&page="+data.pages.next}>&gt;</a></div>*/}
-            <div className="page-navigation">
-              <a style={{ 'display': dataState.pages.previous.display }} className="page-previous" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.previous.value}><svg className={'rotate-90'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><title>Previous page arrow</title><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg></a>
-
-              <a style={{ 'display': dataState.pages.previous.display }} className="page-previous" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.previous.value}>{dataState.pages.previous.value + 1}</a>
-
-              <span style={{ 'display': dataState.pages.current.display }} className="page-current">{dataState.pages.current.value + 1}</span>
-
-              <a style={{ 'display': dataState.pages.next.display }} className="page-next" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.next.value}>{dataState.pages.next.value + 1}</a>
-
-              <a style={{ 'display': dataState.pages.next.display }} className="page-next" href={"datasets?q=" + dataState.parameters.q + urlParamTopic + urlParamPublisher + urlParamTag + urlParamFormat + urlParamSort + "&page=" + dataState.pages.next.value}><svg className={'rotate-270'} xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 20 12"><title>Next page arrow</title><path fill="#4B4B4B" d="m17.8.4-7.7 8.2L2.2.4C1.7-.1.9-.1.4.4s-.5 1.4 0 1.9l8.8 9.3c.3.3.7.4 1.1.4.3 0 .7-.1.9-.4l8.4-9.3c.5-.5.5-1.4 0-1.9s-1.3-.5-1.8 0z" /></svg></a>
-            </div>
+            <SearchResultListing dataState={dataState} />
+            
           </div>
         </article>
       </main>

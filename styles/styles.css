@@ -1,19 +1,19 @@
 :root {
-  --primary-color: #046A99;
-  --primary-dark-color: #034A6B;
-  --primary-light-color: #4F97B8;
-  --primary-lightest-color: #B4D2E0;
-  --primary-hover-color: #034A6B;
-  --secondary-color: #D4D4D4;
-  --secondary-dark-color: #4B4B4B;
-  --secondary-light-color: #EDEDED;
-  --secondary-lightest-color: #FAFAFA;
-  --secondary-hover-color: #4B4B4B;
-  --highlight-color: #FDB81D; 
-  --highlight-dark-color: #B18114;
-  --highlight-light-color: #FECD61;
-  --highlight-lightest-color: #FEEABB;
-  --secondary-hover-color: #B18114;
+  --primary-color: #046a99;
+  --primary-dark-color: #034a6b;
+  --primary-light-color: #4f97b8;
+  --primary-lightest-color: #b4d2e0;
+  --primary-hover-color: #034a6b;
+  --secondary-color: #d4d4d4;
+  --secondary-dark-color: #4b4b4b;
+  --secondary-light-color: #ededed;
+  --secondary-lightest-color: #fafafa;
+  --secondary-hover-color: #4b4b4b;
+  --highlight-color: #fdb81d;
+  --highlight-dark-color: #b18114;
+  --highlight-light-color: #fecd61;
+  --highlight-lightest-color: #feeabb;
+  --secondary-hover-color: #b18114;
 }
 
 :root {
@@ -137,7 +137,7 @@
   --cagov-highlight-light: #fed36d;
   --cagov-highlight: #fec02f;
   --cagov-highlight-dark: #b28621;
-  --cagov-primary: #034A6B;
+  --cagov-primary: #034a6b;
   --cagov-primary-dark: #003484;
   --cagov-secondary: #ff8000;
   --white: #fff;
@@ -150,11 +150,11 @@
   --gray-700: #a09fa7;
   --gray-800: #6c6b77;
   --gray-900: #3f3e4d;
-  --black: #4B4B4B;
+  --black: #4b4b4b;
   --success: #008542;
   --danger: #b71234;
   --warning: #ffd700;
-  --info: #4B4B4B;
+  --info: #4b4b4b;
   --animation-duration-1: 0.1s;
   --animation-duration-2: 0.2s;
   --animation-duration-3: 0.3s;
@@ -289,7 +289,7 @@
 
 .cagov-featured-card {
   display: grid;
-  grid-template-columns: repeat( 2, minmax(250px, 1fr) );
+  grid-template-columns: repeat(2, minmax(250px, 1fr));
   column-gap: 3rem;
 }
 
@@ -2339,7 +2339,7 @@ select[data-class-icon] {
 .page-container-ds {
   max-width: var(--w-lg, 1176px);
   width: 98%;
-  margin: 2rem auto 4rem auto!important;
+  margin: 2rem auto 4rem auto !important;
   padding-right: 0;
   padding-left: 0;
 }
@@ -2622,7 +2622,7 @@ main .wp-block-image img {
 
 .wp-block-button__link {
   background-color: #33705b;
-  background-color: var(--primary-color, #046A99);
+  background-color: var(--primary-color, #046a99);
   color: #fff;
   padding: 0.5556rem;
   margin: 0 0 1rem 0;
@@ -2828,7 +2828,7 @@ textarea {
 input,
 textarea {
   background-color: var(--white, #fff);
-  color: var(--black, #4B4B4B) !important;
+  color: var(--black, #4b4b4b) !important;
   font-size: var(--font-size-2, 1.125rem);
   font-size: calc(var(--font-size-2) + var(--ratio));
   font-weight: var(--font-weight-4, 400);
@@ -2840,7 +2840,7 @@ textarea:focus {
 }
 
 a {
-  color: var(--primary-color, #046A99);
+  color: var(--primary-color, #046a99);
   text-decoration: underline;
 }
 
@@ -2889,7 +2889,7 @@ button:focus {
     font-weight: 700;
     font-size: calc(1rem + var(--ratio));
     line-height: 1.125rem;
-    color: var(--primary-color, #046A99);
+    color: var(--primary-color, #046a99);
   }
 
   .breadcrumb span.crumb:not(:last-child):not([class*="separator"]) {
@@ -2914,7 +2914,7 @@ body {
   font-size: var(--font-size-2, 1.125rem);
   font-weight: var(--font-weight-4, 400);
   line-height: var(--font-lineheight-3, 1.5);
-  color: var(--black, #4B4B4B);
+  color: var(--black, #4b4b4b);
   overflow-x: hidden;
 }
 
@@ -2937,7 +2937,6 @@ p {
   font-size: 1.125rem;
   line-height: 2rem;
   margin-bottom: calc(var(--s-2) + var(--ratio));
-
 }
 
 ol,
@@ -2972,7 +2971,7 @@ h1 {
   margin-bottom: calc(var(--s-4) + var(--ratio));
   font-weight: var(--font-weight-7, 700);
   line-height: var(--font-lineheight-1);
-  color: var(--primary-color-dark, #034A6B);
+  color: var(--primary-color-dark, #034a6b);
 }
 
 .h2,
@@ -2982,7 +2981,7 @@ h2 {
   margin-bottom: calc(var(--s-3) + var(--ratio));
   font-weight: var(--font-weight-7, 700);
   line-height: var(--font-lineheight-2);
-  color: var(--black, #4B4B4B);
+  color: var(--black, #4b4b4b);
 }
 
 .h3,
@@ -5647,7 +5646,7 @@ figure figcaption {
   padding: 0;
   box-sizing: border-box;
   background-color: var(--white, #fff);
-  border-bottom: 3px solid var(--highlight-color, #FDB81D);
+  border-bottom: 3px solid var(--highlight-color, #fdb81d);
 }
 
 .site-header .main-container {
@@ -5688,7 +5687,7 @@ figure figcaption {
   flex-direction: column;
   row-gap: 0.25rem;
   transition: all 0.3s;
-  color: var(--primary-dark-color, #034A6B);
+  color: var(--primary-dark-color, #034a6b);
   text-decoration: none;
   grid-column: 1/2;
   grid-row: 1/2;
@@ -5762,7 +5761,7 @@ figure figcaption {
   background: 0 0;
   overflow: visible;
   padding: 10px;
-  color: var(--primary-color, #046A99);
+  color: var(--primary-color, #046a99);
 }
 
 .site-header button.menu-btn:hover,
@@ -5788,7 +5787,7 @@ figure figcaption {
 
 .site-header button.menu-btn .blue,
 .site-header button.search-btn .blue {
-  fill: var(--primary-color, #046A99);
+  fill: var(--primary-color, #046a99);
 }
 
 .site-header .menu-trigger {
@@ -5799,7 +5798,7 @@ figure figcaption {
   display: inline-block;
   cursor: pointer;
   position: relative;
-  color: var(--black, #4B4B4B);
+  color: var(--black, #4b4b4b);
   display: flex;
   align-items: center;
   right: 0;
@@ -5812,16 +5811,16 @@ figure figcaption {
 }
 
 .site-header .menu-trigger .hamburger-inner {
-  background-color: var(--black, #4B4B4B);
+  background-color: var(--black, #4b4b4b);
 }
 
 .site-header .menu-trigger:hover {
-  color: var(--black, #4B4B4B);
+  color: var(--black, #4b4b4b);
 }
 
 .site-header .menu-trigger:hover .hamburger-inner:after,
 .site-header .menu-trigger:hover .hamburger-inner:before {
-  background-color: var(--black, #4B4B4B);
+  background-color: var(--black, #4b4b4b);
 }
 
 .site-header .hamburger {
@@ -5922,7 +5921,7 @@ cagov-site-navigation .search-container .site-search {
 .site-header .search-container .site-search .search-textfield,
 cagov-site-navigation .search-container .site-search .search-textfield {
   border: 1px solid;
-  border-color: var(--primary-color, #046A99);
+  border-color: var(--primary-color, #046a99);
   border-radius: 4px;
   padding: 10px;
   margin-right: 0;
@@ -5933,7 +5932,7 @@ cagov-site-navigation .search-container .site-search .search-textfield {
 .site-header .search-container .site-search .search-textfield .active,
 cagov-site-navigation .search-container .site-search .search-textfield .active {
   border: 1px solid;
-  border-color: var(--primary-color, #046A99);
+  border-color: var(--primary-color, #046a99);
   border-radius: 4px;
   padding: 10px;
   width: 100%;
@@ -5972,12 +5971,12 @@ cagov-site-navigation .search-container .site-search .search-submit:focus {
 
 .site-header .search-container .site-search .search-submit svg path,
 cagov-site-navigation .search-container .site-search .search-submit svg path {
-  fill: var(--primary-color, #046A99);
+  fill: var(--primary-color, #046a99);
 }
 
 .site-header .search-container .site-search .search-close,
 cagov-site-navigation .search-container .site-search .search-close {
-  color: var(--primary-color, #046A99);
+  color: var(--primary-color, #046a99);
   text-decoration: underline;
   border: none;
   background-color: var(--gray-100, #f9f9fa);
@@ -6003,7 +6002,7 @@ cagov-site-navigation .search-container--small {
 
 .site-header .search-container--small.hidden-search,
 cagov-site-navigation .search-container--small.hidden-search {
-  display: none!important;
+  display: none !important;
 }
 
 @media (min-width: 768px) {
@@ -6046,14 +6045,14 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .cagov-card {
-  background: var(--secondary-light-color, #EDEDED);
-  padding: .75rem;
-  border: 1px solid var(--secondary-light-color, #EDEDED);
+  background: var(--secondary-light-color, #ededed);
+  padding: 0.75rem;
+  border: 1px solid var(--secondary-light-color, #ededed);
   border-radius: 0.3rem;
   min-width: 250px;
   min-height: 100px; /*dropped from changed from 50 to 100px making sure it fit the card*/
   max-height: 325px; /*add to make sure all cards are same size 100px*/
-  margin: .5rem;
+  margin: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -6061,7 +6060,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 
 .cagov-card:hover {
   /*background-color: var(--gray-100, #f9f9fa);  --per sr removed from hover--*/
-  border: 1px solid #A4A4A4; /* added per SR */
+  border: 1px solid #a4a4a4; /* added per SR */
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -6070,8 +6069,8 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .cagov-card .card-text {
-  color: var(--black, #4B4B4B);
-  font-size: 1.4rem;/*dropped from 1.5 to 1.4 making sure it fit the card*/
+  color: var(--black, #4b4b4b);
+  font-size: 1.4rem; /*dropped from 1.5 to 1.4 making sure it fit the card*/
   line-height: 37.4px;
   font-weight: 400;
   padding: 0;
@@ -6079,7 +6078,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .cagov-card svg {
-  color: var(--black, #4B4B4B);
+  color: var(--black, #4b4b4b);
   width: 1rem;
   margin-top: 0.5rem;
   max-height: 25px;
@@ -6158,7 +6157,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .cagov-hero-body-content p {
-  color: var(--white, #FFFFFF);
+  color: var(--white, #ffffff);
   margin-bottom: var(--s-2, 1rem);
 }
 
@@ -6168,14 +6167,18 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .cagov-bkgrd-gry {
-  background-color: var(--secondary-light-color, #EDEDED);
+  background-color: var(--secondary-light-color, #ededed);
 }
 .cagov-bkgrd-primary-gradient {
-  background: rgb(0,79,116);
-  background: linear-gradient(90deg, rgba(0,79,116,1) 0%, rgba(4,106,153,1) 44%);
+  background: rgb(0, 79, 116);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 79, 116, 1) 0%,
+    rgba(4, 106, 153, 1) 44%
+  );
 }
 .cagov-bkgrd-image {
-  background: url("/images/odp-hero.png") no-repeat center center; 
+  background: url("/images/odp-hero.png") no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -6216,7 +6219,7 @@ cagov-site-navigation .search-container--small.hidden-search {
     width: 100%;
     justify-self: start;
   }
-  
+
   .site-header .grid-mobile-icons {
     grid-column: 2/3;
     grid-row: 1/2;
@@ -6232,7 +6235,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 .cagov-hero-body-content
   .wp-block-button:not(.is-style-outline)
   .wp-block-button__link:not(:hover):not(:active):not(.has-background) {
-  background-color: var(--primary-color, #046A99);
+  background-color: var(--primary-color, #046a99);
   color: var(--white, #fff);
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
@@ -6338,7 +6341,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .pdf-link-icon svg path {
-  fill: var(--primary-color, #046A99);
+  fill: var(--primary-color, #046a99);
 }
 
 .external-link-icon {
@@ -6353,7 +6356,7 @@ cagov-site-navigation .search-container--small.hidden-search {
 }
 
 .external-link-icon svg path {
-  fill: var(--primary-color, #046A99);
+  fill: var(--primary-color, #046a99);
 }
 
 .agency-footer a:hover .external-link-icon svg path,
@@ -6363,7 +6366,7 @@ main a:hover .external-link-icon svg path {
 }
 
 footer a .external-link-icon svg path {
-  fill: var(--black, #4B4B4B);
+  fill: var(--black, #4b4b4b);
 }
 
 .cagov-card .external-link-icon,
@@ -6429,8 +6432,8 @@ cagov-back-to-top .back-to-top {
   bottom: 50px;
   opacity: 0;
   visibility: hidden;
-  color: var(--primary-color, #046A99);
-  border: 1px solid var(--primary-color, #046A99);
+  color: var(--primary-color, #046a99);
+  border: 1px solid var(--primary-color, #046a99);
   border-radius: 5px 0 0 5px;
   text-decoration: none;
   cursor: pointer;
@@ -6467,7 +6470,7 @@ cagov-back-to-top .back-to-top svg {
 }
 
 cagov-back-to-top .back-to-top svg path {
-  fill: var(--primary-color, #046A99);
+  fill: var(--primary-color, #046a99);
 }
 
 cagov-back-to-top .back-to-top.is-visible {
@@ -6623,7 +6626,7 @@ ol.cagov-regulatory-outline ol ol li ol li ol li:before {
 }
 
 .official-header {
-  background-color: var(--primary-dark-color, #034A6B);
+  background-color: var(--primary-dark-color, #034a6b);
   padding: 0;
   width: 100%;
   border-bottom: 1px solid var(--gray-200, #ededef);
@@ -6673,14 +6676,14 @@ ol.cagov-regulatory-outline ol ol li ol li ol li:before {
 }
 
 .official-header .official-tag {
-  color: var(--secondary-lightest-color, #FAFAFA);
+  color: var(--secondary-lightest-color, #fafafa);
   margin: 0 var(--spacing-base, 8px);
   font-size: 0.95rem;
   display: inherit;
 }
 
 .official-header .official-languages a {
-  color: var(--black, #4B4B4B);
+  color: var(--black, #4b4b4b);
   padding: 0 0.5rem 0 0.5rem;
 }
 
@@ -6754,7 +6757,7 @@ ol.cagov-regulatory-outline ol ol li ol li ol li:before {
 .official-header .official-languages .dropdown-content {
   background-clip: padding-box;
   background-color: var(--white, #fff);
-  border: 1px solid var(--primary-color, #046A99);
+  border: 1px solid var(--primary-color, #046a99);
   border-radius: 0.25rem;
   padding: 15px;
   position: absolute;
@@ -6819,7 +6822,7 @@ section.site-footer .container {
 }
 
 section.site-footer a {
-  color: var(--primary-color, #046A99);
+  color: var(--primary-color, #046a99);
 }
 
 section.site-footer a:hover {
@@ -6865,7 +6868,7 @@ section.site-footer .footer-social-links a {
 }
 
 section.site-footer .footer-social-links a svg path {
-  fill: var(--primary-color, #046A99);
+  fill: var(--primary-color, #046a99);
 }
 
 section.site-footer .footer-social-links a:hover svg path {
@@ -6885,7 +6888,7 @@ section.site-footer .footer-social-links a:hover svg path {
 }
 
 .bg-light-grey {
-  color: var(--secondary-lightest-color, #FAFAFA);
+  color: var(--secondary-lightest-color, #fafafa);
 }
 
 .pt-0 {
@@ -6964,11 +6967,11 @@ footer .cagov-logo {
 
 footer .bg-light-grey a,
 footer .copyright {
-  color: var(--black, #4B4B4B);
+  color: var(--black, #4b4b4b);
   padding-top: var(--s-1);
   padding-bottom: var(--s-1);
   margin-bottom: 0;
-  font-size: 16px!important;
+  font-size: 16px !important;
 }
 
 .bg-light-grey {
@@ -7167,7 +7170,6 @@ cagov-site-navigation .expanded-menu-section {
   cagov-site-navigation .expanded-menu-section.expanded {
     z-index: 3;
   }
-  
 }
 
 cagov-site-navigation .expanded-menu-section.expanded .expanded-menu-dropdown {
@@ -7262,7 +7264,7 @@ cagov-site-navigation .expanded-menu-section-header-link {
   padding-bottom: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  color: var(--black, #4B4B4B);
+  color: var(--black, #4b4b4b);
   outline-offset: -2px;
 }
 
@@ -7272,7 +7274,7 @@ cagov-site-navigation .expanded-menu-section-header-link:active {
 
 cagov-site-navigation .expanded-menu-section-header-link:hover {
   text-decoration: underline;
-  color: var(--black, #4B4B4B);
+  color: var(--black, #4b4b4b);
 }
 
 @media (min-width: 768px) {
@@ -7322,7 +7324,7 @@ cagov-site-navigation .expanded-menu-dropdown-link {
   transition: color 0.3s cubic-bezier(0.57, 0.2, 0.21, 0.89);
   text-decoration: none;
   width: 100%;
-  color: var(--black, #4B4B4B);
+  color: var(--black, #4b4b4b);
 }
 
 cagov-site-navigation .expanded-menu-dropdown-link:hover {
@@ -7592,10 +7594,10 @@ cagov-highlight-section article .btn-primary-outline {
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
-  color: var(--primary-color, #046A99);
+  color: var(--primary-color, #046a99);
   font-weight: var(--font-weight-4, 400);
   font-size: var(--font-size-2, 1.125rem);
-  border: 1px solid var(--primary-color, #046A99);
+  border: 1px solid var(--primary-color, #046a99);
   border-radius: 5px;
   padding: var(--spacing-base, 0.5rem);
   background-color: #fff;
@@ -7766,7 +7768,7 @@ cagov-highlight-section article .highlight-body .highlight-text h3 {
 }
 
 .cagov-featured-sidebar h1 {
-  color: var(--white, #FFFFFF);
+  color: var(--white, #ffffff);
   padding-bottom: var(--s-2, 1rem);
 }
 
@@ -7861,7 +7863,7 @@ cagov-highlight-section article .highlight-body .highlight-text h3 {
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px var(--gray-400, #d3d2d6) solid;
-  color: var(--black, #4B4B4B);
+  color: var(--black, #4b4b4b);
 }
 
 .contact-us input,
@@ -8131,7 +8133,7 @@ cagov-airtable-form .form-responded {
 .component-sidebar-menu-text {
   flex-grow: 1;
   text-align: start;
-  color: var(--primary-color, #046A99);
+  color: var(--primary-color, #046a99);
 }
 
 .component-sidebar-menu-arrow {
@@ -8216,7 +8218,7 @@ cagov-airtable-form .form-responded {
 
 .component-development-stage-grid div.current-development-stage dt {
   background-color: var(--secondary-color, #ff8000);
-  color: var(--black, #4B4B4B);
+  color: var(--black, #4b4b4b);
 }
 
 .component-development-stage-grid div dt {
@@ -8335,9 +8337,9 @@ code.hljs {
 }
 
 .cagov-article.with-page-nav {
-  grid-template-areas: 
-  "sidebar title"
-  "sidebar content";
+  grid-template-areas:
+    "sidebar title"
+    "sidebar content";
 }
 
 .title-cell {
@@ -8392,8 +8394,12 @@ sidebar cagov-page-navigation .label {
 }
 
 sidebar cagov-page-navigation ul,
-sidebar cagov-page-navigation ol:not([class*=menu]):not([class*=nav]):not([class*=footer-links]),
-sidebar cagov-page-navigation ul:not([class*=menu]):not([class*=nav]):not([class*=footer-links]) {
+sidebar
+  cagov-page-navigation
+  ol:not([class*="menu"]):not([class*="nav"]):not([class*="footer-links"]),
+sidebar
+  cagov-page-navigation
+  ul:not([class*="menu"]):not([class*="nav"]):not([class*="footer-links"]) {
   margin: 0;
   text-indent: 0;
   padding: 0;
@@ -8448,12 +8454,13 @@ cagov-accordion details {
 }
 cagov-accordion details summary {
   cursor: pointer;
-  padding: var(--s-1, 0.5rem) var(--s-5, 3rem) var(--s-1, 0.5rem) var(--s-2, 1rem);
+  padding: var(--s-1, 0.5rem) var(--s-5, 3rem) var(--s-1, 0.5rem)
+    var(--s-2, 1rem);
   background-color: var(--gray-200, #ededef);
   position: relative;
   line-height: var(--s-4, 2rem);
   margin: 0;
-  color: var(--primary-color, #046A99);
+  color: var(--primary-color, #046a99);
   font-size: var(--font-size-2, 1.125rem);
   font-weight: bold;
 }
@@ -8486,7 +8493,7 @@ cagov-accordion:defined details summary:focus {
   outline: solid 2px var(--highlight-color, #fbad23) !important;
 }
 cagov-accordion:defined details .cagov-open-indicator {
-  background-color: var(--primary-color, #046A99);
+  background-color: var(--primary-color, #046a99);
   height: 3px;
   width: 15px;
   border-radius: var(--border-3, 3px);
@@ -8504,7 +8511,7 @@ cagov-accordion:defined details .cagov-open-indicator:before {
   height: 15px;
   border-radius: var(--border-3, 3px);
   border: none;
-  box-shadow: 3px 0 0 0 var(--primary-color, #046A99);
+  box-shadow: 3px 0 0 0 var(--primary-color, #046a99);
   background: none;
 }
 cagov-accordion:defined details[open] .cagov-open-indicator:before {
@@ -8565,7 +8572,7 @@ footer .cagov-logo svg {
 }
 footer .bg-light-grey a,
 footer .copyright {
-  color: var(--black, #4B4B4B);
+  color: var(--black, #4b4b4b);
   padding-top: var(--s-1);
   padding-bottom: var(--s-1);
   margin-bottom: 0;
@@ -8581,13 +8588,13 @@ footer .copyright {
 
 @media (min-width: 991px) {
   .footer-secondary-links,
-footer .container {
+  footer .container {
     margin-right: auto;
     flex-direction: row;
     align-items: center;
   }
   .footer-secondary-links.flex-col-end,
-footer .container.flex-col-end {
+  footer .container.flex-col-end {
     flex-direction: column;
     align-items: end;
   }
