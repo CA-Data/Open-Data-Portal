@@ -1101,7 +1101,7 @@ cagov-site-navigation .expanded-menu-section-header-link {
 }
 
 /* add icon to external links */
-article a[href^="http"]::after, #myModal a[href^="http"]::after {
+article a[href^="http"]::after, #apiModal a[href^="http"]::after {
   content: "";
   width: .7em;
   height: .7em;
@@ -1113,6 +1113,6 @@ article a[href^="http"]::after, #myModal a[href^="http"]::after {
   display: inline-block;
 }
 /* remove external link icon for these domains */
-article a[href^="https://data.ca.gov/"]::after, #myModal a[href^="https://data.ca.gov/"]::after, #body-content a[href^="http"].exclude-external-link-icon::after {
+article a[href^="https://data.ca.gov/"]::after, #apiModal a[href^="https://data.ca.gov/"]::after, #body-content a[href^="http"].exclude-external-link-icon::after {
   display: none !important;
 }
