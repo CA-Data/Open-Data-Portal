@@ -310,7 +310,7 @@ export default function Preview(dataset) {
             {dataset.dictionary.columns.length > 0 && (
               <div id="data-dictionary-section">
                 <h3>Data dictionary</h3>
-                <p>You’re previewing the first 50 rows of this file.</p>
+                <p>You’re previewing the first 50 rows of this data dictionary.</p>
                 <div style={{ height: 214, width: "100%" }}>
                   <DataGrid
                     rows={dataset.dictionary.rows}
