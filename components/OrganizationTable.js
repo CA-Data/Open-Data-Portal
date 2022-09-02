@@ -10,6 +10,7 @@ function Component(props) {
           <div className={style.column}>Datasets</div>
         </div>
         {props.organizations.map((organization, index) => (
+          organization.package_count > 0 &&
           <div key={index} className={style.row}>
             <div className={style.column}>
               <Link
