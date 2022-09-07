@@ -1116,3 +1116,11 @@ article a[href^="http"]::after, #apiModal a[href^="http"]::after {
 article a[href^="https://data.ca.gov/"]::after, #apiModal a[href^="https://data.ca.gov/"]::after, #body-content a[href^="http"].exclude-external-link-icon::after {
   display: none !important;
 }
+
+/* alert banner */
+#alert-experimental {
+  display:none;
+  background:#ededed;
+  border:0;
+  margin:0;
+}

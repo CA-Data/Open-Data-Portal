@@ -666,12 +666,16 @@ document.querySelector("head").appendChild(style);
 // Alert banner
 
 window.addEventListener('load', (event) => {
-	document.querySelector("#hideAlert").onclick = function() {
-    document.querySelector("#alert-experimental").style.display = "none";
-    createCookie('cookie-experimental', 'hide', 7);
-  };
-  if (readCookie('cookie-experimental') != 'hide') {
-    document.querySelector("#alert-experimental").style.display = "block";
+  if (document.querySelector("#alert-experimental") && document.querySelector("#hideAlert")) {
+    document.querySelector("#hideAlert").onclick = function() {
+      document.querySelector("#alert-experimental").style.display = "none";
+      createCookie('cookie-experimental', 'hide', 7);
+    };
+    if (readCookie('cookie-experimental') != 'hide') {
+      const styleTag = document.createElement("style");
+      styleTag.textContent = "div#alert-experimental { display:block; }";
+      document.querySelector("head").appendChild(styleTag);
+    }
   }
 });
 
