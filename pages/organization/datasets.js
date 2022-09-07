@@ -197,8 +197,7 @@ const getFormattedData = async (context) => {
   // Getting Filters
 
   const filters = await fetch(
-    `https://data.ca.gov/api/3/action/package_search?${
-      apirequest.split("?")[1]
+    `https://data.ca.gov/api/3/action/package_search?${apirequest.split("?")[1]
     }&facet.field=["groups","tags","organization","res_format"]&rows=0`
   )
     .then((response) => response.json())
@@ -290,6 +289,8 @@ const Results = (data) => {
   const [publisherShowMore, setPublisherShowMore] = useState(5);
   const [tagShowMore, setTagShowMore] = useState(5);
   const [formatShowMore, setFormatShowMore] = useState(5);
+  const [initialPublisher, setInitialPublisher] = useState("");
+
   const router = useRouter();
   if (typeof window === "object") {
     // Check if document is finally loaded
@@ -422,8 +423,11 @@ const Results = (data) => {
     toBeChecked.tag = tagParams?.split(",");
 
     // Set local state from params
+    if (publisherParams) {
+      setSelectedPublishers(publisherParams.split(","));
+      setInitialPublisher(publisherParams);
+    }
     topicParams ? setSelectedTopics(topicParams.split(",")) : null;
-    publisherParams ? setSelectedPublishers(publisherParams.split(",")) : null;
     formatParams ? setSelectedFormats(formatParams.split(",")) : null;
     tagParams ? setselectedTags(tagParams.split(",")) : null;
 
@@ -469,18 +473,18 @@ const Results = (data) => {
   // resetSearch resets the page
   const resetSearch = async () => {
     setFormatSvg("svg-rotate-down"); // resets any dropdowns to default state
-    setPublisherSvg("svg-rotate-down"); // *
+    // setPublisherSvg("svg-rotate-down"); // *
     setTagSvg("svg-rotate-down"); // *
     setTopicSvg("svg-rotate-up"); // *
     setSelectedTopics([]); // resets useState arrays
-    setSelectedPublishers([]); // *
+    setSelectedPublishers([initialPublisher]); // *
     setSelectedFormats([]); // *
     setselectedTags([]); // *
     setTopicShowMore(5); // *
-    setPublisherShowMore(5); // *
+    // setPublisherShowMore(5); // *
     setTagShowMore(5); // *
     setFormatShowMore(5); // *
-    router.push("?q=", null, { shallow: true }); // and resets search results
+    router.push(`?q=&publisher=${initialPublisher}`, null, { shallow: true }); // and resets search results
   };
 
   const formatSentenceCase = (str) => {
@@ -782,12 +786,15 @@ const Results = (data) => {
                                 }
                               }}
                               style={{
-                                cursor: "pointer",
+                                cursor: initialPublisher === publisher[0] ? "default" : "pointer",
                                 margin: "5px 0 0 4px",
                               }}
                               id={`${publisher[0]}-publisher`}
                               className="checkBox"
                               type={"checkbox"}
+                              disabled={
+                                initialPublisher === publisher[0] ? true : false
+                              }
                             />
                             <label
                               style={{
@@ -1227,7 +1234,11 @@ const Results = (data) => {
                       document.getElementsByClassName("checkBox")
                     );
                     checkBoxes.forEach((checkBox) => {
-                      checkBox.checked = false;
+                      const formatting = checkBox?.id.split("-");
+                      const checkboxId = formatting.join("-");
+                      if (!checkboxId.includes(initialPublisher)) {
+                        checkBox.checked = false;
+                      }
                     });
                     setReset(true);
                     await resetSearch();

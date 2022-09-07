@@ -187,8 +187,7 @@ const getFormattedData = async (context) => {
   // Getting Filters
 
   const filters = await fetch(
-    `https://data.ca.gov/api/3/action/package_search?${
-      apirequest.split("?")[1]
+    `https://data.ca.gov/api/3/action/package_search?${apirequest.split("?")[1]
     }&facet.field=["groups","tags","organization","res_format"]&rows=0`
   )
     .then((response) => response.json())
@@ -284,7 +283,7 @@ const Results = (data) => {
   const [publisherShowMore, setPublisherShowMore] = useState(5);
   const [tagShowMore, setTagShowMore] = useState(5);
   const [formatShowMore, setFormatShowMore] = useState(5);
-  const [initialTopic, setInitalTopic] = useState("");
+  const [initialTopic, setInitialTopic] = useState("");
   const router = useRouter();
   if (typeof window === "object") {
     // Check if document is finally loaded
@@ -419,7 +418,7 @@ const Results = (data) => {
     // Set local state from params
     if (topicParams) {
       setSelectedTopics(topicParams.split(","));
-      setInitalTopic(topicParams);
+      setInitialTopic(topicParams);
     }
     publisherParams ? setSelectedPublishers(publisherParams.split(",")) : null;
     formatParams ? setSelectedFormats(formatParams.split(",")) : null;
@@ -476,16 +475,16 @@ const Results = (data) => {
     setFormatSvg("svg-rotate-down"); // resets any dropdowns to default state
     setPublisherSvg("svg-rotate-up"); // *
     setTagSvg("svg-rotate-down"); // *
-    setTopicSvg("svg-rotate-down"); // *
-    setSelectedTopics([]); // resets useState arrays
+    // setTopicSvg("svg-rotate-down"); // *
+    setSelectedTopics([initialTopic]); // resets useState arrays
     setSelectedPublishers([]); // *
     setSelectedFormats([]); // *
     setSelectedTags([]); // *
-    setTopicShowMore(5); // *
+    // setTopicShowMore(5); // *
     setPublisherShowMore(5); // *
     setTagShowMore(5); // *
     setFormatShowMore(5); // *
-    router.push("?q=", null, { shallow: true }); // and resets search results
+    router.push(`?q=&topic=${initialTopic}`, null, { shallow: true }); // and resets search results
   };
 
   const formatSentenceCase = (str) => {
@@ -1242,7 +1241,11 @@ const Results = (data) => {
                       document.getElementsByClassName("checkBox")
                     );
                     checkBoxes.forEach((checkBox) => {
-                      checkBox.checked = false;
+                      const formatting = checkBox?.id.split("-");
+                      const checkboxId = formatting.join("-");
+                      if (!checkboxId.includes(initialTopic)) {
+                        checkBox.checked = false;
+                      }
                     });
                     setReset(true);
                     await resetSearch();
