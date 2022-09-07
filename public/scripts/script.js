@@ -672,7 +672,9 @@ window.addEventListener('load', (event) => {
       createCookie('cookie-experimental', 'hide', 7);
     };
     if (readCookie('cookie-experimental') != 'hide') {
-      document.querySelector("#alert-experimental").style.display = "block";
+      const styleTag = document.createElement("style");
+      styleTag.textContent = "div#alert-experimental { display:block; }";
+      document.querySelector("head").appendChild(styleTag);
     }
   }
 });

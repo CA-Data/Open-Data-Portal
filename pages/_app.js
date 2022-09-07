@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <div id="alert-experimental" className="cagov-page-alert" style={{display:"none",background:"#ededed",border:0,margin:0}}>
+      <div id="alert-experimental" className="cagov-page-alert">
         <div style={{maxWidth: "var(--w-lg, 1176px)",margin: "0 auto 0 auto",width: "98%",display:"flex",justifyContent:"space-between", flexWrap:"wrap"}}>
           <div>
             <span style={{textTransform:"uppercase", border:"1px solid black", fontSize:"0.8em", fontWeight:"700", letterSpacing:".08em", padding:"0 .8em", marginRight:"1.5em"}}>Experimental</span>
