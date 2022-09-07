@@ -149,7 +149,7 @@ export default function Preview(dataset) {
             }
           }
           if (!thereWasAnError) {
-            emailjs.sendForm('service_c900y85', 'template_hqd9w0v', document.getElementById('contact-form'))
+            emailjs.sendForm('service_ifm3b8i', 'template_hqd9w0v', document.getElementById('contact-form'))
               .then(function() {
                   console.log('SUCCESS!');
               }, function(error) {
