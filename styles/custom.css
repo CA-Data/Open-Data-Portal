@@ -1124,3 +1124,8 @@ article a[href^="https://data.ca.gov/"]::after, #apiModal a[href^="https://data.
   border:0;
   margin:0;
 }
+
+/* remove border from home page */
+.home-layout div.site-header {
+  border:0;
+}

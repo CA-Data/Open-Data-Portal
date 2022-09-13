@@ -86,11 +86,6 @@ function MyApp({ Component, pageProps }) {
               </a>
             </Link>
             <div className="cagov-nav mobile-icons grid-mobile-icons">
-              <div className="cagov-nav mobile-search">
-                <button className="search-btn" aria-expanded="false">
-                  <span>Search</span>
-                </button>
-              </div>
               <button
                 className="menu-trigger cagov-nav open-menu"
                 aria-label="Navigation menu"
@@ -116,38 +111,6 @@ function MyApp({ Component, pageProps }) {
             <div className="mobile-nav">
               <cagov-site-navigation>
                 <div className="container">
-                  <div
-                    className="search-container search-container--small hidden-search"
-                    style={{ display: "none!important" }}
-                  >
-                    <form className="site-search" action="/datasets">
-                      <span className="sr-only" id="SearchInput2">
-                        Search datasets
-                      </span>
-                      <input
-                        type="text"
-                        id="q-top-mobile"
-                        name="q-top"
-                        aria-labelledby="SearchInput"
-                        placeholder="Search datasets"
-                        className="search-textfield"
-                      />
-                      <button className="search-submit">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          enableBackground="new 0 0 17 17"
-                          viewBox="0 0 17 17"
-                          style={{ width: 17 }}
-                        >
-                          <path
-                            fill="#fff"
-                            d="M16.4 15.2l-4-4c2-2.6 1.8-6.5-.6-8.9-1.3-1.3-3-2-4.8-2s-3.5.7-4.8 2c-2.6 2.6-2.6 6.9 0 9.6 1.3 1.3 3 2 4.8 2 1.4 0 2.9-.5 4.1-1.4l4.1 4c.2.2.4.3.7.3.2 0 .5-.1.7-.3.1-.3.1-.9-.2-1.3zM7 12c-1.3 0-2.6-.5-3.5-1.4-1.9-1.9-1.9-5.1 0-7 .9-.9 2.1-1.5 3.5-1.5s2.6.5 3.5 1.4 1.4 2.2 1.4 3.5-.5 2.6-1.4 3.5c-1 1-2.2 1.5-3.5 1.5z"
-                          ></path>
-                        </svg>
-                        <span className="sr-only">Submit</span>
-                      </button>
-                    </form>
-                  </div>
                   <nav
                     className="expanded-menu"
                     role="navigation"
