@@ -1,10 +1,3 @@
-if (document.getElementsByTagName("main").length > 0) {
-  if (
-    document.getElementsByTagName("main")[0].classList.contains("home-page")
-  ) {
-    document.querySelectorAll(".site-header")[0].style.border = "0px";
-  }
-}
 //site navigation
 /**
  * Dropdown menu web component
@@ -18,16 +11,6 @@ if (document.getElementsByTagName("main").length > 0) {
  * @cssprop --w-lg - '1176px'
  */
 
-// Function determining if it's mobile view (max 767px)
-function mobileView() {
-  const mobileElement = document.querySelector(
-    ".site-header .grid-mobile-icons"
-  );
-  if (mobileElement) {
-    return getComputedStyle(mobileElement).display !== "none";
-  }
-  return false;
-}
 class CAGovSiteNavigation extends window.HTMLElement {
   connectedCallback() {
     document
@@ -38,82 +21,15 @@ class CAGovSiteNavigation extends window.HTMLElement {
     const mobileSearchBtn = document.querySelector(
       ".cagov-nav.mobile-search .search-btn"
     );
-    if (mobileSearchBtn) {
-      mobileSearchBtn.setAttribute("aria-expanded", "false");
-      document
-        .querySelector(".search-container--small .site-search input")
-        .setAttribute("tabindex", "-1");
-      document
-        .querySelector(
-          ".search-container--small .site-search button.search-submit"
-        )
-        .setAttribute("tabindex", "-1");
-      document
-        .querySelector(".search-container--small")
-        .setAttribute("aria-hidden", "true");
-      if (mobileView()) {
-        mobileSearchBtn.addEventListener("click", () => {
-          document
-            .querySelector(".search-container--small")
-            .classList.toggle("hidden-search");
-          const searchactive = document
-            .querySelector(".search-container--small")
-            .classList.contains("hidden-search");
-          if (searchactive) {
-            mobileSearchBtn.setAttribute("aria-expanded", "false");
-            document
-              .querySelector(".search-container--small .site-search input")
-              .setAttribute("tabindex", "-1");
-            document
-              .querySelector(
-                ".search-container--small .site-search button.search-submit"
-              )
-              .setAttribute("tabindex", "-1");
-            document
-              .querySelector(".search-container--small")
-              .setAttribute("aria-hidden", "true");
-          } else {
-            mobileSearchBtn.setAttribute("aria-expanded", "true");
-            document
-              .querySelector(".search-container--small .site-search input")
-              .focus();
-            document
-              .querySelector(".search-container--small .site-search input")
-              .removeAttribute("tabindex");
-            document
-              .querySelector(
-                ".search-container--small .site-search button.search-submit"
-              )
-              .removeAttribute("tabindex");
-            document
-              .querySelector(".search-container--small")
-              .setAttribute("aria-hidden", "false");
-          }
-        });
-      }
-    }
+
 
     // reset mobile search on resize
     window.addEventListener("resize", () => {
-      document
-        .querySelector(".search-container--small")
-        .classList.add("hidden-search");
       if (mobileSearchBtn) {
         document
           .querySelector(".cagov-nav.mobile-search .search-btn")
           .setAttribute("aria-expanded", "false");
       }
-      document
-        .querySelector(".search-container--small .site-search input")
-        .setAttribute("tabindex", "-1");
-      document
-        .querySelector(
-          ".search-container--small .site-search button.search-submit"
-        )
-        .setAttribute("tabindex", "-1");
-      document
-        .querySelector(".search-container--small")
-        .setAttribute("aria-hidden", "true");
       // reset navigation on resize
       this.closeAllMenus();
       this.closeMainMenu();

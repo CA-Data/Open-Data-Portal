@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useEffect } from "react";
 import HeroBanner from "../components/homepage/HeroBanner";
 import DatasetGrid from "../components/homepage/DatasetGrid";
 import TopicGrid from "../components/homepage/TopicGrid";
@@ -104,6 +105,12 @@ export async function getStaticProps({ req, res }) {
   };
 }
 export default function Home(data) {
+  useEffect(() => {
+    document.body.classList.add('home-layout')
+    return () => {
+      document.body.classList.remove('home-layout')
+    }
+  }, [])
   return (
     <>
       <Head>
