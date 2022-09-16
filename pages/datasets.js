@@ -131,9 +131,11 @@ const getFormattedData = async (context) => {
 
   //search results
   const resultsArray = []
+  const dataset = {}
   if (response.result.results.length > 0) {
     for (let index = 0; index < response.result.results.length; index++) {
-      let dataset = {}
+      //const dataset = {}
+      dataset = {}
       dataset.formats = []
       dataset.name = response.result.results[index].name
       dataset.title = response.result.results[index].title
