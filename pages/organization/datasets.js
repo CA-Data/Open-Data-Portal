@@ -8,6 +8,9 @@ export async function getServerSideProps(context) {
 }
 
 const getFormattedData = async (context) => {
+  if (typeof context.query.q === "undefined") {
+    context.query.q = "";
+  }
   var apirequest =
     "https://data.ca.gov/api/3/action/package_search?q=" + context.query.q;
   var thereWasAFilter = 0; // flag, did user select any filter?
@@ -185,7 +188,6 @@ const getFormattedData = async (context) => {
   apirequest += "&start=" + page * 10;
 
   //[0]previous, [1]current, [2]next, [3]total, [4]next
-
   const response = await fetch(apirequest).then((response) => response.json());
 
   pageData["total"].value = Math.ceil(parseInt(response.result.count) / 10);
@@ -206,13 +208,14 @@ const getFormattedData = async (context) => {
 
   //search results
   const resultsArray = [];
+  const dataset = {};
   if (response.result.results.length > 0) {
     for (let index = 0; index < response.result.results.length; index++) {
-      const dataset = {};
+      let dataset = {};
+
       dataset.formats = [];
       dataset.name = response.result.results[index].name;
       dataset.title = response.result.results[index].title;
-
       dataset.organization = response.result.results[index].organization.title;
 
       const date_updated = new Date(
@@ -271,7 +274,7 @@ const Results = (data) => {
   const [selectedTopics, setSelectedTopics] = useState([]);
   const [selectedPublishers, setSelectedPublishers] = useState([]);
   const [selectedFormats, setSelectedFormats] = useState([]);
-  const [selectedTags, setselectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [reset, setReset] = useState(false);
   const [topicList, setTopicList] = useState(
     Object.entries(data.filters.result.facets.groups)
@@ -286,10 +289,6 @@ const Results = (data) => {
     Object.entries(data.filters.result.facets.res_format)
   );
   const [dataState, setDataState] = useState(data);
-
-  const [resultState] = useState(data.allResults);
-  const [parameters] = useState(data.parameters);
-  const [pages] = useState(data.pages);
 
   const [topicShowMore, setTopicShowMore] = useState(5);
   const [publisherShowMore, setPublisherShowMore] = useState(5);
@@ -326,9 +325,9 @@ const Results = (data) => {
   // UseEffects will fire when its corresponding array is updated.
   // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedTags)
   // Each array will append a value to the url
-  /*useEffect(() => {
+  useEffect(() => {
     getFormattedData(router).then((response) => setDataState(response.props));
-  }, [router]);*/
+  }, [router]);
 
   useEffect(() => {
     setTopicList(
@@ -435,7 +434,7 @@ const Results = (data) => {
     }
     topicParams ? setSelectedTopics(topicParams.split(",")) : null;
     formatParams ? setSelectedFormats(formatParams.split(",")) : null;
-    tagParams ? setselectedTags(tagParams.split(",")) : null;
+    tagParams ? setSelectedTags(tagParams.split(",")) : null;
 
     // Loop through checkboxes
     checkboxes.forEach((checkbox) => {
@@ -485,7 +484,7 @@ const Results = (data) => {
     setSelectedTopics([]); // resets useState arrays
     setSelectedPublishers([initialPublisher]); // *
     setSelectedFormats([]); // *
-    setselectedTags([]); // *
+    setSelectedTags([]); // *
     setTopicShowMore(5); // *
     // setPublisherShowMore(5); // *
     setTagShowMore(5); // *
@@ -554,7 +553,7 @@ const Results = (data) => {
                 <ul className="search-filters align">
                   <li
                     style={{ color: "#4B4B4B" }}
-                    className="filter-topic"
+                    className={"filter-topic"}
                     tabIndex={"0"}
                     onKeyDown={(e) => {
                       if (e.which === 13 && e.target.tagName === "LI") {
@@ -636,6 +635,7 @@ const Results = (data) => {
                               id={`${topic[0]}-topic`}
                               className="checkBox"
                               type={"checkbox"}
+                              tabIndex={"0"}
                             />
                             <label
                               style={{
@@ -1138,7 +1138,10 @@ const Results = (data) => {
                                 );
                               }
                             }}
-                            style={{ cursor: "pointer", margin: "5px 0 0 4px" }}
+                            style={{
+                              cursor: "pointer",
+                              margin: "5px 10px 5px 4px",
+                            }}
                             id={`${tag[0]}-tag`}
                             className="checkBox"
                             type={"checkbox"}
@@ -1357,7 +1360,6 @@ const Results = (data) => {
                       alignItems: "center",
                       width: "55px",
                     }}
-                    type="submit"
                     className="search-submit"
                   >
                     <svg
@@ -1426,11 +1428,7 @@ const Results = (data) => {
                   : dataState.matches + " dataset"}
               </h4>
             </div>
-            <SearchResultListing
-              parameters={parameters}
-              allResults={resultState}
-              pages={pages}
-            />
+            <SearchResultListing dataState={dataState} />
           </div>
         </article>
       </main>

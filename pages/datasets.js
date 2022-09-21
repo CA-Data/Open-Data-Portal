@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import BasicSelect from "../components/BasicSelect";
 import SearchResultListing from "/components/SearchResultListing";
-import Link from "next/link";
 import Head from "next/head";
-
 export async function getServerSideProps(context) {
   return getFormattedData(context);
 }
@@ -119,7 +117,6 @@ const getFormattedData = async (context) => {
   apirequest += "&start=" + page * 10;
 
   //[0]previous, [1]current, [2]next, [3]total, [4]next
-
   const response = await fetch(apirequest).then((response) => response.json());
 
   pageData["total"].value = Math.ceil(parseInt(response.result.count) / 10);
@@ -140,9 +137,11 @@ const getFormattedData = async (context) => {
 
   //search results
   const resultsArray = [];
+  const dataset = {};
   if (response.result.results.length > 0) {
     for (let index = 0; index < response.result.results.length; index++) {
       let dataset = {};
+
       dataset.formats = [];
       dataset.name = response.result.results[index].name;
       dataset.title = response.result.results[index].title;
@@ -451,7 +450,6 @@ const Results = (data) => {
     }
     return true;
   };
-
   return (
     <>
       <Head>
@@ -768,7 +766,10 @@ const Results = (data) => {
                         Publisher
                       </span>
                     </div>
-                    <ul hidden={publisherSvg != "svg-rotate-up" ? true : false}>
+                    <ul
+                      hidden={publisherSvg != "svg-rotate-up" ? true : false}
+                      style={{ cursor: "default" }}
+                    >
                       {publisherList
                         .slice(0, publisherShowMore)
                         .map((publisher, index) => (
@@ -1133,7 +1134,10 @@ const Results = (data) => {
                                 );
                               }
                             }}
-                            style={{ cursor: "pointer", margin: "5px 0 0 4px" }}
+                            style={{
+                              cursor: "pointer",
+                              margin: "5px 10px 5px 4px",
+                            }}
                             id={`${tag[0]}-tag`}
                             className="checkBox"
                             type={"checkbox"}

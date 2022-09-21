@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import BasicSelect from "../../components/BasicSelect";
 import SearchResultListing from "../../components/SearchResultListing";
-import Link from "next/link";
 import Head from "next/head";
-
 export async function getServerSideProps(context) {
   return getFormattedData(context);
 }
 
 const getFormattedData = async (context) => {
+  if (typeof context.query.q === "undefined") {
+    context.query.q = "";
+  }
   var apirequest =
     "https://data.ca.gov/api/3/action/package_search?q=" + context.query.q;
   var thereWasAFilter = 0; // flag, did user select any filter?
@@ -175,7 +176,6 @@ const getFormattedData = async (context) => {
   apirequest += "&start=" + page * 10;
 
   //[0]previous, [1]current, [2]next, [3]total, [4]next
-
   const response = await fetch(apirequest).then((response) => response.json());
 
   pageData["total"].value = Math.ceil(parseInt(response.result.count) / 10);
@@ -196,9 +196,11 @@ const getFormattedData = async (context) => {
 
   //search results
   const resultsArray = [];
+  const dataset = {};
   if (response.result.results.length > 0) {
     for (let index = 0; index < response.result.results.length; index++) {
-      var dataset = {};
+      let dataset = {};
+
       dataset.formats = [];
       dataset.name = response.result.results[index].name;
       dataset.title = response.result.results[index].title;
@@ -264,7 +266,7 @@ const Results = (data) => {
   const [selectedTopics, setSelectedTopics] = useState([]);
   const [selectedPublishers, setSelectedPublishers] = useState([]);
   const [selectedFormats, setSelectedFormats] = useState([]);
-  const [selectedtags, setSelectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [reset, setReset] = useState(false);
   const [topicList, setTopicList] = useState(
     Object.entries(data.filters.result.facets.groups)
@@ -279,10 +281,6 @@ const Results = (data) => {
     Object.entries(data.filters.result.facets.res_format)
   );
   const [dataState, setDataState] = useState(data);
-
-  const [resultState] = useState(data.allResults);
-  const [parameters] = useState(data.parameters);
-  const [pages] = useState(data.pages);
 
   const [topicShowMore, setTopicShowMore] = useState(5);
   const [publisherShowMore, setPublisherShowMore] = useState(5);
@@ -316,11 +314,11 @@ const Results = (data) => {
   };
 
   // UseEffects will fire when its corresponding array is updated.
-  // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedtags)
+  // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedTags)
   // Each array will append a value to the url
-  /*useEffect(() => {
+  useEffect(() => {
     getFormattedData(router).then((response) => setDataState(response.props));
-  }, [router]);*/
+  }, [router]);
 
   useEffect(() => {
     setTopicList(
@@ -393,16 +391,16 @@ const Results = (data) => {
   useEffect(() => {
     if (!reset) {
       const url = new URL(window.location.href);
-      if (selectedtags.length == 0 || !url.searchParams.get("tag")) {
+      if (selectedTags.length == 0 || !url.searchParams.get("tag")) {
         url.searchParams.delete("tag");
         router.push(url, null, { shallow: true });
       }
-      if (selectedtags.length >= 1) {
-        url.searchParams.set("tag", selectedtags);
+      if (selectedTags.length >= 1) {
+        url.searchParams.set("tag", selectedTags);
         router.push(url, null, { shallow: true });
       }
     }
-  }, [selectedtags]);
+  }, [selectedTags]);
 
   // Persist selected checkboxes on page refresh
   useEffect(() => {
@@ -468,13 +466,6 @@ const Results = (data) => {
 
   // End of UseEffect section **********************************************
 
-  const areObjectKeysEmpty = (obj) => {
-    for (var key in obj) {
-      if (obj[key] !== null && obj[key] != "") return false;
-    }
-    return true;
-  };
-
   // resetSearch resets the page
   const resetSearch = async () => {
     setFormatSvg("svg-rotate-down"); // resets any dropdowns to default state
@@ -521,6 +512,12 @@ const Results = (data) => {
     return words.join(" ");
   };
 
+  const areObjectKeysEmpty = (obj) => {
+    for (var key in obj) {
+      if (obj[key] !== null && obj[key] != "") return false;
+    }
+    return true;
+  };
   return (
     <>
       <Head>
@@ -530,7 +527,6 @@ const Results = (data) => {
           content="Search specific topic datasets from State of California Open Data."
         ></meta>
       </Head>
-
       <main id="body-content" className="cagov-main">
         <article
           id="post-design"
@@ -588,15 +584,18 @@ const Results = (data) => {
                       </svg>
                       <span
                         style={{
-                          fontWeight: "bold",
                           fontSize: "18px",
+                          fontWeight: "bold",
                           lineHeight: "32px",
                         }}
                       >
                         Publisher
                       </span>
                     </div>
-                    <ul hidden={publisherSvg != "svg-rotate-up" ? true : false}>
+                    <ul
+                      hidden={publisherSvg != "svg-rotate-up" ? true : false}
+                      style={{ cursor: "default" }}
+                    >
                       {publisherList
                         .slice(0, publisherShowMore)
                         .map((publisher, index) => (
@@ -622,11 +621,12 @@ const Results = (data) => {
                               }}
                               style={{
                                 cursor: "pointer",
-                                margin: "5px 10px 5px 4px",
+                                margin: "5px 0 0 4px",
                               }}
                               id={`${publisher[0]}-publisher`}
                               className="checkBox"
                               type={"checkbox"}
+                              tabIndex={"0"}
                             />
                             <label
                               style={{
@@ -669,6 +669,7 @@ const Results = (data) => {
                             style={{
                               display: "flex",
                               alignItems: "center",
+                              fontSize: "16px",
                               lineHeight: "28px",
                             }}
                           >
@@ -697,6 +698,7 @@ const Results = (data) => {
                             style={{
                               display: "flex",
                               alignItems: "center",
+                              fontSize: "16px",
                               lineHeight: "28px",
                             }}
                           >
@@ -801,7 +803,7 @@ const Results = (data) => {
                                   initialTopic === topic[0]
                                     ? "default"
                                     : "pointer",
-                                margin: "5px 10px 5px 4px",
+                                margin: "5px 0 0 4px",
                               }}
                               id={`${topic[0]}-topic`}
                               className="checkBox"
@@ -852,6 +854,7 @@ const Results = (data) => {
                             style={{
                               display: "flex",
                               alignItems: "center",
+                              fontSize: "16px",
                               lineHeight: "28px",
                             }}
                           >
@@ -880,6 +883,7 @@ const Results = (data) => {
                             style={{
                               display: "flex",
                               alignItems: "center",
+                              fontSize: "16px",
                               lineHeight: "28px",
                             }}
                           >
@@ -944,8 +948,8 @@ const Results = (data) => {
                       </svg>
                       <span
                         style={{
-                          fontWeight: "bold",
                           fontSize: "18px",
+                          fontWeight: "bold",
                           lineHeight: "32px",
                         }}
                       >
@@ -977,7 +981,7 @@ const Results = (data) => {
                               }}
                               style={{
                                 cursor: "pointer",
-                                margin: "5px 10px 5px 4px",
+                                margin: "5px 0 0 4px",
                               }}
                               id={`${format[0]}-format`}
                               className="checkBox"
@@ -986,11 +990,11 @@ const Results = (data) => {
                             <label
                               style={{
                                 cursor: "pointer",
+                                lineHeight: "28px",
                                 width: "149px",
                                 flexGrow: "1",
-                                lineHeight: "28px",
                               }}
-                              htmlFor={format[0]}
+                              htmlFor={format[0] + "-format"}
                             >
                               {formatSentenceCase(format[0])}{" "}
                             </label>
@@ -1024,6 +1028,7 @@ const Results = (data) => {
                             style={{
                               display: "flex",
                               alignItems: "center",
+                              fontSize: "16px",
                               lineHeight: "28px",
                             }}
                           >
@@ -1052,6 +1057,7 @@ const Results = (data) => {
                             style={{
                               display: "flex",
                               alignItems: "center",
+                              fontSize: "16px",
                               lineHeight: "28px",
                             }}
                           >
@@ -1133,10 +1139,10 @@ const Results = (data) => {
                           <input
                             onChange={(e) => {
                               if (e.target.checked) {
-                                setSelectedTags([...selectedtags, tag[0]]);
+                                setSelectedTags([...selectedTags, tag[0]]);
                               } else {
                                 setSelectedTags(
-                                  selectedtags.filter((item) => item != tag[0])
+                                  selectedTags.filter((item) => item != tag[0])
                                 );
                               }
                             }}
@@ -1155,7 +1161,7 @@ const Results = (data) => {
                               width: "149px",
                               flexGrow: "1",
                             }}
-                            htmlFor={tag[0]}
+                            htmlFor={tag[0] + "-tag"}
                           >
                             {formatSentenceCase(tag[0])}{" "}
                           </label>
@@ -1387,7 +1393,6 @@ const Results = (data) => {
                       alignItems: "center",
                       width: "55px",
                     }}
-                    type="submit"
                     className="search-submit"
                   >
                     <svg
@@ -1456,11 +1461,7 @@ const Results = (data) => {
                   : dataState.matches + " dataset"}
               </h4>
             </div>
-            <SearchResultListing
-              parameters={parameters}
-              allResults={resultState}
-              pages={pages}
-            />
+            <SearchResultListing dataState={dataState} />
           </div>
         </article>
       </main>
