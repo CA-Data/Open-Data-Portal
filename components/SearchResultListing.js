@@ -1,18 +1,26 @@
 import Link from "next/link";
 
-export default function SearchResultListing({ parameters, allResults, pages }) {
-  var urlParamTopic = parameters.topic ? "&topic=" + parameters.topic : "";
-  var urlParamPublisher = parameters.publisher
-    ? "&publisher=" + parameters.publisher
+export default function SearchResultListing({ dataState }) {
+  var urlParamTopic = dataState.parameters.topic
+    ? "&topic=" + dataState.parameters.topic
     : "";
-  var urlParamFormat = parameters.format ? "&format=" + parameters.format : "";
-  var urlParamTag = parameters.tag ? "&tag=" + parameters.tag : "";
-  var urlParamSort = parameters.sort ? "&sort=" + parameters.sort : "";
+  var urlParamPublisher = dataState.parameters.publisher
+    ? "&publisher=" + dataState.parameters.publisher
+    : "";
+  var urlParamFormat = dataState.parameters.format
+    ? "&format=" + dataState.parameters.format
+    : "";
+  var urlParamTag = dataState.parameters.tag
+    ? "&tag=" + dataState.parameters.tag
+    : "";
+  var urlParamSort = dataState.parameters.sort
+    ? "&sort=" + dataState.parameters.sort
+    : "";
 
   return (
     <div>
       <div className="result-page">
-        {allResults.map((dataset, index) => (
+        {dataState.allResults.map((dataset, index) => (
           <div key={index} style={{ marginBottom: "3rem" }} className="result">
             <h2 style={{ marginBottom: "5px" }} className="h5">
               <Link href={"/dataset/" + dataset.name} passHref>
@@ -51,18 +59,18 @@ export default function SearchResultListing({ parameters, allResults, pages }) {
 
       <div className="page-navigation">
         <a
-          style={{ display: pages.previous.display }}
+          style={{ display: dataState.pages.previous.display }}
           className="page-previous"
           href={
             "datasets?q=" +
-            parameters.q +
+            dataState.parameters.q +
             urlParamTopic +
             urlParamPublisher +
             urlParamTag +
             urlParamFormat +
             urlParamSort +
             "&page=" +
-            pages.previous.value
+            dataState.pages.previous.value
           }
         >
           <svg
@@ -80,61 +88,61 @@ export default function SearchResultListing({ parameters, allResults, pages }) {
         </a>
 
         <a
-          style={{ display: pages.previous.display }}
+          style={{ display: dataState.pages.previous.display }}
           className="page-previous"
           href={
             "datasets?q=" +
-            parameters.q +
+            dataState.parameters.q +
             urlParamTopic +
             urlParamPublisher +
             urlParamTag +
             urlParamFormat +
             urlParamSort +
             "&page=" +
-            pages.previous.value
+            dataState.pages.previous.value
           }
         >
-          {pages.previous.value + 1}
+          {dataState.pages.previous.value + 1}
         </a>
 
         <span
-          style={{ display: pages.current.display }}
+          style={{ display: dataState.pages.current.display }}
           className="page-current"
         >
-          {pages.current.value + 1}
+          {dataState.pages.current.value + 1}
         </span>
 
         <a
-          style={{ display: pages.next.display }}
+          style={{ display: dataState.pages.next.display }}
           className="page-next"
           href={
             "datasets?q=" +
-            parameters.q +
+            dataState.parameters.q +
             urlParamTopic +
             urlParamPublisher +
             urlParamTag +
             urlParamFormat +
             urlParamSort +
             "&page=" +
-            pages.next.value
+            dataState.pages.next.value
           }
         >
-          {pages.next.value + 1}
+          {dataState.pages.next.value + 1}
         </a>
 
         <a
-          style={{ display: pages.next.display }}
+          style={{ display: dataState.pages.next.display }}
           className="page-next"
           href={
             "datasets?q=" +
-            parameters.q +
+            dataState.parameters.q +
             urlParamTopic +
             urlParamPublisher +
             urlParamTag +
             urlParamFormat +
             urlParamSort +
             "&page=" +
-            pages.next.value
+            dataState.pages.next.value
           }
         >
           <svg

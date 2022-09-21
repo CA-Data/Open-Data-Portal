@@ -318,9 +318,9 @@ const Results = (data) => {
   // UseEffects will fire when its corresponding array is updated.
   // Arrays can be updated by user input -> (selectedTopics,selectedPublishers,selectedFormats,selectedtags)
   // Each array will append a value to the url
-  useEffect(() => {
+  /*useEffect(() => {
     getFormattedData(router).then((response) => setDataState(response.props));
-  }, [router]);
+  }, [router]);*/
 
   useEffect(() => {
     setTopicList(

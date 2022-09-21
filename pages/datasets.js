@@ -142,7 +142,7 @@ const getFormattedData = async (context) => {
   const resultsArray = [];
   if (response.result.results.length > 0) {
     for (let index = 0; index < response.result.results.length; index++) {
-      var dataset = {};
+      let dataset = {};
       dataset.formats = [];
       dataset.name = response.result.results[index].name;
       dataset.title = response.result.results[index].title;
@@ -218,10 +218,6 @@ const Results = (data) => {
     Object.entries(data.filters.result.facets.res_format)
   );
   const [dataState, setDataState] = useState(data);
-
-  const [resultState] = useState(data.allResults);
-  const [parameters] = useState(data.parameters);
-  const [pages] = useState(data.pages);
 
   const [topicShowMore, setTopicShowMore] = useState(5);
   const [publisherShowMore, setPublisherShowMore] = useState(5);
@@ -1374,12 +1370,7 @@ const Results = (data) => {
                   : dataState.matches + " dataset"}{" "}
               </h2>
             </div>
-            <SearchResultListing
-              parameters={parameters}
-              allResults={resultState}
-              pages={pages}
-            />
-            {/*<SearchResultListing dataState={dataState} />*/}
+            <SearchResultListing dataState={dataState} />
           </div>
         </article>
       </main>
