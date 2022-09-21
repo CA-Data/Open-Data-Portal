@@ -187,7 +187,8 @@ const getFormattedData = async (context) => {
   // Getting Filters
 
   const filters = await fetch(
-    `https://data.ca.gov/api/3/action/package_search?${apirequest.split("?")[1]
+    `https://data.ca.gov/api/3/action/package_search?${
+      apirequest.split("?")[1]
     }&facet.field=["groups","tags","organization","res_format"]&rows=0`
   )
     .then((response) => response.json())
@@ -197,11 +198,10 @@ const getFormattedData = async (context) => {
   const resultsArray = [];
   if (response.result.results.length > 0) {
     for (let index = 0; index < response.result.results.length; index++) {
-      const dataset = {};
+      var dataset = {};
       dataset.formats = [];
       dataset.name = response.result.results[index].name;
       dataset.title = response.result.results[index].title;
-
       dataset.organization = response.result.results[index].organization.title;
 
       const date_updated = new Date(
@@ -279,6 +279,11 @@ const Results = (data) => {
     Object.entries(data.filters.result.facets.res_format)
   );
   const [dataState, setDataState] = useState(data);
+
+  const [resultState] = useState(data.allResults);
+  const [parameters] = useState(data.parameters);
+  const [pages] = useState(data.pages);
+
   const [topicShowMore, setTopicShowMore] = useState(5);
   const [publisherShowMore, setPublisherShowMore] = useState(5);
   const [tagShowMore, setTagShowMore] = useState(5);
@@ -1111,8 +1116,8 @@ const Results = (data) => {
                       </svg>
                       <span
                         style={{
-                          fontWeight: "bold",
                           fontSize: "18px",
+                          fontWeight: "bold",
                           lineHeight: "32px",
                         }}
                       >
@@ -1146,9 +1151,9 @@ const Results = (data) => {
                           <label
                             style={{
                               cursor: "pointer",
+                              lineHeight: "28px",
                               width: "149px",
                               flexGrow: "1",
-                              lineHeight: "28px",
                             }}
                             htmlFor={tag[0]}
                           >
@@ -1184,6 +1189,7 @@ const Results = (data) => {
                             style={{
                               display: "flex",
                               alignItems: "center",
+                              fontSize: "16px",
                               lineHeight: "28px",
                             }}
                           >
@@ -1212,6 +1218,7 @@ const Results = (data) => {
                             style={{
                               display: "flex",
                               alignItems: "center",
+                              fontSize: "16px",
                               lineHeight: "28px",
                             }}
                           >
@@ -1378,7 +1385,7 @@ const Results = (data) => {
                       backgroundColor: "#034A6B",
                       display: "flex",
                       alignItems: "center",
-                      width: "55px"
+                      width: "55px",
                     }}
                     type="submit"
                     className="search-submit"
@@ -1449,7 +1456,11 @@ const Results = (data) => {
                   : dataState.matches + " dataset"}
               </h4>
             </div>
-            <SearchResultListing dataState={dataState} />
+            <SearchResultListing
+              parameters={parameters}
+              allResults={resultState}
+              pages={pages}
+            />
           </div>
         </article>
       </main>

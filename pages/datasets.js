@@ -143,7 +143,6 @@ const getFormattedData = async (context) => {
   if (response.result.results.length > 0) {
     for (let index = 0; index < response.result.results.length; index++) {
       var dataset = {};
-
       dataset.formats = [];
       dataset.name = response.result.results[index].name;
       dataset.title = response.result.results[index].title;
