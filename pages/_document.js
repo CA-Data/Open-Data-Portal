@@ -60,6 +60,7 @@ export default function Document() {
           `,
           }}
         />
+        <meta property="og:image" content="/public/images/social_media_preview_image.png" />
       </Head>
       <body>
         <Main />
