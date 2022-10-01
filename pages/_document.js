@@ -60,7 +60,7 @@ export default function Document() {
           `,
           }}
         />
-        <meta property="og:image" content="/images/social_media_preview_image.png" />
+        <meta property="og:image" content="https://sandbox.data.ca.gov/images/social_media_preview_image.png" />
       </Head>
       <body>
         <Main />
